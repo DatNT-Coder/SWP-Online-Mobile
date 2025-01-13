@@ -1,0 +1,47 @@
+# Ignore build và thư mục output
+build/
+dist/
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Ignore file log
+*.log
+
+# Ignore file tạm hoặc file backup
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Ignore hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Ignore file Java bytecode
+*.class
+
+# Ignore file biên dịch JAR/WAR
+*.jar
+*.war
+*.ear
+
+# Ignore file IDE NetBeans
+nbproject/private/
+*.nb-gradle/
+
+# Ignore file cấu hình môi trường
+*.env
+
+# Ignore thư mục chứa library
+lib/
+
+# Ignore database connection logs
+*.sql~
+*.sql.bak
+
+# Ignore user-specific IDE files
+*.iml
+*.ipr
+*.iws
