@@ -1,0 +1,38 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 25, 2025, 3:19:54 PM
+    Author     : naokh
+*/
+
+.modal a.close-modal[class*="icon-"] {
+          top: 5px;
+          right: 5px;
+          width: 30px;
+          height: 30px;
+          color: #fff;
+          line-height: 1.28;
+          text-align: center;
+          text-decoration: none;
+          text-indent: 0;
+          background: #fd5465;
+          -webkit-border-radius:  26px;
+          -moz-border-radius:     26px;
+          -o-border-radius:       26px;
+          -ms-border-radius:      26px;
+          font-size:0px;
+}
+.modal a.close-modal[class*="icon-"]:before {
+          font-size:12px;
+          line-height:30px;
+}
+
+#popup-modal {
+          -webkit-border-radius:  0;
+          -moz-border-radius:     0;
+          -o-border-radius:       0;
+          -ms-border-radius:      0;
+          border-radius:  0;
+}
