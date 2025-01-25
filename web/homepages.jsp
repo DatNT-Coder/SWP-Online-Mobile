@@ -68,7 +68,7 @@
                                                   <div class="row">
                                                             <div class="col-sm-4">
                                                                       <div class="logo pull-left">
-                                                                                <a href="homepages.jsp"><img style="width: 100px;" src="images/home/logo.png" alt="" /></a>
+                                                                                <a href="homepages.jsp"><img style="width: 100px;" src="images/home/LOGO.png" alt="" /></a>
                                                                       </div>
                                                             </div>
                                                             <div class="col-sm-4">
