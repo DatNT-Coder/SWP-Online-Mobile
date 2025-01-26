@@ -16,7 +16,7 @@
                     <link href="css/jquery.modal.custom.css" rel="stylesheet" />
                     <link href="css/jquery.toast.min.css" rel="stylesheet" />
                     <link href="css/chatbox.css" rel="stylesheet" />
-                    <title>Ho&#224;ng H&#224; Mobile - H? th?ng b&#225;n l? thi?t b? di ??ng v&#224; c&#244;ng ngh? ch&#237;nh h&#227;ng gi&#225; t?t</title>
+                    <title>Five musketeers</title>
                     <script>
                               window.insider_object = {};
                     </script>
@@ -41,44 +41,8 @@
 
           </head>
 
-
-
           <body>
                     <header>
-                              <section class="top-heading">
-                                        <div class="slide-deal-header">
-                                                  <div class="deal-header header-top-intro">
-                                                            <div>
-                                                                      <a>
-                                                                                <i class="icon-chinhhang"></i>
-                                                                                <span>S?N PH?M CHÍNH HÃNG</span>
-                                                                      </a>
-                                                            </div>
-                                                            <div>
-                                                                      <a href="/chinh-sach-bao-hanh">
-                                                                                <i class="icon-ChangeSolidOff"></i>                        <span>CAM K?T L?I ??I LI?N (*)</span>
-                                                                      </a>
-                                                            </div>
-                                                            <div>
-                                                                      <a>
-                                                                                <i class="icon-CallingSolidOff"></i>
-                                                                                <span>HOTLINE 1900.2091</span>
-                                                                      </a>
-                                                            </div>
-                                                            <div>
-                                                                      <a>
-                                                                                <i class="icon-DeliverySolidOff"></i>
-                                                                                <span>MI?N PHÍ V?N CHUY?N TOÀN QU?C</span>
-                                                                      </a>
-                                                            </div>
-                                                  </div>
-                                                  <a href="/thu-cu-doi-moi" class="deal-header header-top-sales">
-                                                            <div><i class="icon-ChangeSolidOff"></i><span> Thu c? giá cao toàn b? s?n ph?m</span></div>
-                                                  </a>
-                                        </div>
-                              </section>
-
-
                               <section class="w-container">
                                         <div class="logo-search-user">
                                                   <div class="logo">
@@ -91,17 +55,17 @@
                                                             <div class="search-box">
                                                                       <form method="get" action="/tim-kiem">
                                                                                 <div class="search-bg">
-                                                                                          <input id="kwd" name="kwd" type="text" placeholder="Hôm nay b?n mu?n tìm ki?m gì?" />
+                                                                                          <input id="kwd" name="kwd" type="text" placeholder="Hom nay ban muon tim kiem gi?" />
                                                                                           <button type="submit">
                                                                                                     <i class="icon-SearchSolidOff"></i>
-                                                                                                    <span>Tìm ki?m</span>
+                                                                                                    <span>Tim kiem</span>
                                                                                           </button>
                                                                                 </div>
                                                                       </form>
                                                             </div>
 
                                                             <div class="search-sugget">
-                                                                      <strong>T? khóa xu h??ng</strong>
+                                                                      <strong>Tu khoa xu huong</strong>
                                                                       <a href="/tim-kiem?kwd=Redmi Note 14">Redmi Note 14</a>
                                                                       <a href="/tim-kiem?kwd= Tecno Pova 6 Neo"> Tecno Pova 6 Neo</a>
                                                                       <a href="/tim-kiem?kwd=iPhone 16">iPhone 16</a>
@@ -110,18 +74,10 @@
                                                   </div>
 
                                                   <div class="quick-for-user">
-                                                            <a class="shop-location" href="/he-thong-cua-hang">
-                                                                      <i class="icon-localtion"></i>
-                                                                      <span>Tìm siêu th?</span>
+                                                            <a id="member-login" class="user text-link" title="Truy c?p trang tài kho?n" href="https://member.hoanghamobile.com" data-width="380" data-hight="630">
+                                                                      <i class="icon-UserSolidOff"></i>
+                                                                      <span>Tài kho?n</span>
                                                             </a>
-
-                                                            <a id="member-login" class="user text-link" title="Truy c?p trang tài kho?n" href="/account" data-width="380" data-hight="630">
-                                                                      <span class="user-loyalty" style="background: rgba(0, 153, 129, 1)">
-                                                                                <img src="/Content/web/img/icon-rank-member.png" />
-                                                                                <span>Chào, naokhung2000</span>
-                                                                      </span>
-                                                            </a>
-
 
                                                             <a class="cart text-link" href="/gio-hang">
                                                                       <i class="icon-Cart2SolidOff"></i>
