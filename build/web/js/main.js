@@ -1,30 +1,74 @@
 /*price range*/
 
- $('#sl2').slider();
+/* global b, g, r */
 
-	var RGBChange = function() {
-	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
-	};	
-		
+$('#sl2').slider();
+
+var RGBChange = function () {
+    $('#RGB').css('background', 'rgb(' + r.getValue() + ',' + g.getValue() + ',' + b.getValue() + ')')
+};
+
 /*scroll to top*/
 
-$(document).ready(function(){
-	$(function () {
-		$.scrollUp({
-	        scrollName: 'scrollUp', // Element ID
-	        scrollDistance: 300, // Distance from top/bottom before showing element (px)
-	        scrollFrom: 'top', // 'top' or 'bottom'
-	        scrollSpeed: 300, // Speed back to top (ms)
-	        easingType: 'linear', // Scroll to top easing (see http://easings.net/)
-	        animation: 'fade', // Fade, slide, none
-	        animationSpeed: 200, // Animation in speed (ms)
-	        scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
-					//scrollTarget: false, // Set a custom target element for scrolling to the top
-	        scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
-	        scrollTitle: false, // Set a custom <a> title if required.
-	        scrollImg: false, // Set true to use image
-	        activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-	        zIndex: 2147483647 // Z-Index for the overlay
-		});
-	});
+$(document).ready(function () {
+    $(function () {
+        $.scrollUp({
+            scrollName: 'scrollUp', // Element ID
+            scrollDistance: 300, // Distance from top/bottom before showing element (px)
+            scrollFrom: 'top', // 'top' or 'bottom'
+            scrollSpeed: 300, // Speed back to top (ms)
+            easingType: 'linear', // Scroll to top easing (see http://easings.net/)
+            animation: 'fade', // Fade, slide, none
+            animationSpeed: 200, // Animation in speed (ms)
+            scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
+            //scrollTarget: false, // Set a custom target element for scrolling to the top
+            scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
+            scrollTitle: false, // Set a custom <a> title if required.
+            scrollImg: false, // Set true to use image
+            activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+            zIndex: 2147483647 // Z-Index for the overlay
+        });
+    });
+});
+
+// Select carousel and arrows
+const carousel = document.querySelector('#slider-carousel');
+const controls = document.querySelectorAll('.control-carousel');
+
+// Add event listener for click on arrows
+controls.forEach(control => {
+    control.addEventListener('click', function () {
+        // Temporarily hide the arrow
+        this.style.opacity = '0';
+        this.style.pointerEvents = 'none';
+    });
+});
+
+// Add event listener to show arrows on hover
+carousel.addEventListener('mouseover', () => {
+    controls.forEach(control => {
+        control.style.opacity = '1';
+        control.style.pointerEvents = 'auto';
+    });
+});
+
+// Add event listener to hide arrows when moving away after click
+carousel.addEventListener('mouseleave', () => {
+    controls.forEach(control => {
+        control.style.opacity = '0';
+        control.style.pointerEvents = 'none';
+    });
+});
+
+$(document).ready(function () {
+    // Initialize the slider
+    $(".slider-area").slick({
+        dots: true,
+        vertical: true,
+        centerMode: false,
+        autoplay: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    });
 });
