@@ -130,7 +130,7 @@ public class AuthenticationServlet extends HttpServlet {
     }
 
     private String regDoPost(HttpServletRequest request, HttpServletResponse response) {
-        
+        return null;
     }
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
