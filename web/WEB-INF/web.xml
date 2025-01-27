@@ -4,8 +4,24 @@
         <servlet-name>AuthenticationServlet</servlet-name>
         <servlet-class>controller.AuthenticationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BlogPostList</servlet-name>
+        <servlet-class>controller.blog.BlogPostList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostcategoryController</servlet-name>
+        <servlet-class>controller.blog.PostcategoryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogPostList</servlet-name>
+        <url-pattern>/BlogPostList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostcategoryController</servlet-name>
+        <url-pattern>/PostcategoryController</url-pattern>
     </servlet-mapping>
 </web-app>
