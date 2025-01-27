@@ -3,17 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/order/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/home/NewServlet.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/customer/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/blog/BlogList.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/slider/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/shipper/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/cart/CartList.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/user/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/setting/List.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/dashboard/List.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/dao/PostCategoryDAO.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/web/blog.html</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/dao/BlogPostDAO.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogPostList.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/web/BloglistCategory.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/web/Blog.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/blog/PostcategoryController.java</file>
         </group>
     </open-files>
 </project-private>
