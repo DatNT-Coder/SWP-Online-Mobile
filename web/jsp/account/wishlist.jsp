@@ -57,10 +57,6 @@
           </head>
 
           <body class="account">
-
-                    <div class="top-link">
-                              <span class="pulse"></span> <p><strong>[Khuyến mại] Thu cũ gi&#225; cao to&#224;n bộ sản phẩm - Trợ gi&#225; tốt nhất</strong> <a href="https://hoanghamobile.com/thu-cu-doi-moi" target="_blank">Xem chi tiết</a></p>
-                    </div>
                     <header>
                               <div class="top-navigation">
                                         <div class="container">
@@ -270,21 +266,21 @@
 
                     <script src="/Content/web/js/app.users.js?c=638735873894982505"></script>
                     <script type="text/javascript">
-                          $(document).ready(function () {
-                                    var reqPath = '/account' + location.pathname.toLowerCase();
-                                    var hasActived = false;
-                                    $('nav ul li a').each(function (idx, value) {
-                                              var href = $(this).attr('href').toLowerCase();
-                                              if (href && reqPath.indexOf(href) >= 0) {
-                                                        $(this).addClass('actived');
-                                                        hasActived = true;
-                                              }
-                                    });
+                              $(document).ready(function () {
+                                        var reqPath = '/account' + location.pathname.toLowerCase();
+                                        var hasActived = false;
+                                        $('nav ul li a').each(function (idx, value) {
+                                                  var href = $(this).attr('href').toLowerCase();
+                                                  if (href && reqPath.indexOf(href) >= 0) {
+                                                            $(this).addClass('actived');
+                                                            hasActived = true;
+                                                  }
+                                        });
 
-                                    if (!hasActived) {
-                                              $('nav ul li:eq(0) a').addClass('actived');
-                                    }
-                          });
+                                        if (!hasActived) {
+                                                  $('nav ul li:eq(0) a').addClass('actived');
+                                        }
+                              });
                     </script>
 
 
