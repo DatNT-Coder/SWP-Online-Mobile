@@ -45,3 +45,5 @@ lib/
 *.iml
 *.ipr
 *.iws
+*.txt
+update.txt
