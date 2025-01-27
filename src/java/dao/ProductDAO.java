@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package dao;
 
 /*
@@ -5,10 +6,19 @@ package dao;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dao;
+
+>>>>>>> main
 /**
  *
  * @author tiend
  */
+<<<<<<< HEAD
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -108,4 +118,8 @@ public class ProductDAO {
         int totalProducts = productDAO.getTotalProductCount();
         System.out.println("Tổng số sản phẩm trong cơ sở dữ liệu: " + totalProducts);
     }
+=======
+public class ProductDAO {
+    
+>>>>>>> main
 }

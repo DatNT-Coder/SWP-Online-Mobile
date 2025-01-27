@@ -1,9 +1,5 @@
-<%-- 
-    Document   : shop
-    Created on : Jan 11, 2025, 7:11:08 PM
-    Author     : naokh
---%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login | E-Shopper</title>
+    <title>Blog | E-Shopper</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -96,7 +92,7 @@
 								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.html" class="active"><i class="fa fa-lock"></i> Login</a></li>
+								<li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
 					</div>
@@ -125,12 +121,12 @@
 										<li><a href="product-details.html">Product Details</a></li> 
 										<li><a href="checkout.html">Checkout</a></li> 
 										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html" class="active">Login</a></li> 
+										<li><a href="login.html">Login</a></li> 
                                     </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+								<li class="dropdown"><a href="#" class="active">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
+                                        <li><a href="blog.html" class="active">Blog List</a></li>
 										<li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
                                 </li> 
@@ -149,42 +145,78 @@
 		</div><!--/header-bottom-->
 	</header><!--/header-->
 	
-	<section id="form"><!--form-->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4 col-sm-offset-1">
-					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
-							<span>
-								<input type="checkbox" class="checkbox"> 
-								Keep me signed in
-							</span>
-							<button type="submit" class="btn btn-default">Login</button>
-						</form>
-					</div><!--/login form-->
-				</div>
-				<div class="col-sm-1">
-					<h2 class="or">OR</h2>
-				</div>
-				<div class="col-sm-4">
-					<div class="signup-form"><!--sign up form-->
-						<h2>New User Signup!</h2>
-						<form action="#">
-							<input type="text" placeholder="Name"/>
-							<input type="email" placeholder="Email Address"/>
-							<input type="password" placeholder="Password"/>
-							<button type="submit" class="btn btn-default">Signup</button>
-						</form>
-					</div><!--/sign up form-->
-				</div>
-			</div>
-		</div>
-	</section><!--/form-->
-	
-	
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>Category</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <c:forEach items="${listPC}" var="c">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="Postcategory?categoryId=${c.id}">${c.name}</a></h4>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div><!--/category-products-->
+
+
+
+                            <div class="shipping text-center"><!--shipping-->
+                                <img src="images/home/shipping.png" alt="" />
+                            </div><!--/shipping-->
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="blog-post-area">
+                            <h2 class="title text-center">Latest From our Blog</h2>
+                            <c:forEach items="${list}" var="b">
+                                <div class="single-blog-post">
+                                    <h3>${b.title}</h3>
+                                    <div class="post-meta">
+                                        <ul>
+                                            <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
+                                            <li><i class="fa fa-bars"></i> ${b.getName()}</li>
+                                            <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
+
+
+                                        </ul>
+
+                                    </div>
+                                    <a href="">
+                                        <img src="assets/img/blogImage/${b.thumbnail}" alt="">
+                                    </a>
+                                    <p>${b.brief_info}</p>
+                                    <a class="btn btn-primary" href="BlogDetail?pid=${b.id}">Read More</a>
+
+                                </div>
+                            </c:forEach>
+
+
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${pageIndex > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="BlogPostList?index=${pageIndex-1}">Trước</a>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach var="i" begin="1" end="${endPage}">
+                                    <li class="page-item ${pageIndex == i?"active":""}"><a class="page-link" href="BlogPostList?index=${i}">${i}</a></li>                              
+                                    </c:forEach>
+
+                                <c:if test="${pageIndex < endPage}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="BlogPostList?index=${pageIndex+1}">Sau</a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
@@ -277,7 +309,7 @@
 								<li><a href="">Contact Us</a></li>
 								<li><a href="">Order Status</a></li>
 								<li><a href="">Change Location</a></li>
-								<li><a href="">FAQ?s</a></li>
+								<li><a href="">FAQ’s</a></li>
 							</ul>
 						</div>
 					</div>
@@ -335,7 +367,7 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright � 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
 					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
 				</div>
 			</div>
@@ -347,7 +379,7 @@
   
     <script src="js/jquery.js"></script>
 	<script src="js/price-range.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
+	<script src="js/jquery.scrollUp.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.prettyPhoto.js"></script>
     <script src="js/main.js"></script>

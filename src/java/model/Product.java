@@ -1,7 +1,22 @@
+<<<<<<< HEAD
 package model;
 
 import java.sql.Timestamp;
 
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author tiend
+ */
+>>>>>>> main
 public class Product {
     private int ID;
     private String name;
@@ -9,6 +24,7 @@ public class Product {
     private double salePrice;
     private String details;
     private String image;
+<<<<<<< HEAD
     private int stock;
     private int productCategoryID;
     private Timestamp updatedDate;
@@ -20,12 +36,28 @@ public class Product {
     // Constructor
     public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int stock,
                    int productCategoryID, Timestamp updatedDate, int status, double costPrice, int settingsID, int brandID) {
+=======
+    private int Stock;
+    private int ProductCategory_ID;
+    private Date updatedDate;
+    private int status;
+    private int brandId;
+    private double cost_price;
+    private int settings_id;
+    
+
+    public Product() {
+    }
+
+    public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, Date updatedDate, int status, int brand, double cost_price, int settings_id) {
+>>>>>>> main
         this.ID = ID;
         this.name = name;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
         this.details = details;
         this.image = image;
+<<<<<<< HEAD
         this.stock = stock;
         this.productCategoryID = productCategoryID;
         this.updatedDate = updatedDate;
@@ -36,6 +68,33 @@ public class Product {
     }
 
     // Getters and Setters
+=======
+        this.Stock = Stock;
+        this.ProductCategory_ID = ProductCategory_ID;
+        this.updatedDate = updatedDate;
+        this.status = status;
+        this.brandId = brand;
+        this.cost_price = cost_price;
+        this.settings_id = settings_id;
+        
+    }
+
+    public Product(String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, Date updatedDate, int status, int brand, double cost_price, int settings_id) {
+        this.name = name;
+        this.originalPrice = originalPrice;
+        this.salePrice = salePrice;
+        this.details = details;
+        this.image = image;
+        this.Stock = Stock;
+        this.ProductCategory_ID = ProductCategory_ID;
+        this.updatedDate = updatedDate;
+        this.status = status;
+        this.brandId = brand;
+        this.cost_price = cost_price;
+        this.settings_id = settings_id;
+    }
+
+>>>>>>> main
     public int getID() {
         return ID;
     }
@@ -85,6 +144,7 @@ public class Product {
     }
 
     public int getStock() {
+<<<<<<< HEAD
         return stock;
     }
 
@@ -105,6 +165,28 @@ public class Product {
     }
 
     public void setUpdatedDate(Timestamp updatedDate) {
+=======
+        return Stock;
+    }
+
+    public void setStock(int Stock) {
+        this.Stock = Stock;
+    }
+
+    public int getProductCategory_ID() {
+        return ProductCategory_ID;
+    }
+
+    public void setProductCategory_ID(int ProductCategory_ID) {
+        this.ProductCategory_ID = ProductCategory_ID;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+>>>>>>> main
         this.updatedDate = updatedDate;
     }
 
@@ -116,6 +198,7 @@ public class Product {
         this.status = status;
     }
 
+<<<<<<< HEAD
     public double getCostPrice() {
         return costPrice;
     }
@@ -159,4 +242,34 @@ public class Product {
                 ", brandID=" + brandID +
                 '}';
     }
+=======
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
+    }
+
+    public double getCost_price() {
+        return cost_price;
+    }
+
+    public void setCost_price(double cost_price) {
+        this.cost_price = cost_price;
+    }
+
+    public int getSettings_id() {
+        return settings_id;
+    }
+
+    public void setSettings_id(int settings_id) {
+        this.settings_id = settings_id;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "ID=" + ID + ", name=" + name + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", details=" + details + ", image=" + image + ", Stock=" + Stock + ", ProductCategory_ID=" + ProductCategory_ID + ", updatedDate=" + updatedDate + ", status=" + status + ", brandId=" + brandId + ", cost_price=" + cost_price + ", settings_id=" + settings_id + '}';
+    }  
+>>>>>>> main
 }

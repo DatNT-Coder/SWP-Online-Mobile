@@ -1,11 +1,15 @@
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Login | E-Shopper</title>
+        <title>Bài Đăng | Pink-Mobile</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -22,8 +26,8 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-    </head><!--/head-->
-
+        <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
+    </head>
     <body>
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
@@ -32,8 +36,8 @@
                         <div class="col-sm-6">
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
-                                    <li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                                    <li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                                    <li><a href="#"><i class="fa fa-phone"></i> +84 985 350 491</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope"></i>  group6_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -52,45 +56,43 @@
                 </div>
             </div><!--/header_top-->
 
-            <div class="header-middle"><!--header-middle-->
+           <div class="header-middle"><!--header-middle-->
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
-                            </div>
-                            <div class="btn-group pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                        USA
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="">Canada</a></li>
-                                        <li><a href="">UK</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                        DOLLAR
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="">Canadian Dollar</a></li>
-                                        <li><a href="">Pound</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                                <a href="Home"><img src="images/home/logo.png" alt="" /></a>
+                            </div>              
                         </div>
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li><a href=""><i class="fa fa-user"></i> Account</a></li>
-                                    <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
-                                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                    <li><a href="login.html" class="active"><i class="fa fa-lock"></i> Login</a></li>
+                                    <li class="dropdown">
+                                        <a href="user-profile">
+                                            <i class="fa fa-user"></i>
+                                            ${empty sessionScope.user.email ? "Tài khoản" : sessionScope.user.full_name}</a>
+                                        <ul class="sub-menu" style=" background-color: #ffffff;padding-top: 0.8rem;max-width: 180px;" >
+                                            <li  style="color: #696763; font-size: 20px; text-align: center;padding:1rem;">
+                                                <a class="dropdown-hover" href="changepassword" style="color: #696763">Đổi mật khẩu</a>
+                                            </li>
+                                            <li  style="color: #696763; font-size: 20px; text-align: center;padding: 1rem;">
+                                                <a class="dropdown-hover" href="user-profile" style="color: #696763;">Thông tin người dùng</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <c:if test="${sessionScope.user != null}">
+                                    <li><a href="${pageContext.request.contextPath}/user/orders"><i class="fa fa-star"></i> Đơn Mua</a></li>
+                                    </c:if>
+                                    <li><a href="/mobileshop/customer/cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    
+                                        <c:choose>
+                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                            <li><a href="signin"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                            <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
                                 </ul>
                             </div>
                         </div>
@@ -112,30 +114,39 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="Home" class="active">Trang Chủ</a></li>
+                                    <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.html">Products</a></li>
-                                            <li><a href="product-details.html">Product Details</a></li> 
-                                            <li><a href="checkout.html">Checkout</a></li> 
-                                            <li><a href="cart.html">Cart</a></li> 
-                                            <li><a href="login.html" class="active">Login</a></li> 
+                                            <li><a href="listProduct">Sản Phẩm</a></li>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                                    <li><a href="signin">Đăng Nhập</a></li> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <li><a href="logOut.jsp">Đăng Xuất</a></li>
+
+                                                </c:otherwise>
+                                            </c:choose>
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                    <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Blog List</a></li>
-                                            <li><a href="blog-single.html">Blog Single</a></li>
+                                            <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
+
                                         </ul>
                                     </li> 
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="contact-us.html">Contact</a></li>
+
+                                   
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class="search_box pull-right">
-                                <input type="text" placeholder="Search"/>
+                            <div class=" pull-right">
+                                 <form action="BlogPostList">
+
+                                    <input name="keyword" type="text" placeholder="Tìm kiếm..." required=""/>
+                                    <button type="submit" value="search">Tìm kiếm</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -143,44 +154,75 @@
             </div><!--/header-bottom-->
         </header><!--/header-->
 
-        <section id="form"><!--form-->
+        <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4 col-sm-offset-1">
-                        <div class="login-form"><!--login form-->
-                            <h2>Login to your account</h2>
-                            <form action="#">
-                                <input type="text" placeholder="Name" />
-                                <input type="email" placeholder="Email Address" />
-                                <span>
-                                    <input type="checkbox" class="checkbox"> 
-                                    Keep me signed in
-                                </span>
-                                <button type="submit" class="btn btn-default">Login</button>
-                            </form>
-                            <form action="#">
-                                <button type="submit" class="btn btn-default">Reset</button>
-                            </form>
-                        </div><!--/login form & reset form-->
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>Danh Mục</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <c:forEach items="${listPC}" var="c">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="Postcategory?categoryId=${c.id}">${c.name}</a></h4>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div><!--/category-products-->
+
+
+
+                            <div class="shipping text-center"><!--shipping-->
+                                <img src="images/home/shipping.png" alt="" />
+                            </div><!--/shipping-->
+                        </div>
                     </div>
-                    <div class="col-sm-1">
-                        <h2 class="or">OR</h2>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="signup-form"><!--sign up form-->
-                            <h2>New User Signup!</h2>
-                            <form action="#">
-                                <input type="text" placeholder="Name"/>
-                                <input type="email" placeholder="Email Address"/>
-                                <input type="password" placeholder="Password"/>
-                                <button type="submit" class="btn btn-default">Signup</button>
-                            </form>
-                        </div><!--/sign up form-->
+                    <div class="col-sm-9">
+                        <div class="blog-post-area">
+                            <h2 class="title text-center">Bài Đăng Mới </h2>
+                            <c:forEach items="${list}" var="b">
+                                <div class="single-blog-post">
+                                    <h3>${b.title}</h3>
+                                    <div class="post-meta">
+                                        <ul>
+                                            <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
+                                            <li><i class="fa fa-user"></i> ${b.getName()}</li>
+                                            <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>                                    
+                                        </ul>
+
+                                    </div>
+                                    <a href="">
+                                        <img src="assets/img/blogImage/${b.thumbnail}" alt="">
+                                    </a>
+                                    <p>${b.brief_info}</p>
+                                    <a class="btn btn-primary" href="BlogDetail?pid=${b.id}">Đọc Thêm</a>
+
+                                </div>
+                            </c:forEach>
+
+
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${pageIndex > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="BlogPostList?index=${pageIndex-1}">Previous</a>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach var="i" begin="1" end="${endPage}">
+                                    <li class="page-item ${pageIndex == i?"active":""}"><a class="page-link" href="BlogPostList?index=${i}">${i}</a></li>                              
+                                    </c:forEach>
+
+                                <c:if test="${pageIndex < endPage}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="BlogPostList?index=${pageIndex+1}">Next</a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section><!--/form-->
-
+        </section>
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -188,7 +230,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="companyinfo">
-                                <h2><span>e</span>-shopper</h2>
+                                <h2><span style="color: #FE0F9E;">Pink</span>-Mobile</h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
                             </div>
                         </div>
@@ -268,19 +310,19 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Service</h2>
+                                <h2>Dịch vụ</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Online Help</a></li>
-                                    <li><a href="">Contact Us</a></li>
-                                    <li><a href="">Order Status</a></li>
-                                    <li><a href="">Change Location</a></li>
+                                    <li><a href="">Hỗ trợ online</a></li>
+                                    <li><a href="">Liên hệ</a></li>
+                                    <li><a href="">Trạng thái đơn hàng</a></li>
+                                    <li><a href="">Thay đổi địa chỉ</a></li>
                                     <li><a href="">FAQ’s</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Quock Shop</h2>
+                                <h2>Mua nhanh</h2>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a href="">T-Shirt</a></li>
                                     <li><a href="">Mens</a></li>
@@ -292,35 +334,33 @@
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Policies</h2>
+                                <h2>Chính sách</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Terms of Use</a></li>
-                                    <li><a href="">Privecy Policy</a></li>
-                                    <li><a href="">Refund Policy</a></li>
-                                    <li><a href="">Billing System</a></li>
-                                    <li><a href="">Ticket System</a></li>
+                                    <li><a href="">Điều khoản sử dụng</a></li>
+                                    <li><a href="">Quyền riêng tư</a></li>
+                                    <li><a href="">Chính sách đổi trả</a></li>
+                                    <li><a href="">Hệ thống hóa đơn</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>About Shopper</h2>
+                                <h2>Về người bán hàng</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Company Information</a></li>
-                                    <li><a href="">Careers</a></li>
-                                    <li><a href="">Store Location</a></li>
-                                    <li><a href="">Affillate Program</a></li>
-                                    <li><a href="">Copyright</a></li>
+                                    <li><a href="">Thông tin công ty</a></li>
+                                    <li><a href="">Địa chỉ cửa hàng</a></li>
+                                    <li><a href="">Tiếp thị liên kết</a></li>
+                                    <li><a href="">Bản quyền</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-3 col-sm-offset-1">
                             <div class="single-widget">
-                                <h2>About Shopper</h2>
+                                <h2>Về người bán hàng</h2>
                                 <form action="#" class="searchform">
-                                    <input type="text" placeholder="Your email address" />
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                                    <p>Get the most recent updates from <br />our site and be updated your self...</p>
+                                    <input type="text" placeholder="Địa chỉ email..." />
+                                    <button style="background-color: #FE0F9E" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
                                 </form>
                             </div>
                         </div>
@@ -332,8 +372,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                        <p class="pull-left">Copyright © 2024 PinkMobile. All rights reserved.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href=""></a></span></p>
                     </div>
                 </div>
             </div>
