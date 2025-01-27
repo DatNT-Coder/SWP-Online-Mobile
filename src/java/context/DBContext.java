@@ -8,45 +8,37 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBContext {
-       public Connection conn = null;
-    public PreparedStatement ps;
-    public ResultSet rs;
+    protected Connection connection;
+    protected PreparedStatement statement;
+    protected ResultSet resultSet;
 
-    public DBContext(String url, String user, String pass) {
+    /**
+     * get an connection
+     *
+     * @return connection or null
+     */
+    public Connection getConnection() {
         try {
-            // call Driver
+            // Sử dụng driver của MySQL
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //connect
-            conn = DriverManager.getConnection(url, user, pass);
-            System.out.println("connected");
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Can't connect to database");
+
+            // URL kết nối MySQL
+            String url = "jdbc:mysql://localhost:3306/mydb"; // Thay project_PRJ2 bằng tên database của bạn
+            String user = "root"; // Thay root bằng username của bạn
+            String password = "123456"; // Thay kali123 bằng password của bạn
+
+            // Tạo kết nối
+            connection = DriverManager.getConnection(url, user, password);
+            return connection;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error " + e.getMessage() + " at DBContext");
+            return null;
         }
-    }
-
-    public ResultSet getData(String sql) {
-        ResultSet rs = null;
-        Statement state;
-        try {
-            state = conn.createStatement(
-                    ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            rs = state.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return rs;
-    }
-
-    public DBContext() {
-        //Don't forget to change the password
-        this("jdbc:mysql://localhost:3306/mydb",
-                "root", "123456");
-
     }
 
     public static void main(String[] args) {
-        DBContext dbConnect = new DBContext();
-        Connection connect = dbConnect.conn;
+        DBContext test = new DBContext();
+        test.connection = test.getConnection();
+        System.out.println(test.connection);
     }
 }

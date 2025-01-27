@@ -17,20 +17,25 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.BlogPost;
-
+import java.sql.Connection;
 /**
  *
  * @author Asus
  */
 public class BlogPostDAO  extends DBContext{
-   
+    private final Connection connection; // Kết nối cơ sở dữ liệu
+
+    public BlogPostDAO() {
+        DBContext dbContext = new DBContext();
+        this.connection = dbContext.getConnection(); // Lấy kết nối từ DBContext
+    }
 
     public ArrayList<BlogPost> BlogListHot() {
         ArrayList<BlogPost> list = new ArrayList<>();
 
         try {
             String sql = "SELECT * FROM mydb.blogs_posts ORDER BY updatedDate DESC LIMIT 4";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
 
@@ -60,7 +65,7 @@ public class BlogPostDAO  extends DBContext{
     public BlogPost BlogLastPost() {
         String query = "SELECT * FROM mydb.blogs_posts ORDER BY updatedDate DESC LIMIT 1";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return new BlogPost(
@@ -94,7 +99,7 @@ public class BlogPostDAO  extends DBContext{
                     + "WHERE bp.status != 0 \n"
                     + "ORDER BY bp.updatedDate ASC \n"
                     + "LIMIT 3;";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
 
@@ -133,7 +138,7 @@ public class BlogPostDAO  extends DBContext{
                     + "         bp.PostCategories_id, bp.User_id, bp.flag_feature, bp.status, u.full_name\n"
                     + "ORDER BY bp.updatedDate DESC\n"
                     + "LIMIT 3;";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
 
@@ -166,7 +171,7 @@ public class BlogPostDAO  extends DBContext{
                 + "FROM mydb.blogs_posts bp\n"
                 + "WHERE bp.status != 0;";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 n = rs.getInt(1);
@@ -186,7 +191,7 @@ public class BlogPostDAO  extends DBContext{
                 + "WHERE bp.status != 0\n"
                 + "LIMIT ? OFFSET ?;";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, numberPerPage);
             ps.setInt(2, (index - 1) * numberPerPage);
             ResultSet rs = ps.executeQuery();
@@ -224,7 +229,7 @@ public class BlogPostDAO  extends DBContext{
                     + "JOIN mydb.user AS u ON bp.User_id = u.id\n"
                     + "INNER JOIN postcategories pc ON bp.PostCategories_id = pc.id\n"
                     + "WHERE bp.title LIKE ? OR bp.details LIKE ? OR pc.name LIKE?;";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             String searchTerm = "%" + keyword + "%";
             statement.setString(1, searchTerm);
             statement.setString(2, searchTerm);
@@ -264,7 +269,7 @@ public class BlogPostDAO  extends DBContext{
                 + "INNER JOIN user u ON b.User_id = u.id\n"
                  + "ORDER BY " + sortBy + " "+order+";";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             int id = 1;
             while (rs.next()) {
@@ -308,7 +313,7 @@ public class BlogPostDAO  extends DBContext{
                 + "ORDER BY b.ID ASC;";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, pSearch);
             ps.setString(2, pSearch);
             ps.setString(3, pSearch);
@@ -352,7 +357,7 @@ public class BlogPostDAO  extends DBContext{
                 + "ORDER BY b.ID ASC;";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, status);
             ResultSet rs = ps.executeQuery();
             int id = 1;
@@ -393,7 +398,7 @@ public class BlogPostDAO  extends DBContext{
                 + "ORDER BY b.ID ASC;";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, bid);
             ResultSet rs = ps.executeQuery();
             int id = 1;
@@ -434,7 +439,7 @@ public class BlogPostDAO  extends DBContext{
                 + "ORDER BY b.ID ASC;";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, cid);
             ResultSet rs = ps.executeQuery();
             int id = 1;
@@ -472,7 +477,7 @@ public class BlogPostDAO  extends DBContext{
                 + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         int productId = 0;
         try {
-            PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getBrief_info());
             ps.setString(3, post.getThumbnail());
@@ -508,7 +513,7 @@ public class BlogPostDAO  extends DBContext{
                 + "ORDER BY p.id ASC;";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, postId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -545,7 +550,7 @@ public class BlogPostDAO  extends DBContext{
                     + "INNER JOIN user u ON p.User_id = u.id\n"
                     + "WHERE p.id = ?\n"
                     + "ORDER BY p.id ASC;";
-            PreparedStatement statement = conn.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -578,7 +583,7 @@ public class BlogPostDAO  extends DBContext{
                     + "INNER JOIN user u ON p.User_id = u.id\n"
                     + "WHERE p.id = ?\n"
                     + "ORDER BY p.id ASC;";
-            PreparedStatement statement = conn.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -620,7 +625,7 @@ public class BlogPostDAO  extends DBContext{
                 + "WHERE\n"
                 + "    `id` = ?;";
         int n = 0;
-        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getBrief_info());
             ps.setString(3, post.getThumbnail());
@@ -645,7 +650,7 @@ public class BlogPostDAO  extends DBContext{
         String query = "UPDATE mydb.blogs_posts SET status = ? WHERE id = ?";
         int n = 0;
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, status);
             ps.setInt(2, pid);
             n = ps.executeUpdate();
@@ -659,7 +664,7 @@ public class BlogPostDAO  extends DBContext{
         int total = 0;
         try {
             String sql = "SELECT COUNT(*) AS total_posts FROM blogs_posts";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 total = rs.getInt("total_posts");

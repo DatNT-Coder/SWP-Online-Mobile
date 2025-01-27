@@ -5,6 +5,7 @@
 package dao;
 
 import context.DBContext;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,13 +21,18 @@ import model.PostCategory;
  * @author Asus
  */
 public class PostCategoryDAO extends DBContext {
-  
+      private final Connection connection; // Kết nối cơ sở dữ liệu
+
+    public PostCategoryDAO() {
+        DBContext dbContext = new DBContext();
+        this.connection = dbContext.getConnection(); // Lấy kết nối từ DBContext
+    }
     public ArrayList<PostCategory> PostCategoryList() {
         ArrayList<PostCategory> listPC = new ArrayList<>();
 
         try {
             String sql = "SELECT * FROM mydb.postcategories";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
 
@@ -57,7 +63,7 @@ public class PostCategoryDAO extends DBContext {
                     + "WHERE bp.PostCategories_id = ?\n"
                     + "LIMIT ?\n"
                     + "OFFSET ?;";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId); // Set category ID
             statement.setInt(2, postPerPage); // Set number of posts per page
             statement.setInt(3, (pageIndex - 1) * postPerPage); // Calculate offset
@@ -96,7 +102,7 @@ public class PostCategoryDAO extends DBContext {
 
         try {
             String sql = "SELECT COUNT(*) AS totalPosts FROM mydb.blogs_posts WHERE PostCategories_id = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId); // Thiết lập tham số trong câu truy vấn
 
             ResultSet rs = statement.executeQuery();
@@ -119,7 +125,7 @@ public class PostCategoryDAO extends DBContext {
                     + "FROM mydb.blogs_posts\n"
                     + "ORDER BY updatedDate DESC\n"
                     + "LIMIT 4 ";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
 
@@ -150,7 +156,7 @@ public class PostCategoryDAO extends DBContext {
         String query = "SELECT * FROM mydb.blogs_posts\n"
                 + "ORDER BY updatedDate DESC  ";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return new BlogPost(rs.getInt(1), // id
@@ -181,7 +187,7 @@ public class PostCategoryDAO extends DBContext {
                     + "FROM mydb.blogs_posts\n"
                     + "ORDER BY updatedDate DESC\n"
                     + "LIMIT 4 ";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
 
@@ -212,7 +218,7 @@ public class PostCategoryDAO extends DBContext {
         int n = 0;
         String query = "SELECT COUNT(*) AS total_posts FROM mydb.blogs_posts";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 n = rs.getInt(1);
@@ -230,7 +236,7 @@ public class PostCategoryDAO extends DBContext {
                 + "LEFT JOIN mydb.user AS u ON bp.User_id = u.id\n"
                 + " LIMIT ? OFFSET ?;";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, numberPerPage);
             ps.setInt(2, (index - 1) * numberPerPage);
             ResultSet rs = ps.executeQuery();
@@ -265,7 +271,7 @@ public class PostCategoryDAO extends DBContext {
                     + "FROM mydb.blogs_posts AS bp\n"
                     + "JOIN mydb.user AS u ON bp.User_id = u.id\n"
                     + "WHERE bp.title LIKE ? OR bp.brief_info LIKE ?;";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             String searchTerm = "%" + keyword + "%";
             statement.setString(1, searchTerm);
             statement.setString(2, searchTerm);
@@ -298,7 +304,7 @@ public class PostCategoryDAO extends DBContext {
         Vector<PostCategory> listC = new Vector<>();
         String query = "SELECT * FROM `mydb`.`postcategories`";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 listC.add(new PostCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("status")));
@@ -314,7 +320,7 @@ public class PostCategoryDAO extends DBContext {
         String query = "UPDATE mydb.postcategories SET status = ? WHERE id = ?";
         int n = 0;
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, status);
             ps.setInt(2, pid);
             n = ps.executeUpdate();
