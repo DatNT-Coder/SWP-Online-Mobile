@@ -1,5 +1,13 @@
+<%-- 
+    Document   : login
+    Created on : Jan 26, 2025, 12:38:27 AM
+    Author     : vuduc
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -149,9 +157,10 @@
                     <div class="col-sm-4 col-sm-offset-1">
                         <div class="login-form"><!--login form-->
                             <h2>Login to your account</h2>
-                            <form action="#">
-                                <input type="text" placeholder="Name" />
-                                <input type="email" placeholder="Email Address" />
+                            <form action="authen?action=login" method="post">
+                                <input name="email" type="email" placeholder="Your Email" />
+                                <input name="password" type="password" placeholder="Your password" />
+                                <h5 style="color: red"> ${error} </h5>
                                 <span>
                                     <input type="checkbox" class="checkbox"> 
                                     Keep me signed in
@@ -169,10 +178,19 @@
                     <div class="col-sm-4">
                         <div class="signup-form"><!--sign up form-->
                             <h2>New User Signup!</h2>
-                            <form action="#">
-                                <input type="text" placeholder="Name"/>
-                                <input type="email" placeholder="Email Address"/>
-                                <input type="password" placeholder="Password"/>
+                            <form action="authen?action=regis" method="post">
+                                <input name="full_name" type="text" placeholder="Enter Full Name"/>
+                                <input name="email" type="email" placeholder="Enter Email Address"/>
+                                <input type="password" placeholder="Enter New Password"/>
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="" disabled selected>Select your gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <label for="phone">Phone Number:</label>
+                                <input type="text" id="phone" name="phone" placeholder="Enter your phone number"
+                                       pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required/>
                                 <button type="submit" class="btn btn-default">Signup</button>
                             </form>
                         </div><!--/sign up form-->
