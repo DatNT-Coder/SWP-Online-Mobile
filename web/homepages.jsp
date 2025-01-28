@@ -20,25 +20,6 @@
                     <script>
                               window.insider_object = {};
                     </script>
-
-                    <link rel="canonical" href="https://hoanghamobile.com" />
-                    <meta name="description" content="Si&#234;u th? ?i?n tho?i di ??ng gi&#225; r? nh?t" />
-                    <meta name="keywords" content
-
-                    <meta name="twitter:title" content="Ho&#224;ng H&#224; Mobile - H? th?ng b&#225;n l? thi?t b? di ??ng v&#224; c&#244;ng ngh? ch&#237;nh h&#227;ng gi&#225; t?t" />
-                    <meta name="twitter:description" content="Si&#234;u th? ?i?n tho?i di ??ng gi&#225; r? nh?t">
-                    <meta name="twitter:url" content="https://hoanghamobile.com">
-
-                    <meta property="og:title" content="Ho&#224;ng H&#224; Mobile - H? th?ng b&#225;n l? thi?t b? di ??ng v&#224; c&#244;ng ngh? ch&#237;nh h&#227;ng gi&#225; t?t" />
-                    <meta property="og:description" content="Si&#234;u th? ?i?n tho?i di ??ng gi&#225; r? nh?t" />
-                    <meta property="og:url" content="https://hoanghamobile.com" />
-                    <meta property="og:image" content="https://hoanghamobile.com/Content/web/img/logo-text.png" />
-
-                    <meta property="og:type" content="website" />
-                    <meta property="fb:app_id" content="252305948121462" />
-
-                    <script async src="//hoanghamobilevn.api.useinsider.com/ins.js?id=10005327"></script>
-
           </head>
 
           <body>
@@ -58,14 +39,14 @@
                                                                                           <input id="kwd" name="kwd" type="text" placeholder="Hom nay ban muon tim kiem gi?" />
                                                                                           <button type="submit">
                                                                                                     <i class="icon-SearchSolidOff"></i>
-                                                                                                    <span>Tim kiem</span>
+                                                                                                    <span>Search</span>
                                                                                           </button>
                                                                                 </div>
                                                                       </form>
                                                             </div>
 
                                                             <div class="search-sugget">
-                                                                      <strong>Tu khoa xu huong</strong>
+                                                                      <strong>Hot search</strong>
                                                                       <a href="/tim-kiem?kwd=Redmi Note 14">Redmi Note 14</a>
                                                                       <a href="/tim-kiem?kwd= Tecno Pova 6 Neo"> Tecno Pova 6 Neo</a>
                                                                       <a href="/tim-kiem?kwd=iPhone 16">iPhone 16</a>
