@@ -23,7 +23,7 @@
 
                     <link rel="canonical" href="https://hoanghamobile.com" />
                     <meta name="description" content="Si&#234;u th? ?i?n tho?i di ??ng gi&#225; r? nh?t" />
-                    <meta name="keywords" content="" />
+                    <meta name="keywords" content
 
                     <meta name="twitter:title" content="Ho&#224;ng H&#224; Mobile - H? th?ng b&#225;n l? thi?t b? di ??ng v&#224; c&#244;ng ngh? ch&#237;nh h&#227;ng gi&#225; t?t" />
                     <meta name="twitter:description" content="Si&#234;u th? ?i?n tho?i di ??ng gi&#225; r? nh?t">
@@ -74,9 +74,9 @@
                                                   </div>
 
                                                   <div class="quick-for-user">
-                                                            <a id="member-login" class="user text-link" title="Truy c?p trang tài kho?n" href="https://member.hoanghamobile.com" data-width="380" data-hight="630">
+                                                            <a id="member-login" class="user text-link" title="Account" href="https://member.hoanghamobile.com" data-width="380" data-hight="630">
                                                                       <i class="icon-UserSolidOff"></i>
-                                                                      <span>Tài kho?n</span>
+                                                                      <span>Account</span>
                                                             </a>
 
                                                             <a class="cart text-link" href="/gio-hang">
@@ -109,14 +109,14 @@
 
 
                                                             <nav>
-                                                                      <h2>Danh m?c</h2>
+                                                                      <h2>Categories</h2>
                                                                       <ul class="root">
                                                                                 <li id="dien-thoai-di-dong">
                                                                                           <a href="/dien-thoai-di-dong" target="_self">
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/dienthoai.png;w=30;h=30;mode=pad" alt="?i?n tho?i" /></label>
                                                                                                     <span>
-                                                                                                              ?i?n tho?i
+                                                                                                             Phone
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -179,7 +179,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/loa.png;w=30;h=30;mode=pad" alt="&#194;m thanh" /></label>
                                                                                                     <span>
-                                                                                                              &#194;m thanh
+                                                                                                              Sound
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -197,7 +197,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/wifi.png;w=30;h=30;mode=pad" alt="Ph? ki?n" /></label>
                                                                                                     <span>
-                                                                                                              Ph? ki?n
+                                                                                                              Lonenht enoonjme nkoojne
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -206,7 +206,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-sua-chua.png;w=30;h=30;mode=pad" alt="S?a ch?a" /></label>
                                                                                                     <span>
-                                                                                                              S?a ch?a
+                                                                                                              Fix
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -215,7 +215,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-dich-vu.png;w=30;h=30;mode=pad" alt="D?ch v?" /></label>
                                                                                                     <span>
-                                                                                                              D?ch v?
+                                                                                                              Services
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -224,7 +224,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-tin-hot.png;w=30;h=30;mode=pad" alt="Tin hot" /></label>
                                                                                                     <span>
-                                                                                                              Tin hot
+                                                                                                              Hot news
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -233,21 +233,21 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-uu-dai.png;w=30;h=30;mode=pad" alt="?u ?&#227;i" /></label>
                                                                                                     <span>
-                                                                                                              ?u ?&#227;i
+                                                                                                              Thu cu
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
                                                                       </ul>
                                                             </nav>
                                                             <nav>
-                                                                      <h2>H&#224;ng c?</h2>
+                                                                      <h2>Thu cu dien thoai</h2>
                                                                       <ul class="root">
                                                                                 <li id="kho-san-pham-cu">
                                                                                           <a href="/kho-san-pham-cu" target="_self">
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-may-cu.png;w=30;h=30;mode=pad" alt="H&#224;ng c?" /></label>
                                                                                                     <span>
-                                                                                                              H&#224;ng c?
+                                                                                                              Thu cu dien thoai
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -256,7 +256,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-thu-cu-doi-moi.png;w=30;h=30;mode=pad" alt="Thu c? ??i m?i" /></label>
                                                                                                     <span>
-                                                                                                              Thu c? ??i m?i
+                                                                                                              Thu cu doi moi
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -319,7 +319,7 @@
                                                                                                     </div>
                                                                                                     <div class="top-slider-thumb">
                                                                                                               <div class="slides">
-                                                                                                                        <strong>??t tr??c Galaxy S25 Series</strong>
+                                                                                                                        <strong>Tra truoc Galaxy S25 Series</strong>
                                                                                                                         <small>Nh?n ?u ?&#227;i gi&#225; t?t</small>
                                                                                                               </div>
                                                                                                               <div class="slides">
