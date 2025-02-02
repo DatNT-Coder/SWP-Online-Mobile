@@ -11,11 +11,10 @@
                     <link href="css/v4.index.css" rel="stylesheet" />
                     <link href="css/owl.carousel.min.css" rel="stylesheet" type="text/css">
                     <link href="css/jquery.modal.min.css" rel="stylesheet" />
-                    <link href="css/jquery.modal.custom.css" rel="stylesheet" />
+                    <link href="css/jquery.modal.custom.css" rel="stylesheet" /> 
                     <link href="css/jquery.toast.min.css" rel="stylesheet" />
                     <link href="css/chatbox.css" rel="stylesheet" />
                     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
                     <title>Five musketeers</title>
                     <script>
                               window.insider_object = {};
@@ -56,12 +55,12 @@
 
                                                   <div class="quick-for-user">
                                                             <a id="member-login" class="user text-link" title="Account" href="jsp/account/home.jsp" data-width="380" data-hight="630">
-                                                                      <i class='bx bxs-user-account'></i>
+                                                                      <i class='bx bxs-user-circle'></i>
                                                                       <span>Account</span>
                                                             </a>
 
                                                             <a class="cart text-link" href="/gio-hang">
-                                                                      <i class='bx bxs-cart-alt' ></i>
+                                                                      <i class='bx bx-shopping-bag' ></i>
                                                                       <label class="cart-counter" id="cart-total">0</label>
                                                             </a>
                                                   </div>
@@ -71,11 +70,6 @@
 
                     <div class="w-container body-wrapper">
                               <div class="wrapper">
-
-
-
-
-
                                         <style>
                                                   body {
                                                             background: url('https://cdn.hoanghamobile.com//Uploads/2024/12/31/template-nen.jpg');
@@ -85,10 +79,7 @@
                                                   }
                                         </style>
                                         <div class="wrapper">
-
                                                   <div class="nav-full">
-
-
                                                             <nav>
                                                                       <h2>Categories</h2>
                                                                       <ul class="root">
@@ -101,15 +92,7 @@
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
-                                                                                <li id="tet-tao-bao-gia-apple">
-                                                                                          <a href="/tet-tao-bao-gia-apple" target="_self">
 
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/path4-1.png;w=30;h=30;mode=pad" alt="Apple" /></label>
-                                                                                                    <span>
-                                                                                                              Apple
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
                                                                                 <li id="laptop">
                                                                                           <a href="/laptop" target="_self">
 
@@ -119,6 +102,7 @@
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
+
                                                                                 <li id="tablet">
                                                                                           <a href="/tablet" target="_self">
 
@@ -128,60 +112,7 @@
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
-                                                                                <li id="man-hinh">
-                                                                                          <a href="/man-hinh" target="_self">
 
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/manhinh.png;w=30;h=30;mode=pad" alt="M&#224;n h&#236;nh" /></label>
-                                                                                                    <span>
-                                                                                                              M&#224;n h&#236;nh
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="dien-may">
-                                                                                          <a href="/dien-may" target="_self">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/tulanh.png;w=30;h=30;mode=pad" alt="?i?n m&#225;y" /></label>
-                                                                                                    <span>
-                                                                                                              ?i?n m&#225;y
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="dong-ho">
-                                                                                          <a href="/dong-ho" target="_self">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/dongho.png;w=30;h=30;mode=pad" alt="??ng h?" /></label>
-                                                                                                    <span>
-                                                                                                              ??ng h?
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="loa-tai-nghe">
-                                                                                          <a href="/loa-tai-nghe" target="_self">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/loa.png;w=30;h=30;mode=pad" alt="&#194;m thanh" /></label>
-                                                                                                    <span>
-                                                                                                              Sound
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="smart-home">
-                                                                                          <a href="/smart-home" target="_self">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/mayhutbui.png;w=30;h=30;mode=pad" alt="Smart home" /></label>
-                                                                                                    <span>
-                                                                                                              Smart home
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="phu-kien">
-                                                                                          <a href="/phu-kien" target="_self">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/wifi.png;w=30;h=30;mode=pad" alt="Ph? ki?n" /></label>
-                                                                                                    <span>
-                                                                                                              Lonenht enoonjme nkoojne
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
                                                                                 <li id="dich-vu-sua-chua">
                                                                                           <a href="/dich-vu-sua-chua" target="_self">
 
@@ -191,30 +122,12 @@
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
-                                                                                <li id="dich-vu">
+                                                                                <li id="dich-vu"> 
                                                                                           <a href="/dich-vu" target="_self">
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-dich-vu.png;w=30;h=30;mode=pad" alt="D?ch v?" /></label>
                                                                                                     <span>
                                                                                                               Services
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="tin-tuc">
-                                                                                          <a href="/tin-tuc" target="_self">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-tin-hot.png;w=30;h=30;mode=pad" alt="Tin hot" /></label>
-                                                                                                    <span>
-                                                                                                              Hot news
-                                                                                                    </span>
-                                                                                          </a>
-                                                                                </li>
-                                                                                <li id="tin-khuyen-maiuu-dai-hot">
-                                                                                          <a href="/tin-khuyen-mai/uu-dai-hot" target="_blank">
-
-                                                                                                    <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/11/14/logo-uu-dai.png;w=30;h=30;mode=pad" alt="?u ?&#227;i" /></label>
-                                                                                                    <span>
-                                                                                                              Thu cu
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
@@ -5588,13 +5501,12 @@
                                         });
                               });
                     </script>
+
                     <script type="text/javascript">
                               $(document).ready(function () {
                                         setTimeout(showPopup(368), 1000);
                               });
                     </script>
-
-
 
                     <script type="text/javascript">
                               function removeStick() {
@@ -5610,6 +5522,14 @@
                                         }
                               });
 
+                    </script>
+
+                    <script>
+                              $(document).ready(function () {
+                                        $("a[data-toggle='collapse']").click(function () {
+                                                  $(this).find(".fa").toggleClass("fa-plus fa-minus");
+                                        });
+                              });
                     </script>
 
           </body>
