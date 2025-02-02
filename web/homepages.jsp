@@ -16,6 +16,8 @@
                     <link href="css/jquery.modal.custom.css" rel="stylesheet" />
                     <link href="css/jquery.toast.min.css" rel="stylesheet" />
                     <link href="css/chatbox.css" rel="stylesheet" />
+                    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
                     <title>Five musketeers</title>
                     <script>
                               window.insider_object = {};
@@ -34,11 +36,11 @@
 
                                                   <div class="search">
                                                             <div class="search-box">
-                                                                      <form method="get" action="/tim-kiem">
+                                                                      <form method="get" action="/search">
                                                                                 <div class="search-bg">
-                                                                                          <input id="kwd" name="kwd" type="text" placeholder="Hom nay ban muon tim kiem gi?" />
+                                                                                          <input id="kwd" name="kwd" type="text" placeholder="What do you want to find ?" />
                                                                                           <button type="submit">
-                                                                                                    <i class="icon-SearchSolidOff"></i>
+                                                                                                    <i class='bx bx-search-alt' ></i>
                                                                                                     <span>Search</span>
                                                                                           </button>
                                                                                 </div>
@@ -47,21 +49,21 @@
 
                                                             <div class="search-sugget">
                                                                       <strong>Hot search</strong>
-                                                                      <a href="/tim-kiem?kwd=Redmi Note 14">Redmi Note 14</a>
-                                                                      <a href="/tim-kiem?kwd= Tecno Pova 6 Neo"> Tecno Pova 6 Neo</a>
-                                                                      <a href="/tim-kiem?kwd=iPhone 16">iPhone 16</a>
-                                                                      <a href="/tim-kiem?kwd=REDMAGIC 10 PRO">REDMAGIC 10 PRO</a>
+                                                                      <a href="/search?kwd=Redmi Note 14">Redmi Note 14</a>
+                                                                      <a href="/search?kwd=Tecno Pova 6 Neo"> Tecno Pova 6 Neo</a>
+                                                                      <a href="/search?kwd=iPhone 16">iPhone 16</a>
+                                                                      <a href="/search?kwd=REDMAGIC 10 PRO">REDMAGIC 10 PRO</a>
                                                             </div>
                                                   </div>
 
                                                   <div class="quick-for-user">
-                                                            <a id="member-login" class="user text-link" title="Account" href="https://member.hoanghamobile.com" data-width="380" data-hight="630">
-                                                                      <i class="icon-UserSolidOff"></i>
+                                                            <a id="member-login" class="user text-link" title="Account" href="jsp/account/home.jsp" data-width="380" data-hight="630">
+                                                                      <i class='bx bxs-user-account'></i>
                                                                       <span>Account</span>
                                                             </a>
 
                                                             <a class="cart text-link" href="/gio-hang">
-                                                                      <i class="icon-Cart2SolidOff"></i>
+                                                                      <i class='bx bxs-cart-alt' ></i>
                                                                       <label class="cart-counter" id="cart-total">0</label>
                                                             </a>
                                                   </div>
@@ -97,7 +99,7 @@
 
                                                                                                     <label><img src="https://cdn.hoanghamobile.com/Uploads/2024/06/27/dienthoai.png;w=30;h=30;mode=pad" alt="?i?n tho?i" /></label>
                                                                                                     <span>
-                                                                                                             Phone
+                                                                                                              Phone
                                                                                                     </span>
                                                                                           </a>
                                                                                 </li>
