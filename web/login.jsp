@@ -161,6 +161,7 @@
                                 <input name="email" type="email" placeholder="Your Email" />
                                 <input name="password" type="password" placeholder="Your password" />
                                 <h5 style="color: red"> ${error} </h5>
+                                <h5 style="color: red"> ${emp} </h5>
                                 <span>
                                     <input type="checkbox" class="checkbox"> 
                                     Keep me signed in

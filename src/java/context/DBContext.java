@@ -18,6 +18,7 @@ public class DBContext {
      * @return connection or null
      */
     public Connection getConnection() {
+        
         try {
             // Sử dụng driver của MySQL
             Class.forName("com.mysql.cj.jdbc.Driver");

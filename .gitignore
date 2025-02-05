@@ -47,3 +47,16 @@ lib/
 *.iws
 *.txt
 update.txt
+ 
+# Ignore NetBeans project files
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+nbproject/private/
+nbproject/project.properties
+nbproject/project.xml
+nbproject/private/private.properties
+nbproject/private/private.xml
+
+
+# Ignore update.txt
+update.txt

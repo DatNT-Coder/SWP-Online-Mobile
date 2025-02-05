@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Product {
     private String image;
     private int Stock;
     private int ProductCategory_ID;
-    private Date updatedDate;
+    private java.sql.Date updatedDate;
     private int status;
     private int brandId;
     private double cost_price;
@@ -29,7 +29,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, Date updatedDate, int status, int brand, double cost_price, int settings_id) {
+    public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, java.sql.Date updatedDate, int status, int brand, double cost_price, int settings_id) {
         this.ID = ID;
         this.name = name;
         this.originalPrice = originalPrice;
@@ -46,7 +46,7 @@ public class Product {
         
     }
 
-    public Product(String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, Date updatedDate, int status, int brand, double cost_price, int settings_id) {
+    public Product(String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, java.sql.Date updatedDate, int status, int brand, double cost_price, int settings_id) {
         this.name = name;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
@@ -125,11 +125,11 @@ public class Product {
         this.ProductCategory_ID = ProductCategory_ID;
     }
 
-    public Date getUpdatedDate() {
+    public java.sql.Date getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(java.sql.Date updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -168,5 +168,5 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" + "ID=" + ID + ", name=" + name + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", details=" + details + ", image=" + image + ", Stock=" + Stock + ", ProductCategory_ID=" + ProductCategory_ID + ", updatedDate=" + updatedDate + ", status=" + status + ", brandId=" + brandId + ", cost_price=" + cost_price + ", settings_id=" + settings_id + '}';
-    }  
+    }
 }

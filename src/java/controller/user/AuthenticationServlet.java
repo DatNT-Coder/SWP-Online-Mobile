@@ -109,22 +109,28 @@ public class AuthenticationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        User u = new User(email, password);
-        User foundUserAccount = d.findEmailPasswordUser(u);
-
-        if (foundUserAccount != null) {
-            request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount);
-            url = "home.jsp";
-            //false => quay tro lai trang login ( set them thong bao loi )
-        } else {
-            request.setAttribute("error", "Email or Password is incorrect !");
+        if (email.isEmpty() || password.isEmpty()) {
+            request.setAttribute("emp", "Fill email, password !");
             url = "login.jsp";
+        } else {
+            User u = new User(email, password);
+            User foundUserAccount = d.findEmailPasswordUser(u);
+
+            if (foundUserAccount != null) {
+                request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount);
+                url = "home.jsp";
+                //false => quay tro lai trang login ( set them thong bao loi )
+            } else {
+                request.setAttribute("error", "Email or Password is incorrect !");
+                url = "login.jsp";
+            }
         }
         return url;
+
     }
 
     private String regDoPost(HttpServletRequest request, HttpServletResponse response) {
-        
+        return null;
     }
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
