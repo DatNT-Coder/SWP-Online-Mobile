@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>AuthenticationServlet</servlet-name>
+        <servlet-class>controller.user.AuthenticationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogPostList</servlet-name>
+        <servlet-class>controller.blog.BlogPostList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostcategoryController</servlet-name>
+        <servlet-class>controller.blog.PostcategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetail</servlet-name>
+        <servlet-class>controller.blog.BlogDetail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthenticationServlet</servlet-name>
+        <url-pattern>/authen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogPostList</servlet-name>
+        <url-pattern>/BlogPostList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostcategoryController</servlet-name>
+        <url-pattern>/Postcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetail</servlet-name>
+        <url-pattern>/BlogDetail</url-pattern>
+    </servlet-mapping>
+</web-app>
