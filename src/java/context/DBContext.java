@@ -2,9 +2,10 @@ package context;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.sql.*;
+import java.sql.Statement;
 
 public class DBContext {
     protected Connection connection;
@@ -17,6 +18,7 @@ public class DBContext {
      * @return connection or null
      */
     public Connection getConnection() {
+        
         try {
             // Sử dụng driver của MySQL
             Class.forName("com.mysql.cj.jdbc.Driver");

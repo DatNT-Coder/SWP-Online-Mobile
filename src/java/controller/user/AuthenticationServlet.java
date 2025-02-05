@@ -164,10 +164,9 @@ public class AuthenticationServlet extends HttpServlet {
         EmailSender.sendVerificationEmail(email, codeToUser);
       
                 
-        return url = "verify.jsp";
-        
-                
+        return url = "verify.jsp";              
     }
+
     
         public static Map<String, VerificationCode> getVerificationCodes() {
         return verificationCodes;

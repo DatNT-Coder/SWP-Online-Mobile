@@ -5,15 +5,41 @@
         <servlet-class>controller.user.AuthenticationServlet</servlet-class>
     </servlet>
     <servlet>
+
         <servlet-name>VerifyServlet</servlet-name>
         <servlet-class>controller.user.VerifyServlet</servlet-class>
+
+        <servlet-name>BlogPostList</servlet-name>
+        <servlet-class>controller.blog.BlogPostList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostcategoryController</servlet-name>
+        <servlet-class>controller.blog.PostcategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetail</servlet-name>
+        <servlet-class>controller.blog.BlogDetail</servlet-class>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>VerifyServlet</servlet-name>
         <url-pattern>/verifyemail</url-pattern>
+
+        <servlet-name>BlogPostList</servlet-name>
+        <url-pattern>/BlogPostList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostcategoryController</servlet-name>
+        <url-pattern>/Postcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetail</servlet-name>
+        <url-pattern>/BlogDetail</url-pattern>
+
     </servlet-mapping>
 </web-app>
