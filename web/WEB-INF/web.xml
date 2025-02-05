@@ -12,6 +12,10 @@
         <servlet-name>PostcategoryController</servlet-name>
         <servlet-class>controller.blog.PostcategoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BlogDetail</servlet-name>
+        <servlet-class>controller.blog.BlogDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
@@ -22,6 +26,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostcategoryController</servlet-name>
-        <url-pattern>/PostcategoryController</url-pattern>
+        <url-pattern>/Postcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetail</servlet-name>
+        <url-pattern>/BlogDetail</url-pattern>
     </servlet-mapping>
 </web-app>
