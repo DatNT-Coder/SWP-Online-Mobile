@@ -12,6 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import model.User;
 
 /**
@@ -19,6 +24,9 @@ import model.User;
  * @author vuduc
  */
 public class AuthenticationServlet extends HttpServlet {
+    
+    private static Map<String, VerificationCode> verificationCodes = new HashMap<>();
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -112,6 +120,7 @@ public class AuthenticationServlet extends HttpServlet {
         if (email.isEmpty() || password.isEmpty()) {
             request.setAttribute("emp", "Fill email, password !");
             url = "login.jsp";
+
         } else {
             User u = new User(email, password);
             User foundUserAccount = d.findEmailPasswordUser(u);
@@ -129,13 +138,50 @@ public class AuthenticationServlet extends HttpServlet {
 
     }
 
-    private String regDoPost(HttpServletRequest request, HttpServletResponse response) {
+    private String regDoPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String url = null;
         
+        String username = request.getParameter("full_name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String gender = request.getParameter("gender");
+        String phone = request.getParameter("phone");
+        Date registrationDate = new Date(System.currentTimeMillis());
+        int status = 1;
+        int updatedBy = 0;
+        Date updatedDate = null;
+        String image = null;
+        int settingsId = 1;
+        
+        User ru = new User(email, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+        request.getSession().setAttribute(CommonConst.SESSION_EMAIL_REGISTER_USER, ru.getEmail());
+        
+        String codeToUser = generateVerificationCode();
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5); // Mã hết hạn sau 5 phút
+        verificationCodes.put(email, new VerificationCode(codeToUser, expiryTime));
+        
+        //gui email o day
+        EmailSender.sendVerificationEmail(email, codeToUser);
+      
+                
+        return url = "verify.jsp";
+        
+                
     }
+    
+        public static Map<String, VerificationCode> getVerificationCodes() {
+        return verificationCodes;
+    }
+    
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
         return "home.jsp";
+    }
+
+    private String generateVerificationCode() {
+        Random random = new Random();
+        return String.format("%06d", random.nextInt(1000000));
     }
 
 }

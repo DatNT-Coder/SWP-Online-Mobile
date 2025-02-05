@@ -4,8 +4,16 @@
         <servlet-name>AuthenticationServlet</servlet-name>
         <servlet-class>controller.user.AuthenticationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyServlet</servlet-name>
+        <servlet-class>controller.user.VerifyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyServlet</servlet-name>
+        <url-pattern>/verifyemail</url-pattern>
     </servlet-mapping>
 </web-app>

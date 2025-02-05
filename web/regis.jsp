@@ -1,9 +1,8 @@
 <%-- 
-    Document   : login
-    Created on : Jan 26, 2025, 12:38:27 AM
+    Document   : regis
+    Created on : Feb 2, 2025, 5:10:45 PM
     Author     : vuduc
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -98,7 +97,12 @@
                                     <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                    <li><a href="login.jsp" class="active"><i class="fa fa-lock"></i> Login</a></li>
+                                        <c:if test="${account != null}">
+                                        <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Logout</a></li>
+                                        </c:if>
+                                        <c:if test="${account == null}">
+                                        <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                        </c:if>
                                     <li><a href="regis.jsp"><i class="fa fa-shopping-cart"></i> Register</a></li>
                                 </ul>
                             </div>
@@ -155,26 +159,24 @@
         <section id="form"><!--form-->
             <div class="container">
                 <div class="row">
-
-                    <div class="login-form"><!--login form-->
-                        <h2>Login to your account</h2>
-                        <form action="authen?action=login" method="post">
-                            <input name="email" type="email" placeholder="Your Email" />
-                            <input name="password" type="password" placeholder="Your password" />
-                            <h5 style="color: red"> ${error} </h5>
-                            <h5 style="color: red"> ${emp} </h5>
-                            <span>
-                                <input type="checkbox" class="checkbox"> 
-                                Keep me signed in
-                            </span>
-                            <button type="submit" class="btn btn-default">Login</button>
+                    <div class="signup-form"><!--sign up form-->
+                        <h2>New User Signup!</h2>
+                        <form action="authen?action=regis" method="post">
+                            <input name="full_name" type="text" placeholder="Enter Full Name"/>
+                            <input name="email" type="email" placeholder="Enter Email Address"/>
+                            <input name="password" type="password" placeholder="Enter New Password"/>
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="gender" required>
+                                <option value="" disabled selected>Select your gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <label for="phone">Phone Number:</label>
+                            <input name="phone" type="text" id="phone" placeholder="Enter your phone number"
+                                   pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required/>
+                            <button type="submit" class="btn btn-default">Signup</button>
                         </form>
-                        <form action="#">
-                            <button type="submit" class="btn btn-default">Reset</button>
-                        </form>
-                    </div><!--/login form & reset form-->
-
-
+                    </div><!--/sign up form-->
                 </div>
             </div>
         </section><!--/form-->
