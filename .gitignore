@@ -34,9 +34,6 @@ nbproject/private/
 # Ignore file cấu hình môi trường
 *.env
 
-# Ignore thư mục chứa library
-lib/
-
 # Ignore database connection logs
 *.sql~
 *.sql.bak
