@@ -315,20 +315,6 @@ public class PostCategoryDAO extends DBContext {
         return listC;
     }
 
-    //Update status cho post categories
-    public int updatePostCategoryStatusByID(int pid, int status) {
-        String query = "UPDATE mydb.postcategories SET status = ? WHERE id = ?";
-        int n = 0;
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, status);
-            ps.setInt(2, pid);
-            n = ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return n;
-    }
 
     public static void main(String[] args) {
         // Tạo một đối tượng BlogPostDAO để thực hiện truy vấn

@@ -135,91 +135,73 @@
 							</ul>
 						</div>
 					</div>
-				   <div class=" pull-right">
-                                <form action="BlogPostList">
+				 <div class=" pull-right">
+                                 <form action="BlogPostList">
 
                                     <input name="keyword" type="text" placeholder="Tìm kiếm..." required=""/>
                                     <button type="submit" value="search">Tìm kiếm</button>
-                                </form> 
+                                </form>
                             </div>
 				</div>
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
-	
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="left-sidebar">
-                            <h2>Category</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <c:forEach items="${listPC}" var="c">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><a href="Postcategory?categoryId=${c.id}">${c.name}</a></h4>
-                                        </div>
+        
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>Category</h2>
+                        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                            <c:forEach items="${listPC}" var="c">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="Postcategory?categoryId=${c.id}">${c.name}</a></h4>
                                     </div>
-                                </c:forEach>
-                            </div><!--/category-products-->
-
-
-
-                            <div class="shipping text-center"><!--shipping-->
-                                <img src="images/home/shipping.png" alt="" />
-                            </div><!--/shipping-->
-                        </div>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="blog-post-area">
-                            <h2 class="title text-center">Latest From our Blog</h2>
-                            <c:forEach items="${list}" var="b">
-                                <div class="single-blog-post">
-                                    <h3>${b.title}</h3>
-                                    <div class="post-meta">
-                                        <ul>
-                                            <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
-                                            <li><i class="fa fa-bars"></i> ${b.getName()}</li>
-                                            <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
-
-
-                                        </ul>
-
-                                    </div>
-                                    <a href="">
-                                        <img src="assets/img/blogImage/thumbnail1.png" alt="">
-                                    </a>
-                                    <p>${b.brief_info}</p>
-                                    <a class="btn btn-primary" href="BlogDetail?pid=${b.id}">Read More</a>
-
                                 </div>
                             </c:forEach>
+                        </div><!--/category-products-->
 
 
-                            <ul class="pagination justify-content-center">
-                                <c:if test="${pageIndex > 1}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="BlogPostList?index=${pageIndex-1}">Trước</a>
-                                    </li>
-                                </c:if>
 
-                                <c:forEach var="i" begin="1" end="${endPage}">
-                                    <li class="page-item ${pageIndex == i?"active":""}"><a class="page-link" href="BlogPostList?index=${i}">${i}</a></li>                              
-                                    </c:forEach>
-
-                                <c:if test="${pageIndex < endPage}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="BlogPostList?index=${pageIndex+1}">Sau</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </div>
+                        <div class="shipping text-center"><!--shipping-->
+                            <img src="images/home/shipping.png" alt="" />
+                        </div><!--/shipping-->
                     </div>
                 </div>
-            </div>
-        </section>
+                <div class="col-sm-9">
+                    <div class="blog-post-area">
+                        <h2 class="title text-center">Latest From our Blog </h2>
 
-	<footer id="footer"><!--Footer-->
+                        <div class="single-blog-post">
+                            <h3>${postDetails.title}</h3>
+                            <div class="post-meta">
+                                <ul>
+                                    <li><i class="fa fa-user"></i> ${postDetails.getFull_name()}</li>
+                                    <li><i class="fa fa-bars"></i> ${postDetails.getName()}</li>
+                                    <li><i class="fa fa-calendar"></i> ${postDetails.updatedDate}</li>
+                                </ul>
+                            </div>
+                            <a href="">
+                                <img src="assets/img/blogImage/${postDetails.thumbnail}" alt="">
+                            </a>
+                            <p>${postDetails.brief_info}</p>
+                            <p>${postDetails.details.replace("]","<br/>")}</p>
+                        </div>
+                        <div class="pager-area">
+                            <div class="pager pull-right">
+                                <a href="BlogPostList" class="btn btn-primary" style="background-color: #FE0F9E">Đọc thêm bài đăng khác</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!--/blog-post-area-->
+
+
+                </section>
+
+           <footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
 				<div class="row">
