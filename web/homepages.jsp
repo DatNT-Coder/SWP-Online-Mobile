@@ -27,7 +27,7 @@
                               <section class="w-container">
                                         <div class="logo-search-user">
                                                   <div class="logo">
-                                                            <a href="/">
+                                                            <a href="homepages.jsp">
                                                                       <img src="images/home/Newlogo.png" alt="" />
                                                             </a>
                                                   </div>
