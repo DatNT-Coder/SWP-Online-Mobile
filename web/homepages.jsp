@@ -4,7 +4,7 @@
                     <meta name="viewport" content="width=device-width" />
 
                     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-                    <link href="css/main.css" rel="stylesheet" />
+                    <link href="css/style.css" rel="stylesheet" />
                     <link href="css/slick.css" rel="stylesheet" />
                     <link href="css/slick-theme.css" rel="stylesheet" />
                     <link href="css/formOrder.css" rel="stylesheet" />
@@ -52,18 +52,18 @@
                                                   </div>
 
                                                   <div class="quick-for-user">
-                                                            <a class="shop-location" title="Login"  href="/he-thong-cua-hang">
+                                                            <a class="shop-location" title="Login"  href="login.jsp">
                                                                       <i class='bx bx-log-in-circle'></i>
                                                                       <span>Login</span>
                                                             </a>
 
 
-                                                            <a id="member-login" class="user text-link" title="Access account" href="#" data-width="380" data-hight="630">
+                                                            <a id="member-login" class="user text-link" title="Access account" href="jsp/account/home.jsp" data-width="380" data-hight="630">
                                                                       <i class='bx bx-user-circle'></i>
                                                                       <span>Account</span>
                                                             </a>
 
-                                                            <a class="cart text-link" href="/gio-hang">
+                                                            <a class="cart text-link" href="cart.html">
                                                                       <i class='bx bx-shopping-bag'></i>
                                                                       <label class="cart-counter" id="cart-total">0</label>
                                                             </a>
