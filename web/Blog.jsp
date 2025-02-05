@@ -187,7 +187,7 @@
 
                                     </div>
                                     <a href="">
-                                        <img src="assets/img/blogImage/thumbnail1.png" alt="">
+                                        <img src="assets/img/blogImage/${b.thumbnail}" alt="">
                                     </a>
                                     <p>${b.brief_info}</p>
                                     <a class="btn btn-primary" href="BlogDetail?pid=${b.id}">Read More</a>
