@@ -1,22 +1,15 @@
-<<<<<<< HEAD
-package model;
-
-import java.sql.Timestamp;
-
-=======
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
  * @author tiend
  */
->>>>>>> main
 public class Product {
     private int ID;
     private String name;
@@ -24,22 +17,9 @@ public class Product {
     private double salePrice;
     private String details;
     private String image;
-<<<<<<< HEAD
-    private int stock;
-    private int productCategoryID;
-    private Timestamp updatedDate;
-    private int status;
-    private double costPrice;
-    private int settingsID;
-    private int brandID;
-
-    // Constructor
-    public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int stock,
-                   int productCategoryID, Timestamp updatedDate, int status, double costPrice, int settingsID, int brandID) {
-=======
     private int Stock;
     private int ProductCategory_ID;
-    private Date updatedDate;
+    private java.sql.Date updatedDate;
     private int status;
     private int brandId;
     private double cost_price;
@@ -49,26 +29,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, Date updatedDate, int status, int brand, double cost_price, int settings_id) {
->>>>>>> main
+    public Product(int ID, String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, java.sql.Date updatedDate, int status, int brand, double cost_price, int settings_id) {
         this.ID = ID;
         this.name = name;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
         this.details = details;
         this.image = image;
-<<<<<<< HEAD
-        this.stock = stock;
-        this.productCategoryID = productCategoryID;
-        this.updatedDate = updatedDate;
-        this.status = status;
-        this.costPrice = costPrice;
-        this.settingsID = settingsID;
-        this.brandID = brandID;
-    }
-
-    // Getters and Setters
-=======
         this.Stock = Stock;
         this.ProductCategory_ID = ProductCategory_ID;
         this.updatedDate = updatedDate;
@@ -79,7 +46,7 @@ public class Product {
         
     }
 
-    public Product(String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, Date updatedDate, int status, int brand, double cost_price, int settings_id) {
+    public Product(String name, double originalPrice, double salePrice, String details, String image, int Stock, int ProductCategory_ID, java.sql.Date updatedDate, int status, int brand, double cost_price, int settings_id) {
         this.name = name;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
@@ -94,7 +61,6 @@ public class Product {
         this.settings_id = settings_id;
     }
 
->>>>>>> main
     public int getID() {
         return ID;
     }
@@ -144,28 +110,6 @@ public class Product {
     }
 
     public int getStock() {
-<<<<<<< HEAD
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public int getProductCategoryID() {
-        return productCategoryID;
-    }
-
-    public void setProductCategoryID(int productCategoryID) {
-        this.productCategoryID = productCategoryID;
-    }
-
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Timestamp updatedDate) {
-=======
         return Stock;
     }
 
@@ -181,12 +125,11 @@ public class Product {
         this.ProductCategory_ID = ProductCategory_ID;
     }
 
-    public Date getUpdatedDate() {
+    public java.sql.Date getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
->>>>>>> main
+    public void setUpdatedDate(java.sql.Date updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -198,51 +141,6 @@ public class Product {
         this.status = status;
     }
 
-<<<<<<< HEAD
-    public double getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(double costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public int getSettingsID() {
-        return settingsID;
-    }
-
-    public void setSettingsID(int settingsID) {
-        this.settingsID = settingsID;
-    }
-
-    public int getBrandID() {
-        return brandID;
-    }
-
-    public void setBrandID(int brandID) {
-        this.brandID = brandID;
-    }
-
-    // Ghi đè phương thức toString()
-    @Override
-    public String toString() {
-        return "Product{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", originalPrice=" + originalPrice +
-                ", salePrice=" + salePrice +
-                ", details='" + details + '\'' +
-                ", image='" + image + '\'' +
-                ", stock=" + stock +
-                ", productCategoryID=" + productCategoryID +
-                ", updatedDate=" + updatedDate +
-                ", status=" + status +
-                ", costPrice=" + costPrice +
-                ", settingsID=" + settingsID +
-                ", brandID=" + brandID +
-                '}';
-    }
-=======
     public int getBrandId() {
         return brandId;
     }
@@ -270,6 +168,5 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" + "ID=" + ID + ", name=" + name + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", details=" + details + ", image=" + image + ", Stock=" + Stock + ", ProductCategory_ID=" + ProductCategory_ID + ", updatedDate=" + updatedDate + ", status=" + status + ", brandId=" + brandId + ", cost_price=" + cost_price + ", settings_id=" + settings_id + '}';
-    }  
->>>>>>> main
+    }
 }
