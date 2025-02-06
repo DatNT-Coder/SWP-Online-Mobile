@@ -27,8 +27,8 @@ import model.ProductCategory;
  *
  * @author tiend
  */
-@jakarta.servlet.annotation.WebServlet(name = "listProduct", urlPatterns = {"/listProduct"})
-public class listProduct extends jakarta.servlet.http.HttpServlet {
+@jakarta.servlet.annotation.WebServlet(name = "ProductList", urlPatterns = {"/ProductList"})
+public class ProductList extends jakarta.servlet.http.HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
