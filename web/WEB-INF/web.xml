@@ -16,6 +16,14 @@
         <servlet-name>BlogDetail</servlet-name>
         <servlet-class>controller.blog.BlogDetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CustomerListServlet</servlet-name>
+        <servlet-class>controller.customer.CustomerListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCustomerServlet</servlet-name>
+        <servlet-class>controller.customer.AddCustomerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
@@ -31,5 +39,17 @@
     <servlet-mapping>
         <servlet-name>BlogDetail</servlet-name>
         <url-pattern>/BlogDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerListServlet</servlet-name>
+        <url-pattern>/customerList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerListServlet</servlet-name>
+        <url-pattern>/customerlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCustomerServlet</servlet-name>
+        <url-pattern>/addCustomer</url-pattern>
     </servlet-mapping>
 </web-app>
