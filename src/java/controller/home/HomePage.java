@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import model.Brand;
 import model.Product;
 import model.ProductCategory;
