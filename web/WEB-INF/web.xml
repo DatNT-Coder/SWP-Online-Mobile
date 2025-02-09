@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
+                    <servlet-name>HomePage</servlet-name>
+                    <servlet-class>controller.home.HomePage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+                    <servlet-name>HomePage</servlet-name>
+                    <url-pattern>/HomePage</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>AuthenticationServlet</servlet-name>
         <servlet-class>controller.user.AuthenticationServlet</servlet-class>
     </servlet>
@@ -19,6 +27,22 @@
     <servlet>
         <servlet-name>BlogDetail</servlet-name>
         <servlet-class>controller.blog.BlogDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerListServlet</servlet-name>
+        <servlet-class>controller.customer.CustomerListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCustomerServlet</servlet-name>
+        <servlet-class>controller.customer.AddCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartAddItemController</servlet-name>
+        <servlet-class>controller.cart.CartAddItemController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartViewController</servlet-name>
+        <servlet-class>controller.cart.CartViewController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
@@ -39,5 +63,29 @@
     <servlet-mapping>
         <servlet-name>BlogDetail</servlet-name>
         <url-pattern>/BlogDetail</url-pattern>
-    </servlet-mapping> 
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerListServlet</servlet-name>
+        <url-pattern>/customerList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerListServlet</servlet-name>
+        <url-pattern>/customerlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCustomerServlet</servlet-name>
+        <url-pattern>/addCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartAddItemController</servlet-name>
+        <url-pattern>/CartAddItemController</url-pattern>
+    </servlet-mapping>
+<!--    <servlet-mapping>
+        <servlet-name>AddToCartController</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>CartViewController</servlet-name>
+        <url-pattern>/CartViewController</url-pattern>
+    </servlet-mapping>
 </web-app>

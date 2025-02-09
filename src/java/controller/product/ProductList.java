@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Vector;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.Brand;
 import model.Product;
 import model.ProductCategory;
@@ -22,8 +27,8 @@ import model.ProductCategory;
  *
  * @author tiend
  */
-@jakarta.servlet.annotation.WebServlet(name = "listProduct", urlPatterns = {"/listProduct"})
-public class listProduct extends jakarta.servlet.http.HttpServlet {
+@jakarta.servlet.annotation.WebServlet(name = "ProductList", urlPatterns = {"/ProductList"})
+public class ProductList extends jakarta.servlet.http.HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

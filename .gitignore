@@ -60,3 +60,6 @@ update.txt
 # Libraries
 /lib/nblibraries.properties
 /lib/
+nbproject/private/private.properties
+nbproject/private/private.xml
+nbproject/project.properties

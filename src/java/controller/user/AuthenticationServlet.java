@@ -133,7 +133,7 @@ public class AuthenticationServlet extends HttpServlet {
             User foundUserAccount = d.findEmailPasswordUser(u);
 
             if (foundUserAccount != null) {
-                request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount);
+               request.getSession().setAttribute("user", foundUserAccount);
                 url = "home.jsp";
                 //false => quay tro lai trang login ( set them thong bao loi )
             } else {
