@@ -5,6 +5,8 @@
 package dao;
 
 import context.DBContext;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +51,13 @@ public class AccountDAO extends DBContext {
         }
         return listFound.isEmpty() ? null : listFound.get(0);
     }
-
-    public static void main(String[] args) {
+    
+   
+   public static void main(String[] args) {
         AccountDAO d = new AccountDAO();
-        User a = new User("john.doe@example.com", "pass123");
+        User a = new User("vinh@gmail.com", "123");
         System.out.println(d.findEmailPasswordUser(a));
+
     }
 
 }
