@@ -3,7 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/web/shop.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/web/login.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/web/cart.jsp</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/dao/CartDAO.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/product/ProductList.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/dao/ProductDAO.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/cart/CartViewController.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/user/AuthenticationServlet.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/dao/BrandDAO.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/product/ProductSearch.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/dao/AccountDAO.java</file>
+            <file>file:/C:/Users/Asus/Documents/GitHub/swp391-group3/src/java/controller/cart/CartAddItemController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -24,6 +24,14 @@
         <servlet-name>AddCustomerServlet</servlet-name>
         <servlet-class>controller.customer.AddCustomerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartAddItemController</servlet-name>
+        <servlet-class>controller.cart.CartAddItemController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartViewController</servlet-name>
+        <servlet-class>controller.cart.CartViewController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
@@ -51,5 +59,17 @@
     <servlet-mapping>
         <servlet-name>AddCustomerServlet</servlet-name>
         <url-pattern>/addCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartAddItemController</servlet-name>
+        <url-pattern>/CartAddItemController</url-pattern>
+    </servlet-mapping>
+<!--    <servlet-mapping>
+        <servlet-name>AddToCartController</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>CartViewController</servlet-name>
+        <url-pattern>/CartViewController</url-pattern>
     </servlet-mapping>
 </web-app>
