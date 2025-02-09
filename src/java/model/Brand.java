@@ -9,47 +9,48 @@ package model;
  * @author tiend
  */
 public class Brand {
-    private int brandID;
-    private String brandName;
-    private int status;
 
-    public Brand(int brandID, String brandName, int status) {
-        this.brandID = brandID;
-        this.brandName = brandName;
-        this.status = status;
-    }
+          private int brandID;
+          private String brandName;
+          private int status;
 
-    public Brand(String brandName, int status) {
-        this.brandName = brandName;
-        this.status = status;
-    }
-  
-    public int getBrandID() {
-        return brandID;
-    }
+          public Brand(int brandID, String brandName, int status) {
+                    this.brandID = brandID;
+                    this.brandName = brandName;
+                    this.status = status;
+          }
 
-    public void setBrandID(int brandID) {
-        this.brandID = brandID;
-    }
+          public Brand(String brandName, int status) {
+                    this.brandName = brandName;
+                    this.status = status;
+          }
 
-    public String getBrandName() {
-        return brandName;
-    }
+          public int getBrandID() {
+                    return brandID;
+          }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
+          public void setBrandID(int brandID) {
+                    this.brandID = brandID;
+          }
 
-    public int getStatus() {
-        return status;
-    }
+          public String getBrandName() {
+                    return brandName;
+          }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+          public void setBrandName(String brandName) {
+                    this.brandName = brandName;
+          }
 
-    @Override
-    public String toString() {
-        return "Brand{" + "brandID=" + brandID + ", brandName=" + brandName + ", status=" + status + '}';
-    }
+          public int getStatus() {
+                    return status;
+          }
+
+          public void setStatus(int status) {
+                    this.status = status;
+          }
+
+          @Override
+          public String toString() {
+                    return "Brand{" + "brandID=" + brandID + ", brandName=" + brandName + ", status=" + status + '}';
+          }
 }

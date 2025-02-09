@@ -299,77 +299,6 @@
                                                                                 <li><a href="">&raquo;</a></li>
                                                                       </ul>
                                                             </div><!--features_items-->
-
-                                                            <div class="recommended_items"><!--recommended_items-->
-                                                                      <h2 class="title text-center">Sản phẩm mới nhất</h2>
-
-                                                                      <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                                                                                <div class="carousel-inner">
-                                                                                          <div class="item active">
-                                                                                                    <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
-                                                                                                              <div class="col-sm-4">
-                                                                                                                        <a href="productDetail?pid=${latestP.ID}">
-                                                                                                                                  <div class="product-image-wrapper">
-                                                                                                                                            <div class="single-products">
-                                                                                                                                                      <div class="productinfo text-center">
-                                                                                                                                                                <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
-                                                                                                                                                                <h2>${latestP.originalPrice}</h2>
-                                                                                                                                                                <p>${latestP.name}</p>
-                                                                                                                                                                <c:if test="${sessionScope.user != null}">
-
-                                                                                                                                                                          <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-
-                                                                                                                                                                </c:if>
-                                                                                                                                                                <c:if test="${sessionScope.user == null}">
-                                                                                                                                                                          <a href="signIn.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-
-                                                                                                                                                                </c:if>
-                                                                                                                                                      </div>
-                                                                                                                                            </div>
-                                                                                                                                  </div>
-                                                                                                                        </a>
-                                                                                                              </div>  
-                                                                                                    </c:forEach>
-                                                                                          </div>
-                                                                                          <div class="item">	
-
-                                                                                                    <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
-                                                                                                              <div class="col-sm-4">
-                                                                                                                        <a href="productDetail?pid=${latestP.ID}">
-                                                                                                                                  <div class="product-image-wrapper">
-                                                                                                                                            <div class="single-products">
-                                                                                                                                                      <div class="productinfo text-center">
-                                                                                                                                                                <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
-                                                                                                                                                                <h2>${latestP.originalPrice}</h2>
-                                                                                                                                                                <p>${latestP.name}</p>
-                                                                                                                                                                <c:if test="${sessionScope.user != null}">
-
-                                                                                                                                                                          <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-
-                                                                                                                                                                </c:if>
-                                                                                                                                                                <c:if test="${sessionScope.user == null}">
-                                                                                                                                                                          <a href="signIn.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-
-
-                                                                                                                                                                </c:if>
-
-                                                                                                                                                      </div>
-                                                                                                                                            </div>
-                                                                                                                                  </div>
-                                                                                                                        </a>
-                                                                                                              </div>  
-                                                                                                    </c:forEach>
-                                                                                          </div>
-
-                                                                                </div>
-                                                                                <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                                                                                          <i class="fa fa-angle-left"></i>
-                                                                                </a>
-                                                                                <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                                                                                          <i class="fa fa-angle-right"></i>
-                                                                                </a>			
-                                                                      </div>
-                                                            </div><!--/recommended_items-->
                                                   </div>
 
                                                   <div class="col-sm-2">
@@ -411,8 +340,77 @@
                                                             </div>
                                                   </div>
                                         </div>
-                    </section>
+                                        <div class="recommended_items"><!--recommended_items-->
+                                                  <h2 class="title text-center">Sản phẩm mới nhất</h2>
 
+                                                  <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                                            <div class="carousel-inner">
+                                                                      <div class="item active">
+                                                                                <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
+                                                                                          <div class="col-sm-4">
+                                                                                                    <a href="productDetail?pid=${latestP.ID}">
+                                                                                                              <div class="product-image-wrapper">
+                                                                                                                        <div class="single-products">
+                                                                                                                                  <div class="productinfo text-center">
+                                                                                                                                            <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                                            <h2>${latestP.originalPrice}</h2>
+                                                                                                                                            <p>${latestP.name}</p>
+                                                                                                                                            <c:if test="${sessionScope.user != null}">
+
+                                                                                                                                                      <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+
+                                                                                                                                            </c:if>
+                                                                                                                                            <c:if test="${sessionScope.user == null}">
+                                                                                                                                                      <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+
+                                                                                                                                            </c:if>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                    </a>
+                                                                                          </div>  
+                                                                                </c:forEach>
+                                                                      </div>
+                                                                      <div class="item">	
+
+                                                                                <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
+                                                                                          <div class="col-sm-4">
+                                                                                                    <a href="productDetail?pid=${latestP.ID}">
+                                                                                                              <div class="product-image-wrapper">
+                                                                                                                        <div class="single-products">
+                                                                                                                                  <div class="productinfo text-center">
+                                                                                                                                            <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                                            <h2>${latestP.originalPrice}</h2>
+                                                                                                                                            <p>${latestP.name}</p>
+                                                                                                                                            <c:if test="${sessionScope.user != null}">
+
+                                                                                                                                                      <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+
+                                                                                                                                            </c:if>
+                                                                                                                                            <c:if test="${sessionScope.user == null}">
+                                                                                                                                                      <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+
+
+                                                                                                                                            </c:if>
+
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                    </a>
+                                                                                          </div>  
+                                                                                </c:forEach>
+                                                                      </div>
+
+                                                            </div>
+                                                            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                                                      <i class="fa fa-angle-left"></i>
+                                                            </a>
+                                                            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                                                      <i class="fa fa-angle-right"></i>
+                                                            </a>			
+                                                  </div>
+                                        </div><!--/recommended_items-->
+                    </section>
                     <footer id="footer"><!--Footer-->
                               <div class="footer-widget">
                                         <div class="container">
@@ -495,96 +493,96 @@
                     <script src="js/jquery.prettyPhoto.js"></script>
                     <script src="js/main.js"></script>
                     <script>
-                                                                                                                                                                                    // Convert the list of products from Java to JavaScript
-                                                                                                                                                                                    var products = JSON.parse('${listProduct}');
+                                                                                                                                                                // Convert the list of products from Java to JavaScript
+                                                                                                                                                                var products = JSON.parse('${listProduct}');
 
-                                                                                                                                                                                    var currentPage = 1; // Current page
-                                                                                                                                                                                    var itemsPerPage = 6; // Number of items per page
+                                                                                                                                                                var currentPage = 1; // Current page
+                                                                                                                                                                var itemsPerPage = 6; // Number of items per page
 
-                                                                                                                                                                                    // Display products for the current page
-                                                                                                                                                                                    function displayProducts() {
-                                                                                                                                                                                              var start = (currentPage - 1) * itemsPerPage;
-                                                                                                                                                                                              var end = start + itemsPerPage;
-                                                                                                                                                                                              var productsToDisplay = products.slice(start, end);
+                                                                                                                                                                // Display products for the current page
+                                                                                                                                                                function displayProducts() {
+                                                                                                                                                                          var start = (currentPage - 1) * itemsPerPage;
+                                                                                                                                                                          var end = start + itemsPerPage;
+                                                                                                                                                                          var productsToDisplay = products.slice(start, end);
 
-                                                                                                                                                                                              // Clear the current products
-                                                                                                                                                                                              $('.product-list').empty();
+                                                                                                                                                                          // Clear the current products
+                                                                                                                                                                          $('.product-list').empty();
 
-                                                                                                                                                                                              // Add each product
-                                                                                                                                                                                              //Cart ở đây
-                                                                                                                                                                                              //Product Detail ở đây.
-                                                                                                                                                                                              productsToDisplay.forEach(function (product) {
-                                                                                                                                                                                                        var productHtml = '<div class="col-md-4">' +
-                                                                                                                                                                                                                '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
-                                                                                                                                                                                                                '<div class="product-image-wrapper">' +
-                                                                                                                                                                                                                '<div class="single-products">' +
-                                                                                                                                                                                                                '<div class="productinfo text-center">' +
-                                                                                                                                                                                                                '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
-                                                                                                                                                                                                                '<h2>$' + product.salePrice + '</h2>' +
-                                                                                                                                                                                                                '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
-                                                                                                                                                                                                                '<p>' + product.name + '</p>';
-                                                                                                                                                                                                        //không dùng $\{product.ID} mà dùng + product.ID +
-                                                                                                                                                                                                        // if (sessionStorage.getItem('user') !== null) {
-                                                                                                                                                                                                        // User is logged in, add "Add to cart" button with onclick attribute
-                                                                                                                                                                                                        productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
-                                                                                                                                                                                                        productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
+                                                                                                                                                                          // Add each product
+                                                                                                                                                                          //Cart ở đây
+                                                                                                                                                                          //Product Detail ở đây.
+                                                                                                                                                                          productsToDisplay.forEach(function (product) {
+                                                                                                                                                                                    var productHtml = '<div class="col-md-4">' +
+                                                                                                                                                                                            '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                                                                                                                                                                                            '<div class="product-image-wrapper">' +
+                                                                                                                                                                                            '<div class="single-products">' +
+                                                                                                                                                                                            '<div class="productinfo text-center">' +
+                                                                                                                                                                                            '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
+                                                                                                                                                                                            '<h2>$' + product.salePrice + '</h2>' +
+                                                                                                                                                                                            '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
+                                                                                                                                                                                            '<p>' + product.name + '</p>';
+                                                                                                                                                                                    //không dùng $\{product.ID} mà dùng + product.ID +
+                                                                                                                                                                                    // if (sessionStorage.getItem('user') !== null) {
+                                                                                                                                                                                    // User is logged in, add "Add to cart" button with onclick attribute
+                                                                                                                                                                                    productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
+                                                                                                                                                                                    productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
 
-                                                                                                                                                                                                        //                    } 
-                                                                                                                                                                                                        //                    else {
-                                                                                                                                                                                                        //                        // User is not logged in, add a link to the sign-in page
-                                                                                                                                                                                                        //                        productHtml += '<a href="signIn.jsp" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';
-                                                                                                                                                                                                        //                    }
-                                                                                                                                                                                                        productHtml += '</div></div></div></a></div>';
-                                                                                                                                                                                                        $('.product-list').append(productHtml);
-                                                                                                                                                                                              });
+                                                                                                                                                                                    //                    } 
+                                                                                                                                                                                    //                    else {
+                                                                                                                                                                                    //                        // User is not logged in, add a link to the sign-in page
+                                                                                                                                                                                    //                        productHtml += '<a href="signIn.jsp" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';
+                                                                                                                                                                                    //                    }
+                                                                                                                                                                                    productHtml += '</div></div></div></a></div>';
+                                                                                                                                                                                    $('.product-list').append(productHtml);
+                                                                                                                                                                          });
+                                                                                                                                                                }
+
+                                                                                                                                                                // Update the pagination links
+                                                                                                                                                                function updatePagination() {
+                                                                                                                                                                          var totalPages = Math.ceil(products.length / itemsPerPage);
+
+                                                                                                                                                                          // Clear the current pagination links
+                                                                                                                                                                          $('.pagination').empty();
+
+                                                                                                                                                                          // Add "Previous" button
+                                                                                                                                                                          var prevClass = currentPage === 1 ? 'disabled' : '';
+                                                                                                                                                                          var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
+                                                                                                                                                                          $('.pagination').append(prevHtml);
+
+                                                                                                                                                                          // Add each pagination link
+                                                                                                                                                                          for (var i = 1; i <= totalPages; i++) {
+                                                                                                                                                                                    var liClass = i === currentPage ? 'active' : '';
+                                                                                                                                                                                    var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
+                                                                                                                                                                                    $('.pagination').append(liHtml);
+                                                                                                                                                                          }
+
+                                                                                                                                                                          // Add "Next" button
+                                                                                                                                                                          var nextClass = currentPage === totalPages ? 'disabled' : '';
+                                                                                                                                                                          var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
+                                                                                                                                                                          $('.pagination').append(nextHtml);
+
+                                                                                                                                                                          // Add event handlers to the pagination links
+                                                                                                                                                                          $('.pagination a').click(function (e) {
+                                                                                                                                                                                    e.preventDefault();
+
+                                                                                                                                                                                    var pageText = $(this).text();
+
+                                                                                                                                                                                    if (pageText === 'Trước' && currentPage !== 1) {
+                                                                                                                                                                                              currentPage--;
+                                                                                                                                                                                    } else if (pageText === 'Sau' && currentPage !== totalPages) {
+                                                                                                                                                                                              currentPage++;
+                                                                                                                                                                                    } else if (pageText !== 'Trước' && pageText !== 'Sau') {
+                                                                                                                                                                                              currentPage = parseInt(pageText);
                                                                                                                                                                                     }
 
-                                                                                                                                                                                    // Update the pagination links
-                                                                                                                                                                                    function updatePagination() {
-                                                                                                                                                                                              var totalPages = Math.ceil(products.length / itemsPerPage);
-
-                                                                                                                                                                                              // Clear the current pagination links
-                                                                                                                                                                                              $('.pagination').empty();
-
-                                                                                                                                                                                              // Add "Previous" button
-                                                                                                                                                                                              var prevClass = currentPage === 1 ? 'disabled' : '';
-                                                                                                                                                                                              var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
-                                                                                                                                                                                              $('.pagination').append(prevHtml);
-
-                                                                                                                                                                                              // Add each pagination link
-                                                                                                                                                                                              for (var i = 1; i <= totalPages; i++) {
-                                                                                                                                                                                                        var liClass = i === currentPage ? 'active' : '';
-                                                                                                                                                                                                        var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
-                                                                                                                                                                                                        $('.pagination').append(liHtml);
-                                                                                                                                                                                              }
-
-                                                                                                                                                                                              // Add "Next" button
-                                                                                                                                                                                              var nextClass = currentPage === totalPages ? 'disabled' : '';
-                                                                                                                                                                                              var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
-                                                                                                                                                                                              $('.pagination').append(nextHtml);
-
-                                                                                                                                                                                              // Add event handlers to the pagination links
-                                                                                                                                                                                              $('.pagination a').click(function (e) {
-                                                                                                                                                                                                        e.preventDefault();
-
-                                                                                                                                                                                                        var pageText = $(this).text();
-
-                                                                                                                                                                                                        if (pageText === 'Trước' && currentPage !== 1) {
-                                                                                                                                                                                                                  currentPage--;
-                                                                                                                                                                                                        } else if (pageText === 'Sau' && currentPage !== totalPages) {
-                                                                                                                                                                                                                  currentPage++;
-                                                                                                                                                                                                        } else if (pageText !== 'Trước' && pageText !== 'Sau') {
-                                                                                                                                                                                                                  currentPage = parseInt(pageText);
-                                                                                                                                                                                                        }
-
-                                                                                                                                                                                                        displayProducts();
-                                                                                                                                                                                                        updatePagination();
-                                                                                                                                                                                              });
-                                                                                                                                                                                    }
-
-                                                                                                                                                                                    // Display the initial products and pagination
                                                                                                                                                                                     displayProducts();
                                                                                                                                                                                     updatePagination();
+                                                                                                                                                                          });
+                                                                                                                                                                }
+
+                                                                                                                                                                // Display the initial products and pagination
+                                                                                                                                                                displayProducts();
+                                                                                                                                                                updatePagination();
                     </script>
           </body>
 </html>
