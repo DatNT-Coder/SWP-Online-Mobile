@@ -11,6 +11,7 @@ package constant;
 public class CommonConst {
     
     public static final String SESSION_ACCOUNT = "account";
-    public static final String SESSION_EMAIL_REGISTER_USER = "emailRegisterUser";
+    public static final String SESSION_REGISTER_USER_EMAIL = "registerUserMail";
+    public static final String SESSION_REGISTER_USER = "registerUser";
     
 }

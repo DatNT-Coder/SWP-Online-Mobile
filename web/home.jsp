@@ -103,6 +103,9 @@
                                         <c:if test="${account == null}">
                                         <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
                                         </c:if>
+                                        <c:if test="${account != null}">
+                                        <li><a href="changepw.jsp"><i class="fa fa-lock"></i> Change Password</a></li>
+                                        </c:if>
                                     <li><a href="regis.jsp"><i class="fa fa-shopping-cart"></i> Register</a></li>
                                 </ul>
 

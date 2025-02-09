@@ -4,6 +4,8 @@
  */
 package controller.user;
 
+import constant.CommonConst;
+import dao.AccountDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,13 +13,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
+import model.User;
+import static org.apache.coyote.http11.Constants.a;
 
 /**
  *
  * @author vuduc
  */
 public class VerifyServlet extends HttpServlet {
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -70,19 +74,31 @@ public class VerifyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String emailFromRegis = request.getParameter("email");
-        String codeFromRegis = request.getParameter("vCode");
         
-        VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailFromRegis);
-        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeFromRegis);
-        
-        if(isCodeValid){
+        String emailFromVerify = request.getParameter("e");
+        String codeFromVerify = request.getParameter("vCode");
+
+        VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailFromVerify);
+        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeFromVerify);
+
+        if (isCodeValid) {
+
+            AuthenticationServlet.getVerificationCodes().remove(emailFromVerify);
+
+            AccountDAO dao = new AccountDAO();
+            User u = (User) request.getSession().getAttribute("registerUser");
             
-        }else{
+            dao.insertUserToDB(u);
             
+            request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, u);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+
+        } else {
+            // Gửi thông báo lỗi về trang trước hoặc trang lỗi
+            request.setAttribute("errorMessage", "Mã xác nhận không hợp lệ hoặc đã hết hạn.");
+            request.getRequestDispatcher("verify.jsp").forward(request, response);
         }
-                
-        
+
     }
 
     /**

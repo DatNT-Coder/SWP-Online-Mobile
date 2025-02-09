@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +25,12 @@ import model.User;
  * @author vuduc
  */
 public class AuthenticationServlet extends HttpServlet {
-    
+
     private static Map<String, VerificationCode> verificationCodes = new HashMap<>();
 
+    public static Map<String, VerificationCode> getVerificationCodes() {
+        return verificationCodes;
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -104,6 +108,9 @@ public class AuthenticationServlet extends HttpServlet {
             case "regis":
                 url = regDoPost(request, response);
                 break;
+            case "change":
+                url = changeDoPost(request, response);
+                break;
             default:
                 url = "home";
         }
@@ -138,40 +145,49 @@ public class AuthenticationServlet extends HttpServlet {
 
     }
 
-    private String regDoPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private String regDoPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        AccountDAO dao = new AccountDAO();
         String url = null;
-        
-        String username = request.getParameter("full_name");
-        String email = request.getParameter("email");
+
+        String emailUser = request.getParameter("email");
         String password = request.getParameter("password");
-        String gender = request.getParameter("gender");
+        String username = request.getParameter("full_name");
         String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
         Date registrationDate = new Date(System.currentTimeMillis());
         int status = 1;
         int updatedBy = 0;
         Date updatedDate = null;
         String image = null;
         int settingsId = 1;
-        
-        User ru = new User(email, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
-        request.getSession().setAttribute(CommonConst.SESSION_EMAIL_REGISTER_USER, ru.getEmail());
-        
-        String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5); // Mã hết hạn sau 5 phút
-        verificationCodes.put(email, new VerificationCode(codeToUser, expiryTime));
-        
-        //gui email o day
-        EmailSender.sendVerificationEmail(email, codeToUser);
-      
-                
-        return url = "verify.jsp";              
-    }
 
-    
-        public static Map<String, VerificationCode> getVerificationCodes() {
-        return verificationCodes;
+        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+
+        boolean isExistUserEmail = dao.checkUserEmailExist(ru);
+
+        if (isExistUserEmail) {
+            request.setAttribute("erEmail", "Email is exist.");
+            request.getRequestDispatcher("regis.jsp").forward(request, response);
+        } else {
+            request.getSession().setAttribute(CommonConst.SESSION_REGISTER_USER_EMAIL, ru.getEmail());
+            request.getSession().setAttribute(CommonConst.SESSION_REGISTER_USER, ru);
+        }
+
+        String codeToUser = generateVerificationCode();
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+
+        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+        verificationCodes.put(emailUser, codeExpire);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+        String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+
+        //gui email o day
+        EmailSender.sendEmail(ru.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+
+        url = "verify.jsp";
+        return url;
     }
-    
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
@@ -181,6 +197,52 @@ public class AuthenticationServlet extends HttpServlet {
     private String generateVerificationCode() {
         Random random = new Random();
         return String.format("%06d", random.nextInt(1000000));
+    }
+
+    private String changeDoPost(HttpServletRequest request, HttpServletResponse response) {
+        String url = null;
+
+        String email = request.getParameter("email");
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String newPasswordAgain = request.getParameter("newPasswordAgain");
+
+        // Kiểm tra sự tồn tại của email trong cơ sở dữ liệu
+        AccountDAO accountDAO = new AccountDAO();
+        boolean isEmailExist = accountDAO.checkUserEmailExistString(email);
+        if (!isEmailExist) {
+            request.setAttribute("errorMessage", "Email không tồn tại trong hệ thống.");
+            url = "changepw.jsp"; // Quay lại trang đổi mật khẩu với thông báo lỗi
+            return url;
+        }
+
+        // Kiểm tra mật khẩu cũ có đúng không (giả sử bạn có một phương thức xác minh mật khẩu cũ)
+        boolean isOldPasswordValid = accountDAO.checkOldPassword(email, oldPassword);
+        if (!isOldPasswordValid) {
+            request.setAttribute("errorMessage", "Mật khẩu cũ không đúng.");
+            url = "changepw.jsp"; // Quay lại trang đổi mật khẩu với thông báo lỗi
+            return url;
+        }
+        
+        // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận có khớp không
+        if (newPassword == null || !newPassword.equals(newPasswordAgain) || newPassword.isEmpty() || newPasswordAgain.isEmpty()) {
+            request.setAttribute("errorMessage", "Mật khẩu mới và xác nhận mật khẩu không hợp lệ.");
+            url = "changepw.jsp"; // Chuyển hướng về trang đổi mật khẩu với thông báo lỗi
+            return url;
+        }
+
+        // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+        boolean isUpdated = accountDAO.updatePassword(email, newPassword);
+        if (isUpdated) {
+            // Nếu cập nhật thành công, chuyển hướng về trang home.jsp
+            request.setAttribute("successMessage", "Mật khẩu đã được cập nhật thành công.");
+            url = "home.jsp";
+        } else {
+            // Nếu có lỗi trong việc cập nhật mật khẩu, hiển thị thông báo lỗi
+            request.setAttribute("errorMessage", "Đã xảy ra lỗi trong quá trình cập nhật mật khẩu.");
+            url = "changepw.jsp";
+        }
+        return url;
     }
 
 }

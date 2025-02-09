@@ -4,51 +4,61 @@
  */
 package controller.user;
 
-import javax.mail.internet.*;
+
 import java.util.Properties;
-import javax.mail.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
 /**
  *
  * @author vuduc
  */
-
 public class EmailSender {
-    private static final String SMTP_HOST = "smtp.gmail.com";
-    private static final String SMTP_PORT = "587";
-    private static final String EMAIL_SENDER = "";  // Thay bằng email của bạn
-    private static final String EMAIL_PASSWORD = "";  // Thay bằng App Password của Gmail
+        final static String emailSender = "swp391fptg3@gmail.com";
+        final static String passwordSender = "phugenmwaebwnhwn";
+    
+    public static void sendEmail(String to, String subject, String body) {
 
-    public static void sendVerificationEmail(String recipientEmail, String verificationCode) {
-        // Cấu hình các thuộc tính cho SMTP
+        // Configure email session properties
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", SMTP_HOST);
-        props.put("mail.smtp.port", SMTP_PORT);
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
-        // Tạo session với xác thực
-        Session session = Session.getInstance(props, new Authenticator() {
+      Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL_SENDER, EMAIL_PASSWORD);
+                return new PasswordAuthentication(emailSender, passwordSender);
             }
         });
-
         try {
-            // Tạo email
+            // Create a MimeMessage object
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(EMAIL_SENDER));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
-            message.setSubject("Mã Xác Nhận Đăng Ký");
-            message.setText("Mã xác nhận của bạn là: " + verificationCode + "\nMã này sẽ hết hạn sau 5 phút.");
+            message.setFrom(new InternetAddress(emailSender));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(body);
 
-            // Gửi email
+            // Send the email
             Transport.send(message);
-            System.out.println("Email đã được gửi thành công đến: " + recipientEmail);
+
+            System.out.println("Email sent successfully");
+
         } catch (MessagingException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
-}
 
-// mới làm đến đây chưa test gửi đc hay k.
+//    // Hàm main để thử gửi email
+//    public static void main(String[] args) {
+//    }
+    
+}
+ 
