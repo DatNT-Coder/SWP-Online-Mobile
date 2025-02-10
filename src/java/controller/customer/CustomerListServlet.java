@@ -26,91 +26,135 @@ public class CustomerListServlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-           * @throws ServletException if a servlet-specific error occurs
-           * @throws IOException if an I/O error occurs
-           */
-          protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-                  throws ServletException, IOException {
-                    response.setContentType("text/html;charset=UTF-8");
-                    try (PrintWriter out = response.getWriter()) {
-                              /* TODO output your page here. You may use following sample code. */
-                              out.println("<!DOCTYPE html>");
-                              out.println("<html>");
-                              out.println("<head>");
-                              out.println("<title>Servlet CustomerListServlet</title>");
-                              out.println("</head>");
-                              out.println("<body>");
-                              out.println("<h1>Servlet CustomerListServlet at " + request.getContextPath() + "</h1>");
-                              out.println("</body>");
-                              out.println("</html>");
-                    }
-          }
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CustomerListServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CustomerListServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
-          // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-          /**
-           * Handles the HTTP <code>GET</code> method.
-           *
-           * @param request servlet request
-           * @param response servlet response
-           * @throws ServletException if a servlet-specific error occurs
-           * @throws IOException if an I/O error occurs
-           */
-          @Override
-          protected void doGet(HttpServletRequest request, HttpServletResponse response)
-                  throws ServletException, IOException {
-                    CustomerDAO dao = new CustomerDAO();
-                    List<User> customers = dao.getAllCustomers();
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-                    request.setAttribute("customers", customers);
-                    request.getRequestDispatcher("/CustomerList.jsp").forward(request, response);
-          }
+        CustomerDAO customerDAO = new CustomerDAO();
 
-          /**
-           * Handles the HTTP <code>POST</code> method.
-           *
-           * @param request servlet request
-           * @param response servlet response
-           * @throws ServletException if a servlet-specific error occurs
-           * @throws IOException if an I/O error occurs
-           */
-          @Override
-          protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                  throws ServletException, IOException {
-                    String keyword = request.getParameter("searchKeyword");
-                    String statusParam = request.getParameter("statusFilter");
+        String sortField = request.getParameter("sortField");
+        String sortOrder = request.getParameter("sortOrder");
 
-                    CustomerDAO dao = new CustomerDAO();
-                    List<User> customers;
+        if (sortField == null || sortField.isEmpty()) {
+            sortField = "id";
+        }
+        if (sortOrder == null || sortOrder.isEmpty()) {
+            sortOrder = "asc";
+        }
 
-                    if (keyword != null && !keyword.trim().isEmpty()) {
-                              customers = dao.searchCustomers(keyword);
-                    } else {
-                              customers = dao.getAllCustomers();
-                    }
+        int page = 1;
+        int recordsPerPage = 15;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
 
-                    if (statusParam != null && !statusParam.isEmpty()) {
-                              try {
-                                        int status = Integer.parseInt(statusParam);
-                                        customers = dao.filterCustomersByStatus(status);
-                              } catch (NumberFormatException e) {
-                                        System.out.println("Invalid status value: " + e.getMessage());
-                              }
-                    }
+        int totalCustomers = customerDAO.getCustomerCount();
+        int totalPages = (int) Math.ceil((double) totalCustomers / recordsPerPage);
+        int offset = (page - 1) * recordsPerPage;
 
-                    request.setAttribute("customers", customers);
-                    request.setAttribute("searchKeyword", keyword);
-                    request.setAttribute("statusFilter", statusParam);
-                    request.getRequestDispatcher("/CustomerList.jsp").forward(request, response);
-          }
+        List<User> customers = customerDAO.getCustomersByPage(offset, recordsPerPage, sortField, sortOrder);
 
-          /**
-           * Returns a short description of the servlet.
-           *
-           * @return a String containing servlet description
-           */
-          @Override
-          public String getServletInfo() {
-                    return "Short description";
-          }// </editor-fold>
+        request.setAttribute("customers", customers);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("sortField", sortField);
+        request.setAttribute("sortOrder", sortOrder);
+
+        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String keyword = request.getParameter("searchKeyword");
+        String statusParam = request.getParameter("statusFilter");
+        String page = request.getParameter("currentPage");
+        String totalPages = request.getParameter("totalPages");
+
+        String err = "";
+        CustomerDAO dao = new CustomerDAO();
+
+        List<User> customers = dao.getAllCustomers();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            List<User> searchResults = dao.searchCustomers(keyword);
+            if (!searchResults.isEmpty()) {
+                customers = searchResults;
+            } else {
+                err = "No results found for: " + keyword;
+            }
+        }
+
+        if (statusParam != null && !statusParam.isEmpty()) {
+            try {
+                int status = Integer.parseInt(statusParam);
+                List<User> filteredResults = dao.filterCustomersByStatus(status);
+                if (!filteredResults.isEmpty()) {
+                    customers = filteredResults;
+                } else {
+                    err = "No customers found for selected status.";
+                }
+            } catch (NumberFormatException e) {
+                err = "Invalid status value.";
+            }
+        }
+        
+        
+        
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("err", err);
+        request.setAttribute("customers", customers);
+        request.setAttribute("searchKeyword", keyword);
+        request.setAttribute("statusFilter", statusParam);
+        request.getRequestDispatcher("/CustomerList.jsp").forward(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

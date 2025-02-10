@@ -18,44 +18,46 @@ import model.ProductCategory;
  */
 public class ProductCategoryDAO extends DBContext {
 
-          public Vector<ProductCategory> getAllCategories() {
-                    Vector<ProductCategory> listC = new Vector<>();
-                    String query = "SELECT * FROM `mydb`.`productcategory` where status != 0";
-                    try {
-                              this.connection = getConnection();
-                              PreparedStatement ps = connection.prepareStatement(query);
-                              ResultSet rs = ps.executeQuery();
-                              while (rs.next()) {
-                                        listC.add(new ProductCategory(rs.getInt("ID"), rs.getString("categoryName"), rs.getInt("status")));
-                              }
-                    } catch (SQLException e) {
-                              System.out.println(e);
-                    }
-                    return listC;
-          }
+    public Vector<ProductCategory> getAllCategories() {
+        Vector<ProductCategory> listC = new Vector<>();
+        String query = "SELECT * FROM `mydb`.`productcategory` where status != 0";
+        try {
+            this.connection = getConnection();            
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listC.add(new ProductCategory(rs.getInt("ID"), rs.getString("categoryName"), rs.getInt("status")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listC;
+    }
 
-          public Vector<ProductCategory> getCategoryById(int pcid) {
-                    Vector<ProductCategory> listC = new Vector<>();
-                    String query = "SELECT * FROM `mydb`.`productcategory` where ID = ?";
-                    try {
-                              this.connection = getConnection();
-                              PreparedStatement ps = connection.prepareStatement(query);
-                              ps.setInt(1, pcid);
-                              ResultSet rs = ps.executeQuery();
-                              while (rs.next()) {
-                                        listC.add(new ProductCategory(rs.getInt("ID"), rs.getString("categoryName"), rs.getInt("status")));
-                              }
-                    } catch (SQLException e) {
-                              System.out.println(e);
-                    }
-                    return listC;
-          }
+    public Vector<ProductCategory> getCategoryById(int pcid) {
+        Vector<ProductCategory> listC = new Vector<>();
+        String query = "SELECT * FROM `mydb`.`productcategory` where ID = ?";
+        try {
+            this.connection = getConnection();            
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, pcid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listC.add(new ProductCategory(rs.getInt("ID"), rs.getString("categoryName"), rs.getInt("status")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listC;
+    }
 
-          public static void main(String[] args) {
-                    ProductCategoryDAO dao = new ProductCategoryDAO();
-                    Vector<ProductCategory> list = dao.getAllCategories();
-                    for (ProductCategory productCategory : list) {
-                              System.out.println(productCategory);
-                    }
-          }
+   
+    public static void main(String[] args) {
+        ProductCategoryDAO dao = new ProductCategoryDAO();
+        Vector<ProductCategory> list = dao.getAllCategories();
+        for (ProductCategory productCategory : list) {
+            System.out.println(productCategory);
+        }
+    }
 }
+

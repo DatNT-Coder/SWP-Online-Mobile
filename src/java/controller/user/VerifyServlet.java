@@ -2,25 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.customer;
+package controller.user;
 
-import dao.CustomerDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
+import constant.CommonConst;
+import dao.AccountDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
 import model.User;
+import static org.apache.coyote.http11.Constants.a;
 
 /**
  *
- * @author admin
+ * @author vuduc
  */
-public class AddCustomerServlet extends HttpServlet {
+public class VerifyServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class AddCustomerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddCustomerServlet</title>");
+            out.println("<title>Servlet VerifyServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddCustomerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,46 +74,31 @@ public class AddCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String phone = request.getParameter("phone");
-            String gender = request.getParameter("gender");
-            String registrationDateStr = request.getParameter("registrationDate");
-            String status = request.getParameter("status");
-            String updatedBy = request.getParameter("updatedBy");
-            String updatedDateStr = request.getParameter("updatedDate");
-            String settingsId = request.getParameter("settingsId");
+        
+        String emailFromVerify = request.getParameter("e");
+        String codeFromVerify = request.getParameter("vCode");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date registration_date = sdf.parse(registrationDateStr);
-            Date updated_date = updatedDateStr.isEmpty() ? null : sdf.parse(updatedDateStr);
+        VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailFromVerify);
+        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeFromVerify);
 
-            int statusInt = Integer.parseInt(status);
-            int updatedByInt = updatedBy.isEmpty() ? 0 : Integer.parseInt(updatedBy);
-            int settingsIdInt = settingsId.isEmpty() ? 0 : Integer.parseInt(settingsId);
+        if (isCodeValid) {
 
-            Part filePart = request.getPart("image");
-            String imageUrl = null;
-            if (filePart != null && filePart.getSize() > 0) {
-                imageUrl = "uploads/" + filePart.getSubmittedFileName();
-                filePart.write(getServletContext().getRealPath("/") + imageUrl);
-            }
+            AuthenticationServlet.getVerificationCodes().remove(emailFromVerify);
 
-            CustomerDAO da = new CustomerDAO();
-            if (request.getParameter("add") != null) {
-                User u = new User(0, email, password, fullName, phone, gender, registration_date, statusInt, updatedByInt, updated_date, imageUrl, settingsIdInt);
-                da.addCustomer(u);
+            AccountDAO dao = new AccountDAO();
+            User u = (User) request.getSession().getAttribute("registerUser");
+            
+            dao.insertUserToDB(u);
+            
+            request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, u);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
 
-            }
-
-            request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Lỗi khi thêm khách hàng: " + e.getMessage());
-            request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        } else {
+            // Gửi thông báo lỗi về trang trước hoặc trang lỗi
+            request.setAttribute("errorMessage", "Mã xác nhận không hợp lệ hoặc đã hết hạn.");
+            request.getRequestDispatcher("verify.jsp").forward(request, response);
         }
+
     }
 
     /**

@@ -8,39 +8,38 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBContext {
+    protected Connection connection;
+    protected PreparedStatement statement;
+    protected ResultSet resultSet;
 
-          protected Connection connection;
-          protected PreparedStatement statement;
-          protected ResultSet resultSet;
+    /**
+     * get an connection
+     *
+     * @return connection or null
+     */
+    public Connection getConnection() {
+        
+        try {
+            // Sử dụng driver của MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-          /**
-           * get an connection
-           *
-           * @return connection or null
-           */
-          public Connection getConnection() {
+            // URL kết nối MySQL
+            String url = "jdbc:mysql://localhost:3306/mydb"; // Thay project_PRJ2 bằng tên database của bạn
+            String user = "root"; // Thay root bằng username của bạn
+            String password = "123456"; // Thay kali123 bằng password của bạn
 
-                    try {
-                              // Sử dụng driver của MySQL
-                              Class.forName("com.mysql.cj.jdbc.Driver");
+            // Tạo kết nối
+            connection = DriverManager.getConnection(url, user, password);
+            return connection;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error " + e.getMessage() + " at DBContext");
+            return null;
+        }
+    }
 
-                              // URL kết nối MySQL
-                              String url = "jdbc:mysql://localhost:3306/mydb"; // Thay project_PRJ2 bằng tên database của bạn
-                              String user = "root"; // Thay root bằng username của bạn
-                              String password = "123456"; // Thay kali123 bằng password của bạn
-
-                              // Tạo kết nối
-                              connection = DriverManager.getConnection(url, user, password);
-                              return connection;
-                    } catch (SQLException | ClassNotFoundException e) {
-                              System.err.println("Error " + e.getMessage() + " at DBContext");
-                              return null;
-                    }
-          }
-
-          public static void main(String[] args) {
-                    DBContext test = new DBContext();
-                    test.connection = test.getConnection();
-                    System.out.println(test.connection);
-          }
+    public static void main(String[] args) {
+        DBContext test = new DBContext();
+        test.connection = test.getConnection();
+        System.out.println(test.connection);
+    }
 }
