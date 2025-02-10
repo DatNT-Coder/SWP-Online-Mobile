@@ -100,7 +100,9 @@
                                                                                                     <ul class="nav navbar-nav">
                                                                                                               <li><a href="account.jsp"><i class="fa fa-user"></i> Account</a></li>
                                                                                                               <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                                                                                              <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                                                                                                        <c:if test="${account == null}">
+                                                                                                                        <li><a href="login.jsp"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                                                                                                        </c:if>
                                                                                                                         <c:if test="${account != null}">
                                                                                                                         <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Logout</a></li>
                                                                                                                         </c:if>
@@ -130,11 +132,7 @@
                                                                                                     <ul class="nav navbar-nav collapse navbar-collapse">
                                                                                                               <li><a href="HomePage" class="active">Home</a></li>
                                                                                                               <li><a href="ProductList">Shop</a></li> 
-                                                                                                              <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                                                                                                        <ul role="menu" class="sub-menu">
-                                                                                                                                  <li><a href="blog.html">Blog List</a></li>
-                                                                                                                                  <li><a href="blog-single.html">Blog Single</a></li>
-                                                                                                                        </ul>
+                                                                                                              <li><a href="BlogPostList">Blog</a>
                                                                                                               </li> 
                                                                                                               <li class="dropdown"><a href="CustomerList.jsp">Customer List</a>
                                                                                                               </li> 
