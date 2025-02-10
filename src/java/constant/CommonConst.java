@@ -9,5 +9,9 @@ package constant;
  * @author vuduc
  */
 public class CommonConst {
+    
     public static final String SESSION_ACCOUNT = "account";
+    public static final String SESSION_REGISTER_USER_EMAIL = "registerUserMail";
+    public static final String SESSION_REGISTER_USER = "registerUser";
+    
 }

@@ -58,11 +58,38 @@ public class CustomerListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            CustomerDAO dao = new CustomerDAO();
-    List<User> customers = dao.getAllCustomers();
 
-    request.setAttribute("customers", customers);
-    request.getRequestDispatcher("/CustomerList.jsp").forward(request, response);
+        CustomerDAO customerDAO = new CustomerDAO();
+
+        String sortField = request.getParameter("sortField");
+        String sortOrder = request.getParameter("sortOrder");
+
+        if (sortField == null || sortField.isEmpty()) {
+            sortField = "id";
+        }
+        if (sortOrder == null || sortOrder.isEmpty()) {
+            sortOrder = "asc";
+        }
+
+        int page = 1;
+        int recordsPerPage = 15;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        int totalCustomers = customerDAO.getCustomerCount();
+        int totalPages = (int) Math.ceil((double) totalCustomers / recordsPerPage);
+        int offset = (page - 1) * recordsPerPage;
+
+        List<User> customers = customerDAO.getCustomersByPage(offset, recordsPerPage, sortField, sortOrder);
+
+        request.setAttribute("customers", customers);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("sortField", sortField);
+        request.setAttribute("sortOrder", sortOrder);
+
+        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
     }
 
     /**
@@ -78,25 +105,42 @@ public class CustomerListServlet extends HttpServlet {
             throws ServletException, IOException {
         String keyword = request.getParameter("searchKeyword");
         String statusParam = request.getParameter("statusFilter");
+        String page = request.getParameter("currentPage");
+        String totalPages = request.getParameter("totalPages");
 
+        String err = "";
         CustomerDAO dao = new CustomerDAO();
-        List<User> customers;
+
+        List<User> customers = dao.getAllCustomers();
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            customers = dao.searchCustomers(keyword);
-        } else {
-            customers = dao.getAllCustomers();
+            List<User> searchResults = dao.searchCustomers(keyword);
+            if (!searchResults.isEmpty()) {
+                customers = searchResults;
+            } else {
+                err = "No results found for: " + keyword;
+            }
         }
 
         if (statusParam != null && !statusParam.isEmpty()) {
             try {
                 int status = Integer.parseInt(statusParam);
-                customers = dao.filterCustomersByStatus(status);
+                List<User> filteredResults = dao.filterCustomersByStatus(status);
+                if (!filteredResults.isEmpty()) {
+                    customers = filteredResults;
+                } else {
+                    err = "No customers found for selected status.";
+                }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid status value: " + e.getMessage());
+                err = "Invalid status value.";
             }
         }
-
+        
+        
+        
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("err", err);
         request.setAttribute("customers", customers);
         request.setAttribute("searchKeyword", keyword);
         request.setAttribute("statusFilter", statusParam);

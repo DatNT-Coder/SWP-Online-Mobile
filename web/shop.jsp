@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Sản phẩm | Pink-Mobile</title>
+        <title>Sản phẩm</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -39,7 +39,7 @@
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
                                     <li><a href=""><i class="fa fa-phone"></i> +84 985 350 491</a></li>
-                                    <li><a href=""><i class="fa fa-envelope"></i> group6_shopmobile@gmail.com</a></li>
+                                    <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                                         <input type="hidden" name="action" value="searchByPrice"/>
                                         <input style="padding:0.5rem;width:100%" placeholder="Từ..."  type="text" name="fromPrice" class="span2" value="${sessionScope.fromP}" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" ><br />
                                         <input style="padding:0.5rem;width:100%;margin-top:6px;" placeholder="Đến..." type="text" name="toPrice" class="span2" value="${sessionScope.toP}"  pattern="^\d+(\.\d+)?$" title="vui lòng nhập số"  ><br />
-                                        <button style="background-color: #FE0F9E;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
+                                        <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
                                     </div>
                                 </form>
 
@@ -343,8 +343,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="companyinfo">
-                                <h2><span style="color: #FE0F9E;">Pink</span>-Mobile</h2>
-                                <p>Sự hài lòng của bạn là trách nhiệm của tôi.</p>
+                                
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -472,7 +471,7 @@
                                 <h2>Về người bán hàng</h2>
                                 <form action="#" class="searchform">
                                     <input type="text" placeholder="Địa chỉ email..." />
-                                    <button style="background-color: #FE0F9E" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <button style="background-color: " type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
                                     <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
                                 </form>
                             </div>
@@ -485,7 +484,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2024 PinkMobile. All rights reserved.</p>
+                        <p class="pull-left">Copyright © 2024. All rights reserved.</p>
                         <p class="pull-right">Designed by <span><a target="_blank" href=""></a></span></p>
                     </div>
                 </div>

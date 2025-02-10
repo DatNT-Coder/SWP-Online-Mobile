@@ -11,6 +11,7 @@ import java.util.Date;
  * @author vuduc
  */
 public class User {
+
     private int id;
     private String email;
     private String password;
@@ -24,10 +25,25 @@ public class User {
     private String image;
     private int settings_id;
     private int role_id;
+    private UserAddress userAddress;
 
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", full_name=" + full_name + ", phone=" + phone + ", gender=" + gender + ", registration_date=" + registration_date + ", status=" + status + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", image=" + image + ", settings_id=" + settings_id + ", role_id=" + role_id + '}';
+    }
+
+    public User(String email, String password, String full_name, String phone, String gender, Date registration_date, int status, int updatedBy, Date updatedDate, String image, int settings_id) {
+        this.email = email;
+        this.password = password;
+        this.full_name = full_name;
+        this.phone = phone;
+        this.gender = gender;
+        this.registration_date = registration_date;
+        this.status = status;
+        this.updatedBy = updatedBy;
+        this.updatedDate = updatedDate;
+        this.image = image;
+        this.settings_id = settings_id;
     }
 
 
@@ -45,11 +61,15 @@ public class User {
         this.password = password;
     }
 
+    public User(String email) {
+        this.email = email;
+    }
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
-    
+
     public User(int id, String email, String password, String full_name, String phone, String gender, Date registration_date, int status, int updatedBy, Date updatedDate, String image, int settings_id) {
         this.id = id;
         this.email = email;
@@ -163,6 +183,12 @@ public class User {
     public void setSettings_id(int settings_id) {
         this.settings_id = settings_id;
     }
-    
-    
+
+    public UserAddress getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
+    }
 }
