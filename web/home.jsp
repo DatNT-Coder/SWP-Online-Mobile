@@ -34,775 +34,583 @@
                     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
           </head><!--/head-->
 
-    <body>
-        <header id="header"><!--header-->
-            <div class="header_top"><!--header_top-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="contactinfo">
-                                <ul class="nav nav-pills">
-                                    <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="social-icons pull-right">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/header_top-->
-
-            <div class="header-middle"><!--header-middle-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
-                            </div>
-                            <div class="btn-group pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                        USA
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Canada</a></li>
-                                        <li><a href="#">UK</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                        DOLLAR
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Canadian Dollar</a></li>
-                                        <li><a href="#">Pound</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="shop-menu pull-right">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                        <c:if test="${account != null}">
-                                        <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Logout</a></li>
-                                        </c:if>
-                                        <c:if test="${account == null}">
-                                        <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
-                                        </c:if>
-                                        <c:if test="${account != null}">
-                                        <li><a href="changepw.jsp"><i class="fa fa-lock"></i> Change Password</a></li>
-                                        </c:if>
-                                    <li><a href="regis.jsp"><i class="fa fa-shopping-cart"></i> Register</a></li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/header-middle-->
-
-            <div class="header-bottom"><!--header-bottom-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                            </div>
-                            <div class="mainmenu pull-left">
-                                <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="index.html" class="active">Home</a></li>
-                                    <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.html">Products</a></li>
-                                            <li><a href="product-details.html">Product Details</a></li> 
-                                            <li><a href="checkout.html">Checkout</a></li> 
-                                            <li><a href="cart.html">Cart</a></li> 
-                                            <li><a href="login.html">Login</a></li> 
-                                        </ul>
-                                    </li> 
-                                    <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Blog List</a></li>
-                                            <li><a href="blog-single.html">Blog Single</a></li>
-                                        </ul>
-                                    </li> 
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="contact-us.html">Contact</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="search_box pull-right">
-                                <input type="text" placeholder="Search"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/header-bottom-->
-        </header><!--/header-->
-
-        <section id="slider"><!--slider-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#slider-carousel" data-slide-to="1"></li>
-                                <li data-target="#slider-carousel" data-slide-to="2"></li>
-                            </ol>
-
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>Free E-Commerce Template</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                        <img src="images/home/pricing.png"  class="pricing" alt="" />
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>100% Responsive Design</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                        <img src="images/home/pricing.png"  class="pricing" alt="" />
-                                    </div>
-                                </div>
-
-                                <div class="item">
-                                    <div class="col-sm-6">
-                                        <h1><span>E</span>-SHOPPER</h1>
-                                        <h2>Free Ecommerce Template</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                        <button type="button" class="btn btn-default get">Get it now</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                        <img src="images/home/pricing.png" class="pricing" alt="" />
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section><!--/slider-->
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div>
-                        <div class="left-sidebar">
-                            <h2>Category</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Sportswear
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="sportswear" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Nike </a></li>
-                                                <li><a href="#">Under Armour </a></li>
-                                                <li><a href="#">Adidas </a></li>
-                                                <li><a href="#">Puma</a></li>
-                                                <li><a href="#">ASICS </a></li>
-                                            </ul>
+          <body>
+                    <header id="header"><!--header-->
+                              <div class="header_top"><!--header_top-->
+                                        <div class="container">
+                                                  <div class="row">
+                                                            <div class="col-sm-6">
+                                                                      <div class="contactinfo">
+                                                                                <ul class="nav nav-pills">
+                                                                                          <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                                                                                          <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                                                                                </ul>
+                                                                      </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                      <div class="social-icons pull-right">
+                                                                                <ul class="nav navbar-nav">
+                                                                                          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                                                          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                                                          <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                                                                          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                                                                          <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                                                                </ul>
+                                                                      </div>
+                                                            </div>
+                                                  </div>
                                         </div>
                               </div><!--/header_top-->
 
-                              <div class="header-middle"><!--header-middle-->
+                              <section>
                                         <div class="container">
-                                                  <div class="row">
-                                                            <div class="col-sm-4">
-                                                                      <div class="logo pull-left">
-                                                                                <a href="HomePage"><img src="images/home/logo.png" alt="" /></a>
-                                                                      </div>
-                                                                      <div class="btn-group pull-right">
-                                                                                <div class="btn-group">
-                                                                                          <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                                                                                    USA
-                                                                                                    <span class="caret"></span>
-                                                                                          </button>
-                                                                                          <ul class="dropdown-menu">
-                                                                                                    <li><a href="#">Canada</a></li>
-                                                                                                    <li><a href="#">UK</a></li>
-                                                                                          </ul>
-                                                                                </div>
+                                                  <div class="header-middle"><!--header-middle-->
+                                                            <div class="container">
+                                                                      <div class="row">
+                                                                                <div class="col-sm-4">
+                                                                                          <div class="logo pull-left">
+                                                                                                    <a href="HomePage"><img src="images/home/logo.png" alt="" /></a>
+                                                                                          </div>
+                                                                                          <div class="btn-group pull-right">
+                                                                                                    <div class="btn-group">
+                                                                                                              <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                                                                                                        USA
+                                                                                                                        <span class="caret"></span>
+                                                                                                              </button>
+                                                                                                              <ul class="dropdown-menu">
+                                                                                                                        <li><a href="#">Canada</a></li>
+                                                                                                                        <li><a href="#">UK</a></li>
+                                                                                                              </ul>
+                                                                                                    </div>
 
-                                                                                <div class="btn-group">
-                                                                                          <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                                                                                    DOLLAR
-                                                                                                    <span class="caret"></span>
-                                                                                          </button>
-                                                                                          <ul class="dropdown-menu">
-                                                                                                    <li><a href="#">Canadian Dollar</a></li>
-                                                                                                    <li><a href="#">Pound</a></li>
-                                                                                          </ul>
+                                                                                                    <div class="btn-group">
+                                                                                                              <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                                                                                                        DOLLAR
+                                                                                                                        <span class="caret"></span>
+                                                                                                              </button>
+                                                                                                              <ul class="dropdown-menu">
+                                                                                                                        <li><a href="#">Canadian Dollar</a></li>
+                                                                                                                        <li><a href="#">Pound</a></li>
+                                                                                                              </ul>
+                                                                                                    </div>
+                                                                                          </div>
                                                                                 </div>
-                                                                      </div>
-                                                            </div>
-                                                            <div class="col-sm-8">
-                                                                      <div class="shop-menu pull-right">
-                                                                                <ul class="nav navbar-nav">
-                                                                                          <li><a href="account.jsp"><i class="fa fa-user"></i> Account</a></li>
-                                                                                          <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                                                                          <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                                                                                    <c:if test="${account != null}">
-                                                                                                    <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Logout</a></li>
-                                                                                                    </c:if>
-                                                                                                    <c:if test="${account == null}">
-                                                                                                    <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
-                                                                                                    </c:if>
-                                                                                </ul>
-                                                                      </div>
-                                                            </div>
-                                                  </div>
-                                        </div>
-                              </div><!--/header-middle-->
-
-                              <div class="header-bottom"><!--header-bottom-->
-                                        <div class="container">
-                                                  <div class="row">
-                                                            <div class="col-sm-9">
-                                                                      <div class="navbar-header">
-                                                                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                                                                          <span class="sr-only">Toggle navigation</span>
-                                                                                          <span class="icon-bar"></span>
-                                                                                          <span class="icon-bar"></span>
-                                                                                          <span class="icon-bar"></span>
-                                                                                </button>
-                                                                      </div>
-                                                                      <div class="mainmenu pull-left">
-                                                                                <ul class="nav navbar-nav collapse navbar-collapse">
-                                                                                          <li><a href="HomePage" class="active">Home</a></li>
-                                                                                          <li><a href="ProductList">Shop</a></li> 
-                                                                                          <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                                                                                    <ul role="menu" class="sub-menu">
-                                                                                                              <li><a href="blog.html">Blog List</a></li>
-                                                                                                              <li><a href="blog-single.html">Blog Single</a></li>
+                                                                                <div class="col-sm-8">
+                                                                                          <div class="shop-menu pull-right">
+                                                                                                    <ul class="nav navbar-nav">
+                                                                                                              <li><a href="account.jsp"><i class="fa fa-user"></i> Account</a></li>
+                                                                                                              <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                                                                                              <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                                                                                                        <c:if test="${account != null}">
+                                                                                                                        <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Logout</a></li>
+                                                                                                                        </c:if>
+                                                                                                                        <c:if test="${account == null}">
+                                                                                                                        <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                                                                                                        </c:if>
                                                                                                     </ul>
-                                                                                          </li> 
-                                                                                          <li class="dropdown"><a href="CustomerList.jsp">Customer List</a>
-                                                                                          </li> 
-                                                                                </ul>
+                                                                                          </div>
+                                                                                </div>
                                                                       </div>
                                                             </div>
-                                                            <div class="col-sm-3">
-                                                                      <div class=" pull-right">
-                                                                                <form action="searchProduct">
-                                                                                          <input type="hidden" name="action" value="searchByWord"/>
-                                                                                          <input name="searchBox" type="text" placeholder="Mô tả, tên sản phẩm..." required=""/>
-                                                                                          <button type="submit" value="search">Tìm kiếm</button>
-                                                                                </form> 
-                                                                      </div>
-                                                            </div>
-                                                  </div>
-                                        </div>
-                              </div><!--/header-bottom-->
-                    </header><!--/header-->
+                                                  </div><!--/header-middle-->
 
-                    <section id="slider"><!--slider-->
-                              <div class="container">
-                                        <div class="row">
-                                                  <div class="col-sm-12">
-                                                            <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                                                                      <ol class="carousel-indicators">
-                                                                                <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                                                                                <li data-target="#slider-carousel" data-slide-to="1"></li>
-                                                                                <li data-target="#slider-carousel" data-slide-to="2"></li>
-                                                                      </ol>
-
-                                                                      <div class="carousel-inner">
-                                                                                <div class="item active">
-                                                                                          <div class="col-sm-6">
-                                                                                                    <h1><span>E</span>-SHOPPER</h1>
-                                                                                                    <h2>Free E-Commerce Template</h2>
-                                                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                                                                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                                  <div class="header-bottom"><!--header-bottom-->
+                                                            <div class="container">
+                                                                      <div class="row">
+                                                                                <div class="col-sm-9">
+                                                                                          <div class="navbar-header">
+                                                                                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                                                                                              <span class="sr-only">Toggle navigation</span>
+                                                                                                              <span class="icon-bar"></span>
+                                                                                                              <span class="icon-bar"></span>
+                                                                                                              <span class="icon-bar"></span>
+                                                                                                    </button>
                                                                                           </div>
-                                                                                          <div class="col-sm-6">
-                                                                                                    <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                                                                                    <img src="images/home/pricing.png"  class="pricing" alt="" />
-                                                                                          </div>
-                                                                                </div>
-                                                                                <div class="item">
-                                                                                          <div class="col-sm-6">
-                                                                                                    <h1><span>E</span>-SHOPPER</h1>
-                                                                                                    <h2>100% Responsive Design</h2>
-                                                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                                                                                    <button type="button" class="btn btn-default get">Get it now</button>
-                                                                                          </div>
-                                                                                          <div class="col-sm-6">
-                                                                                                    <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                                                                                    <img src="images/home/pricing.png"  class="pricing" alt="" />
-                                                                                          </div>
-                                                                                </div>
-
-                                                                                <div class="item">
-                                                                                          <div class="col-sm-6">
-                                                                                                    <h1><span>E</span>-SHOPPER</h1>
-                                                                                                    <h2>Free Ecommerce Template</h2>
-                                                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                                                                                    <button type="button" class="btn btn-default get">Get it now</button>
-                                                                                          </div>
-                                                                                          <div class="col-sm-6">
-                                                                                                    <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                                                                                    <img src="images/home/pricing.png" class="pricing" alt="" />
-                                                                                          </div>
-                                                                                </div>
-
-                                                                      </div>
-
-                                                                      <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                                                                                <i class="fa fa-angle-left"></i>
-                                                                      </a>
-                                                                      <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                                                                                <i class="fa fa-angle-right"></i>
-                                                                      </a>
-                                                            </div>
-
-                                                  </div>
-                                        </div>
-                              </div>
-                    </section><!--/slider-->
-
-                    <section>
-                              <div class="container">
-                                        <div class="row">
-                                                  <div class="col-sm-2">
-                                                            <div class="left-sidebar">
-                                                                      <h2>Danh mục</h2>
-                                                                      <div class="panel-group category-products" id="accordian"><!--category-product-->
-                                                                                <!-- lựa chọn tất cả, reset lại cái brand cho tất cả -->
-                                                                                <div class="panel panel-default">
-                                                                                          <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                              <a href="listProduct">
-                                                                                                                        <span class="badge pull-right"></span>
-                                                                                                                        Tất cả
-                                                                                                              </a>
-                                                                                                    </h4>
-                                                                                          </div>
-                                                                                </div>
-                                                                                <c:forEach items="${requestScope.listPC}" var="listPC">
-                                                                                          <div class="panel panel-default">
-                                                                                                    <div class="panel-heading ">
-                                                                                                              <h4 class="panel-title">
-                                                                                                                        <c:if test="${listPC.id == sessionScope.pickedCategory}">
-                                                                                                                                  <a style="color: #009981;"  href="searchProduct?action=pickCategory&cid=${listPC.id}">
-                                                                                                                                            <span class="badge pull-right"></span>
-                                                                                                                                            ${listPC.categoryName}
-                                                                                                                                  </a>
-                                                                                                                        </c:if>
-                                                                                                                        <c:if test="${listPC.id != sessionScope.pickedCategory}">
-                                                                                                                                  <a href="searchProduct?action=pickCategory&cid=${listPC.id}">
-                                                                                                                                            <span class="badge pull-right"></span>
-                                                                                                                                            ${listPC.categoryName}
-                                                                                                                                  </a>
-                                                                                                                        </c:if>
-                                                                                                              </h4>
-                                                                                                    </div>
-                                                                                          </div>
-                                                                                </c:forEach>
-                                                                      </div><!--/category-productsr-->
-                                                                      <div class="brands_products"><!--brands_products-->
-                                                                                <h2>Thương hiệu</h2>
-                                                                                <div class="brands-name">
-                                                                                          <ul class="nav nav-pills nav-stacked">
-                                                                                                    <c:forEach items="${requestScope.listBrand}" var="listBrand">
-                                                                                                              <c:if test="${listBrand.brandID == sessionScope.pickedBrand}">
-                                                                                                                        <li><a style="color: #009981;" href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
-                                                                                                                                  </c:if>
-                                                                                                                                  <c:if test="${listBrand.brandID != sessionScope.pickedBrand}">
-                                                                                                                        <li><a href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
-                                                                                                                                  </c:if> 
-                                                                                                                        </c:forEach>
-                                                                                          </ul>
-                                                                                </div>
-                                                                      </div><!--/brands_products-->
-
-                                                                      <div class="price-range"><!--price-range-->
-                                                                                <h2>Khoảng giá</h2>
-                                                                                <form action="searchProduct">
-                                                                                          <div style="width: 100%">
-                                                                                                    <input type="hidden" name="action" value="searchByPrice"/>
-                                                                                                    <input style="padding:0.5rem;width:100%" placeholder="Từ..."  type="text" name="fromPrice" class="span2" value="${sessionScope.fromP}" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" ><br />
-                                                                                                    <input style="padding:0.5rem;width:100%;margin-top:6px;" placeholder="Đến..." type="text" name="toPrice" class="span2" value="${sessionScope.toP}"  pattern="^\d+(\.\d+)?$" title="vui lòng nhập số"  ><br />
-                                                                                                    <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
-                                                                                          </div>
-                                                                                </form>
-                                                                      </div><!--/price-range-->
-                                                            </div>
-                                                  </div>
-
-                                                  <div class="col-sm-8 padding-right">
-                                                            <div class="features_items"><!--features_items-->
-                                                                      <h2 class="title text-center">Sản phẩm</h2>
-                                                                      <h3>${requestScope.searchResult}</h3>
-
-                                                                      <div style="min-height: 800px;" class="col-md-12 product-list">
-                                                                                <!-- JavaScript will insert product elements here -->
-                                                                      </div>
-                                                                      <ul class="pagination">
-                                                                                <li class="active"><a href="">1</a></li>
-                                                                                <li><a href="">2</a></li>
-                                                                                <li><a href="">3</a></li>
-                                                                                <li><a href="">&raquo;</a></li>
-                                                                      </ul>
-                                                            </div><!--features_items-->
-                                                  </div>
-                                                  <div class="col-sm-2"> <!--hot_post-->
-                                                            <h2 class="title text-center">Hot Posts</h2>
-                                                            <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
-                                                                      <div class="carousel-inner">
-                                                                                <c:forEach items="${list}" var="b" varStatus="status">
-                                                                                          <div class="carousel-item ${status.first ? 'active' : ''}">
-                                                                                                    <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
-                                                                                                              <h3>${b.title}</h3>
-                                                                                                              <div class="post-meta">
-                                                                                                                        <ul>
-                                                                                                                                  <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
-                                                                                                                                  <li><i class="fa fa-bars"></i> ${b.getName()}</li>
+                                                                                          <div class="mainmenu pull-left">
+                                                                                                    <ul class="nav navbar-nav collapse navbar-collapse">
+                                                                                                              <li><a href="HomePage" class="active">Home</a></li>
+                                                                                                              <li><a href="ProductList">Shop</a></li> 
+                                                                                                              <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                                                                                                        <ul role="menu" class="sub-menu">
+                                                                                                                                  <li><a href="blog.html">Blog List</a></li>
+                                                                                                                                  <li><a href="blog-single.html">Blog Single</a></li>
                                                                                                                         </ul>
-                                                                                                              </div>
-                                                                                                              <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
-                                                                                                              <p>${b.brief_info}</p>
-                                                                                                    </div>
+                                                                                                              </li> 
+                                                                                                              <li class="dropdown"><a href="CustomerList.jsp">Customer List</a>
+                                                                                                              </li> 
+                                                                                                    </ul>
                                                                                           </div>
-                                                                                </c:forEach>
+                                                                                </div>
+                                                                                <div class="col-sm-3">
+                                                                                          <div class=" pull-right">
+                                                                                                    <form action="searchProduct">
+                                                                                                              <input type="hidden" name="action" value="searchByWord"/>
+                                                                                                              <input name="searchBox" type="text" placeholder="Mô tả, tên sản phẩm..." required=""/>
+                                                                                                              <button type="submit" value="search">Tìm kiếm</button>
+                                                                                                    </form> 
+                                                                                          </div>
+                                                                                </div>
                                                                       </div>
-
-                                                                      <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
-                                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                                <span class="visually-hidden">Previous</span>
-                                                                      </button>
-                                                                      <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
-                                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                                <span class="visually-hidden">Next</span>
-                                                                      </button>
                                                             </div>
-                                                  </div><!--hot_post-->
+                                                  </div><!--/header-bottom-->
+                                                  </header><!--/header-->
 
-                                                  <script>
-                                                            function redirectToBlogDetail(id) {
-                                                                      window.location.href = "BlogDetail?id=" + id;
-                                                            }
-                                                  </script>
-
-
-
-                                                  </section>
-                                                  <section>
+                                                  <section id="slider"><!--slider-->
                                                             <div class="container">
                                                                       <div class="row">
                                                                                 <div class="col-sm-12">
-                                                                                          <div class="recommended_items"><!--recommended_items-->
-                                                                                                    <h2 class="title text-center">Sản phẩm mới nhất</h2>
-                                                                                                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                                                                                                              <div class="carousel-inner">
-                                                                                                                        <div class="item active">
-                                                                                                                                  <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
-                                                                                                                                            <div class="col-sm-4">
-                                                                                                                                                      <a href="productDetail?pid=${latestP.ID}">
-                                                                                                                                                                <div class="product-image-wrapper">
-                                                                                                                                                                          <div class="single-products">
-                                                                                                                                                                                    <div class="productinfo text-center">
-                                                                                                                                                                                              <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
-                                                                                                                                                                                              <h2>${latestP.originalPrice}</h2>
-                                                                                                                                                                                              <p>${latestP.name}</p>
-                                                                                                                                                                                              <c:if test="${sessionScope.user != null}">
-                                                                                                                                                                                                        <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                                                                                              </c:if>
-                                                                                                                                                                                              <c:if test="${sessionScope.user == null}">
-                                                                                                                                                                                                        <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                                                                                              </c:if>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                          </div>
-                                                                                                                                                                </div>
-                                                                                                                                                      </a>
-                                                                                                                                            </div>
-                                                                                                                                  </c:forEach>
+                                                                                          <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                                                                                                    <ol class="carousel-indicators">
+                                                                                                              <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                                                                                                              <li data-target="#slider-carousel" data-slide-to="1"></li>
+                                                                                                              <li data-target="#slider-carousel" data-slide-to="2"></li>
+                                                                                                    </ol>
+
+                                                                                                    <div class="carousel-inner">
+                                                                                                              <div class="item active">
+                                                                                                                        <div class="col-sm-6">
+                                                                                                                                  <h1><span>E</span>-SHOPPER</h1>
+                                                                                                                                  <h2>Free E-Commerce Template</h2>
+                                                                                                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                                                                                                                  <button type="button" class="btn btn-default get">Get it now</button>
                                                                                                                         </div>
-                                                                                                                        <div class="item">	
-                                                                                                                                  <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
-                                                                                                                                            <div class="col-sm-4">
-                                                                                                                                                      <a href="productDetail?pid=${latestP.ID}">
-                                                                                                                                                                <div class="product-image-wrapper">
-                                                                                                                                                                          <div class="single-products">
-                                                                                                                                                                                    <div class="productinfo text-center">
-                                                                                                                                                                                              <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
-                                                                                                                                                                                              <h2>${latestP.originalPrice}</h2>
-                                                                                                                                                                                              <p>${latestP.name}</p>
-                                                                                                                                                                                              <c:if test="${sessionScope.user != null}">
-                                                                                                                                                                                                        <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                                                                                              </c:if>
-                                                                                                                                                                                              <c:if test="${sessionScope.user == null}">
-                                                                                                                                                                                                        <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                                                                                              </c:if>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                          </div>
-                                                                                                                                                                </div>
-                                                                                                                                                      </a>
-                                                                                                                                            </div>  
-                                                                                                                                  </c:forEach>
+                                                                                                                        <div class="col-sm-6">
+                                                                                                                                  <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                                                                                                                  <img src="images/home/pricing.png"  class="pricing" alt="" />
                                                                                                                         </div>
                                                                                                               </div>
-                                                                                                              <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                                                                                                                        <i class="fa fa-angle-left"></i>
-                                                                                                              </a>
-                                                                                                              <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                                                                                                                        <i class="fa fa-angle-right"></i>
-                                                                                                              </a>			
+                                                                                                              <div class="item">
+                                                                                                                        <div class="col-sm-6">
+                                                                                                                                  <h1><span>E</span>-SHOPPER</h1>
+                                                                                                                                  <h2>100% Responsive Design</h2>
+                                                                                                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                                                                                                                  <button type="button" class="btn btn-default get">Get it now</button>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-6">
+                                                                                                                                  <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                                                                                                                  <img src="images/home/pricing.png"  class="pricing" alt="" />
+                                                                                                                        </div>
+                                                                                                              </div>
+
+                                                                                                              <div class="item">
+                                                                                                                        <div class="col-sm-6">
+                                                                                                                                  <h1><span>E</span>-SHOPPER</h1>
+                                                                                                                                  <h2>Free Ecommerce Template</h2>
+                                                                                                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                                                                                                                  <button type="button" class="btn btn-default get">Get it now</button>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-6">
+                                                                                                                                  <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                                                                                                                  <img src="images/home/pricing.png" class="pricing" alt="" />
+                                                                                                                        </div>
+                                                                                                              </div>
+
                                                                                                     </div>
+
+                                                                                                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                                                                                                              <i class="fa fa-angle-left"></i>
+                                                                                                    </a>
+                                                                                                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                                                                                                              <i class="fa fa-angle-right"></i>
+                                                                                                    </a>
                                                                                           </div>
 
-                                                                                          <div>
-                                                                                                    <h2 class="title text-center">Hot Posts</h2>
-                                                                                                    <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
-                                                                                                              <div class="carousel-inner">
-                                                                                                                        <c:forEach items="${list}" var="b" varStatus="status">
-                                                                                                                                  <div class="carousel-item ${status.first ? 'active' : ''}">
-                                                                                                                                            <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
-                                                                                                                                                      <h3>${b.title}</h3>
-                                                                                                                                                      <div class="post-meta">
-                                                                                                                                                                <ul>
-                                                                                                                                                                          <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
-                                                                                                                                                                          <li><i class="fa fa-bars"></i> ${b.getName()}</li>
-                                                                                                                                                                          <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
-                                                                                                                                                                </ul>
-                                                                                                                                                      </div>
-                                                                                                                                                      <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
-                                                                                                                                                      <p>${b.brief_info}</p>
-                                                                                                                                            </div>
+                                                                                </div>
+                                                                      </div>
+                                                            </div>
+                                                  </section><!--/slider-->
+
+                                                  <section>
+                                                            <div class="container">
+                                                                      <div class="row">
+                                                                                <div class="col-sm-2">
+                                                                                          <div class="left-sidebar">
+                                                                                                    <h2>Danh mục</h2>
+                                                                                                    <div class="panel-group category-products" id="accordian"><!--category-product-->
+                                                                                                              <!-- lựa chọn tất cả, reset lại cái brand cho tất cả -->
+                                                                                                              <div class="panel panel-default">
+                                                                                                                        <div class="panel-heading">
+                                                                                                                                  <h4 class="panel-title">
+                                                                                                                                            <a href="listProduct">
+                                                                                                                                                      <span class="badge pull-right"></span>
+                                                                                                                                                      Tất cả
+                                                                                                                                            </a>
+                                                                                                                                  </h4>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                              <c:forEach items="${requestScope.listPC}" var="listPC">
+                                                                                                                        <div class="panel panel-default">
+                                                                                                                                  <div class="panel-heading ">
+                                                                                                                                            <h4 class="panel-title">
+                                                                                                                                                      <c:if test="${listPC.id == sessionScope.pickedCategory}">
+                                                                                                                                                                <a style="color: #009981;"  href="searchProduct?action=pickCategory&cid=${listPC.id}">
+                                                                                                                                                                          <span class="badge pull-right"></span>
+                                                                                                                                                                          ${listPC.categoryName}
+                                                                                                                                                                </a>
+                                                                                                                                                      </c:if>
+                                                                                                                                                      <c:if test="${listPC.id != sessionScope.pickedCategory}">
+                                                                                                                                                                <a href="searchProduct?action=pickCategory&cid=${listPC.id}">
+                                                                                                                                                                          <span class="badge pull-right"></span>
+                                                                                                                                                                          ${listPC.categoryName}
+                                                                                                                                                                </a>
+                                                                                                                                                      </c:if>
+                                                                                                                                            </h4>
                                                                                                                                   </div>
-                                                                                                                        </c:forEach>
+                                                                                                                        </div>
+                                                                                                              </c:forEach>
+                                                                                                    </div><!--/category-productsr-->
+                                                                                                    <div class="brands_products"><!--brands_products-->
+                                                                                                              <h2>Thương hiệu</h2>
+                                                                                                              <div class="brands-name">
+                                                                                                                        <ul class="nav nav-pills nav-stacked">
+                                                                                                                                  <c:forEach items="${requestScope.listBrand}" var="listBrand">
+                                                                                                                                            <c:if test="${listBrand.brandID == sessionScope.pickedBrand}">
+                                                                                                                                                      <li><a style="color: #009981;" href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
+                                                                                                                                                                </c:if>
+                                                                                                                                                                <c:if test="${listBrand.brandID != sessionScope.pickedBrand}">
+                                                                                                                                                      <li><a href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
+                                                                                                                                                                </c:if> 
+                                                                                                                                                      </c:forEach>
+                                                                                                                        </ul>
                                                                                                               </div>
+                                                                                                    </div><!--/brands_products-->
 
-                                                                                                              <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
-                                                                                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                                                                        <span class="visually-hidden">Previous</span>
-                                                                                                              </button>
-                                                                                                              <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
-                                                                                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                                                                        <span class="visually-hidden">Next</span>
-                                                                                                              </button>
-                                                                                                    </div>
+                                                                                                    <div class="price-range"><!--price-range-->
+                                                                                                              <h2>Khoảng giá</h2>
+                                                                                                              <form action="searchProduct">
+                                                                                                                        <div style="width: 100%">
+                                                                                                                                  <input type="hidden" name="action" value="searchByPrice"/>
+                                                                                                                                  <input style="padding:0.5rem;width:100%" placeholder="Từ..."  type="text" name="fromPrice" class="span2" value="${sessionScope.fromP}" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" ><br />
+                                                                                                                                  <input style="padding:0.5rem;width:100%;margin-top:6px;" placeholder="Đến..." type="text" name="toPrice" class="span2" value="${sessionScope.toP}"  pattern="^\d+(\.\d+)?$" title="vui lòng nhập số"  ><br />
+                                                                                                                                  <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
+                                                                                                                        </div>
+                                                                                                              </form>
+                                                                                                    </div><!--/price-range-->
                                                                                           </div>
                                                                                 </div>
-                                                                      </div><!--/recommended_items-->
-                                                  </section>
-                                                  <footer id="footer"><!--Footer-->
-                                                            <div class="footer-widget">
-                                                                      <div class="container">
-                                                                                <div class="row">
-                                                                                          <div class="col-sm-3">
-                                                                                                    <div class="single-widget">
-                                                                                                              <h2>Support - service</h2>
-                                                                                                              <ul class="nav nav-pills nav-stacked">
-                                                                                                                        <li><a href="/mua-hang-tra-gop">Policy and instructions for installment purchases</a></li>
-                                                                                                                        <li><a href="/huong-dan-dat-hang">Purchase instructions and shipping policy</a></li>
-                                                                                                                        <li><a href="/order/check">Order Tracking</a></li>
-                                                                                                                        <li><a href="/chinh-sach-bao-hanh">Exchange and warranty policy</a></li>
-                                                                                                                        <li><a href="/tin-tuc/dat-hang/dich-vu-bao-hanh-mo-rong-hoang-ha-mobile/">Extended warranty service</a></li>
-                                                                                                              </ul>
+
+                                                                                <div class="col-sm-8 padding-right">
+                                                                                          <div class="features_items"><!--features_items-->
+                                                                                                    <h2 class="title text-center">Sản phẩm</h2>
+                                                                                                    <h3>${requestScope.searchResult}</h3>
+
+                                                                                                    <div style="min-height: 800px;" class="col-md-12 product-list">
+                                                                                                              <!-- JavaScript will insert product elements here -->
                                                                                                     </div>
-                                                                                          </div>
-                                                                                          <div class="col-sm-3">
-                                                                                                    <div class="single-widget">
-                                                                                                              <h2>Contact information</h2>
-                                                                                                              <ul class="nav nav-pills nav-stacked">
-                                                                                                                        <li><a href="/cham-soc-khach-hang">Customer care</a></li>
-                                                                                                                        <li><a href="/trung-tam-bao-hanh">Warranty lookup</a></li>
-                                                                                                                        <li><a href="contact-us.html">Contact us</a></li>
-                                                                                                              </ul>
-                                                                                                    </div>
-                                                                                          </div>
-                                                                                          <div class="col-sm-3">
-                                                                                                    <div class="single-widget">
-                                                                                                              <h2>Payment methods</h2>
-                                                                                                              <ul class="nav nav-pills nav-stacked">
-                                                                                                                        <img src="images/home/visa.png" />
-                                                                                                                        <img src="images/home/mastercard.png" />
-                                                                                                                        <img src="images/home/jcb.png" />
-                                                                                                                        <img src="images/home/samsungpay.png" />
-                                                                                                                        <img src="images/home/vnpay.png" />
-                                                                                                                        <img src="images/home/zalopay.png" />
-                                                                                                              </ul>
-                                                                                                    </div>
-                                                                                          </div>
-                                                                                          <div class="col-sm-3">
-                                                                                                    <div class="single-widget">
-                                                                                                              <h2>Shipping method</h2>
-                                                                                                              <ul class="nav nav-pills nav-stacked">
-                                                                                                                        <img src="images/home/vnpost.png">
-                                                                                                              </ul>
-                                                                                                    </div>
-                                                                                          </div>
+                                                                                                    <ul class="pagination">
+                                                                                                              <li class="active"><a href="">1</a></li>
+                                                                                                              <li><a href="">2</a></li>
+                                                                                                              <li><a href="">3</a></li>
+                                                                                                              <li><a href="">&raquo;</a></li>
+                                                                                                    </ul>
+                                                                                          </div><!--features_items-->
                                                                                 </div>
-                                                                      </div>
-                                                            </div>
+                                                                                <div class="col-sm-2"> <!--hot_post-->
+                                                                                          <h2 class="title text-center">Hot Posts</h2>
+                                                                                          <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
+                                                                                                    <div class="carousel-inner">
+                                                                                                              <c:forEach items="${list}" var="b" varStatus="status">
+                                                                                                                        <div class="carousel-item ${status.first ? 'active' : ''}">
+                                                                                                                                  <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                                                                                                                                            <h3>${b.title}</h3>
+                                                                                                                                            <div class="post-meta">
+                                                                                                                                                      <ul>
+                                                                                                                                                                <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
+                                                                                                                                                                <li><i class="fa fa-bars"></i> ${b.getName()}</li>
+                                                                                                                                                      </ul>
+                                                                                                                                            </div>
+                                                                                                                                            <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
+                                                                                                                                            <p>${b.brief_info}</p>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </c:forEach>
+                                                                                                    </div>
 
-                                                            <div class="footer-bottom">
-                                                                      <div class="container">
-                                                                                <div class="row">
-                                                                                          <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                                                                                          <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
-                                                                                </div>
-                                                                      </div>
-                                                            </div>
+                                                                                                    <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
+                                                                                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                                              <span class="visually-hidden">Previous</span>
+                                                                                                    </button>
+                                                                                                    <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
+                                                                                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                                              <span class="visually-hidden">Next</span>
+                                                                                                    </button>
+                                                                                          </div>
+                                                                                </div><!--hot_post-->
 
-                                                  </footer><!--/Footer-->
+                                                                                <script>
+                                                                                          function redirectToBlogDetail(id) {
+                                                                                                    window.location.href = "BlogDetail?id=" + id;
+                                                                                          }
+                                                                                </script>
 
 
 
-                                                  <script src="js/jquery.js"></script>
-                                                  <script src="js/bootstrap.min.js"></script>
-                                                  <script src="js/jquery.scrollUp.min.js"></script>
-                                                  <script src="js/price-range.js"></script>
-                                                  <script src="js/jquery.prettyPhoto.js"></script>
-                                                  <script src="js/main.js"></script>
-                                                  <script>
-                                                                                                                                                      function redirectToBlogDetail(id) {
-                                                                                                                                                                window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                                                                                                                                      }
-                                                  </script>
-                                                  <script>
-                                                            // Convert the list of products from Java to JavaScript
-                                                            var products = JSON.parse('${listProduct}');
+                                                                                </section>
+                                                                                <section>
+                                                                                          <div class="container">
+                                                                                                    <div class="row">
+                                                                                                              <div class="col-sm-12">
+                                                                                                                        <div class="recommended_items"><!--recommended_items-->
+                                                                                                                                  <h2 class="title text-center">Sản phẩm mới nhất</h2>
+                                                                                                                                  <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                                                                                                                            <div class="carousel-inner">
+                                                                                                                                                      <div class="item active">
+                                                                                                                                                                <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
+                                                                                                                                                                          <div class="col-sm-4">
+                                                                                                                                                                                    <a href="productDetail?pid=${latestP.ID}">
+                                                                                                                                                                                              <div class="product-image-wrapper">
+                                                                                                                                                                                                        <div class="single-products">
+                                                                                                                                                                                                        <div class="productinfo text-center">
+                                                                                                                                                                                                        <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                                                                                                        <h2>${latestP.originalPrice}</h2>
+                                                                                                                                                                                                        <p>${latestP.name}</p>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user != null}">
+                                                                                                                                                                                                        <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user == null}">
+                                                                                                                                                                                                        <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                          </div>
+                                                                                                                                                                </c:forEach>
+                                                                                                                                                      </div>
+                                                                                                                                                      <div class="item">	
+                                                                                                                                                                <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
+                                                                                                                                                                          <div class="col-sm-4">
+                                                                                                                                                                                    <a href="productDetail?pid=${latestP.ID}">
+                                                                                                                                                                                              <div class="product-image-wrapper">
+                                                                                                                                                                                                        <div class="single-products">
+                                                                                                                                                                                                        <div class="productinfo text-center">
+                                                                                                                                                                                                        <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                                                                                                        <h2>${latestP.originalPrice}</h2>
+                                                                                                                                                                                                        <p>${latestP.name}</p>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user != null}">
+                                                                                                                                                                                                        <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user == null}">
+                                                                                                                                                                                                        <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                          </div>  
+                                                                                                                                                                </c:forEach>
+                                                                                                                                                      </div>
+                                                                                                                                            </div>
+                                                                                                                                            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                                                                                                                                      <i class="fa fa-angle-left"></i>
+                                                                                                                                            </a>
+                                                                                                                                            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                                                                                                                                      <i class="fa fa-angle-right"></i>
+                                                                                                                                            </a>			
+                                                                                                                                  </div>
+                                                                                                                        </div>
 
-                                                            var currentPage = 1; // Current page
-                                                            var itemsPerPage = 6; // Number of items per page
+                                                                                                                        <div>
+                                                                                                                                  <h2 class="title text-center">Hot Posts</h2>
+                                                                                                                                  <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
+                                                                                                                                            <div class="carousel-inner">
+                                                                                                                                                      <c:forEach items="${list}" var="b" varStatus="status">
+                                                                                                                                                                <div class="carousel-item ${status.first ? 'active' : ''}">
+                                                                                                                                                                          <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                                                                                                                                                                                    <h3>${b.title}</h3>
+                                                                                                                                                                                    <div class="post-meta">
+                                                                                                                                                                                              <ul>
+                                                                                                                                                                                                        <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
+                                                                                                                                                                                                        <li><i class="fa fa-bars"></i> ${b.getName()}</li>
+                                                                                                                                                                                                        <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
+                                                                                                                                                                                              </ul>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
+                                                                                                                                                                                    <p>${b.brief_info}</p>
+                                                                                                                                                                          </div>
+                                                                                                                                                                </div>
+                                                                                                                                                      </c:forEach>
+                                                                                                                                            </div>
 
-                                                            // Display products for the current page
-                                                            function displayProducts() {
-                                                                      var start = (currentPage - 1) * itemsPerPage;
-                                                                      var end = start + itemsPerPage;
-                                                                      var productsToDisplay = products.slice(start, end);
+                                                                                                                                            <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
+                                                                                                                                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                                                                                      <span class="visually-hidden">Previous</span>
+                                                                                                                                            </button>
+                                                                                                                                            <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
+                                                                                                                                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                                                                                      <span class="visually-hidden">Next</span>
+                                                                                                                                            </button>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                    </div><!--/recommended_items-->
+                                                                                </section>
+                                                                                <footer id="footer"><!--Footer-->
+                                                                                          <div class="footer-widget">
+                                                                                                    <div class="container">
+                                                                                                              <div class="row">
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Support - service</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <li><a href="/mua-hang-tra-gop">Policy and instructions for installment purchases</a></li>
+                                                                                                                                                      <li><a href="/huong-dan-dat-hang">Purchase instructions and shipping policy</a></li>
+                                                                                                                                                      <li><a href="/order/check">Order Tracking</a></li>
+                                                                                                                                                      <li><a href="/chinh-sach-bao-hanh">Exchange and warranty policy</a></li>
+                                                                                                                                                      <li><a href="/tin-tuc/dat-hang/dich-vu-bao-hanh-mo-rong-hoang-ha-mobile/">Extended warranty service</a></li>
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Contact information</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <li><a href="/cham-soc-khach-hang">Customer care</a></li>
+                                                                                                                                                      <li><a href="/trung-tam-bao-hanh">Warranty lookup</a></li>
+                                                                                                                                                      <li><a href="contact-us.html">Contact us</a></li>
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Payment methods</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <img src="images/home/visa.png" />
+                                                                                                                                                      <img src="images/home/mastercard.png" />
+                                                                                                                                                      <img src="images/home/jcb.png" />
+                                                                                                                                                      <img src="images/home/samsungpay.png" />
+                                                                                                                                                      <img src="images/home/vnpay.png" />
+                                                                                                                                                      <img src="images/home/zalopay.png" />
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Shipping method</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <img src="images/home/vnpost.png">
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                    </div>
+                                                                                          </div>
 
-                                                                      // Clear the current products
-                                                                      $('.product-list').empty();
+                                                                                          <div class="footer-bottom">
+                                                                                                    <div class="container">
+                                                                                                              <div class="row">
+                                                                                                                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                                                                                                                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                                                                                                              </div>
+                                                                                                    </div>
+                                                                                          </div>
 
-                                                                      // Add each product
-                                                                      //Cart ở đây
-                                                                      //Product Detail ở đây.
-                                                                      productsToDisplay.forEach(function (product) {
-                                                                                var productHtml = '<div class="col-md-4">' +
-                                                                                        '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
-                                                                                        '<div class="product-image-wrapper">' +
-                                                                                        '<div class="single-products">' +
-                                                                                        '<div class="productinfo text-center">' +
-                                                                                        '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
-                                                                                        '<h2>$' + product.salePrice + '</h2>' +
-                                                                                        '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
-                                                                                        '<p>' + product.name + '</p>';
-                                                                                //không dùng $\{product.ID} mà dùng + product.ID +
-                                                                                // if (sessionStorage.getItem('user') !== null) {
-                                                                                // User is logged in, add "Add to cart" button with onclick attribute
-                                                                                productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
-                                                                                productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
+                                                                                </footer><!--/Footer-->
 
-                                                                                //                    } 
-                                                                                //                    else {
-                                                                                //                        // User is not logged in, add a link to the sign-in page
-                                                                                //                        productHtml += '<a href="signIn.jsp" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';
-                                                                                //                    }
-                                                                                productHtml += '</div></div></div></a></div>';
-                                                                                $('.product-list').append(productHtml);
-                                                                      });
-                                                            }
 
-                                                            // Update the pagination links
-                                                            function updatePagination() {
-                                                                      var totalPages = Math.ceil(products.length / itemsPerPage);
 
-                                                                      // Clear the current pagination links
-                                                                      $('.pagination').empty();
+                                                                                <script src="js/jquery.js"></script>
+                                                                                <script src="js/bootstrap.min.js"></script>
+                                                                                <script src="js/jquery.scrollUp.min.js"></script>
+                                                                                <script src="js/price-range.js"></script>
+                                                                                <script src="js/jquery.prettyPhoto.js"></script>
+                                                                                <script src="js/main.js"></script>
+                                                                                <script>
+                                                                                                                                                                                    function redirectToBlogDetail(id) {
+                                                                                                                                                                                              window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                                                                                                                                                                    }
+                                                                                </script>
+                                                                                <script>
+                                                                                          // Convert the list of products from Java to JavaScript
+                                                                                          var products = JSON.parse('${listProduct}');
 
-                                                                      // Add "Previous" button
-                                                                      var prevClass = currentPage === 1 ? 'disabled' : '';
-                                                                      var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
-                                                                      $('.pagination').append(prevHtml);
+                                                                                          var currentPage = 1; // Current page
+                                                                                          var itemsPerPage = 6; // Number of items per page
 
-                                                                      // Add each pagination link
-                                                                      for (var i = 1; i <= totalPages; i++) {
-                                                                                var liClass = i === currentPage ? 'active' : '';
-                                                                                var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
-                                                                                $('.pagination').append(liHtml);
-                                                                      }
+                                                                                          // Display products for the current page
+                                                                                          function displayProducts() {
+                                                                                                    var start = (currentPage - 1) * itemsPerPage;
+                                                                                                    var end = start + itemsPerPage;
+                                                                                                    var productsToDisplay = products.slice(start, end);
 
-                                                                      // Add "Next" button
-                                                                      var nextClass = currentPage === totalPages ? 'disabled' : '';
-                                                                      var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
-                                                                      $('.pagination').append(nextHtml);
+                                                                                                    // Clear the current products
+                                                                                                    $('.product-list').empty();
 
-                                                                      // Add event handlers to the pagination links
-                                                                      $('.pagination a').click(function (e) {
-                                                                                e.preventDefault();
+                                                                                                    // Add each product
+                                                                                                    //Cart ở đây
+                                                                                                    //Product Detail ở đây.
+                                                                                                    productsToDisplay.forEach(function (product) {
+                                                                                                              var productHtml = '<div class="col-md-4">' +
+                                                                                                                      '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                                                                                                                      '<div class="product-image-wrapper">' +
+                                                                                                                      '<div class="single-products">' +
+                                                                                                                      '<div class="productinfo text-center">' +
+                                                                                                                      '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
+                                                                                                                      '<h2>$' + product.salePrice + '</h2>' +
+                                                                                                                      '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
+                                                                                                                      '<p>' + product.name + '</p>';
+                                                                                                              //không dùng $\{product.ID} mà dùng + product.ID +
+                                                                                                              // if (sessionStorage.getItem('user') !== null) {
+                                                                                                              // User is logged in, add "Add to cart" button with onclick attribute
+                                                                                                              productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
+                                                                                                              productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
 
-                                                                                var pageText = $(this).text();
+                                                                                                              //                    } 
+                                                                                                              //                    else {
+                                                                                                              //                        // User is not logged in, add a link to the sign-in page
+                                                                                                              //                        productHtml += '<a href="signIn.jsp" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';
+                                                                                                              //                    }
+                                                                                                              productHtml += '</div></div></div></a></div>';
+                                                                                                              $('.product-list').append(productHtml);
+                                                                                                    });
+                                                                                          }
 
-                                                                                if (pageText === 'Trước' && currentPage !== 1) {
-                                                                                          currentPage--;
-                                                                                } else if (pageText === 'Sau' && currentPage !== totalPages) {
-                                                                                          currentPage++;
-                                                                                } else if (pageText !== 'Trước' && pageText !== 'Sau') {
-                                                                                          currentPage = parseInt(pageText);
-                                                                                }
+                                                                                          // Update the pagination links
+                                                                                          function updatePagination() {
+                                                                                                    var totalPages = Math.ceil(products.length / itemsPerPage);
 
-                                                                                displayProducts();
-                                                                                updatePagination();
-                                                                      });
-                                                            }
+                                                                                                    // Clear the current pagination links
+                                                                                                    $('.pagination').empty();
 
-                                                            // Display the initial products and pagination
-                                                            displayProducts();
-                                                            updatePagination();
-                                                  </script>
-                                                  </body>
-                                                  </html>
+                                                                                                    // Add "Previous" button
+                                                                                                    var prevClass = currentPage === 1 ? 'disabled' : '';
+                                                                                                    var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
+                                                                                                    $('.pagination').append(prevHtml);
+
+                                                                                                    // Add each pagination link
+                                                                                                    for (var i = 1; i <= totalPages; i++) {
+                                                                                                              var liClass = i === currentPage ? 'active' : '';
+                                                                                                              var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
+                                                                                                              $('.pagination').append(liHtml);
+                                                                                                    }
+
+                                                                                                    // Add "Next" button
+                                                                                                    var nextClass = currentPage === totalPages ? 'disabled' : '';
+                                                                                                    var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
+                                                                                                    $('.pagination').append(nextHtml);
+
+                                                                                                    // Add event handlers to the pagination links
+                                                                                                    $('.pagination a').click(function (e) {
+                                                                                                              e.preventDefault();
+
+                                                                                                              var pageText = $(this).text();
+
+                                                                                                              if (pageText === 'Trước' && currentPage !== 1) {
+                                                                                                                        currentPage--;
+                                                                                                              } else if (pageText === 'Sau' && currentPage !== totalPages) {
+                                                                                                                        currentPage++;
+                                                                                                              } else if (pageText !== 'Trước' && pageText !== 'Sau') {
+                                                                                                                        currentPage = parseInt(pageText);
+                                                                                                              }
+
+                                                                                                              displayProducts();
+                                                                                                              updatePagination();
+                                                                                                    });
+                                                                                          }
+
+                                                                                          // Display the initial products and pagination
+                                                                                          displayProducts();
+                                                                                          updatePagination();
+                                                                                </script>
+                                                                                </body>
+                                                                                </html>
