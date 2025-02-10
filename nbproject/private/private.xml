@@ -3,11 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductSearch.java</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/customer/AddCustomerServlet.java</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/home/HomePage.java</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductList.java</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/WEB-INF/web.xml</file>
+=======
+            <file>file:/C:/Users/admin/OneDrive/Máy%20tính/GitHub/swp391-group3/web/AddCustomer.jsp</file>
+            <file>file:/C:/Users/admin/OneDrive/Máy%20tính/GitHub/swp391-group3/src/java/controller/customer/AddCustomerServlet.java</file>
+            <file>file:/C:/Users/admin/OneDrive/Máy%20tính/GitHub/swp391-group3/src/java/dao/CustomerDAO.java</file>
+            <file>file:/C:/Users/admin/OneDrive/Máy%20tính/GitHub/swp391-group3/src/java/controller/customer/CustomerListServlet.java</file>
+            <file>file:/C:/Users/admin/OneDrive/Máy%20tính/GitHub/swp391-group3/web/CustomerList.jsp</file>
+>>>>>>> origin/GiaKhanh
         </group>
     </open-files>
 </project-private>
