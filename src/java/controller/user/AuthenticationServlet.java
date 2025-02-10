@@ -134,8 +134,8 @@ public class AuthenticationServlet extends HttpServlet {
 
             if (foundUserAccount != null) {
                 request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount);
-               request.getSession().setAttribute("user", foundUserAccount);
-                url = "home.jsp";
+                request.getSession().setAttribute("user", foundUserAccount);
+                url = "HomePage";
                 //false => quay tro lai trang login ( set them thong bao loi )
             } else {
                 request.setAttribute("error", "Email or Password is incorrect !");
@@ -192,7 +192,7 @@ public class AuthenticationServlet extends HttpServlet {
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
-        return "home.jsp";
+        return "HomePage";
     }
 
     private String generateVerificationCode() {
@@ -237,7 +237,7 @@ public class AuthenticationServlet extends HttpServlet {
         if (isUpdated) {
             // Nếu cập nhật thành công, chuyển hướng về trang home.jsp
             request.setAttribute("successMessage", "Mật khẩu đã được cập nhật thành công.");
-            url = "home.jsp";
+            url = "HomePage";
         } else {
             // Nếu có lỗi trong việc cập nhật mật khẩu, hiển thị thông báo lỗi
             request.setAttribute("errorMessage", "Đã xảy ra lỗi trong quá trình cập nhật mật khẩu.");
