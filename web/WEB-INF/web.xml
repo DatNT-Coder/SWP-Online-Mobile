@@ -13,6 +13,10 @@
         <servlet-class>controller.user.AuthenticationServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>VerifyServlet</servlet-name>
+        <servlet-class>controller.user.VerifyServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BlogPostList</servlet-name>
         <servlet-class>controller.blog.BlogPostList</servlet-class>
     </servlet>
@@ -49,6 +53,10 @@
     <servlet-mapping>
         <servlet-name>BlogPostList</servlet-name>
         <url-pattern>/BlogPostList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyServlet</servlet-name>
+        <url-pattern>/verifyemail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostcategoryController</servlet-name>
