@@ -127,13 +127,14 @@
                                                                       <div class="mainmenu pull-left">
                                                                                 <ul class="nav navbar-nav collapse navbar-collapse">
                                                                                           <li><a href="HomePage" class="active">Home</a></li>
-                                                                                          <li class="dropdown"><a href="ProductList">Shop</a>
-                                                                                          </li> 
+                                                                                          <li><a href="ProductList">Shop</a></li> 
                                                                                           <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                                                                                     <ul role="menu" class="sub-menu">
                                                                                                               <li><a href="blog.html">Blog List</a></li>
                                                                                                               <li><a href="blog-single.html">Blog Single</a></li>
                                                                                                     </ul>
+                                                                                          </li> 
+                                                                                          <li class="dropdown"><a href="CustomerList.jsp">Customer List</a>
                                                                                           </li> 
                                                                                 </ul>
                                                                       </div>
@@ -314,7 +315,6 @@
                                                                                                                         <ul>
                                                                                                                                   <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
                                                                                                                                   <li><i class="fa fa-bars"></i> ${b.getName()}</li>
-                                                                                                                                  <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
                                                                                                                         </ul>
                                                                                                               </div>
                                                                                                               <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
@@ -513,7 +513,6 @@
                                                   <script src="js/price-range.js"></script>
                                                   <script src="js/jquery.prettyPhoto.js"></script>
                                                   <script src="js/main.js"></script>
-                                                  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                                                   <script>
                                                                                                                                                       function redirectToBlogDetail(id) {
                                                                                                                                                                 window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
