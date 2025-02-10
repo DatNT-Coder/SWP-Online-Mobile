@@ -4,23 +4,25 @@
  */
 package controller.customer;
 
-import dao.CustomerDAO;
+import dao.CustomerDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import model.User;
 
 /**
  *
  * @author admin
  */
-public class AddCustomerServlet extends HttpServlet {
+public class CustomerDetailServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    private CustomerDetailDAO customerDetailDAO = new CustomerDetailDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class AddCustomerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddCustomerServlet</title>");
+            out.println("<title>Servlet CustomerDetailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddCustomerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CustomerDetailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +62,12 @@ public class AddCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+// Lấy danh sách khách hàng từ database
+        List<User> customers = customerDetailDAO.getCustomerList();
+
+        // Gửi danh sách này sang JSP
+        request.setAttribute("customers", customers);
+        request.getRequestDispatcher("/CustomerDetail.jsp").forward(request, response);
     }
 
     /**
@@ -74,46 +81,22 @@ public class AddCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String phone = request.getParameter("phone");
-            String gender = request.getParameter("gender");
-            String registrationDateStr = request.getParameter("registrationDate");
-            String status = request.getParameter("status");
-            String updatedBy = request.getParameter("updatedBy");
-            String updatedDateStr = request.getParameter("updatedDate");
-            String settingsId = request.getParameter("settingsId");
+        String fullName = request.getParameter("fullName");
+        String gender = request.getParameter("gender");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("mobile");
+        String address = request.getParameter("address");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date registration_date = sdf.parse(registrationDateStr);
-            Date updated_date = updatedDateStr.isEmpty() ? null : sdf.parse(updatedDateStr);
-
-            int statusInt = Integer.parseInt(status);
-            int updatedByInt = updatedBy.isEmpty() ? 0 : Integer.parseInt(updatedBy);
-            int settingsIdInt = settingsId.isEmpty() ? 0 : Integer.parseInt(settingsId);
-
-            Part filePart = request.getPart("image");
-            String imageUrl = null;
-            if (filePart != null && filePart.getSize() > 0) {
-                imageUrl = "uploads/" + filePart.getSubmittedFileName();
-                filePart.write(getServletContext().getRealPath("/") + imageUrl);
-            }
-
-            CustomerDAO da = new CustomerDAO();
-            if (request.getParameter("add") != null) {
-                User u = new User(0, email, password, fullName, phone, gender, registration_date, statusInt, updatedByInt, updated_date, imageUrl, settingsIdInt);
-                da.addCustomer(u);
-
-            }
-
-            request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Lỗi khi thêm khách hàng: " + e.getMessage());
-            request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        int updatedBy = 1;
+        CustomerDetailDAO da = new CustomerDetailDAO();
+        if(request.getParameter("save") != null){
+            
         }
+        // Lưu thông tin khách hàng
+        customerDetailDAO.saveCustomer(fullName, gender, email, phone, address, updatedBy);
+
+        request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
+
     }
 
     /**

@@ -24,6 +24,10 @@
         <servlet-name>AddCustomerServlet</servlet-name>
         <servlet-class>controller.customer.AddCustomerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CustomerDetailServlet</servlet-name>
+        <servlet-class>controller.customer.CustomerDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/authen</url-pattern>
@@ -51,5 +55,9 @@
     <servlet-mapping>
         <servlet-name>AddCustomerServlet</servlet-name>
         <url-pattern>/addCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerDetailServlet</servlet-name>
+        <url-pattern>/customerDetail</url-pattern>
     </servlet-mapping>
 </web-app>
