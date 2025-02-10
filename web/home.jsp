@@ -231,7 +231,7 @@
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div>
                         <div class="left-sidebar">
                             <h2>Category</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
