@@ -447,7 +447,7 @@
                                                             <div class="footer-widget">
                                                                       <div class="container">
                                                                                 <div class="row">
-                                                                                          <div class="col-sm-12">
+                                                                                          <div class="col-sm-3">
                                                                                                     <div class="single-widget">
                                                                                                               <h2>Support - service</h2>
                                                                                                               <ul class="nav nav-pills nav-stacked">
@@ -459,7 +459,7 @@
                                                                                                               </ul>
                                                                                                     </div>
                                                                                           </div>
-                                                                                          <div class="col-sm-2">
+                                                                                          <div class="col-sm-3">
                                                                                                     <div class="single-widget">
                                                                                                               <h2>Contact information</h2>
                                                                                                               <ul class="nav nav-pills nav-stacked">
@@ -469,7 +469,7 @@
                                                                                                               </ul>
                                                                                                     </div>
                                                                                           </div>
-                                                                                          <div class="col-sm-2">
+                                                                                          <div class="col-sm-3">
                                                                                                     <div class="single-widget">
                                                                                                               <h2>Payment methods</h2>
                                                                                                               <ul class="nav nav-pills nav-stacked">
@@ -482,7 +482,7 @@
                                                                                                               </ul>
                                                                                                     </div>
                                                                                           </div>
-                                                                                          <div class="col-sm-2">
+                                                                                          <div class="col-sm-3">
                                                                                                     <div class="single-widget">
                                                                                                               <h2>Shipping method</h2>
                                                                                                               <ul class="nav nav-pills nav-stacked">
@@ -490,17 +490,6 @@
                                                                                                               </ul>
                                                                                                     </div>
                                                                                           </div>
-                                                                                          <div class="col-sm-3 col-sm-offset-1">
-                                                                                                    <div class="single-widget">
-                                                                                                              <h2>About Shopper</h2>
-                                                                                                              <form action="#" class="searchform">
-                                                                                                                        <input type="text" placeholder="Your email address" />
-                                                                                                                        <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                                                                                                                        <p>Get the most recent updates from <br />our site and be updated your self...</p>
-                                                                                                              </form>
-                                                                                                    </div>
-                                                                                          </div>
-
                                                                                 </div>
                                                                       </div>
                                                             </div>
@@ -526,9 +515,9 @@
                                                   <script src="js/main.js"></script>
                                                   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                                                   <script>
-                                                                                                              function redirectToBlogDetail(id) {
-                                                                                                                        window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                                                                                              }
+                                                                                                                                                      function redirectToBlogDetail(id) {
+                                                                                                                                                                window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                                                                                                                                      }
                                                   </script>
                                                   <script>
                                                             // Convert the list of products from Java to JavaScript
