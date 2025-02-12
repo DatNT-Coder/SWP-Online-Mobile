@@ -114,7 +114,7 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="${pageContext.request.contextPath}/Home">Trang chủ</a></li>
+                                    <li><a href="HomePage">Trang chủ</a></li>
                                     <li class="dropdown"><a href="/mobileshop/Home" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="/mobileshop/listProduct" class="active">Sản phẩm</a></li>
@@ -231,7 +231,7 @@
                                 quantityDiv.value = newQuantity;
                                 priceDiv.innerHTML = '$' + price;
                                 totalDiv.innerHTML = '$' + total;
-                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
+//                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
                             } else {
                                 await FuiToast.error('Update product quantity failed!');
                             }

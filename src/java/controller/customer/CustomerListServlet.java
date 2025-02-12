@@ -11,7 +11,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
 
 /**
@@ -89,6 +96,7 @@ public class CustomerListServlet extends HttpServlet {
         request.setAttribute("sortField", sortField);
         request.setAttribute("sortOrder", sortOrder);
 
+        
         request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
     }
 
@@ -109,6 +117,33 @@ public class CustomerListServlet extends HttpServlet {
         String totalPages = request.getParameter("totalPages");
 
         String err = "";
+        
+//        String fullName = request.getParameter("fullName");
+//        String email = request.getParameter("email");
+//        String password = request.getParameter("password");
+//        String phone = request.getParameter("phone");
+//        String gender = request.getParameter("gender");
+//        String registrationDate = request.getParameter("registrationDate");
+//        String status = request.getParameter("status");
+//        String updatedBy = request.getParameter("updatedBy");
+//        String updatedDate = request.getParameter("updatedDate");
+//        String settingsId = request.getParameter("settingsId");
+//
+//        Part filePart = request.getPart("image"); 
+//        String imageFileName = filePart.getSubmittedFileName();
+//        String uploadPath = getServletContext().getRealPath("") + "uploads/" + imageFileName;
+//        filePart.write(uploadPath);
+//
+//            int statusInt = Integer.parseInt(status);
+//            int updatedByInt = updatedBy.isEmpty() ? 0 : Integer.parseInt(updatedBy);
+//            int settingsIdInt = settingsId.isEmpty() ? 0 : Integer.parseInt(settingsId);
+//
+//            Part filePart = request.getPart("image");
+//            String imageUrl = null;
+//            if (filePart != null && filePart.getSize() > 0) {
+//                imageUrl = "uploads/" + filePart.getSubmittedFileName();
+//                filePart.write(getServletContext().getRealPath("/") + imageUrl);
+//            }
         CustomerDAO dao = new CustomerDAO();
 
         List<User> customers = dao.getAllCustomers();
@@ -136,7 +171,19 @@ public class CustomerListServlet extends HttpServlet {
             }
         }
         
-        
+
+//        CustomerDAO cu = new CustomerDAO();
+//        if(request.getParameter("add")!=null){
+//                    User u = new User(email, password, fullName, phone, gender, registration_date, statusInt, updatedByInt, updated_date, page, settingsIdInt);
+//                    cu.addCustomer(u);
+//        }
+//
+//        if(request.getParameter("update")!=null){
+//            String id = request.getParameter("id");
+//                    User u = new User(email, password, fullName, phone, gender, registration_date, statusInt, updatedByInt, updated_date, page, settingsIdInt);
+//
+//            cu.editCustomer(u);
+//        }
         
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
