@@ -82,7 +82,7 @@ public class AuthenticationServlet extends HttpServlet {
                 url = logOutDoGet(request, response);
                 break;
             default:
-                url = "home.jsp";
+                url = "HomePage";
         }
 
         request.getRequestDispatcher(url).forward(request, response);
@@ -112,7 +112,7 @@ public class AuthenticationServlet extends HttpServlet {
                 url = changeDoPost(request, response);
                 break;
             default:
-                url = "home";
+                url = "HomePage";
         }
         request.getRequestDispatcher(url).forward(request, response);
     }
@@ -135,7 +135,7 @@ public class AuthenticationServlet extends HttpServlet {
             if (foundUserAccount != null) {
                 request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount);
                request.getSession().setAttribute("user", foundUserAccount);
-                url = "home.jsp";
+                url = "HomePage";
                 //false => quay tro lai trang login ( set them thong bao loi )
             } else {
                 request.setAttribute("error", "Email or Password is incorrect !");
