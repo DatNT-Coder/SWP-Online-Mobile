@@ -99,7 +99,7 @@
                                                                                 <div class="col-sm-8">
                                                                                           <div class="shop-menu pull-right">
                                                                                                     <ul class="nav navbar-nav">
-                                                                                                              <li><a href="uerprofile.jsp"><i class="fa fa-user"></i> Account</a></li>
+                                                                                                              <li><a href="userprofile.jsp"><i class="fa fa-user"></i> Account</a></li>
                                                                                                               <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                                                                                               <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                                                                                                         <c:if test="${account != null}">
