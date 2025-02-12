@@ -131,11 +131,7 @@
                                                                                                     <ul class="nav navbar-nav collapse navbar-collapse">
                                                                                                               <li><a href="HomePage" class="active">Home</a></li>
                                                                                                               <li><a href="ProductList">Shop</a></li> 
-                                                                                                              <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                                                                                                        <ul role="menu" class="sub-menu">
-                                                                                                                                  <li><a href="blog.html">Blog List</a></li>
-                                                                                                                                  <li><a href="blog-single.html">Blog Single</a></li>
-                                                                                                                        </ul>
+                                                                                                              <li class="dropdown"><a href="BlogPostList">Blog</a>
                                                                                                               </li> 
                                                                                                               <li class="dropdown"><a href="customerList">Customer List</a>
                                                                                                               </li> 
