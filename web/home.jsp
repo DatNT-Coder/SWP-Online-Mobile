@@ -343,6 +343,175 @@
                                                                                                     window.location.href = "BlogDetail?id=" + id;
                                                                                           }
                                                                                 </script>
+<script>
+    function redirectToBlogDetail(id) {
+              window.location.href = "BlogDetail?id=" + id;
+    }
+</script>
+
+
+
+</section>
+<section>
+    <div class="container">
+              <div class="row">
+                        <div class="col-sm-12">
+                                  <div class="recommended_items"><!--recommended_items-->
+                                            <h2 class="title text-center">Sản phẩm mới nhất</h2>
+                                            <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                                      <div class="carousel-inner">
+                                                                <div class="item active">
+                                                                          <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
+                                                                                    <div class="col-sm-4">
+                                                                                              <a href="productDetail?pid=${latestP.ID}">
+                                                                                                        <div class="product-image-wrapper">
+                                                                                                                  <div class="single-products">
+                                                                                                                  <div class="productinfo text-center">
+                                                                                                                  <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                  <h2>${latestP.originalPrice}</h2>
+                                                                                                                  <p>${latestP.name}</p>
+                                                                                                                  <c:if test="${sessionScope.user != null}">
+                                                                                                                  <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                  </c:if>
+                                                                                                                  <c:if test="${sessionScope.user == null}">
+                                                                                                                  <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                  </c:if>
+                                                                                                                  </div>
+                                                                                                                  </div>
+                                                                                                        </div>
+                                                                                              </a>
+                                                                                    </div>
+                                                                          </c:forEach>
+                                                                </div>
+                                                                <div class="item">	
+                                                                          <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
+                                                                                    <div class="col-sm-4">
+                                                                                              <a href="productDetail?pid=${latestP.ID}">
+                                                                                                        <div class="product-image-wrapper">
+                                                                                                                  <div class="single-products">
+                                                                                                                  <div class="productinfo text-center">
+                                                                                                                  <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                  <h2>${latestP.originalPrice}</h2>
+                                                                                                                  <p>${latestP.name}</p>
+                                                                                                                  <c:if test="${sessionScope.user != null}">
+                                                                                                                  <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                  </c:if>
+                                                                                                                  <c:if test="${sessionScope.user == null}">
+                                                                                                                  <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                  </c:if>
+                                                                                                                  </div>
+                                                                                                                  </div>
+                                                                                                        </div>
+                                                                                              </a>
+                                                                                    </div>  
+                                                                          </c:forEach>
+                                                                </div>
+                                                      </div>
+                                                      <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                                                <i class="fa fa-angle-left"></i>
+                                                      </a>
+                                                      <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                                                <i class="fa fa-angle-right"></i>
+                                                      </a>			
+                                            </div>
+                                  </div>
+
+                                  <div>
+                                            <h2 class="title text-center">Hot Posts</h2>
+                                            <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
+                                                      <div class="carousel-inner">
+                                                                <c:forEach items="${list}" var="b" varStatus="status">
+                                                                          <div class="carousel-item ${status.first ? 'active' : ''}">
+                                                                                    <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                                                                                              <h3>${b.title}</h3>
+                                                                                              <div class="post-meta">
+                                                                                                        <ul>
+                                                                                                                  <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
+                                                                                                                  <li><i class="fa fa-bars"></i> ${b.getName()}</li>
+                                                                                                                  <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
+                                                                                                        </ul>
+                                                                                              </div>
+                                                                                              <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
+                                                                                              <p>${b.brief_info}</p>
+                                                                                    </div>
+                                                                          </div>
+                                                                </c:forEach>
+                                                      </div>
+
+                                                      <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Previous</span>
+                                                      </button>
+                                                      <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Next</span>
+                                                      </button>
+                                            </div>
+                                  </div>
+                        </div>
+              </div><!--/recommended_items-->
+</section>
+<footer id="footer"><!--Footer-->
+    <div class="footer-widget">
+              <div class="container">
+                        <div class="row">
+                                  <div class="col-sm-3">
+                                            <div class="single-widget">
+                                                      <h2>Support - service</h2>
+                                                      <ul class="nav nav-pills nav-stacked">
+                                                                <li><a href="/mua-hang-tra-gop">Policy and instructions for installment purchases</a></li>
+                                                                <li><a href="/huong-dan-dat-hang">Purchase instructions and shipping policy</a></li>
+                                                                <li><a href="/order/check">Order Tracking</a></li>
+                                                                <li><a href="/chinh-sach-bao-hanh">Exchange and warranty policy</a></li>
+                                                                <li><a href="/tin-tuc/dat-hang/dich-vu-bao-hanh-mo-rong-hoang-ha-mobile/">Extended warranty service</a></li>
+                                                      </ul>
+                                            </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                            <div class="single-widget">
+                                                      <h2>Contact information</h2>
+                                                      <ul class="nav nav-pills nav-stacked">
+                                                                <li><a href="/cham-soc-khach-hang">Customer care</a></li>
+                                                                <li><a href="/trung-tam-bao-hanh">Warranty lookup</a></li>
+                                                                <li><a href="contact-us.html">Contact us</a></li>
+                                                      </ul>
+                                            </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                            <div class="single-widget">
+                                                      <h2>Payment methods</h2>
+                                                      <ul class="nav nav-pills nav-stacked">
+                                                                <img src="images/home/visa.png" />
+                                                                <img src="images/home/mastercard.png" />
+                                                                <img src="images/home/jcb.png" />
+                                                                <img src="images/home/samsungpay.png" />
+                                                                <img src="images/home/vnpay.png" />
+                                                                <img src="images/home/zalopay.png" />
+                                                      </ul>
+                                            </div>
+                                  </div>
+                                  <div class="col-sm-3">
+                                            <div class="single-widget">
+                                                      <h2>Shipping method</h2>
+                                                      <ul class="nav nav-pills nav-stacked">
+                                                                <img src="images/home/vnpost.png">
+                                                      </ul>
+                                            </div>
+                                  </div>
+                        </div>
+              </div>
+    </div>
+
+    <div class="footer-bottom">
+              <div class="container">
+                        <div class="row">
+                                  <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                                  <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                        </div>
+              </div>
+    </div>
+
+</footer><!--/Footer-->
 
 
 
