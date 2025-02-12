@@ -158,7 +158,8 @@
 
         <section id="form"><!--form-->
             <div class="container">
-                <div class="row">
+                                <div style="display: flex; justify-content: center; align-items: center;">
+
                     <div class="signup-form"><!--sign up form-->
                         <h2>New User Signup!</h2>
                         <form action="authen?action=regis" method="post">
