@@ -177,48 +177,58 @@
                     </header><!--/header-->
 
                     <section>
-                              <h2>Slider List</h2>
+                              <div class="container">
+                                        <div class="row">
+                                                  <div class="col-sm-12">
+                                                            <h2 class="title text-center">Slider List</h2>
 
-                              <%
-                                  List<Slider> sliders = (List<Slider>) request.getAttribute("sliders");
-                                  int currentPage = (Integer) request.getAttribute("currentPage");
-                                  int totalPages = (Integer) request.getAttribute("totalPages");
+                                                            <%
+                                                                List<Slider> sliders = (List<Slider>) request.getAttribute("sliders");
+                                                                int currentPage = (Integer) request.getAttribute("currentPage");
+                                                                int totalPages = (Integer) request.getAttribute("totalPages");
 
-                                  if (sliders != null && !sliders.isEmpty()) {
-                                      for (Slider slider : sliders) {
-                              %>
-                              <div class="slider-container">
-                                        <strong>ID:</strong> <%= slider.getId() %><br>
-                                        <strong>Title:</strong> <%= slider.getTitle() %><br>
-                                        <strong>Image:</strong> <img src="<%= slider.getImage() %>" width="100" height="50"><br>
-                                        <strong>Backlink:</strong> <a href="<%= slider.getBacklink() %>"><%= slider.getBacklink() %></a><br>
-                                        <strong>Status:</strong> <%= slider.getStatus() %><br>
-                                        <strong>Notes:</strong> <%= slider.getNotes() %><br>
-                                        <strong>Marketing ID:</strong> <%= slider.getMarketingId() %><br>
-                                        <strong>Updated Date:</strong> <%= slider.getUpdatedDate() %><br>
-                              </div>
-                              <%
-                                      }
-                                  } else {
-                              %>
-                              <p>No sliders found.</p>
-                              <%
-                                  }
-                              %>
+                                                                // Retrieve the selected slider ID from request
+                                                                String sliderIdParam = request.getParameter("sliderId");
+                                                                int selectedSliderId = (sliderIdParam != null) ? Integer.parseInt(sliderIdParam) : -1;
 
-                              <!-- Pagination -->
-                              <div class="pagination">
-                                        <% if (currentPage > 1) { %>
-                                        <a href="Slider?page=<%= currentPage - 1 %>">Previous</a>
-                                        <% } %>
+                                                                if (sliders != null && !sliders.isEmpty()) {
+                                                                    for (Slider slider : sliders) {
+                                                            %>
+                                                            <div class="slider-container <%= (slider.getId() == selectedSliderId) ? "highlighted-slider" : "" %>">
+                                                                      <strong>ID:</strong> <%= slider.getId() %><br>
+                                                                      <strong>Title:</strong> <%= slider.getTitle() %><br>
+                                                                      <strong>Image:</strong> <img src="<%= slider.getImage() %>" width="100" height="50"><br>
+                                                                      <strong>Backlink:</strong> <a href="<%= slider.getBacklink() %>"><%= slider.getBacklink() %></a><br>
+                                                                      <strong>Status:</strong> <%= slider.getStatus() %><br>
+                                                                      <strong>Notes:</strong> <%= slider.getNotes() %><br>
+                                                                      <strong>Marketing ID:</strong> <%= slider.getMarketingId() %><br>
+                                                                      <strong>Updated Date:</strong> <%= slider.getUpdatedDate() %><br>
+                                                            </div>
+                                                            <%
+                                                                    }
+                                                                } else {
+                                                            %>
+                                                            <p>No sliders found.</p>
+                                                            <%
+                                                                }
+                                                            %>
 
-                                        <% for (int i = 1; i <= totalPages; i++) { %>
-                                        <a href="Slider?page=<%= i %>" class="<%= (i == currentPage) ? "active" : "" %>"><%= i %></a>
-                                        <% } %>
+                                                            <!-- Pagination -->
+                                                            <div class="pagination">
+                                                                      <% if (currentPage > 1) { %>
+                                                                      <a href="Slider?page=<%= currentPage - 1 %>">Previous</a>
+                                                                      <% } %>
 
-                                        <% if (currentPage < totalPages) { %>
-                                        <a href="Slider?page=<%= currentPage + 1 %>">Next</a>
-                                        <% } %>
+                                                                      <% for (int i = 1; i <= totalPages; i++) { %>
+                                                                      <a href="Slider?page=<%= i %>" class="<%= (i == currentPage) ? "active" : "" %>"><%= i %></a>
+                                                                      <% } %>
+
+                                                                      <% if (currentPage < totalPages) { %>
+                                                                      <a href="Slider?page=<%= currentPage + 1 %>">Next</a>
+                                                                      <% } %>
+                                                            </div>
+                                                  </div>
+                                        </div>
                               </div>
                     </section>
 

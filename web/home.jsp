@@ -6,6 +6,10 @@
 <%@page import="java.util.List"%>
 <%@page import="model.BlogPost"%>
 <%@page import="model.BlogPost"%>
+<%@page import="java.util.List, model.Slider"%>
+<%
+    List<Slider> sliders = (List<Slider>) request.getAttribute("sliders");
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -156,56 +160,19 @@
                                                   </div><!--/header-bottom-->
                                                   </header><!--/header-->
 
-                                                  <section id="slider"><!--slider-->
+                                                  <section id="slider">
                                                             <div class="container">
                                                                       <div class="row">
                                                                                 <div class="col-sm-12">
                                                                                           <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                                                                                                    <ol class="carousel-indicators">
-                                                                                                              <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                                                                                                              <li data-target="#slider-carousel" data-slide-to="1"></li>
-                                                                                                              <li data-target="#slider-carousel" data-slide-to="2"></li>
-                                                                                                    </ol>
-
                                                                                                     <div class="carousel-inner">
-                                                                                                              <div class="item active">
-                                                                                                                        <div class="col-sm-6">
-                                                                                                                                  <h1><span>E</span>-SHOPPER</h1>
-                                                                                                                                  <h2>Free E-Commerce Template</h2>
-                                                                                                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                                                                                                                  <button type="button" class="btn btn-default get">Get it now</button>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-sm-6">
-                                                                                                                                  <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                                                                                                                  <img src="images/home/pricing.png"  class="pricing" alt="" />
-                                                                                                                        </div>
+                                                                                                              <% for (int i = 0; i < sliders.size(); i++) { %>
+                                                                                                              <div class="item <%= (i == 0) ? "active" : "" %>">
+                                                                                                                        <a href="Slider?sliderId=<%= sliders.get(i).getId() %>">
+                                                                                                                                  <img src="<%= sliders.get(i).getImage() %>" class="img-responsive" alt="Slider Image" style="width:100%; height:auto;" />
+                                                                                                                        </a>
                                                                                                               </div>
-                                                                                                              <div class="item">
-                                                                                                                        <div class="col-sm-6">
-                                                                                                                                  <h1><span>E</span>-SHOPPER</h1>
-                                                                                                                                  <h2>100% Responsive Design</h2>
-                                                                                                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                                                                                                                  <button type="button" class="btn btn-default get">Get it now</button>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-sm-6">
-                                                                                                                                  <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                                                                                                                  <img src="images/home/pricing.png"  class="pricing" alt="" />
-                                                                                                                        </div>
-                                                                                                              </div>
-
-                                                                                                              <div class="item">
-                                                                                                                        <div class="col-sm-6">
-                                                                                                                                  <h1><span>E</span>-SHOPPER</h1>
-                                                                                                                                  <h2>Free Ecommerce Template</h2>
-                                                                                                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                                                                                                                  <button type="button" class="btn btn-default get">Get it now</button>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-sm-6">
-                                                                                                                                  <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                                                                                                                  <img src="images/home/pricing.png" class="pricing" alt="" />
-                                                                                                                        </div>
-                                                                                                              </div>
-
+                                                                                                              <% } %>
                                                                                                     </div>
 
                                                                                                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
@@ -215,11 +182,11 @@
                                                                                                               <i class="fa fa-angle-right"></i>
                                                                                                     </a>
                                                                                           </div>
-
                                                                                 </div>
                                                                       </div>
                                                             </div>
-                                                  </section><!--/slider-->
+                                                  </section>
+
 
                                                   <section>
                                                             <div class="container">
@@ -343,301 +310,301 @@
                                                                                                     window.location.href = "BlogDetail?id=" + id;
                                                                                           }
                                                                                 </script>
-<script>
-    function redirectToBlogDetail(id) {
-              window.location.href = "BlogDetail?id=" + id;
-    }
-</script>
+                                                                                <script>
+                                                                                          function redirectToBlogDetail(id) {
+                                                                                                    window.location.href = "BlogDetail?id=" + id;
+                                                                                          }
+                                                                                </script>
 
 
 
-</section>
-<section>
-    <div class="container">
-              <div class="row">
-                        <div class="col-sm-12">
-                                  <div class="recommended_items"><!--recommended_items-->
-                                            <h2 class="title text-center">Sản phẩm mới nhất</h2>
-                                            <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                                                      <div class="carousel-inner">
-                                                                <div class="item active">
-                                                                          <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
-                                                                                    <div class="col-sm-4">
-                                                                                              <a href="productDetail?pid=${latestP.ID}">
-                                                                                                        <div class="product-image-wrapper">
-                                                                                                                  <div class="single-products">
-                                                                                                                  <div class="productinfo text-center">
-                                                                                                                  <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
-                                                                                                                  <h2>${latestP.originalPrice}</h2>
-                                                                                                                  <p>${latestP.name}</p>
-                                                                                                                  <c:if test="${sessionScope.user != null}">
-                                                                                                                  <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                  </c:if>
-                                                                                                                  <c:if test="${sessionScope.user == null}">
-                                                                                                                  <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                  </c:if>
-                                                                                                                  </div>
-                                                                                                                  </div>
-                                                                                                        </div>
-                                                                                              </a>
-                                                                                    </div>
-                                                                          </c:forEach>
-                                                                </div>
-                                                                <div class="item">	
-                                                                          <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
-                                                                                    <div class="col-sm-4">
-                                                                                              <a href="productDetail?pid=${latestP.ID}">
-                                                                                                        <div class="product-image-wrapper">
-                                                                                                                  <div class="single-products">
-                                                                                                                  <div class="productinfo text-center">
-                                                                                                                  <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
-                                                                                                                  <h2>${latestP.originalPrice}</h2>
-                                                                                                                  <p>${latestP.name}</p>
-                                                                                                                  <c:if test="${sessionScope.user != null}">
-                                                                                                                  <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                  </c:if>
-                                                                                                                  <c:if test="${sessionScope.user == null}">
-                                                                                                                  <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
-                                                                                                                  </c:if>
-                                                                                                                  </div>
-                                                                                                                  </div>
-                                                                                                        </div>
-                                                                                              </a>
-                                                                                    </div>  
-                                                                          </c:forEach>
-                                                                </div>
-                                                      </div>
-                                                      <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                                                                <i class="fa fa-angle-left"></i>
-                                                      </a>
-                                                      <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                                                                <i class="fa fa-angle-right"></i>
-                                                      </a>			
-                                            </div>
-                                  </div>
+                                                                                </section>
+                                                                                <section>
+                                                                                          <div class="container">
+                                                                                                    <div class="row">
+                                                                                                              <div class="col-sm-12">
+                                                                                                                        <div class="recommended_items"><!--recommended_items-->
+                                                                                                                                  <h2 class="title text-center">Sản phẩm mới nhất</h2>
+                                                                                                                                  <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                                                                                                                            <div class="carousel-inner">
+                                                                                                                                                      <div class="item active">
+                                                                                                                                                                <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
+                                                                                                                                                                          <div class="col-sm-4">
+                                                                                                                                                                                    <a href="productDetail?pid=${latestP.ID}">
+                                                                                                                                                                                              <div class="product-image-wrapper">
+                                                                                                                                                                                                        <div class="single-products">
+                                                                                                                                                                                                        <div class="productinfo text-center">
+                                                                                                                                                                                                        <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                                                                                                        <h2>${latestP.originalPrice}</h2>
+                                                                                                                                                                                                        <p>${latestP.name}</p>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user != null}">
+                                                                                                                                                                                                        <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user == null}">
+                                                                                                                                                                                                        <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                          </div>
+                                                                                                                                                                </c:forEach>
+                                                                                                                                                      </div>
+                                                                                                                                                      <div class="item">	
+                                                                                                                                                                <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
+                                                                                                                                                                          <div class="col-sm-4">
+                                                                                                                                                                                    <a href="productDetail?pid=${latestP.ID}">
+                                                                                                                                                                                              <div class="product-image-wrapper">
+                                                                                                                                                                                                        <div class="single-products">
+                                                                                                                                                                                                        <div class="productinfo text-center">
+                                                                                                                                                                                                        <img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/${latestP.image}" alt="" />
+                                                                                                                                                                                                        <h2>${latestP.originalPrice}</h2>
+                                                                                                                                                                                                        <p>${latestP.name}</p>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user != null}">
+                                                                                                                                                                                                        <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        <c:if test="${sessionScope.user == null}">
+                                                                                                                                                                                                        <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                                                                                                                                                        </c:if>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                          </div>  
+                                                                                                                                                                </c:forEach>
+                                                                                                                                                      </div>
+                                                                                                                                            </div>
+                                                                                                                                            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                                                                                                                                      <i class="fa fa-angle-left"></i>
+                                                                                                                                            </a>
+                                                                                                                                            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                                                                                                                                      <i class="fa fa-angle-right"></i>
+                                                                                                                                            </a>			
+                                                                                                                                  </div>
+                                                                                                                        </div>
 
-                                  <div>
-                                            <h2 class="title text-center">Hot Posts</h2>
-                                            <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
-                                                      <div class="carousel-inner">
-                                                                <c:forEach items="${list}" var="b" varStatus="status">
-                                                                          <div class="carousel-item ${status.first ? 'active' : ''}">
-                                                                                    <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
-                                                                                              <h3>${b.title}</h3>
-                                                                                              <div class="post-meta">
-                                                                                                        <ul>
-                                                                                                                  <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
-                                                                                                                  <li><i class="fa fa-bars"></i> ${b.getName()}</li>
-                                                                                                                  <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
-                                                                                                        </ul>
-                                                                                              </div>
-                                                                                              <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
-                                                                                              <p>${b.brief_info}</p>
-                                                                                    </div>
-                                                                          </div>
-                                                                </c:forEach>
-                                                      </div>
+                                                                                                                        <div>
+                                                                                                                                  <h2 class="title text-center">Hot Posts</h2>
+                                                                                                                                  <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
+                                                                                                                                            <div class="carousel-inner">
+                                                                                                                                                      <c:forEach items="${list}" var="b" varStatus="status">
+                                                                                                                                                                <div class="carousel-item ${status.first ? 'active' : ''}">
+                                                                                                                                                                          <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                                                                                                                                                                                    <h3>${b.title}</h3>
+                                                                                                                                                                                    <div class="post-meta">
+                                                                                                                                                                                              <ul>
+                                                                                                                                                                                                        <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
+                                                                                                                                                                                                        <li><i class="fa fa-bars"></i> ${b.getName()}</li>
+                                                                                                                                                                                                        <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
+                                                                                                                                                                                              </ul>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
+                                                                                                                                                                                    <p>${b.brief_info}</p>
+                                                                                                                                                                          </div>
+                                                                                                                                                                </div>
+                                                                                                                                                      </c:forEach>
+                                                                                                                                            </div>
 
-                                                      <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
-                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Previous</span>
-                                                      </button>
-                                                      <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
-                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Next</span>
-                                                      </button>
-                                            </div>
-                                  </div>
-                        </div>
-              </div><!--/recommended_items-->
-</section>
-<footer id="footer"><!--Footer-->
-    <div class="footer-widget">
-              <div class="container">
-                        <div class="row">
-                                  <div class="col-sm-3">
-                                            <div class="single-widget">
-                                                      <h2>Support - service</h2>
-                                                      <ul class="nav nav-pills nav-stacked">
-                                                                <li><a href="/mua-hang-tra-gop">Policy and instructions for installment purchases</a></li>
-                                                                <li><a href="/huong-dan-dat-hang">Purchase instructions and shipping policy</a></li>
-                                                                <li><a href="/order/check">Order Tracking</a></li>
-                                                                <li><a href="/chinh-sach-bao-hanh">Exchange and warranty policy</a></li>
-                                                                <li><a href="/tin-tuc/dat-hang/dich-vu-bao-hanh-mo-rong-hoang-ha-mobile/">Extended warranty service</a></li>
-                                                      </ul>
-                                            </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                            <div class="single-widget">
-                                                      <h2>Contact information</h2>
-                                                      <ul class="nav nav-pills nav-stacked">
-                                                                <li><a href="/cham-soc-khach-hang">Customer care</a></li>
-                                                                <li><a href="/trung-tam-bao-hanh">Warranty lookup</a></li>
-                                                                <li><a href="contact-us.html">Contact us</a></li>
-                                                      </ul>
-                                            </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                            <div class="single-widget">
-                                                      <h2>Payment methods</h2>
-                                                      <ul class="nav nav-pills nav-stacked">
-                                                                <img src="images/home/visa.png" />
-                                                                <img src="images/home/mastercard.png" />
-                                                                <img src="images/home/jcb.png" />
-                                                                <img src="images/home/samsungpay.png" />
-                                                                <img src="images/home/vnpay.png" />
-                                                                <img src="images/home/zalopay.png" />
-                                                      </ul>
-                                            </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                            <div class="single-widget">
-                                                      <h2>Shipping method</h2>
-                                                      <ul class="nav nav-pills nav-stacked">
-                                                                <img src="images/home/vnpost.png">
-                                                      </ul>
-                                            </div>
-                                  </div>
-                        </div>
-              </div>
-    </div>
+                                                                                                                                            <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
+                                                                                                                                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                                                                                      <span class="visually-hidden">Previous</span>
+                                                                                                                                            </button>
+                                                                                                                                            <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
+                                                                                                                                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                                                                                      <span class="visually-hidden">Next</span>
+                                                                                                                                            </button>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                    </div><!--/recommended_items-->
+                                                                                </section>
+                                                                                <footer id="footer"><!--Footer-->
+                                                                                          <div class="footer-widget">
+                                                                                                    <div class="container">
+                                                                                                              <div class="row">
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Support - service</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <li><a href="/mua-hang-tra-gop">Policy and instructions for installment purchases</a></li>
+                                                                                                                                                      <li><a href="/huong-dan-dat-hang">Purchase instructions and shipping policy</a></li>
+                                                                                                                                                      <li><a href="/order/check">Order Tracking</a></li>
+                                                                                                                                                      <li><a href="/chinh-sach-bao-hanh">Exchange and warranty policy</a></li>
+                                                                                                                                                      <li><a href="/tin-tuc/dat-hang/dich-vu-bao-hanh-mo-rong-hoang-ha-mobile/">Extended warranty service</a></li>
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Contact information</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <li><a href="/cham-soc-khach-hang">Customer care</a></li>
+                                                                                                                                                      <li><a href="/trung-tam-bao-hanh">Warranty lookup</a></li>
+                                                                                                                                                      <li><a href="contact-us.html">Contact us</a></li>
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Payment methods</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <img src="images/home/visa.png" />
+                                                                                                                                                      <img src="images/home/mastercard.png" />
+                                                                                                                                                      <img src="images/home/jcb.png" />
+                                                                                                                                                      <img src="images/home/samsungpay.png" />
+                                                                                                                                                      <img src="images/home/vnpay.png" />
+                                                                                                                                                      <img src="images/home/zalopay.png" />
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-sm-3">
+                                                                                                                                  <div class="single-widget">
+                                                                                                                                            <h2>Shipping method</h2>
+                                                                                                                                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                                                      <img src="images/home/vnpost.png">
+                                                                                                                                            </ul>
+                                                                                                                                  </div>
+                                                                                                                        </div>
+                                                                                                              </div>
+                                                                                                    </div>
+                                                                                          </div>
 
-    <div class="footer-bottom">
-              <div class="container">
-                        <div class="row">
-                                  <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                                  <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
-                        </div>
-              </div>
-    </div>
+                                                                                          <div class="footer-bottom">
+                                                                                                    <div class="container">
+                                                                                                              <div class="row">
+                                                                                                                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                                                                                                                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                                                                                                              </div>
+                                                                                                    </div>
+                                                                                          </div>
 
-</footer><!--/Footer-->
+                                                                                </footer><!--/Footer-->
 
 
 
-                                                  <script src="js/jquery.js"></script>
-                                                  <script src="js/bootstrap.min.js"></script>
-                                                  <script src="js/jquery.scrollUp.min.js"></script>
-                                                  <script src="js/price-range.js"></script>
-                                                  <script src="js/jquery.prettyPhoto.js"></script>
-                                                  <script src="js/main.js"></script>
-                                                   <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
-      
-                                                  <script>
-                                                                                                                                                      function redirectToBlogDetail(id) {
-                                                                                                                                                                window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                                                                                                                                      }
-                                                  </script>
-<script>
-   async function addToCart(id) {
-       const postData = new URLSearchParams();
-       postData.append("productId", id);
-       const response = await fetch('${pageContext.request.contextPath}/CartAddItemController', {
-           method: "POST",
-           body: postData
-       });
-       const data = await response.json();
-       const status = data.status;
-       console.log(data.status);
-       if (status === 'successed') {
-           FuiToast.success('Đã thêm sản phẩm vào giỏ hàng!');
-       } else {
-           FuiToast.error('Add product to cart failed!');
-       }
-       return false;
-   }
- </script>
- <script>
-           // Convert the list of products from Java to JavaScript
-           var products = JSON.parse('${listProduct}');
+                                                                                <script src="js/jquery.js"></script>
+                                                                                <script src="js/bootstrap.min.js"></script>
+                                                                                <script src="js/jquery.scrollUp.min.js"></script>
+                                                                                <script src="js/price-range.js"></script>
+                                                                                <script src="js/jquery.prettyPhoto.js"></script>
+                                                                                <script src="js/main.js"></script>
+                                                                                <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
-           var currentPage = 1; // Current page
-           var itemsPerPage = 6; // Number of items per page
+                                                                                <script>
+                                                                                                                                                                                    function redirectToBlogDetail(id) {
+                                                                                                                                                                                              window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                                                                                                                                                                    }
+                                                                                </script>
+                                                                                <script>
+                                                                                          async function addToCart(id) {
+                                                                                                    const postData = new URLSearchParams();
+                                                                                                    postData.append("productId", id);
+                                                                                                    const response = await fetch('${pageContext.request.contextPath}/CartAddItemController', {
+                                                                                                              method: "POST",
+                                                                                                              body: postData
+                                                                                                    });
+                                                                                                    const data = await response.json();
+                                                                                                    const status = data.status;
+                                                                                                    console.log(data.status);
+                                                                                                    if (status === 'successed') {
+                                                                                                              FuiToast.success('Đã thêm sản phẩm vào giỏ hàng!');
+                                                                                                    } else {
+                                                                                                              FuiToast.error('Add product to cart failed!');
+                                                                                                    }
+                                                                                                    return false;
+                                                                                          }
+                                                                                </script>
+                                                                                <script>
+                                                                                          // Convert the list of products from Java to JavaScript
+                                                                                          var products = JSON.parse('${listProduct}');
 
-           // Display products for the current page
-           function displayProducts() {
-                     var start = (currentPage - 1) * itemsPerPage;
-                     var end = start + itemsPerPage;
-                     var productsToDisplay = products.slice(start, end);
+                                                                                          var currentPage = 1; // Current page
+                                                                                          var itemsPerPage = 6; // Number of items per page
 
-                     // Clear the current products
-                     $('.product-list').empty();
+                                                                                          // Display products for the current page
+                                                                                          function displayProducts() {
+                                                                                                    var start = (currentPage - 1) * itemsPerPage;
+                                                                                                    var end = start + itemsPerPage;
+                                                                                                    var productsToDisplay = products.slice(start, end);
 
-                     // Add each product
-                     //Cart ở đây
-                     //Product Detail ở đây.
-                     productsToDisplay.forEach(function (product) {
-                               var productHtml = '<div class="col-md-4">' +
-                                       '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
-                                       '<div class="product-image-wrapper">' +
-                                       '<div class="single-products">' +
-                                       '<div class="productinfo text-center">' +
-                                       '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
-                                       '<h2>$' + product.salePrice + '</h2>' +
-                                       '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
-                                       '<p>' + product.name + '</p>';
-                               //không dùng $\{product.ID} mà dùng + product.ID +
-                               // if (sessionStorage.getItem('user') !== null) {
-                               // User is logged in, add "Add to cart" button with onclick attribute
-                               productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
-                               productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
+                                                                                                    // Clear the current products
+                                                                                                    $('.product-list').empty();
 
-                               //                    } 
-                               //                    else {
-                               //                        // User is not logged in, add a link to the sign-in page
-                               //                        productHtml += '<a href="signIn.jsp" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';
-                               //                    }
-                               productHtml += '</div></div></div></a></div>';
-                               $('.product-list').append(productHtml);
-                     });
-           }
+                                                                                                    // Add each product
+                                                                                                    //Cart ở đây
+                                                                                                    //Product Detail ở đây.
+                                                                                                    productsToDisplay.forEach(function (product) {
+                                                                                                              var productHtml = '<div class="col-md-4">' +
+                                                                                                                      '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                                                                                                                      '<div class="product-image-wrapper">' +
+                                                                                                                      '<div class="single-products">' +
+                                                                                                                      '<div class="productinfo text-center">' +
+                                                                                                                      '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
+                                                                                                                      '<h2>$' + product.salePrice + '</h2>' +
+                                                                                                                      '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
+                                                                                                                      '<p>' + product.name + '</p>';
+                                                                                                              //không dùng $\{product.ID} mà dùng + product.ID +
+                                                                                                              // if (sessionStorage.getItem('user') !== null) {
+                                                                                                              // User is logged in, add "Add to cart" button with onclick attribute
+                                                                                                              productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
+                                                                                                              productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
 
-           // Update the pagination links
-           function updatePagination() {
-                     var totalPages = Math.ceil(products.length / itemsPerPage);
+                                                                                                              //                    } 
+                                                                                                              //                    else {
+                                                                                                              //                        // User is not logged in, add a link to the sign-in page
+                                                                                                              //                        productHtml += '<a href="signIn.jsp" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';
+                                                                                                              //                    }
+                                                                                                              productHtml += '</div></div></div></a></div>';
+                                                                                                              $('.product-list').append(productHtml);
+                                                                                                    });
+                                                                                          }
 
-                     // Clear the current pagination links
-                     $('.pagination').empty();
+                                                                                          // Update the pagination links
+                                                                                          function updatePagination() {
+                                                                                                    var totalPages = Math.ceil(products.length / itemsPerPage);
 
-                     // Add "Previous" button
-                     var prevClass = currentPage === 1 ? 'disabled' : '';
-                     var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
-                     $('.pagination').append(prevHtml);
+                                                                                                    // Clear the current pagination links
+                                                                                                    $('.pagination').empty();
 
-                     // Add each pagination link
-                     for (var i = 1; i <= totalPages; i++) {
-                               var liClass = i === currentPage ? 'active' : '';
-                               var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
-                               $('.pagination').append(liHtml);
-                     }
+                                                                                                    // Add "Previous" button
+                                                                                                    var prevClass = currentPage === 1 ? 'disabled' : '';
+                                                                                                    var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
+                                                                                                    $('.pagination').append(prevHtml);
 
-                     // Add "Next" button
-                     var nextClass = currentPage === totalPages ? 'disabled' : '';
-                     var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
-                     $('.pagination').append(nextHtml);
+                                                                                                    // Add each pagination link
+                                                                                                    for (var i = 1; i <= totalPages; i++) {
+                                                                                                              var liClass = i === currentPage ? 'active' : '';
+                                                                                                              var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
+                                                                                                              $('.pagination').append(liHtml);
+                                                                                                    }
 
-                     // Add event handlers to the pagination links
-                     $('.pagination a').click(function (e) {
-                               e.preventDefault();
+                                                                                                    // Add "Next" button
+                                                                                                    var nextClass = currentPage === totalPages ? 'disabled' : '';
+                                                                                                    var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
+                                                                                                    $('.pagination').append(nextHtml);
 
-                               var pageText = $(this).text();
+                                                                                                    // Add event handlers to the pagination links
+                                                                                                    $('.pagination a').click(function (e) {
+                                                                                                              e.preventDefault();
 
-                               if (pageText === 'Trước' && currentPage !== 1) {
-                                         currentPage--;
-                               } else if (pageText === 'Sau' && currentPage !== totalPages) {
-                                         currentPage++;
-                               } else if (pageText !== 'Trước' && pageText !== 'Sau') {
-                                         currentPage = parseInt(pageText);
-                               }
+                                                                                                              var pageText = $(this).text();
 
-                               displayProducts();
-                               updatePagination();
-                     });
-           }
+                                                                                                              if (pageText === 'Trước' && currentPage !== 1) {
+                                                                                                                        currentPage--;
+                                                                                                              } else if (pageText === 'Sau' && currentPage !== totalPages) {
+                                                                                                                        currentPage++;
+                                                                                                              } else if (pageText !== 'Trước' && pageText !== 'Sau') {
+                                                                                                                        currentPage = parseInt(pageText);
+                                                                                                              }
 
-           // Display the initial products and pagination
-           displayProducts();
-           updatePagination();
- </script>
-</body>
-</html>
+                                                                                                              displayProducts();
+                                                                                                              updatePagination();
+                                                                                                    });
+                                                                                          }
+
+                                                                                          // Display the initial products and pagination
+                                                                                          displayProducts();
+                                                                                          updatePagination();
+                                                                                </script>
+                                                                                </body>
+                                                                                </html>
