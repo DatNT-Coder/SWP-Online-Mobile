@@ -117,7 +117,7 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="Home" class="active">Trang Chủ</a></li>
+                                    <li><a href="HomePage" class="active">Trang Chủ</a></li>
                                     <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="listProduct">Sản Phẩm</a></li>
@@ -186,7 +186,7 @@
                                         <div class="panel-heading ">
                                             <h4 class="panel-title">
                                                 <c:if test="${listPC.id == sessionScope.pickedCategory}">
-                                                    <a style="color: #FE0F9E;"  href="searchProduct?action=pickCategory&cid=${listPC.id}">
+                                                    <a style="color: #009981;"  href="searchProduct?action=pickCategory&cid=${listPC.id}">
                                                         <span class="badge pull-right"></span>
                                                         ${listPC.categoryName}
                                                     </a>
@@ -212,7 +212,7 @@
                                     <ul class="nav nav-pills nav-stacked">
                                         <c:forEach items="${requestScope.listBrand}" var="listBrand">
                                             <c:if test="${listBrand.brandID == sessionScope.pickedBrand}">
-                                                <li><a style="color: #FE0F9E;" href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
+                                                <li><a style="color: #009981;" href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
                                                     </c:if>
                                                     <c:if test="${listBrand.brandID != sessionScope.pickedBrand}">
                                                 <li><a href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
