@@ -41,6 +41,16 @@ public class UserProfile extends HttpServlet {
                     user.setGender(gender);
                     user.setPassword(password);
 
-                    request.getRequestDispatcher("userprofile.jsp").forward(request, response);
+                    AccountDAO accountDAO = new AccountDAO();
+                    boolean success = accountDAO.updateUser(user); // Now follows the correct connection pattern
+
+                    if (success) {
+                              session.setAttribute(CommonConst.SESSION_ACCOUNT, user);
+                              request.setAttribute("message", "Account updated successfully!");
+                    } else {
+                              request.setAttribute("message", "Failed to update account.");
+                    }
+
+                    request.getRequestDispatcher("account.jsp").forward(request, response);
           }
 }
