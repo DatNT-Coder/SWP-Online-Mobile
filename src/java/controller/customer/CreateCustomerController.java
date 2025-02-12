@@ -4,12 +4,13 @@
  */
 package controller.customer;
 
+import controller.user.EmailSender;
 import dao.AccountDAO;
-import dao.CustomerDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,23 +23,19 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import model.User;
-import model.UserAddress;
 import utils.Helper;
 
 /**
  *
- * @author admin
+ * @author
  */
+@WebServlet(name = "CreateCustomerController", urlPatterns = {"/create-customer"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1 MB
         maxFileSize = 1024 * 1024 * 5, // 5 MB
         maxRequestSize = 1024 * 1024 * 10 // 10 MB
 )
-public class CustomerDetailServlet extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-
-    private CustomerDetailDAO customerDetailDAO = new CustomerDetailDAO();
+public class CreateCustomerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,19 +48,6 @@ public class CustomerDetailServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CustomerDetailServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CustomerDetailServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -78,21 +62,8 @@ public class CustomerDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//// Lấy danh sách khách hàng từ database
-//        List<User> customers = customerDetailDAO.getCustomerList();
-//
-//        // Gửi danh sách này sang JSP
-//        request.setAttribute("customers", customers);
-//        request.getRequestDispatcher("/CustomerDetail.jsp").forward(request, response);
-        try {
-            String id = request.getParameter("id");
-            AccountDAO accountDAO = new AccountDAO();
-            User u = accountDAO.getUserById(id);
-            request.setAttribute("u", u);
-            request.getRequestDispatcher("UpdateCustomer.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+         response.setContentType("text/html;charset=UTF-8");
+         request.getRequestDispatcher("CreateCustomer.jsp").forward(request, response);
     }
 
     /**
@@ -106,33 +77,22 @@ public class CustomerDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        String fullName = request.getParameter("fullName");
-//        String gender = request.getParameter("gender");
-//        String email = request.getParameter("email");
-//        String phone = request.getParameter("mobile");
-//        String address = request.getParameter("address");
-//
-//        int updatedBy = 1;
-//        CustomerDetailDAO da = new CustomerDetailDAO();
-//        if (request.getParameter("save") != null) {
-//
-//        }
-//        // Lưu thông tin khách hàng
-//        customerDetailDAO.saveCustomer(fullName, gender, email, phone, address, updatedBy);
-//
-//        request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
         response.setContentType("text/html;charset=UTF-8");
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
             String fullname = request.getParameter("fullName");
+//            String username = request.getParameter("username");
+            String password = Helper.randomString(8);
+            String email = request.getParameter("email");
             String mobile = request.getParameter("phone");
             String gender = request.getParameter("gender");
             String address = request.getParameter("address");
-            String oldImage = request.getParameter("oldImage");
-            int status = Integer.parseInt(request.getParameter("status"));
+            int role = 1;
+            int status = 1;
+            int settingsId = 1;
             int updateBy = 0;
-            Date updateDate = new Date(System.currentTimeMillis());
-
+            Date registrationDate = new Date(System.currentTimeMillis());
+            
+            
             // Xử lý file image upload
             Part filePart = request.getPart("image");
             String imageFilePath = null;
@@ -159,21 +119,25 @@ public class CustomerDetailServlet extends HttpServlet {
                 }
                 //get link image
                 imageFile = Helper.UPLOAD_IMAGES_DIR + File.separator + fileName;
-            } else {
-                imageFile = oldImage;
             }
-
+            
+            
             AccountDAO accountDAO = new AccountDAO();
+            boolean isEmailExists = accountDAO.checkUserEmailExistString(email);
+            if (!isEmailExists) {
+                User user = new User(email, password, fullname, mobile, gender, registrationDate, status, updateBy, null, imageFile, settingsId);
+                accountDAO.insertUserToDB(user, address);
+                //send password to mail
+//                EmailSender.sendEmail(email, "Password!", "Your email and password is: " + email + " and " + password);
 
-            User user = new User(id, fullname, mobile, gender, status, updateBy, updateDate, imageFile, new UserAddress(address, id));
-            accountDAO.updateUserToDB(user);
-
-            request.setAttribute("success", "Update success");
+                request.setAttribute("success", "Add success");
+            } else {
+                request.setAttribute("error", "Email existed");
+            }
             response.sendRedirect("customerList");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**

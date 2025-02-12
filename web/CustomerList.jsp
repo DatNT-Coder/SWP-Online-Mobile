@@ -40,9 +40,9 @@
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Customer List</h5>
                                 <div>
-                                    <a href="AddCustomer.jsp" class="btn btn-primary btn-sm">Add New</a>
-                                    <a href="#" class="btn btn-info btn-sm">View</a>
-                                    <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="create-customer" class="btn btn-primary btn-sm">Add New</a>
+<!--                                    <a href="#" class="btn btn-info btn-sm">View</a>
+                                    <a href="#" class="btn btn-warning btn-sm">Edit</a>-->
                                 </div>
                             </div>
                             <div class="card-body">
@@ -111,8 +111,11 @@
                                                 <td>${customer.gender}</td>
                                                 <td>${customer.email}</td>
                                                 <td>${customer.phone}</td>
-                                                <td>${customer.status}</td>
-                                                <td>${Detail}</td>
+                                                <td>${customer.status == 1 ? 'Active' : 'InActive'}</td>
+                                                <td>
+                                                <a href="customerDetail?id=${customer.id}" class="btn btn-info btn-sm">View Detail</a>
+                                    <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
