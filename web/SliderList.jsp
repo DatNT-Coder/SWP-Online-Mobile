@@ -60,11 +60,11 @@
                               <div class="header_top"><!--header_top-->
                                         <div class="container">
                                                   <div class="row">
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-6 ">
                                                                       <div class="contactinfo">
                                                                                 <ul class="nav nav-pills">
-                                                                                          <li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                                                                                          <li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                                                                                          <li><a href=""><i class="fa fa-phone"></i> +84 985 350 491</a></li>
+                                                                                          <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                                                                 </ul>
                                                                       </div>
                                                             </div>
@@ -88,40 +88,39 @@
                                                   <div class="row">
                                                             <div class="col-sm-4">
                                                                       <div class="logo pull-left">
-                                                                                <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                                                                                <a href="Home "><img src="images/home/logo.png" alt="" /></a>
                                                                       </div>
-                                                                      <div class="btn-group pull-right">
-                                                                                <div class="btn-group">
-                                                                                          <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                                                                                    USA
-                                                                                                    <span class="caret"></span>
-                                                                                          </button>
-                                                                                          <ul class="dropdown-menu">
-                                                                                                    <li><a href="">Canada</a></li>
-                                                                                                    <li><a href="">UK</a></li>
-                                                                                          </ul>
-                                                                                </div>
 
-                                                                                <div class="btn-group">
-                                                                                          <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                                                                                    DOLLAR
-                                                                                                    <span class="caret"></span>
-                                                                                          </button>
-                                                                                          <ul class="dropdown-menu">
-                                                                                                    <li><a href="">Canadian Dollar</a></li>
-                                                                                                    <li><a href="">Pound</a></li>
-                                                                                          </ul>
-                                                                                </div>
-                                                                      </div>
                                                             </div>
                                                             <div class="col-sm-8">
                                                                       <div class="shop-menu pull-right">
                                                                                 <ul class="nav navbar-nav">
-                                                                                          <li><a href=""><i class="fa fa-user"></i> Account</a></li>
-                                                                                          <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
-                                                                                          <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                                                                          <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                                                                          <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                                                                                          <li class="dropdown">
+                                                                                                    <a href="user-profile">
+                                                                                                              <i class="fa fa-user"></i>
+                                                                                                              ${empty sessionScope.user.email ? "Tài khoản" : sessionScope.user.full_name}</a>
+                                                                                                    <ul class="sub-menu" style=" background-color: #ffffff;padding-top: 0.8rem;max-width: 180px;" >
+                                                                                                              <li  style="color: #696763; font-size: 20px; text-align: center;padding:1rem;">
+                                                                                                                        <a class="dropdown-hover" href="changepassword" style="color: #696763">Đổi mật khẩu</a>
+                                                                                                              </li>
+                                                                                                              <li  style="color: #696763; font-size: 20px; text-align: center;padding: 1rem;">
+                                                                                                                        <a class="dropdown-hover" href="user-profile" style="color: #696763;">Thông tin người dùng</a>
+                                                                                                              </li>
+                                                                                                    </ul>
+                                                                                          </li>
+                                                                                          <c:if test="${sessionScope.user != null}">
+                                                                                                    <li><a href="${pageContext.request.contextPath}/user/orders"><i class="fa fa-star"></i> Đơn Mua</a></li>
+                                                                                          </c:if>
+                                                                                          <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+
+                                                                                          <c:choose>
+                                                                                                    <c:when test="${sessionScope.user == null}">
+                                                                                                              <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                                                                                    </c:when>
+                                                                                                    <c:otherwise>
+                                                                                                              <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
+                                                                                                    </c:otherwise>
+                                                                                          </c:choose>
                                                                                 </ul>
                                                                       </div>
                                                             </div>
@@ -143,38 +142,23 @@
                                                                       </div>
                                                                       <div class="mainmenu pull-left">
                                                                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                                                                          <li><a href="index.html">Home</a></li>
-                                                                                          <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                                                                                    <ul role="menu" class="sub-menu">
-                                                                                                              <li><a href="shop.html">Products</a></li>
-                                                                                                              <li><a href="product-details.html">Product Details</a></li> 
-                                                                                                              <li><a href="checkout.html">Checkout</a></li> 
-                                                                                                              <li><a href="cart.html">Cart</a></li> 
-                                                                                                              <li><a href="login.html">Login</a></li> 
-                                                                                                    </ul>
-                                                                                          </li> 
-                                                                                          <li class="dropdown"><a href="#" class="active">Blog<i class="fa fa-angle-down"></i></a>
-                                                                                                    <ul role="menu" class="sub-menu">
-                                                                                                              <li><a href="BlogPostList" class="active">Blog List</a></li>
-
-                                                                                                    </ul>
-                                                                                          </li> 
-                                                                                          <li><a href="404.html">404</a></li>
-                                                                                          <li><a href="contact-us.html">Contact</a></li>
+                                                                                          <li><a href="HomePage" class="active">Trang Chủ</a></li>
                                                                                 </ul>
                                                                       </div>
                                                             </div>
-                                                            <div class=" pull-right">
-                                                                      <form action="BlogPostList">
-
-                                                                                <input name="keyword" type="text" placeholder="Tìm kiếm..." required=""/>
-                                                                                <button type="submit" value="search">Tìm kiếm</button>
-                                                                      </form> 
+                                                            <div class="col-sm-3">
+                                                                      <div class=" pull-right">
+                                                                                <form action="searchProduct">
+                                                                                          <input type="hidden" name="action" value="searchByWord"/>
+                                                                                          <input name="searchBox" type="text" placeholder="Mô tả, tên sản phẩm..." required=""/>
+                                                                                          <button type="submit" value="search">Tìm kiếm</button>
+                                                                                </form> 
+                                                                      </div>
                                                             </div>
                                                   </div>
                                         </div>
-                              </div><!--/header-bottom-->
-                    </header><!--/header-->
+                              </div>
+                    </header>
 
                     <section>
                               <div class="container">
