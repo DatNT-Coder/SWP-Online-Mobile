@@ -20,110 +20,115 @@ import model.User;
  */
 public class AccountDAO extends DBContext {
 
-    public User findEmailPasswordUser(User u) {
-        List<User> listFound = new ArrayList<>();
-        connection = getConnection();
-        // Chuẩn bị câu lệnh SQL
-        String sql = "SELECT u.*, ur.role_id\n"
-                + "FROM User u\n"
-                + "JOIN user_role ur ON u.id = ur.user_id\n"
-                + "WHERE u.email = ? AND u.password = ?;";
-        try {
-            // Tạo đối tượng PreparedStatement
-            statement = connection.prepareStatement(sql);
-            // Lấy giá trị username và password từ đối tượng u để gán vào các vị trí ?
-            statement.setObject(1, u.getEmail());
-            statement.setObject(2, u.getPassword());
+          public User findEmailPasswordUser(User u) {
+                    List<User> listFound = new ArrayList<>();
+                    connection = getConnection();
+                    // Chuẩn bị câu lệnh SQL
+                    String sql = "SELECT u.*, ur.role_id\n"
+                            + "FROM User u\n"
+                            + "JOIN user_role ur ON u.id = ur.user_id\n"
+                            + "WHERE u.email = ? AND u.password = ?;";
+                    try {
+                              // Tạo đối tượng PreparedStatement
+                              statement = connection.prepareStatement(sql);
+                              // Lấy giá trị username và password từ đối tượng u để gán vào các vị trí ?
+                              statement.setObject(1, u.getEmail());
+                              statement.setObject(2, u.getPassword());
 
-            // Thực thi câu lệnh
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int idUser = resultSet.getInt("id");
-                String emailFound = resultSet.getString("email").trim();
-                String passwordFound = resultSet.getString("password").trim();
-                int roleIdFound = resultSet.getInt("role_id");
-                System.out.println("role_id from database: " + roleIdFound);
-                User userFound = new User(idUser, emailFound, passwordFound, roleIdFound);
-                listFound.add(userFound);
+                              // Thực thi câu lệnh
+                              resultSet = statement.executeQuery();
+                              if (resultSet.next()) {
+                                        int idUser = resultSet.getInt("id");
+                                        String emailFound = resultSet.getString("email").trim();
+                                        String passwordFound = resultSet.getString("password").trim();
+                                        int roleIdFound = resultSet.getInt("role_id");
+                                        String full_nameFound = resultSet.getString("full_name");
+                                        String phoneFound = resultSet.getString("phone");
+                                        String genderFound = resultSet.getString("gender");
+                                        Date registration_dateFound = resultSet.getDate("registration_date");
+                                        String imageFound = resultSet.getString("image");
+                                        System.out.println("role_id from database: " + roleIdFound);
+                                        User userFound = new User(emailFound, passwordFound, idUser, full_nameFound, phoneFound, genderFound, imageFound);
+                                        listFound.add(userFound);
 
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return listFound.isEmpty() ? null : listFound.get(0);
-    }
+                              }
+                    } catch (SQLException e) {
+                              System.out.println(e.getMessage());
+                    }
+                    return listFound.isEmpty() ? null : listFound.get(0);
+          }
 
-    public boolean checkUserEmailExist(User u) {
-        boolean check = false;
-        // Kết nối với cơ sở dữ liệu
-        connection = getConnection();
-        // Chuẩn bị câu lệnh SQL
-        String sql = "SELECT * FROM `user` WHERE `email` = ?";
-        try {
-            // Tạo đối tượng PreparedStatement
-            statement = connection.prepareStatement(sql);
-            // Đặt giá trị cho tham số
-            statement.setString(1, u.getEmail());
-            // Thực thi câu lệnh
-            resultSet = statement.executeQuery();
-            // Nếu có dòng dữ liệu nào trả về, username đã tồn tại
-            check = resultSet.next();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            // Đóng các tài nguyên sau khi sử dụng
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return check;
-    }
+          public boolean checkUserEmailExist(User u) {
+                    boolean check = false;
+                    // Kết nối với cơ sở dữ liệu
+                    connection = getConnection();
+                    // Chuẩn bị câu lệnh SQL
+                    String sql = "SELECT * FROM `user` WHERE `email` = ?";
+                    try {
+                              // Tạo đối tượng PreparedStatement
+                              statement = connection.prepareStatement(sql);
+                              // Đặt giá trị cho tham số
+                              statement.setString(1, u.getEmail());
+                              // Thực thi câu lệnh
+                              resultSet = statement.executeQuery();
+                              // Nếu có dòng dữ liệu nào trả về, username đã tồn tại
+                              check = resultSet.next();
+                    } catch (SQLException e) {
+                              System.out.println(e.getMessage());
+                    } finally {
+                              // Đóng các tài nguyên sau khi sử dụng
+                              try {
+                                        if (resultSet != null) {
+                                                  resultSet.close();
+                                        }
+                                        if (statement != null) {
+                                                  statement.close();
+                                        }
+                                        if (connection != null) {
+                                                  connection.close();
+                                        }
+                              } catch (SQLException e) {
+                                        System.out.println(e.getMessage());
+                              }
+                    }
+                    return check;
+          }
 
-    public boolean checkUserEmailExistString(String u) {
-        boolean check = false;
-        // Kết nối với cơ sở dữ liệu
-        connection = getConnection();
-        // Chuẩn bị câu lệnh SQL
-        String sql = "SELECT * FROM `user` WHERE `email` = ?";
-        try {
-            // Tạo đối tượng PreparedStatement
-            statement = connection.prepareStatement(sql);
-            // Đặt giá trị cho tham số
-            statement.setString(1, u);
-            // Thực thi câu lệnh
-            resultSet = statement.executeQuery();
-            // Nếu có dòng dữ liệu nào trả về, username đã tồn tại
-            check = resultSet.next();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            // Đóng các tài nguyên sau khi sử dụng
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return check;
-    }
+          public boolean checkUserEmailExistString(String u) {
+                    boolean check = false;
+                    // Kết nối với cơ sở dữ liệu
+                    connection = getConnection();
+                    // Chuẩn bị câu lệnh SQL
+                    String sql = "SELECT * FROM `user` WHERE `email` = ?";
+                    try {
+                              // Tạo đối tượng PreparedStatement
+                              statement = connection.prepareStatement(sql);
+                              // Đặt giá trị cho tham số
+                              statement.setString(1, u);
+                              // Thực thi câu lệnh
+                              resultSet = statement.executeQuery();
+                              // Nếu có dòng dữ liệu nào trả về, username đã tồn tại
+                              check = resultSet.next();
+                    } catch (SQLException e) {
+                              System.out.println(e.getMessage());
+                    } finally {
+                              // Đóng các tài nguyên sau khi sử dụng
+                              try {
+                                        if (resultSet != null) {
+                                                  resultSet.close();
+                                        }
+                                        if (statement != null) {
+                                                  statement.close();
+                                        }
+                                        if (connection != null) {
+                                                  connection.close();
+                                        }
+                              } catch (SQLException e) {
+                                        System.out.println(e.getMessage());
+                              }
+                    }
+                    return check;
+          }
 
 //public void insertUserToDB(User user) {
 //    // Kết nối với cơ sở dữ liệu
@@ -186,185 +191,185 @@ public class AccountDAO extends DBContext {
 //        }
 //    }
 //}
-    public void insertUserToDB(User user) {
-        try {
-            // Kết nối với cơ sở dữ liệu
-            connection = getConnection();
+          public void insertUserToDB(User user) {
+                    try {
+                              // Kết nối với cơ sở dữ liệu
+                              connection = getConnection();
 
-            // Tạo câu lệnh SQL để chèn user
-            String sql = "INSERT INTO `user` "
-                    + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                              // Tạo câu lệnh SQL để chèn user
+                              String sql = "INSERT INTO `user` "
+                                      + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
+                                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            // Chuẩn bị câu lệnh SQL
-            statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
+                              // Chuẩn bị câu lệnh SQL
+                              statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
 
-            // Gán giá trị vào câu lệnh SQL
-            statement.setString(1, user.getEmail());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getFull_name());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getGender());
-            statement.setDate(6, new java.sql.Date(user.getRegistration_date().getTime()));
-            statement.setInt(7, user.getStatus());
-            statement.setInt(8, user.getUpdatedBy());
+                              // Gán giá trị vào câu lệnh SQL
+                              statement.setString(1, user.getEmail());
+                              statement.setString(2, user.getPassword());
+                              statement.setString(3, user.getFull_name());
+                              statement.setString(4, user.getPhone());
+                              statement.setString(5, user.getGender());
+                              statement.setDate(6, new java.sql.Date(user.getRegistration_date().getTime()));
+                              statement.setInt(7, user.getStatus());
+                              statement.setInt(8, user.getUpdatedBy());
 
-            // Xử lý giá trị NULL cho updated_date và image
-            if (user.getUpdatedDate() != null) {
-                statement.setDate(9, new java.sql.Date(user.getUpdatedDate().getTime()));
-            } else {
-                statement.setNull(9, java.sql.Types.DATE);
-            }
+                              // Xử lý giá trị NULL cho updated_date và image
+                              if (user.getUpdatedDate() != null) {
+                                        statement.setDate(9, new java.sql.Date(user.getUpdatedDate().getTime()));
+                              } else {
+                                        statement.setNull(9, java.sql.Types.DATE);
+                              }
 
-            if (user.getImage() != null) {
-                statement.setString(10, user.getImage());
-            } else {
-                statement.setNull(10, java.sql.Types.VARCHAR);
-            }
+                              if (user.getImage() != null) {
+                                        statement.setString(10, user.getImage());
+                              } else {
+                                        statement.setNull(10, java.sql.Types.VARCHAR);
+                              }
 
-            statement.setInt(11, user.getSettings_id());
+                              statement.setInt(11, user.getSettings_id());
 
-            // Thực thi câu lệnh SQL
-            statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
+                              // Thực thi câu lệnh SQL
+                              statement.executeUpdate();
+                              resultSet = statement.getGeneratedKeys();
 
-            // Kiểm tra nếu có ID được sinh tự động
-            if (resultSet.next()) {
-                int userId = resultSet.getInt(1);
-                System.out.println("User inserted with ID: " + userId);
+                              // Kiểm tra nếu có ID được sinh tự động
+                              if (resultSet.next()) {
+                                        int userId = resultSet.getInt(1);
+                                        System.out.println("User inserted with ID: " + userId);
 
-                // Sau khi chèn user, thêm user_id vào bảng user_role
-                insertToUserRole(userId, 1); // Gán mặc định role_id = 1
-            }
+                                        // Sau khi chèn user, thêm user_id vào bảng user_role
+                                        insertToUserRole(userId, 1); // Gán mặc định role_id = 1
+                              }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Đóng tài nguyên
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+                    } catch (SQLException e) {
+                              e.printStackTrace();
+                    } finally {
+                              // Đóng tài nguyên
+                              try {
+                                        if (resultSet != null) {
+                                                  resultSet.close();
+                                        }
+                                        if (statement != null) {
+                                                  statement.close();
+                                        }
+                                        if (connection != null) {
+                                                  connection.close();
+                                        }
+                              } catch (SQLException e) {
+                                        e.printStackTrace();
+                              }
+                    }
+          }
 
 // Phương thức thêm user vào bảng user_role
-    private void insertToUserRole(int idFromUser, int roleId) {
-        try {
-            connection = getConnection();
-            String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, idFromUser);
-            statement.setInt(2, roleId);
+          private void insertToUserRole(int idFromUser, int roleId) {
+                    try {
+                              connection = getConnection();
+                              String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
+                              statement = connection.prepareStatement(sql);
+                              statement.setInt(1, idFromUser);
+                              statement.setInt(2, roleId);
 
-            statement.executeUpdate();
-            System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
+                              statement.executeUpdate();
+                              System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+                    } catch (SQLException e) {
+                              e.printStackTrace();
+                    } finally {
+                              try {
+                                        if (statement != null) {
+                                                  statement.close();
+                                        }
+                                        if (connection != null) {
+                                                  connection.close();
+                                        }
+                              } catch (SQLException e) {
+                                        e.printStackTrace();
+                              }
+                    }
+          }
 
+          public boolean checkOldPassword(String email, String oldPassword) {
+                    boolean isValid = false;
 
-    public boolean checkOldPassword(String email, String oldPassword) {
-        boolean isValid = false;
+                    // Kết nối với cơ sở dữ liệu
+                    connection = getConnection();
 
-        // Kết nối với cơ sở dữ liệu
-        connection = getConnection();
+                    // Câu lệnh SQL để kiểm tra email và mật khẩu
+                    String sql = "SELECT * FROM `user` WHERE `email` = ? AND `password` = ?";
 
-        // Câu lệnh SQL để kiểm tra email và mật khẩu
-        String sql = "SELECT * FROM `user` WHERE `email` = ? AND `password` = ?";
+                    try {
+                              // Tạo PreparedStatement
+                              statement = connection.prepareStatement(sql);
+                              // Đặt giá trị cho tham số
+                              statement.setString(1, email);
+                              statement.setString(2, oldPassword);
+                              // Thực thi câu lệnh SQL
+                              resultSet = statement.executeQuery();
+                              // Nếu có dữ liệu trả về, nghĩa là mật khẩu cũ đúng
+                              isValid = resultSet.next();
+                    } catch (SQLException e) {
+                              System.out.println("Lỗi kiểm tra mật khẩu cũ: " + e.getMessage());
+                    } finally {
+                              // Đóng các tài nguyên
+                              try {
+                                        if (resultSet != null) {
+                                                  resultSet.close();
+                                        }
+                                        if (statement != null) {
+                                                  statement.close();
+                                        }
+                                        if (connection != null) {
+                                                  connection.close();
+                                        }
+                              } catch (SQLException e) {
+                                        System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
+                              }
+                    }
+                    return isValid;
+          }
 
-        try {
-            // Tạo PreparedStatement
-            statement = connection.prepareStatement(sql);
-            // Đặt giá trị cho tham số
-            statement.setString(1, email);
-            statement.setString(2, oldPassword);
-            // Thực thi câu lệnh SQL
-            resultSet = statement.executeQuery();
-            // Nếu có dữ liệu trả về, nghĩa là mật khẩu cũ đúng
-            isValid = resultSet.next();
-        } catch (SQLException e) {
-            System.out.println("Lỗi kiểm tra mật khẩu cũ: " + e.getMessage());
-        } finally {
-            // Đóng các tài nguyên
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
-            }
-        }
-        return isValid;
-    }
+          public boolean updatePassword(String email, String newPassword) {
+                    boolean isUpdated = false;
 
-    
-public boolean updatePassword(String email, String newPassword) {
-    boolean isUpdated = false;
+                    // Câu lệnh SQL cập nhật mật khẩu
+                    String sql = "UPDATE `user` SET `password` = ? WHERE `email` = ?";
 
-    // Câu lệnh SQL cập nhật mật khẩu
-    String sql = "UPDATE `user` SET `password` = ? WHERE `email` = ?";
-    
-    try {
-        // Kết nối với cơ sở dữ liệu
-        connection = getConnection();
-        statement = connection.prepareStatement(sql);
-        
-        // Đặt giá trị cho tham số
-        statement.setString(1, newPassword);
-        statement.setString(2, email);
-        
-        // Thực thi câu lệnh SQL
-        int rowsAffected = statement.executeUpdate();
-        
-        // Nếu có ít nhất một dòng được cập nhật, tức là cập nhật thành công
-        isUpdated = rowsAffected > 0;
-    } catch (SQLException e) {
-        System.out.println("Lỗi cập nhật mật khẩu: " + e.getMessage());
-    } finally {
-        // Đóng tài nguyên để tránh rò rỉ
-        try {
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        } catch (SQLException e) {
-            System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
-        }
-    }
-    return isUpdated;
-}
+                    try {
+                              // Kết nối với cơ sở dữ liệu
+                              connection = getConnection();
+                              statement = connection.prepareStatement(sql);
 
-    
-    
-        public static void main(String[] args) {
-        AccountDAO d = new AccountDAO();
+                              // Đặt giá trị cho tham số
+                              statement.setString(1, newPassword);
+                              statement.setString(2, email);
+
+                              // Thực thi câu lệnh SQL
+                              int rowsAffected = statement.executeUpdate();
+
+                              // Nếu có ít nhất một dòng được cập nhật, tức là cập nhật thành công
+                              isUpdated = rowsAffected > 0;
+                    } catch (SQLException e) {
+                              System.out.println("Lỗi cập nhật mật khẩu: " + e.getMessage());
+                    } finally {
+                              // Đóng tài nguyên để tránh rò rỉ
+                              try {
+                                        if (statement != null) {
+                                                  statement.close();
+                                        }
+                                        if (connection != null) {
+                                                  connection.close();
+                                        }
+                              } catch (SQLException e) {
+                                        System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
+                              }
+                    }
+                    return isUpdated;
+          }
+
+          public static void main(String[] args) {
+                    AccountDAO d = new AccountDAO();
 
 //        User a = new User("gggg@gmail.com", "a12345");
 //        User isExist = d.findEmailPasswordUser(a);
@@ -386,15 +391,9 @@ public boolean updatePassword(String email, String newPassword) {
 //        int settingsId = 1;
 //        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
 //        d.insertUserToDB(ru);
-
 //        System.out.println(d.checkUserEmailExistString("john.doe@example.com"));
-        
 //        System.out.println(d.checkOldPassword("john.doe@example.com", "pass123"));
-        
 //        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
-            
+          }
 
-    }
-    
-    
 }

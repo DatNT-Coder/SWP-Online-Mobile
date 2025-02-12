@@ -155,14 +155,13 @@ public class AuthenticationServlet extends HttpServlet {
         String username = request.getParameter("full_name");
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
-        Date registrationDate = new Date(System.currentTimeMillis());
         int status = 1;
         int updatedBy = 0;
         Date updatedDate = null;
         String image = null;
         int settingsId = 1;
 
-        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+        User ru = new User(emailUser, password, updatedBy, username, phone, gender, image);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
 
