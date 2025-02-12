@@ -43,6 +43,8 @@
     <servlet>
         <servlet-name>CartViewController</servlet-name>
         <servlet-class>controller.cart.CartViewController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CustomerDetailServlet</servlet-name>
         <servlet-class>controller.customer.CustomerDetailServlet</servlet-class>
     </servlet>
@@ -89,7 +91,5 @@
     <servlet-mapping>
         <servlet-name>CartViewController</servlet-name>
         <url-pattern>/CartViewController</url-pattern>
-        <servlet-name>CustomerDetailServlet</servlet-name>
-        <url-pattern>/customerDetail</url-pattern>
     </servlet-mapping>
 </web-app>

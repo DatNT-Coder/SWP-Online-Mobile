@@ -231,7 +231,7 @@
                                 quantityDiv.value = newQuantity;
                                 priceDiv.innerHTML = '$' + price;
                                 totalDiv.innerHTML = '$' + total;
-                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
+//                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
                             } else {
                                 await FuiToast.error('Update product quantity failed!');
                             }
