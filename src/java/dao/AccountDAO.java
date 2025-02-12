@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.User;
+import model.UserAddress;
 
 /**
  *
@@ -256,6 +257,78 @@ public class AccountDAO extends DBContext {
             }
         }
     }
+    
+    public void insertUserToDB(User user, String address) {
+        try {
+            // Kết nối với cơ sở dữ liệu
+            connection = getConnection();
+
+            // Tạo câu lệnh SQL để chèn user
+            String sql = "INSERT INTO `user` "
+                    + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            // Chuẩn bị câu lệnh SQL
+            statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
+
+            // Gán giá trị vào câu lệnh SQL
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getFull_name());
+            statement.setString(4, user.getPhone());
+            statement.setString(5, user.getGender());
+            statement.setDate(6, new java.sql.Date(user.getRegistration_date().getTime()));
+            statement.setInt(7, user.getStatus());
+            statement.setInt(8, user.getUpdatedBy());
+
+            // Xử lý giá trị NULL cho updated_date và image
+            if (user.getUpdatedDate() != null) {
+                statement.setDate(9, new java.sql.Date(user.getUpdatedDate().getTime()));
+            } else {
+                statement.setNull(9, java.sql.Types.DATE);
+            }
+
+            if (user.getImage() != null) {
+                statement.setString(10, user.getImage());
+            } else {
+                statement.setNull(10, java.sql.Types.VARCHAR);
+            }
+
+            statement.setInt(11, user.getSettings_id());
+
+            // Thực thi câu lệnh SQL
+            statement.executeUpdate();
+            resultSet = statement.getGeneratedKeys();
+
+            // Kiểm tra nếu có ID được sinh tự động
+            if (resultSet.next()) {
+                int userId = resultSet.getInt(1);
+                System.out.println("User inserted with ID: " + userId);
+
+                // Sau khi chèn user, thêm user_id vào bảng user_role
+                insertToUserRole(userId, 1); // Gán mặc định role_id = 1
+                insertToUserAddress(userId, address);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 // Phương thức thêm user vào bảng user_role
     private void insertToUserRole(int idFromUser, int roleId) {
@@ -268,6 +341,32 @@ public class AccountDAO extends DBContext {
 
             statement.executeUpdate();
             System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void insertToUserAddress(int idFromUser, String address) {
+        try {
+            connection = getConnection();
+            String sql = "INSERT INTO useraddress (user_id, user_address) VALUES (?, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idFromUser);
+            statement.setString(2, address);
+
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -395,6 +494,130 @@ public boolean updatePassword(String email, String newPassword) {
             
 
     }
+
+    public User getUserById(String id) {
+        User user = null;
+        connection = getConnection();
+        // Chuẩn bị câu lệnh SQL
+        String sql = "SELECT *\n"
+                + "FROM User u, useraddress ud\n"
+                + "WHERE u.id = ud.user_id and u.id = ?";
+        try {
+            // Tạo đối tượng PreparedStatement
+            statement = connection.prepareStatement(sql);
+            // Lấy giá trị username và password từ đối tượng u để gán vào các vị trí ?
+            statement.setInt(1, Integer.parseInt(id));
+
+            // Thực thi câu lệnh
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User(resultSet.getInt(1), 
+                        resultSet.getString(2), 
+                        resultSet.getString(3), 
+                        resultSet.getString(4), 
+                        resultSet.getString(5), 
+                        resultSet.getString(6), 
+                        resultSet.getDate(7), 
+                        resultSet.getInt(8), 
+                        resultSet.getInt(9), 
+                        resultSet.getDate(10), resultSet.getString(11), resultSet.getInt(12));
+                
+                UserAddress ud = new UserAddress(resultSet.getString(13), resultSet.getInt(1));
+               
+                user.setUserAddress(ud);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
     
+    }
+
+    public void updateUserToDB(User user) {
+        try {
+            // Kết nối với cơ sở dữ liệu
+            connection = getConnection();
+            // Tạo câu lệnh SQL để chèn user
+            String sql = "update `user` "
+                    + "set full_name = ?, phone = ?, gender = ?, status = ?, updatedBy = ?, updatedDate =?, image=? "
+                    + "where id = ?";
+
+            // Gán giá trị vào câu lệnh SQL
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getFull_name());
+            statement.setString(2, user.getPhone());
+            statement.setString(3, user.getGender());
+            statement.setInt(4, user.getStatus());
+            statement.setInt(5, user.getUpdatedBy());
+            statement.setDate(6, new java.sql.Date(user.getUpdatedDate().getTime()));
+            statement.setString(7, user.getImage());
+            statement.setInt(8, user.getId());
+
+         
+            // Thực thi câu lệnh SQL
+            statement.executeUpdate();
+            updateUserAddressToDB(user.getUserAddress());
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+        public void updateUserAddressToDB(UserAddress ua) {
+        try {
+            // Kết nối với cơ sở dữ liệu
+            connection = getConnection();
+
+            // Tạo câu lệnh SQL để chèn user
+            String sql = "update `useraddress` "
+                    + "set user_address = ? "
+                    + "where user_id = ?";
+
+            // Gán giá trị vào câu lệnh SQL
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, ua.getUserAddress());
+           
+            statement.setInt(2, ua.getUserId());
+
+         
+            // Thực thi câu lệnh SQL
+            statement.executeUpdate();
+
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     
 }

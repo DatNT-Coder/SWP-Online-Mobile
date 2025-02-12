@@ -24,9 +24,9 @@ public class DBContext {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // URL kết nối MySQL
-            String url = "jdbc:mysql://localhost:3306/mydb"; // Thay project_PRJ2 bằng tên database của bạn
-            String user = "root"; // Thay root bằng username của bạn
-            String password = "123456"; // Thay kali123 bằng password của bạn
+            String url = "jdbc:mysql://localhost:3306/mydb"; 
+            String user = "root"; 
+            String password = "123456"; 
 
             // Tạo kết nối
             connection = DriverManager.getConnection(url, user, password);
