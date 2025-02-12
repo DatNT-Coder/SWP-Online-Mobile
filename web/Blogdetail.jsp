@@ -191,7 +191,7 @@
                         </div>
                         <div class="pager-area">
                             <div class="pager pull-right">
-                                <a href="BlogPostList" class="btn btn-primary" style="background-color: #FE0F9E">Đọc thêm bài đăng khác</a>
+                                <a href="BlogPostList" class="btn btn-primary" style="background-color: #009981">Đọc thêm bài đăng khác</a>
                             </div>
                         </div>
                     </div>
