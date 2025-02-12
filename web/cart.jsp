@@ -148,11 +148,11 @@
         <section id="cart_items">
             <div class="container">
                 <div class="breadcrumbs">
-                    <ol style="color: #FE0F9E;" class="breadcrumb">
+                    <ol style="color: #009981;" class="breadcrumb">
                         
                     </ol>
                 </div>
-                <div style="color: #FE0F9E;" class="table-responsive cart_info">
+                <div style="color: #009981;" class="table-responsive cart_info">
                     <table  class="table table-condensed">
                         <thead>
                             <tr  class="cart_menu">
