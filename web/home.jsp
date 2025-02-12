@@ -137,7 +137,7 @@
                                                                                                                                   <li><a href="blog-single.html">Blog Single</a></li>
                                                                                                                         </ul>
                                                                                                               </li> 
-                                                                                                              <li class="dropdown"><a href="CustomerList.jsp">Customer List</a>
+                                                                                                              <li class="dropdown"><a href="customerList">Customer List</a>
                                                                                                               </li> 
                                                                                                     </ul>
                                                                                           </div>
