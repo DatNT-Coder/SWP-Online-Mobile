@@ -63,7 +63,6 @@ public class User {
         this.updatedDate = updatedDate;
         this.image = image;
         this.settings_id = settings_id;
-        this.userAddress = userAddress;
     }
 
     public User(int id, String full_name, String phone, String gender, int status, int updatedBy, Date updatedDate, String image, UserAddress userAddress) {
