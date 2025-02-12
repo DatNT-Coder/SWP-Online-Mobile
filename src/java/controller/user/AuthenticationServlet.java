@@ -192,7 +192,8 @@ public class AuthenticationServlet extends HttpServlet {
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
-        return "home.jsp";
+        request.getSession().removeAttribute("user");
+        return "HomePage";
     }
 
     private String generateVerificationCode() {
