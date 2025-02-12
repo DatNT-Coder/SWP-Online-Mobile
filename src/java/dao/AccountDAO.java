@@ -509,8 +509,6 @@ public boolean updatePassword(String email, String newPassword) {
             statement.setInt(1, Integer.parseInt(id));
 
             // Thực thi câu lệnh
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
                 user = new User(resultSet.getInt(1), 
                         resultSet.getString(2), 
                         resultSet.getString(3), 
