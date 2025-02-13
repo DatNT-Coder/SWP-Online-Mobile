@@ -78,7 +78,7 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
                                         pageIndex = "1";
                               }
                               int index = Integer.parseInt(pageIndex);
-                              int postPerPage = 1;
+                              int postPerPage = 2;
 
                               String keyword = request.getParameter("keyword");
                               Vector<BlogPost> listPost;
