@@ -23,7 +23,7 @@ import model.Slider;
 public class SliderList extends HttpServlet {
 
           private SliderDAO sliderDAO = new SliderDAO();
-          private static final int PAGE_SIZE = 1; // Number of sliders per page
+          private static final int PAGE_SIZE = 2; // Number of sliders per page
 
           /**
            * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -65,35 +65,25 @@ public class SliderList extends HttpServlet {
 
                     // Get page number from request, default to 1
                     int page = 1;
-                    int sliderId = -1;
-
                     try {
                               if (request.getParameter("page") != null) {
                                         page = Integer.parseInt(request.getParameter("page"));
-                              }
-                              if (request.getParameter("sliderId") != null) {
-                                        sliderId = Integer.parseInt(request.getParameter("sliderId"));
                               }
                     } catch (NumberFormatException e) {
                               page = 1;
                     }
 
-                    SliderDAO sliderDAO = new SliderDAO();
+                    // Fetch sliders for the page
+                    List<Slider> sliders = sliderDAO.getSlidersByPage(page, PAGE_SIZE);
                     int totalSliders = sliderDAO.getTotalSliders();
                     int totalPages = (int) Math.ceil((double) totalSliders / PAGE_SIZE);
 
-                    // Determine which page contains the sliderId
-                    if (sliderId != -1) {
-                              page = sliderDAO.getSliderPage(sliderId, PAGE_SIZE);
-                    }
-
-                    List<Slider> sliders = sliderDAO.getSlidersByPage(page, PAGE_SIZE);
-
+                    // Set attributes for JSP
                     request.setAttribute("sliders", sliders);
                     request.setAttribute("currentPage", page);
                     request.setAttribute("totalPages", totalPages);
-                    request.setAttribute("sliderId", sliderId);  // To highlight the slider
 
+                    // Forward to JSP
                     request.getRequestDispatcher("SliderList.jsp").forward(request, response);
           }
 

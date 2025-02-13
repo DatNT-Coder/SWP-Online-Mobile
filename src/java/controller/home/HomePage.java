@@ -10,20 +10,17 @@ import dao.BrandDAO;
 import dao.PostCategoryDAO;
 import dao.ProductCategoryDAO;
 import dao.ProductDAO;
-import dao.SliderDAO;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
 import jakarta.servlet.ServletException;
 import java.util.ArrayList;
-import java.util.List;
 import model.BlogPost;
 import model.Brand;
 import model.PostCategory;
 import model.Product;
 import model.ProductCategory;
-import model.Slider;
 
 /**
  *
@@ -114,15 +111,10 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
                               request.setAttribute("endPage", endPage);
                               request.setAttribute("keyword", keyword);
 
-                              SliderDAO sliderDAO = new SliderDAO();
-                              List<Slider> sliders = sliderDAO.getAllSliders();
-                              request.setAttribute("sliders", sliders);
-
                               request.setAttribute("listPC", listPCategories);
                               request.setAttribute("latestP", latestProduct);
                               request.getRequestDispatcher("home.jsp").forward(request, response);
                     }
-
           }
 
           // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
