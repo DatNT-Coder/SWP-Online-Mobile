@@ -269,7 +269,7 @@
 
                                                                 </c:if>
                                                                 <c:if test="${sessionScope.user == null}">
-                                                                    <a href="Login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
 
                                                                 </c:if>
                                                             </div>
