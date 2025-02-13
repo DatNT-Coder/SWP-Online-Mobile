@@ -3,17 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/index.html</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/BloglistCategory.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/SliderDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderList.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/home/HomePage.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderList.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/verify.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Slider.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/shop.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/home.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/AccountDAO.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/shop.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/home.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/cart.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductList.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/login.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/BloglistCategory.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/cart/CartViewController.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/user/VerifyServlet.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/regis.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/Blogdetail.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/dao/AccountDAO.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/user/AuthenticationServlet.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/Blog.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/changepw.jsp</file>
         </group>
     </open-files>
 </project-private>
