@@ -524,7 +524,7 @@ public boolean updatePassword(String email, String newPassword) {
                
                 user.setUserAddress(ud);
             }
-        } catch (SQLException e) {
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return user;
