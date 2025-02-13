@@ -162,6 +162,25 @@ public class AuthenticationServlet extends HttpServlet {
         String image = null;
         int settingsId = 1;
 
+        //ktra null hoặc chuỗi rỗng "  "
+        boolean hasError = false;
+        if (password == null || password.trim().isEmpty()) {
+            request.setAttribute("erPass", "Password cannot be empty.");
+            hasError = true;
+        }
+        if (username == null || username.trim().isEmpty()) {
+            request.setAttribute("erName", "Name cannot be empty.");
+            hasError = true;
+        }
+        if (emailUser == null || emailUser.trim().isEmpty()) {
+            request.setAttribute("erEmail", "Email cannot be empty.");
+            hasError = true;
+        }
+        
+        if (hasError) {
+            return url = "regis.jsp";
+        }
+
         User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
@@ -186,7 +205,7 @@ public class AuthenticationServlet extends HttpServlet {
         //gui email o day
         EmailSender.sendEmail(ru.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
 
-        url = "verify.jsp";
+        url = "HomePage";
         return url;
     }
 
