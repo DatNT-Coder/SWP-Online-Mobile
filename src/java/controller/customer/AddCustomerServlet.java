@@ -74,9 +74,9 @@ public class AddCustomerServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         int status = Integer.parseInt(request.getParameter("status"));
 
-        User newCustomer = new User(fullName, gender, email, phone, status);
-        CustomerDAO dao = new CustomerDAO();
-        dao.addCustomer(newCustomer);
+//        User newCustomer = new User(fullName, gender, email, phone, status);
+//        CustomerDAO dao = new CustomerDAO();
+//        dao.addCustomer(newCustomer);
 
         response.sendRedirect("customerList");
     }

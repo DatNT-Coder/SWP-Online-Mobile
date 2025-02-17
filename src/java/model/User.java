@@ -44,6 +44,22 @@ public class User {
         this.settings_id = settings_id;
     }
 
+    public User(int id, String email, String password, String full_name, String phone, String gender, Date registration_date, int status, int updatedBy, Date updatedDate, String image, int settings_id, int role_id) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.full_name = full_name;
+        this.phone = phone;
+        this.gender = gender;
+        this.registration_date = registration_date;
+        this.status = status;
+        this.updatedBy = updatedBy;
+        this.updatedDate = updatedDate;
+        this.image = image;
+        this.settings_id = settings_id;
+        this.role_id = role_id;
+    }
+
 
 
     public User(int id, String email, String password, int role_id) {

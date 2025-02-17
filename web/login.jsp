@@ -154,8 +154,7 @@
 
         <section id="form"><!--form-->
             <div class="container">
-                <div class="row">
-
+                <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="login-form"><!--login form-->
                         <h2>Login to your account</h2>
                         <form action="authen?action=login" method="post">

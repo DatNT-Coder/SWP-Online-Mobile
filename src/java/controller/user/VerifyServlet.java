@@ -86,7 +86,7 @@ public class VerifyServlet extends HttpServlet {
             AuthenticationServlet.getVerificationCodes().remove(emailFromVerify);
 
             AccountDAO dao = new AccountDAO();
-            User u = (User) request.getSession().getAttribute("registerUser");
+            User u = (User) request.getSession().getAttribute("registerUser"); //request.getSession().getAttribute("registerUser") trả về kiểu object nên cần cast về kiểu User
             
             dao.insertUserToDB(u);
             
