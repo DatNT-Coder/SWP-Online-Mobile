@@ -118,7 +118,7 @@
                                     <li><a href="cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
                                             <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
                                             <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
@@ -151,7 +151,7 @@
                                             <li><a href="ProductList">Sản Phẩm</a></li>
                                                 <c:choose>
                                                     <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                                    <li><a href="signIn.jsp">Đăng Nhập</a></li> 
+                                                    <li><a href="login.jsp">Đăng Nhập</a></li> 
                                                     </c:when>
                                                     <c:otherwise>
                                                     <li><a href="logOut.jsp">Đăng Xuất</a></li>

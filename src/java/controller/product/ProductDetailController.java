@@ -5,7 +5,7 @@
 package controller.product;
 
 import dao.BrandDAO;
-//import dao.FeedbackDAO;
+import dao.FeedbackDAO;
 import dao.ProductCategoryDAO;
 import dao.ProductDAO;
 import dao.ProductDetailDAO;
@@ -79,8 +79,8 @@ public class ProductDetailController extends HttpServlet {
         }
         ProductDetailDAO dao = new ProductDetailDAO();
         ProductDAO daoP = new ProductDAO();
-//        FeedbackDAO daoFeedback = new FeedbackDAO();
-//        List<ProductFeedback> listFeedback = daoFeedback.findFeedbackbyProductID(Integer.parseInt(id));
+        FeedbackDAO daoFeedback = new FeedbackDAO();
+        List<ProductFeedback> listFeedback = daoFeedback.findFeedbackbyProductID(Integer.parseInt(id));
         List<Product> latestProduct = dao.latestProduct();
         ProductDetail productDetail = dao.getProductById(id);
         Product pById = daoP.getProductById(Integer.parseInt(id));
@@ -94,7 +94,7 @@ public class ProductDetailController extends HttpServlet {
         request.setAttribute("productDetail", productDetail);
         request.setAttribute("latestP", latestProduct);
         request.setAttribute("listPC", listPCategories);
-//        request.setAttribute("listFeedback", listFeedback);
+        request.setAttribute("listFeedback", listFeedback);
         session.setAttribute("pickedCategory", pById.getProductCategory_ID());
         session.setAttribute("pickedBrand", pById.getBrandId());
         //get all Brand
@@ -118,7 +118,7 @@ public class ProductDetailController extends HttpServlet {
         User userProfile = (User) session.getAttribute("user");
         int role = (Integer) session.getAttribute("role");
         if (role == 1) {
-//            FeedbackDAO dao = new FeedbackDAO();
+            FeedbackDAO dao = new FeedbackDAO();
             ProductDAO daoP = new ProductDAO();
             // Retrieve feedback data from the form
             String fullName = request.getParameter("full_name");
@@ -147,7 +147,7 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setProduct_Id(productId);
                 feedback.setUser_Id(userId);
                 feedback.setStatus(1);
-//                dao.addFeedback(feedback);
+                dao.addFeedback(feedback);
             } else {
 
                 filePart.write("D:\\group6_shopmobile\\web\\assets\\img\\feedbackImage\\" + fileName);
@@ -161,7 +161,7 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setProduct_Id(productId);
                 feedback.setUser_Id(userId);
                 feedback.setStatus(1);
-//                dao.addFeedback(feedback);
+                dao.addFeedback(feedback);
             }
             try {
                 // Thời gian chờ (được đặt bằng mili giây)
