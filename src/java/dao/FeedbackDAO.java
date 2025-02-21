@@ -359,7 +359,8 @@ public class FeedbackDAO extends DBContext {
                 + "WHERE\n"
                 + "    Product_ID = ?;";
         try ( 
-               
+            Connection connection = getConnection(); 
+
             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, testProductId);
             try ( ResultSet rs = statement.executeQuery()) {

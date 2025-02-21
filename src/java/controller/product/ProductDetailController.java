@@ -171,7 +171,7 @@ public class ProductDetailController extends HttpServlet {
             }
             Product b = daoP.getProductById(productId);
             // You may want to redirect the user to a confirmation page
-            response.sendRedirect("productDetail?bid=" + b.getBrandId() + "&cid=" + b.getProductCategory_ID() + "&pid=" + productId);
+            response.sendRedirect("ProductDetails?bid=" + b.getBrandId() + "&cid=" + b.getProductCategory_ID() + "&pid=" + productId);
         } 
         else {
             response.sendRedirect("/mobileshop/404.jsp"); 
