@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="Home"><img src="images/home/logo.png" alt="" /></a>
+                                <a href="HomePage"><img src="images/home/logo.png" alt="" /></a>
                             </div>              
                         </div>
                         <div class="col-sm-8">
@@ -145,10 +145,10 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="Home" class="active">Trang Chủ</a></li>
-                                    <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="HomePage" class="active">Trang Chủ</a></li>
+                                    <li class="dropdown"><a href="ProductList">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="listProduct">Sản Phẩm</a></li>
+                                            <li><a href="ProductList">Sản Phẩm</a></li>
                                                 <c:choose>
                                                     <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
                                                     <li><a href="signIn.jsp">Đăng Nhập</a></li> 
@@ -196,7 +196,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title" >
-                                            <a href="listProduct">
+                                            <a href="ProductList">
                                                 <span class="badge pull-right"></span>
                                                 Tất cả
                                             </a>
@@ -431,7 +431,7 @@
                                     <div class="item active">
                                         <c:forEach begin="0" end="2" items="${requestScope.latestP}" var="latestP">
                                             <div class="col-sm-4">
-                                                <a href="productDetail?pid=${latestP.ID}">
+                                                <a href="ProductDetails?pid=${latestP.ID}">
                                                     <div class="product-image-wrapper">
                                                         <div class="single-products">
 
@@ -453,7 +453,7 @@
 
                                         <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
                                             <div class="col-sm-4">
-                                                <a href="productDetail?pid=${latestP.ID}">
+                                                <a href="ProductDetails?pid=${latestP.ID}">
                                                     <div class="product-image-wrapper">
                                                         <div class="single-products">
 
