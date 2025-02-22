@@ -91,7 +91,7 @@ public class VerifyServlet extends HttpServlet {
             dao.insertUserToDB(u);
             
             request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, u);
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            request.getRequestDispatcher("HomePage").forward(request, response);
 
         } else {
             // Gửi thông báo lỗi về trang trước hoặc trang lỗi

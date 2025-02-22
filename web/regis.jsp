@@ -103,6 +103,9 @@
                                         <c:if test="${account == null}">
                                         <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
                                         </c:if>
+                                                                                <c:if test="${account != null}">
+                                        <li><a href="changepw.jsp"><i class="fa fa-lock"></i> Change Password</a></li>
+                                        </c:if>
                                     <li><a href="regis.jsp"><i class="fa fa-shopping-cart"></i> Register</a></li>
                                 </ul>
                             </div>
@@ -175,7 +178,7 @@
                             <label for="phone">Phone Number:</label>
                             <input name="phone" type="text" id="phone" placeholder="Enter your phone number"
                                    pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required/>
-                            <button type="submit" class="btn btn-default">Signup</button> <h1 style="color: red"> ${erEmail} ${erPass} ${erName} ${erEmailName} </h1>
+                            <button type="submit" class="btn btn-default">Signup</button> <h1 style="color: red"> ${erEmail} ${erPass} ${erName} ${erEmailExist} </h1>
                         </form>
                     </div><!--/sign up form-->
                 </div>

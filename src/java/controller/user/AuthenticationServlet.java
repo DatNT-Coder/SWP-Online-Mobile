@@ -191,10 +191,10 @@ public class AuthenticationServlet extends HttpServlet {
         User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
-
+        
         if (isExistUserEmail) {
-            request.setAttribute("erEmail", "Email is exist.");
-            request.getRequestDispatcher("regis.jsp").forward(request, response);
+            request.setAttribute("erEmailExist", "Email is exist.");
+            return url = "regis.jsp";
         } else {
             request.getSession().setAttribute(CommonConst.SESSION_REGISTER_USER_EMAIL, ru.getEmail());
             request.getSession().setAttribute(CommonConst.SESSION_REGISTER_USER, ru);
@@ -212,8 +212,9 @@ public class AuthenticationServlet extends HttpServlet {
         //gui email o day
         EmailSender.sendEmail(ru.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
 
-        url = "HomePage";
+        url = "verify.jsp";
         return url;
+        
     }
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
