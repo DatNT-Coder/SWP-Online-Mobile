@@ -5,17 +5,25 @@
 package controller.home;
 
 import com.google.gson.Gson;
+import dao.BlogPostDAO;
 import dao.BrandDAO;
+import dao.PostCategoryDAO;
 import dao.ProductCategoryDAO;
 import dao.ProductDAO;
+import dao.SliderDAO;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
 import jakarta.servlet.ServletException;
+import java.util.ArrayList;
+import java.util.List;
+import model.BlogPost;
 import model.Brand;
+import model.PostCategory;
 import model.Product;
 import model.ProductCategory;
+import model.Slider;
 
 /**
  *
@@ -64,11 +72,57 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
                               request.setAttribute("listProduct", listProductGson);
 
                               //setup forward jsp file
+                              String pageIndex = request.getParameter("index");
+
+                              if (pageIndex == null) {
+                                        pageIndex = "1";
+                              }
+                              int index = Integer.parseInt(pageIndex);
+                              int postPerPage = 1;
+
+                              String keyword = request.getParameter("keyword");
+                              Vector<BlogPost> listPost;
+                              int blogCount;
+
+                              if (keyword != null && !keyword.isEmpty()) {
+                                        BlogPostDAO blogdao = new BlogPostDAO();
+                                        listPost = blogdao.searchBlogs(keyword);
+                                        blogCount = listPost.size(); // Update count based on search results
+                              } else {
+                                        //get total product for pagination
+                                        BlogPostDAO blogdao = new BlogPostDAO();
+                                        blogCount = blogdao.getPostListQuantity();
+                                        //get Product for each Page
+                                        listPost = blogdao.pagingPost(index, postPerPage);
+                              }
+
+                              int endPage = blogCount / postPerPage;
+                              if (blogCount % postPerPage != 0) {
+                                        endPage++;
+                              }
+
+                              //khac
+                              BlogPostDAO blg = new BlogPostDAO();
+                              ArrayList<BlogPost> blpos = blg.BlogListHot();
+                              // category
+                              PostCategoryDAO postC = new PostCategoryDAO();
+                              ArrayList<PostCategory> listPC = postC.PostCategoryList();
+                              request.setAttribute("listPC", listPC);
+                              request.setAttribute("blpos", blpos);
+                              request.setAttribute("list", listPost);
+                              request.setAttribute("pageIndex", index);
+                              request.setAttribute("endPage", endPage);
+                              request.setAttribute("keyword", keyword);
+
+                              SliderDAO sliderDAO = new SliderDAO();
+                              List<Slider> sliders = sliderDAO.getAllSliders();
+                              request.setAttribute("sliders", sliders);
+
                               request.setAttribute("listPC", listPCategories);
                               request.setAttribute("latestP", latestProduct);
                               request.getRequestDispatcher("home.jsp").forward(request, response);
-
                     }
+
           }
 
           // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

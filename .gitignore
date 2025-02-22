@@ -23,6 +23,7 @@ Thumbs.db
 *.class
 
 # Ignore file biên dịch JAR/WAR
+*.jar
 *.war
 *.ear
 
@@ -60,3 +61,6 @@ nbproject/private/private.xml
 nbproject/private/private.properties
 nbproject/private/private.xml
 nbproject/project.properties
+nbproject/private/private.properties
+nbproject/private/private.xml
+nbproject/private/private.properties

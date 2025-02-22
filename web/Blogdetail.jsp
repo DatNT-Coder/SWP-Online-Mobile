@@ -114,7 +114,7 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html">Home</a></li>
+								<li><a href="HomePage">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.html">Products</a></li>
@@ -191,7 +191,7 @@
                         </div>
                         <div class="pager-area">
                             <div class="pager pull-right">
-                                <a href="BlogPostList" class="btn btn-primary" style="background-color: #FE0F9E">Đọc thêm bài đăng khác</a>
+                                <a href="BlogPostList" class="btn btn-primary" style="background-color: #009981">Đọc thêm bài đăng khác</a>
                             </div>
                         </div>
                     </div>

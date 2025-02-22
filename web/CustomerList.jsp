@@ -32,6 +32,7 @@
     </head>
     <body>
         <form action="customerList" method="post">
+
             <div class="container">
                 <div class="row">
                     <div class="col-12 mb-3 mb-lg-5">
@@ -39,9 +40,9 @@
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Customer List</h5>
                                 <div>
-                                    <a href="#" class="btn btn-primary btn-sm">Add New</a>
-                                    <a href="#" class="btn btn-info btn-sm">View</a>
-                                    <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="create-customer" class="btn btn-primary btn-sm">Add New</a>
+<!--                                    <a href="#" class="btn btn-info btn-sm">View</a>
+                                    <a href="#" class="btn btn-warning btn-sm">Edit</a>-->
                                 </div>
                             </div>
                             <div class="card-body">
@@ -50,6 +51,7 @@
                                         <input type="text" class="form-control" name="searchKeyword" 
                                                placeholder="Search by name, email, mobile" value="${searchKeyword}">
                                         <button type="submit" class="btn btn-secondary">Search</button>
+                                        ${err}
                                     </div>
                                 </div>
 
@@ -66,19 +68,42 @@
 
                             </div>
                             <div class="table-responsive">
-                                <table class="table mb-0">
+                                <table class="table table-bordered">
                                     <thead class="small text-uppercase bg-body text-muted">
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Full Name</th>
+                                            <th>
+                                                ID
+                                                <a href="?sortField=id&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=id&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
+                                            <th>
+                                                Full Name
+                                                <a href="?sortField=full_name&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=full_name&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
                                             <th>Gender</th>
-                                            <th>Email</th>
-                                            <th>Mobile</th>
-                                            <th>Status</th>
+                                            <th>
+                                                Email
+                                                <a href="?sortField=email&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=email&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
+                                            <th>
+                                                Mobile
+                                                <a href="?sortField=phone&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=phone&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
+                                            <th>
+                                                Status
+                                                <a href="?sortField=status&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=status&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
 
+
+
+                                    <tbody>
                                         <c:forEach var="customer" items="${customers}">
                                             <tr>
                                                 <td>${customer.id}</td>
@@ -86,29 +111,50 @@
                                                 <td>${customer.gender}</td>
                                                 <td>${customer.email}</td>
                                                 <td>${customer.phone}</td>
-                                                <td>${customer.status}</td>
+                                                <td>${customer.status == 1 ? 'Active' : 'InActive'}</td>
+                                                <td>
+                                                <a href="customerDetail?id=${customer.id}" class="btn btn-info btn-sm">View Detail</a>
+                                    <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
+                                                </td>
                                             </tr>
                                         </c:forEach>
-
                                     </tbody>
                                 </table>
+
                             </div>
-                            <!--                            <nav aria-label="Page navigation">
-                                                            <ul class="pagination justify-content-center mt-3">
-                                                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                                            </ul>
-                                                        </nav>-->
+
+                            <!-- Phân trang --><nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center mt-3">
+                                    <c:if test="${currentPage > 1}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=${currentPage - 1}&sortField=${sortField}&sortOrder=${sortOrder}">Previous</a>
+                                        </li>
+                                    </c:if>
+
+                                    <c:forEach var="i" begin="1" end="${totalPages}">
+                                        <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                            <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}">${i}</a>
+                                        </li>
+                                    </c:forEach>
+
+                                    <c:if test="${currentPage < totalPages}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}">Next</a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </nav>
+
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        </form>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>

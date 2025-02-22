@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Sản phẩm | Pink-Mobile</title>
+        <title>Sản phẩm</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -39,7 +39,7 @@
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
                                     <li><a href=""><i class="fa fa-phone"></i> +84 985 350 491</a></li>
-                                    <li><a href=""><i class="fa fa-envelope"></i> group6_shopmobile@gmail.com</a></li>
+                                    <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -117,21 +117,8 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="Home" class="active">Trang Chủ</a></li>
-                                    <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="listProduct">Sản Phẩm</a></li>
-                                                <c:choose>
-                                                  <c:when test="${sessionScope.user == null}">
-                                                    <li><a href="signin">Đăng Nhập</a></li> 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <li><a href="logOut.jsp">Đăng Xuất</a></li>
-
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </ul>
-                                    </li> 
+                                    <li><a href="HomePage" class="active">Trang Chủ</a></li>
+                                    
                                     <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
@@ -144,7 +131,7 @@
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class=" pull-right">
+                            <div class=" pull-right" style="margin-bottom: 10px;">
                                 <form action="searchProduct">
                                     <input type="hidden" name="action" value="searchByWord"/>
                                     <input name="searchBox" type="text" placeholder="Mô tả, tên sản phẩm..." required=""/>
@@ -152,6 +139,19 @@
                                 </form> 
                             </div>
                         </div>
+                        <div class="pull-right" style="white-space: nowrap;">
+    <label for="sortPrice" style="display: inline; font-weight: bold;">Sắp xếp theo giá:</label>
+    <select id="sortPrice" onchange="sortProducts()" style="display: inline; width: auto; padding: 5px;">
+        <option value="default">Mặc định</option>
+        <option value="asc">Giá tăng dần</option>
+        <option value="desc">Giá giảm dần</option>
+    </select>
+</div>
+
+                        <div class="col-sm-3">
+    
+</div>
+
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a href="listProduct">
+                                            <a href="ProductList">
                                                 <span class="badge pull-right"></span>
                                                 Tất cả
                                             </a>
@@ -186,7 +186,7 @@
                                         <div class="panel-heading ">
                                             <h4 class="panel-title">
                                                 <c:if test="${listPC.id == sessionScope.pickedCategory}">
-                                                    <a style="color: #FE0F9E;"  href="searchProduct?action=pickCategory&cid=${listPC.id}">
+                                                    <a style="color: #009981;"  href="searchProduct?action=pickCategory&cid=${listPC.id}">
                                                         <span class="badge pull-right"></span>
                                                         ${listPC.categoryName}
                                                     </a>
@@ -212,7 +212,7 @@
                                     <ul class="nav nav-pills nav-stacked">
                                         <c:forEach items="${requestScope.listBrand}" var="listBrand">
                                             <c:if test="${listBrand.brandID == sessionScope.pickedBrand}">
-                                                <li><a style="color: #FE0F9E;" href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
+                                                <li><a style="color: #009981;" href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
                                                     </c:if>
                                                     <c:if test="${listBrand.brandID != sessionScope.pickedBrand}">
                                                 <li><a href="searchProduct?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
@@ -230,11 +230,12 @@
                                         <input type="hidden" name="action" value="searchByPrice"/>
                                         <input style="padding:0.5rem;width:100%" placeholder="Từ..."  type="text" name="fromPrice" class="span2" value="${sessionScope.fromP}" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" ><br />
                                         <input style="padding:0.5rem;width:100%;margin-top:6px;" placeholder="Đến..." type="text" name="toPrice" class="span2" value="${sessionScope.toP}"  pattern="^\d+(\.\d+)?$" title="vui lòng nhập số"  ><br />
-                                        <button style="background-color: #FE0F9E;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
+                                        <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
                                     </div>
                                 </form>
 
                             </div><!--/price-range-->
+
 
                             <div class="shipping text-center"><!--shipping-->
                                 <img src="images/home/shipping.png" alt="" />
@@ -282,7 +283,7 @@
 
                                                                 </c:if>
                                                                 <c:if test="${sessionScope.user == null}">
-                                                                    <a href="Login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
 
                                                                 </c:if>
                                                             </div>
@@ -311,7 +312,7 @@
 
                                                                 </c:if>
                                                                 <c:if test="${sessionScope.user == null}">
-                                                                    <a href="signIn.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
 
 
                                                                 </c:if>
@@ -343,8 +344,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="companyinfo">
-                                <h2><span style="color: #FE0F9E;">Pink</span>-Mobile</h2>
-                                <p>Sự hài lòng của bạn là trách nhiệm của tôi.</p>
+                                
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -472,7 +472,7 @@
                                 <h2>Về người bán hàng</h2>
                                 <form action="#" class="searchform">
                                     <input type="text" placeholder="Địa chỉ email..." />
-                                    <button style="background-color: #FE0F9E" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <button style="background-color: " type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
                                     <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
                                 </form>
                             </div>
@@ -485,7 +485,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2024 PinkMobile. All rights reserved.</p>
+                        <p class="pull-left">Copyright © 2024. All rights reserved.</p>
                         <p class="pull-right">Designed by <span><a target="_blank" href=""></a></span></p>
                     </div>
                 </div>
@@ -546,7 +546,7 @@
                 //Product Detail ở đây.
                 productsToDisplay.forEach(function (product) {
                     var productHtml = '<div class="col-md-4">' +
-                            '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                            '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
                             '<div class="product-image-wrapper">' +
                             '<div class="single-products">' +
                             '<div class="productinfo text-center">' +
@@ -558,7 +558,7 @@
                     // if (sessionStorage.getItem('user') !== null) {
                     // User is logged in, add "Add to cart" button with onclick attribute
                     productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
-                    productHtml += '<a onclick="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
+                    productHtml += '<a onclick="#" class="btn btn-default add-to-cart"><i class="fa fa-star"></i>Đánh giá</a>';
 	
 //                    else {
 //                        // User is not logged in, add a link to the sign-in page
@@ -611,6 +611,28 @@
                     updatePagination();
                 });
             }
+            
+            function sortProducts() {
+                var sortBy = $('#sortPrice').val();
+
+                if (sortBy === 'asc') {
+                    products.sort(function (a, b) {
+                        return a.salePrice - b.salePrice;
+                    });
+                } else if (sortBy === 'desc') {
+                    products.sort(function (a, b) {
+                        return b.salePrice - a.salePrice;
+                    });
+                } else {
+                    // Nếu chọn mặc định, có thể load lại danh sách từ nguồn ban đầu nếu cần
+                    products = JSON.parse('${listProduct}');
+                }
+
+    // Hiển thị lại sản phẩm sau khi sắp xếp
+    displayProducts();
+    updatePagination();
+}
+
 
             // Display the initial products and pagination
             displayProducts();

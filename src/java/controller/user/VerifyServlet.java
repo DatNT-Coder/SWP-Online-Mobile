@@ -96,7 +96,7 @@ public class VerifyServlet extends HttpServlet {
         } else {
             // Gửi thông báo lỗi về trang trước hoặc trang lỗi
             request.setAttribute("errorMessage", "Mã xác nhận không hợp lệ hoặc đã hết hạn.");
-            request.getRequestDispatcher("verify.jsp").forward(request, response);
+            request.getRequestDispatcher("HomePage").forward(request, response);
         }
 
     }

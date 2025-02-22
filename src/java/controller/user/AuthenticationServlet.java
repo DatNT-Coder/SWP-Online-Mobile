@@ -82,7 +82,7 @@ public class AuthenticationServlet extends HttpServlet {
                 url = logOutDoGet(request, response);
                 break;
             default:
-                url = "home.jsp";
+                url = "HomePage";
         }
 
         request.getRequestDispatcher(url).forward(request, response);
@@ -112,7 +112,7 @@ public class AuthenticationServlet extends HttpServlet {
                 url = changeDoPost(request, response);
                 break;
             default:
-                url = "home";
+                url = "HomePage";
         }
         request.getRequestDispatcher(url).forward(request, response);
     }
@@ -184,7 +184,6 @@ public class AuthenticationServlet extends HttpServlet {
             request.setAttribute("erEmail", "Email cannot be empty.");
             hasError = true;
         }
-
         if (hasError) {
             return url = "regis.jsp";
         }
@@ -213,12 +212,13 @@ public class AuthenticationServlet extends HttpServlet {
         //gui email o day
         EmailSender.sendEmail(ru.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
 
-        url = "verify.jsp";
+        url = "HomePage";
         return url;
     }
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
+        request.getSession().removeAttribute("user");
         return "HomePage";
     }
 

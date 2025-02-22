@@ -57,7 +57,7 @@ public class CartViewController extends HttpServlet {
         } else {
             request.setAttribute("need", "Bạn cần phải đăng nhập!");
       
-            request.getRequestDispatcher("/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
 
