@@ -78,6 +78,15 @@ public class AuthenticationServlet extends HttpServlet {
         String url;
 
         switch (action) {
+            case "regis":
+                url = "regis.jsp";
+                break;
+            case "change":
+                url = "changepw.jsp";
+                break;
+            case "login":
+                url = "login.jsp";
+                break;
             case "logout":
                 url = logOutDoGet(request, response);
                 break;
@@ -191,7 +200,7 @@ public class AuthenticationServlet extends HttpServlet {
         User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
-        
+
         if (isExistUserEmail) {
             request.setAttribute("erEmailExist", "Email is exist.");
             return url = "regis.jsp";
@@ -214,7 +223,7 @@ public class AuthenticationServlet extends HttpServlet {
 
         url = "verify.jsp";
         return url;
-        
+
     }
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
