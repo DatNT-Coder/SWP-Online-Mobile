@@ -55,9 +55,6 @@ nbproject/private/private.properties
 nbproject/private/private.xml
 
 
-# Ignore update.txt
-update.txt
-
 # Libraries
 /lib/nblibraries.properties
 /lib/

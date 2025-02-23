@@ -86,12 +86,12 @@ public class VerifyServlet extends HttpServlet {
             AuthenticationServlet.getVerificationCodes().remove(emailFromVerify);
 
             AccountDAO dao = new AccountDAO();
-            User u = (User) request.getSession().getAttribute("registerUser");
+            User u = (User) request.getSession().getAttribute("registerUser"); //request.getSession().getAttribute("registerUser") trả về kiểu object nên cần cast về kiểu User
             
             dao.insertUserToDB(u);
             
             request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, u);
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            request.getRequestDispatcher("HomePage").forward(request, response);
 
         } else {
             // Gửi thông báo lỗi về trang trước hoặc trang lỗi

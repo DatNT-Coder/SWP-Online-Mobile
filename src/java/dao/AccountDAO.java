@@ -21,6 +21,42 @@ import model.UserAddress;
  */
 public class AccountDAO extends DBContext {
 
+public User getDataUser(String email, String password) {
+    User user = null;
+    connection = getConnection();
+    String sql = "SELECT u.*, ur.role_id FROM User u "
+               + "JOIN user_role ur ON u.id = ur.user_id "
+               + "WHERE u.email = ? AND u.password = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, email);
+        statement.setString(2, password);
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                
+                int idUser = resultSet.getInt("id");
+                String emailFound = resultSet.getString("email").trim();
+                String passwordFound = resultSet.getString("password").trim();
+                String fullNameFound = resultSet.getString("full_name"); 
+                String phoneNumberFound = resultSet.getString("phone");
+                String genderFound = resultSet.getString("gender");
+                Date registrationDateFound = resultSet.getDate("registration_date");
+                int statusFound = resultSet.getInt("status");
+                int updatedByFound = resultSet.getInt("updatedBy");
+                Date updatedDateFound = resultSet.getDate("updatedDate");
+                String imageFound = resultSet.getString("image");
+                int settingsIdFound = resultSet.getInt("settings_id");
+                int roleIdFound = resultSet.getInt("role_id");
+                
+                user = new User(idUser, emailFound, passwordFound, fullNameFound, phoneNumberFound, genderFound, registrationDateFound, statusFound, updatedByFound, updatedDateFound, imageFound, settingsIdFound, roleIdFound);
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching user data: " + e.getMessage());
+    }
+    return user;
+}
+
+    
     public User findEmailPasswordUser(User u) {
         List<User> listFound = new ArrayList<>();
         connection = getConnection();
@@ -126,67 +162,7 @@ public class AccountDAO extends DBContext {
         return check;
     }
 
-//public void insertUserToDB(User user) {
-//    // Kết nối với cơ sở dữ liệu
-//    connection = getConnection();
-//
-//    // Tạo câu lệnh SQL cho MySQL
-//    String sql = "INSERT INTO `user` " +
-//                 "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) " +
-//                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//
-//    try {
-//        // Tạo đối tượng PreparedStatement
-//        statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
-//
-//        // Đặt giá trị cho các tham số
-//        statement.setString(1, user.getEmail());
-//        statement.setString(2, user.getPassword());
-//        statement.setString(3, user.getFull_name());
-//        statement.setString(4, user.getPhone());
-//        statement.setString(5, user.getGender());
-//        statement.setDate(6, new java.sql.Date(user.getRegistration_date().getTime()));
-//        statement.setInt(7, user.getStatus());
-//        statement.setInt(8, user.getUpdatedBy());
-//
-//        // Xử lý giá trị NULL cho updated_date và image
-//        if (user.getUpdatedDate() != null) {
-//            statement.setDate(9, new java.sql.Date(user.getUpdatedDate().getTime()));
-//        } else {
-//            statement.setNull(9, java.sql.Types.DATE);
-//        }
-//
-//        if (user.getImage() != null) {
-//            statement.setString(10, user.getImage());
-//        } else {
-//            statement.setNull(10, java.sql.Types.VARCHAR);
-//        }
-//
-//        statement.setInt(11, user.getSettings_id());
-//
-//        // Thực thi câu lệnh SQL
-//        statement.executeUpdate();
-//        resultSet = statement.getGeneratedKeys();
-//
-//        // Kiểm tra nếu có ID được sinh tự động
-//        if (resultSet.next()) {
-//            int userId = resultSet.getInt(1);
-//            System.out.println("User inserted with ID: " + userId);
-//        }
-//
-//    } catch (SQLException e) {
-//        e.printStackTrace();
-//    } finally {
-//        // Đóng các tài nguyên
-//        try {
-//            if (resultSet != null) resultSet.close();
-//            if (statement != null) statement.close();
-//            if (connection != null) connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//}
+
     public void insertUserToDB(User user) {
         try {
             // Kết nối với cơ sở dữ liệu
@@ -493,6 +469,8 @@ public boolean updatePassword(String email, String newPassword) {
 //        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
             
 
+//        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
+    
     }
 
     public User getUserById(String id) {

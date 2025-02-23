@@ -131,7 +131,7 @@
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class=" pull-right">
+                            <div class=" pull-right" style="margin-bottom: 10px;">
                                 <form action="searchProduct">
                                     <input type="hidden" name="action" value="searchByWord"/>
                                     <input name="searchBox" type="text" placeholder="Mô tả, tên sản phẩm..." required=""/>
@@ -139,6 +139,19 @@
                                 </form> 
                             </div>
                         </div>
+                        <div class="pull-right" style="white-space: nowrap;">
+    <label for="sortPrice" style="display: inline; font-weight: bold;">Sắp xếp theo giá:</label>
+    <select id="sortPrice" onchange="sortProducts()" style="display: inline; width: auto; padding: 5px;">
+        <option value="default">Mặc định</option>
+        <option value="asc">Giá tăng dần</option>
+        <option value="desc">Giá giảm dần</option>
+    </select>
+</div>
+
+                        <div class="col-sm-3">
+    
+</div>
+
                     </div>
                 </div>
             </div>
@@ -161,7 +174,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a href="listProduct">
+                                            <a href="ProductList">
                                                 <span class="badge pull-right"></span>
                                                 Tất cả
                                             </a>
@@ -222,6 +235,7 @@
                                 </form>
 
                             </div><!--/price-range-->
+
 
                             <div class="shipping text-center"><!--shipping-->
                                 <img src="images/home/shipping.png" alt="" />
@@ -532,7 +546,7 @@
                 //Product Detail ở đây.
                 productsToDisplay.forEach(function (product) {
                     var productHtml = '<div class="col-md-4">' +
-                            '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                            '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
                             '<div class="product-image-wrapper">' +
                             '<div class="single-products">' +
                             '<div class="productinfo text-center">' +
@@ -544,7 +558,7 @@
                     // if (sessionStorage.getItem('user') !== null) {
                     // User is logged in, add "Add to cart" button with onclick attribute
                     productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
-                    productHtml += '<a onclick="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Đánh giá</a>';
+                    productHtml += '<a onclick="#" class="btn btn-default add-to-cart"><i class="fa fa-star"></i>Đánh giá</a>';
 	
 //                    else {
 //                        // User is not logged in, add a link to the sign-in page
@@ -597,6 +611,28 @@
                     updatePagination();
                 });
             }
+            
+            function sortProducts() {
+                var sortBy = $('#sortPrice').val();
+
+                if (sortBy === 'asc') {
+                    products.sort(function (a, b) {
+                        return a.salePrice - b.salePrice;
+                    });
+                } else if (sortBy === 'desc') {
+                    products.sort(function (a, b) {
+                        return b.salePrice - a.salePrice;
+                    });
+                } else {
+                    // Nếu chọn mặc định, có thể load lại danh sách từ nguồn ban đầu nếu cần
+                    products = JSON.parse('${listProduct}');
+                }
+
+    // Hiển thị lại sản phẩm sau khi sắp xếp
+    displayProducts();
+    updatePagination();
+}
+
 
             // Display the initial products and pagination
             displayProducts();
