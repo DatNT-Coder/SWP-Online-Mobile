@@ -11,6 +11,9 @@
 <%
     List<BlogPost> posts = (List<BlogPost>) request.getAttribute("posts");
 %>
+<link hrfef="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
+
+
 
 <!DOCTYPE html>
 <html>
@@ -24,9 +27,13 @@
 
       <label for="searchField">Search By:</label>
       <select id="searchField">
-         <option value="1">Title</option>   <!-- Column index in the table (0-based) -->
-         <option value="2">Brief Info</option>
-         <option value="0">ID</option>
+         <option value="0">Status</option>
+         <option value="1">Update Date</option>
+         <option value="2">Thumnail</option>
+         <option value="3">CatID</option>
+         <option value="4">Brief Info</option>
+         <option value="5">Title</option>
+         <option value="6">ID</option><!-- Column index in the table (0-based) -->
       </select>
       <input type="text" id="searchQuery" placeholder="Enter search text">
       <button onclick="filterTable()">Search</button>
