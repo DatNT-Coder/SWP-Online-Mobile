@@ -1,6 +1,8 @@
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -38,7 +40,7 @@
                         <div class="col-sm-6 ">
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
-                                    <li><a href=""><i class="fa fa-phone"></i> </a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> +84 987 654 321</a></li>
                                     <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
@@ -86,8 +88,8 @@
                                     <li><a href="/mobileshop/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="/mobileshop/customer/cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
-                                          <c:when test="${sessionScope.user == null}">
-                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
                                             <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
@@ -114,10 +116,10 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="HomePage">Trang chủ</a></li>
-                                    <li class="dropdown"><a href="/ProjectSWP391/HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="${pageContext.request.contextPath}/Home">Trang chủ</a></li>
+                                    <li class="dropdown"><a href="Home" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
+                                            <li><a href="/mobileshop/listProduct" class="active">Sản phẩm</a></li>
                                             <li><a href="cart">Giỏ Hàng</a></li> 
                                         </ul>
                                     </li> 
@@ -143,24 +145,25 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header><!--/header-->
 
         <section id="cart_items">
             <div class="container">
                 <div class="breadcrumbs">
-                    <ol style="color: #009981;" class="breadcrumb">
-                        
+                    <ol class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
-                <div style="color: #009981;" class="table-responsive cart_info">
-                    <table  class="table table-condensed">
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
                         <thead>
-                            <tr  class="cart_menu">
-                                <td class="image">Sản phẩm</td>
+                            <tr class="cart_menu">
+                                <td class="image">Sản Phẩm</td>
                                 <td class="description"></td>
-                                <td class="price">Giá tiền</td>
-                                <td class="quantity">Số Lượng</td>
-                                <td class="total">Tổng Giá</td>
+                                <td class="price">Giá Tiền</td>
+                                <td class="quantity">Số lượng</td>
+                                <td class="total">Tổng tiền</td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -179,16 +182,16 @@
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
-                                            <a onclick="updateQuantity('${item.productId}', -1)" class="cart_quantity_down"> - </a>
+                                            <!--<a onclick="updateQuantity('${item.productId}', -1)" class="cart_quantity_down"> - </a>-->
                                             <input readOnly id="item-quantity-${item.productId}" class="cart_quantity_input" type="text" name="quantity" value="${item.quantity}" autocomplete="off" size="2">
-                                            <a onclick="updateQuantity('${item.productId}', 1)" class="cart_quantity_up"> + </a>
+                                            <!--<a onclick="updateQuantity('${item.productId}', 1)" class="cart_quantity_up"> + </a>-->
                                         </div>
                                     </td>
-                                    <td  class="cart_total">
+                                    <td class="cart_total">
                                         <p id="item-total-${item.productId}" class="cart_total_price">$${item.total}</p>
                                     </td>
                                     <td class="cart_delete">
-                                        <a onclick="updateQuantity('${item.productId}', 0)" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
+                                        <!--<a onclick="updateQuantity('${item.productId}', 0)" class="cart_quantity_delete"><i class="fa fa-times"></i></a>-->
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -197,11 +200,6 @@
                     <script>
                         async function updateQuantity(productId, amount) {
                             const quantityDiv = document.getElementById('item-quantity-' + productId);
-
-                            if (!document.querySelector('.cart_info table tbody tr')) {
-                                await FuiToast.error('Your cart is empty. Add items to your cart before updating quantities.');
-                                return false;
-                            }
                             const postData = new URLSearchParams();
                             postData.append("productId", productId);
                             if (amount === 0) {
@@ -221,7 +219,7 @@
                                 const newQuantity = data.quantity;
                                 if (+newQuantity === 0) {
                                     document.getElementById('item-' + productId).remove();
-                                    await FuiToast.success('Đã xóa sản phẩm!');
+                                    await FuiToast.success('Updated product quantity successfully!');
                                     return false;
                                 }
                                 const price = data.price;
@@ -231,7 +229,7 @@
                                 quantityDiv.value = newQuantity;
                                 priceDiv.innerHTML = '$' + price;
                                 totalDiv.innerHTML = '$' + total;
-//                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
+                                await FuiToast.success('Updated product quantity successfully!');
                             } else {
                                 await FuiToast.error('Update product quantity failed!');
                             }
@@ -240,15 +238,60 @@
                     </script>
                     
                 </div>
-                <div  class="row">
-                    <div class="col" style="color: #FE0F9E; display: flex; justify-content: center; margin-top: -20px; margin-bottom: 30px;">
-                        
-                        <a  href="${pageContext.request.contextPath}/customer/cart/contact" class="btn btn-default add-to-cart" href="">Đi đến thanh toán</a>
-                    </div>
-                </div>
             </div>
         </section> <!--/#cart_items-->
 
+        <section id="do_action">
+            <div class="container">
+                <div class="heading">
+                    <h3>Thông Tin Liên Lạc</h3>
+                    <p>Hãy hoàn thành thông tin trước khi bạn đạt hàng</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <ul>
+                                <li>Tổng tiền <span>$${total}</span></li>
+                                <li>
+                                    <p>
+                                        Thanh toán bằng mã QR dưới đây!
+                                    </p>
+                                    <img style="max-width: 250px; margin: 0 auto; display: block;" src="${qr}" alt="qr"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <form action="${pageContext.request.contextPath}/customer/cart/checkout" method="POST" style="margin-left: 2.5rem;">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Địa chỉ</label>
+                                    <input name="address"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Address" required="không thể bỏ trống địa chỉ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Số Điện Thoại</label>
+                                    <input name="phone"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone" required="không thể bỏ trống địa chỉ">
+                                    <!--<label style="color: red" > số điện thoại không đúng định dạng!!!</label>-->
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input name="email"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" required="không thể bỏ trống địa chỉ">
+                                    <!--<label style="color: red" > email không tồn tại!!!</label>-->
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ghi chú</label>
+                                    <input name="note" type="text" class="form-control" id="exampleInputEmail1" placeholder="Note">
+                                </div>
+                                
+                                        <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Hoàn tất đặt hàng"/>
+                                    
+                                </form>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/#do_action-->
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
