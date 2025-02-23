@@ -25,12 +25,12 @@ public class EmailSender {
     
     public static void sendEmail(String to, String subject, String body) {
 
-        // Configure email session properties
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        // Cấu hình thuộc tính của SMTP
+        Properties props = new Properties(); // Tạo một đối tượng Properties để lưu các cài đặt cấu hình
+        props.put("mail.smtp.auth", "true"); // Bật tính năng xác thực SMTP.
+        props.put("mail.smtp.starttls.enable", "true"); //Bật mã hóa TLS để bảo mật email.
+        props.put("mail.smtp.host", "smtp.gmail.com"); //Đặt máy chủ SMTP của Gmail.
+        props.put("mail.smtp.port", "587"); //Sử dụng cổng SMTP 587 của Gmail.
 
       Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override

@@ -78,6 +78,15 @@ public class AuthenticationServlet extends HttpServlet {
         String url;
 
         switch (action) {
+            case "regis":
+                url = "regis.jsp";
+                break;
+            case "change":
+                url = "changepw.jsp";
+                break;
+            case "login":
+                url = "login.jsp";
+                break;
             case "logout":
                 url = logOutDoGet(request, response);
                 break;
@@ -133,8 +142,8 @@ public class AuthenticationServlet extends HttpServlet {
             User foundUserAccount = d.findEmailPasswordUser(u);
 
             if (foundUserAccount != null) {
-                request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount);
-               request.getSession().setAttribute("user", foundUserAccount);
+                request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
+                request.getSession().setAttribute("user", foundUserAccount);
                 url = "HomePage";
                 //false => quay tro lai trang login ( set them thong bao loi )
             } else {
@@ -162,13 +171,39 @@ public class AuthenticationServlet extends HttpServlet {
         String image = null;
         int settingsId = 1;
 
+        //ktra null hoặc chuỗi rỗng "  "
+        boolean hasError = false;
+        if (password == null || password.trim().isEmpty()) {
+            request.setAttribute("erPass", "Password cannot be empty.");
+            hasError = true;
+        } else if (password.contains(" ")) {  // Kiểm tra xem có khoảng trắng trong kí tự không
+            request.setAttribute("erPass", "Password cannot contain spaces.");
+            hasError = true;
+        }
+
+        if (username == null || username.trim().isEmpty()) {
+            request.setAttribute("erName", "Name cannot be empty.");
+            hasError = true;
+        } else if (username.startsWith(" ") || username.endsWith(" ")) {
+            request.setAttribute("erName", "Name cannot start or end with a space.");
+            hasError = true;
+        }
+
+        if (emailUser == null || emailUser.trim().isEmpty()) {
+            request.setAttribute("erEmail", "Email cannot be empty.");
+            hasError = true;
+        }
+        if (hasError) {
+            return url = "regis.jsp";
+        }
+
         User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
 
         if (isExistUserEmail) {
-            request.setAttribute("erEmail", "Email is exist.");
-            request.getRequestDispatcher("regis.jsp").forward(request, response);
+            request.setAttribute("erEmailExist", "Email is exist.");
+            return url = "regis.jsp";
         } else {
             request.getSession().setAttribute(CommonConst.SESSION_REGISTER_USER_EMAIL, ru.getEmail());
             request.getSession().setAttribute(CommonConst.SESSION_REGISTER_USER, ru);
@@ -188,6 +223,7 @@ public class AuthenticationServlet extends HttpServlet {
 
         url = "verify.jsp";
         return url;
+
     }
 
     private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
@@ -225,7 +261,7 @@ public class AuthenticationServlet extends HttpServlet {
             url = "changepw.jsp"; // Quay lại trang đổi mật khẩu với thông báo lỗi
             return url;
         }
-        
+
         // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận có khớp không
         if (newPassword == null || !newPassword.equals(newPasswordAgain) || newPassword.isEmpty() || newPasswordAgain.isEmpty()) {
             request.setAttribute("errorMessage", "Mật khẩu mới và xác nhận mật khẩu không hợp lệ.");
@@ -236,9 +272,7 @@ public class AuthenticationServlet extends HttpServlet {
         // Cập nhật mật khẩu mới vào cơ sở dữ liệu
         boolean isUpdated = accountDAO.updatePassword(email, newPassword);
         if (isUpdated) {
-            // Nếu cập nhật thành công, chuyển hướng về trang home.jsp
-            request.setAttribute("successMessage", "Mật khẩu đã được cập nhật thành công.");
-            url = "home.jsp";
+            url = "HomePage";
         } else {
             // Nếu có lỗi trong việc cập nhật mật khẩu, hiển thị thông báo lỗi
             request.setAttribute("errorMessage", "Đã xảy ra lỗi trong quá trình cập nhật mật khẩu.");
