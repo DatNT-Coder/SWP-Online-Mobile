@@ -585,7 +585,7 @@
                             //Product Detail ở đây.
                             productsToDisplay.forEach(function (product) {
                                 var productHtml = '<div class="col-md-4">' +
-                                        '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                                        '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
                                         '<div class="product-image-wrapper">' +
                                         '<div class="single-products">' +
                                         '<div class="productinfo text-center">' +
@@ -596,8 +596,8 @@
                                 //không dùng $\{product.ID} mà dùng + product.ID +
                                 // if (sessionStorage.getItem('user') !== null) {
                                 // User is logged in, add "Add to cart" button with onclick attribute
-                                productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
-                                productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-star"></i>Đánh giá</a>';
+                                productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+                                productHtml += '<a onclick="addToCart(' + product.ID + ')" class=""><i class="fa fa-star"></i>Đánh giá</a>';
 
                                 //                    } 
                                 //                    else {

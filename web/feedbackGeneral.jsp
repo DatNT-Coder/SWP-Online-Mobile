@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="Home"><img src="images/home/logo.png" alt="" /></a>
+                                <a href="HomePage"><img src="images/home/logo.png" alt="" /></a>
                             </div>              
                         </div>
                         <div class="col-sm-8">
@@ -120,7 +120,7 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="Home" class="active">Trang Chủ</a></li>
+                                    <li><a href="HomePage" class="active">Trang Chủ</a></li>
                                     <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="listProduct">Sản Phẩm</a></li>
@@ -170,7 +170,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a href="Home">
+                                            <a href="HomePage">
                                                 <span class="badge pull-right"></span>
                                                 Tất cả
                                             </a>
@@ -284,7 +284,7 @@
                                     <label for="feedback">Phản hồi của bạn</label>
                                     <textarea name="comment"   style="width: 50%;"  class="form-control" id="feedback" rows="3" required=""></textarea>
                                 </div>
-                                <button style="background-color: #fe0f9e;" type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
+                                <button style="background-color: #009981;" type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
                             </form>
                         </div>
                     </div>
