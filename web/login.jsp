@@ -1,4 +1,4 @@
-regi<%-- 
+<%-- 
     Document   : login
     Created on : Jan 26, 2025, 12:38:27 AM
     Author     : vuduc
@@ -98,8 +98,8 @@ regi<%--
                                     <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                    <li><a href="login.jsp" class="active"><i class="fa fa-lock"></i> Login</a></li>
-                                    <li><a href="regis.jsp"><i class="fa fa-shopping-cart"></i> Register</a></li>
+                                    <li><a href="authen?action=login" class="active"><i class="fa fa-lock"></i> Login</a></li>
+                                    <li><a href="authen?action=regis"><i class="fa fa-shopping-cart"></i> Register</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -168,8 +168,11 @@ regi<%--
                             </span>
                             <button type="submit" class="btn btn-default">Login</button>
                         </form>
-                        <form action="#">
+                        <form style="padding-top: 50px" action="authen?action=reset" method="post">
+                            <h2>Input Email to reset your password</h2>
+                            <input name="email" type="email" placeholder="Your Email" />
                             <button type="submit" class="btn btn-default">Reset</button>
+                            <h5 style="color: red"> ${erEmailNotExist} </h5>
                         </form>
                     </div><!--/login form & reset form-->
 

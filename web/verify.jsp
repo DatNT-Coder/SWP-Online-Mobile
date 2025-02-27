@@ -34,6 +34,18 @@
                     Verify
                 </button>  <h1 style="color: red"> ${errorMessage} </h1>
             </form>
+            <div style="display: flex; justify-content: flex-start; align-items: center;">
+                <form action="authen?action=resend" method="post">
+                    <button style="margin-right: 10px" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                        Resend
+                    </button>
+                </form>
+                <form action="HomePage">
+                    <button style="margin-left: 10px" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                        Home
+                    </button>
+                </form>
+            </div>
         </div>
     </body>
 </html>

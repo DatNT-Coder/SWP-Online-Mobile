@@ -101,9 +101,12 @@
                                         <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Logout</a></li>
                                         </c:if>
                                         <c:if test="${account == null}">
-                                        <li><a href="login.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                        <li><a href="authen?action=login"><i class="fa fa-lock"></i> Login</a></li>
                                         </c:if>
-                                    <li><a href="regis.jsp"><i class="fa fa-shopping-cart"></i> Register</a></li>
+                                                                                <c:if test="${account != null}">
+                                        <li><a href="changepw.jsp"><i class="fa fa-lock"></i> Change Password</a></li>
+                                        </c:if>
+                                    <li><a href="authen?action=regis"><i class="fa fa-shopping-cart"></i> Register</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -175,7 +178,7 @@
                             <label for="phone">Phone Number:</label>
                             <input name="phone" type="text" id="phone" placeholder="Enter your phone number"
                                    pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required/>
-                            <button type="submit" class="btn btn-default">Signup</button> <h1 style="color: red"> ${erEmail} ${erPass} ${erName} ${erEmail}</h1>
+                            <button type="submit" class="btn btn-default">Signup</button> <h5 style="color: red"> ${erEmail} ${erPass} ${erName} ${erEmailExist} </h5>
                         </form>
                     </div><!--/sign up form-->
                 </div>
