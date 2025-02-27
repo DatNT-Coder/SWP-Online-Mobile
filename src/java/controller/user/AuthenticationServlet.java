@@ -111,6 +111,9 @@ public class AuthenticationServlet extends HttpServlet {
         String url;
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
         switch (action) {
+            case "reset":
+                url = resDoPost(request, response);
+                break;
             case "login":
                 url = logDoPost(request, response);
                 break;
@@ -119,6 +122,9 @@ public class AuthenticationServlet extends HttpServlet {
                 break;
             case "change":
                 url = changeDoPost(request, response);
+                break;
+            case "resend":
+                url = resendDoPost(request, response);
                 break;
             default:
                 url = "HomePage";
@@ -153,6 +159,12 @@ public class AuthenticationServlet extends HttpServlet {
         }
         return url;
 
+    }
+
+    private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
+        request.getSession().removeAttribute("user");
+        return "HomePage";
     }
 
     private String regDoPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -226,15 +238,33 @@ public class AuthenticationServlet extends HttpServlet {
 
     }
 
-    private String logOutDoGet(HttpServletRequest request, HttpServletResponse response) {
-        request.getSession().removeAttribute(CommonConst.SESSION_ACCOUNT);
-        request.getSession().removeAttribute("user");
-        return "HomePage";
-    }
-
     private String generateVerificationCode() {
         Random random = new Random();
         return String.format("%06d", random.nextInt(1000000));
+    }
+
+    private String resendDoPost(HttpServletRequest request, HttpServletResponse response) {
+        String url;
+
+        User u = (User) request.getSession().getAttribute("registerUser");
+
+        // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
+        verificationCodes.remove(u.getEmail());
+
+        String codeToUser = generateVerificationCode();
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+
+        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+        verificationCodes.put(u.getEmail(), codeExpire);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+        String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+
+        //gui email o day
+        EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+
+        url = "verify.jsp";
+        return url;
     }
 
     private String changeDoPost(HttpServletRequest request, HttpServletResponse response) {
@@ -279,6 +309,38 @@ public class AuthenticationServlet extends HttpServlet {
             url = "changepw.jsp";
         }
         return url;
+    }
+
+    private String resDoPost(HttpServletRequest request, HttpServletResponse response) {
+        AccountDAO d = new AccountDAO();
+
+        String url;
+        String emailReset = request.getParameter("email");
+        User u = new User(emailReset);
+
+        boolean isExistUserEmail = d.checkUserEmailExist(u);
+        if (!isExistUserEmail) {
+            request.setAttribute("erEmailNotExist", "Email is not exist.");
+            return url = "login.jsp";
+        } else {
+            request.getSession().setAttribute(CommonConst.SESSION_RESET_USER_EMAIL, u.getEmail());
+        }
+
+        String codeToUser = generateVerificationCode();
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+
+        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+        verificationCodes.put(emailReset, codeExpire); //biến hashmap lưu giá trị 
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+        String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+
+        //gui email o day
+        EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+
+        url = "reset.jsp";
+        return url;
+
     }
 
 }

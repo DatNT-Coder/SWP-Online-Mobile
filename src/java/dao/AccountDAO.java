@@ -21,42 +21,41 @@ import model.UserAddress;
  */
 public class AccountDAO extends DBContext {
 
-public User getDataUser(String email, String password) {
-    User user = null;
-    connection = getConnection();
-    String sql = "SELECT u.*, ur.role_id FROM User u "
-               + "JOIN user_role ur ON u.id = ur.user_id "
-               + "WHERE u.email = ? AND u.password = ?";
-    try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, email);
-        statement.setString(2, password);
-        try (ResultSet resultSet = statement.executeQuery()) {
-            if (resultSet.next()) {
-                
-                int idUser = resultSet.getInt("id");
-                String emailFound = resultSet.getString("email").trim();
-                String passwordFound = resultSet.getString("password").trim();
-                String fullNameFound = resultSet.getString("full_name"); 
-                String phoneNumberFound = resultSet.getString("phone");
-                String genderFound = resultSet.getString("gender");
-                Date registrationDateFound = resultSet.getDate("registration_date");
-                int statusFound = resultSet.getInt("status");
-                int updatedByFound = resultSet.getInt("updatedBy");
-                Date updatedDateFound = resultSet.getDate("updatedDate");
-                String imageFound = resultSet.getString("image");
-                int settingsIdFound = resultSet.getInt("settings_id");
-                int roleIdFound = resultSet.getInt("role_id");
-                
-                user = new User(idUser, emailFound, passwordFound, fullNameFound, phoneNumberFound, genderFound, registrationDateFound, statusFound, updatedByFound, updatedDateFound, imageFound, settingsIdFound, roleIdFound);
-            }
-        }
-    } catch (SQLException e) {
-        System.out.println("Error fetching user data: " + e.getMessage());
-    }
-    return user;
-}
+    public User getDataUser(String email, String password) {
+        User user = null;
+        connection = getConnection();
+        String sql = "SELECT u.*, ur.role_id FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "WHERE u.email = ? AND u.password = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
+            statement.setString(2, password);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
 
-    
+                    int idUser = resultSet.getInt("id");
+                    String emailFound = resultSet.getString("email").trim();
+                    String passwordFound = resultSet.getString("password").trim();
+                    String fullNameFound = resultSet.getString("full_name");
+                    String phoneNumberFound = resultSet.getString("phone");
+                    String genderFound = resultSet.getString("gender");
+                    Date registrationDateFound = resultSet.getDate("registration_date");
+                    int statusFound = resultSet.getInt("status");
+                    int updatedByFound = resultSet.getInt("updatedBy");
+                    Date updatedDateFound = resultSet.getDate("updatedDate");
+                    String imageFound = resultSet.getString("image");
+                    int settingsIdFound = resultSet.getInt("settings_id");
+                    int roleIdFound = resultSet.getInt("role_id");
+
+                    user = new User(idUser, emailFound, passwordFound, fullNameFound, phoneNumberFound, genderFound, registrationDateFound, statusFound, updatedByFound, updatedDateFound, imageFound, settingsIdFound, roleIdFound);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching user data: " + e.getMessage());
+        }
+        return user;
+    }
+
     public User findEmailPasswordUser(User u) {
         List<User> listFound = new ArrayList<>();
         connection = getConnection();
@@ -162,7 +161,6 @@ public User getDataUser(String email, String password) {
         return check;
     }
 
-
     public void insertUserToDB(User user) {
         try {
             // Kết nối với cơ sở dữ liệu
@@ -233,7 +231,7 @@ public User getDataUser(String email, String password) {
             }
         }
     }
-    
+
     public void insertUserToDB(User user, String address) {
         try {
             // Kết nối với cơ sở dữ liệu
@@ -333,7 +331,7 @@ public User getDataUser(String email, String password) {
             }
         }
     }
-    
+
     private void insertToUserAddress(int idFromUser, String address) {
         try {
             connection = getConnection();
@@ -359,7 +357,6 @@ public User getDataUser(String email, String password) {
             }
         }
     }
-
 
     public boolean checkOldPassword(String email, String oldPassword) {
         boolean isValid = false;
@@ -401,76 +398,42 @@ public User getDataUser(String email, String password) {
         return isValid;
     }
 
-    
-public boolean updatePassword(String email, String newPassword) {
-    boolean isUpdated = false;
+    public boolean updatePassword(String email, String newPassword) {
+        boolean isUpdated = false;
 
-    // Câu lệnh SQL cập nhật mật khẩu
-    String sql = "UPDATE `user` SET `password` = ? WHERE `email` = ?";
-    
-    try {
-        // Kết nối với cơ sở dữ liệu
-        connection = getConnection();
-        statement = connection.prepareStatement(sql);
-        
-        // Đặt giá trị cho tham số
-        statement.setString(1, newPassword);
-        statement.setString(2, email);
-        
-        // Thực thi câu lệnh SQL
-        int rowsAffected = statement.executeUpdate();
-        
-        // Nếu có ít nhất một dòng được cập nhật, tức là cập nhật thành công
-        isUpdated = rowsAffected > 0;
-    } catch (SQLException e) {
-        System.out.println("Lỗi cập nhật mật khẩu: " + e.getMessage());
-    } finally {
-        // Đóng tài nguyên để tránh rò rỉ
+        // Câu lệnh SQL cập nhật mật khẩu
+        String sql = "UPDATE `user` SET `password` = ? WHERE `email` = ?";
+
         try {
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
+            // Kết nối với cơ sở dữ liệu
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+
+            // Đặt giá trị cho tham số
+            statement.setString(1, newPassword);
+            statement.setString(2, email);
+
+            // Thực thi câu lệnh SQL
+            int rowsAffected = statement.executeUpdate();
+
+            // Nếu có ít nhất một dòng được cập nhật, tức là cập nhật thành công
+            isUpdated = rowsAffected > 0;
         } catch (SQLException e) {
-            System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
+            System.out.println("Lỗi cập nhật mật khẩu: " + e.getMessage());
+        } finally {
+            // Đóng tài nguyên để tránh rò rỉ
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
+            }
         }
-    }
-    return isUpdated;
-}
-
-    
-    
-        public static void main(String[] args) {
-        AccountDAO d = new AccountDAO();
-
-//        User a = new User("gggg@gmail.com", "a12345");
-//        User isExist = d.findEmailPasswordUser(a);
-//        System.out.println(isExist);
-//        
-//         User b = new User("gggg@gmail.com");
-//         System.out.println(d.checkUserEmailExist(b));
-//         
-//        String emailUser = "gggg@gmail.com";
-//        String password = "a12345";
-//        String username = "Pham Thanh Vinh";
-//        String phone = "1234567890";
-//        String gender = "Male";
-//        Date registrationDate = new Date(System.currentTimeMillis());
-//        int status = 1;
-//        int updatedBy = 0;
-//        Date updatedDate = null;
-//        String image = null;
-//        int settingsId = 1;
-//        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
-//        d.insertUserToDB(ru);
-
-//        System.out.println(d.checkUserEmailExistString("john.doe@example.com"));
-        
-//        System.out.println(d.checkOldPassword("john.doe@example.com", "pass123"));
-        
-//        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
-            
-
-//        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
-    
+        return isUpdated;
     }
 
     public User getUserById(String id) {
@@ -487,26 +450,25 @@ public boolean updatePassword(String email, String newPassword) {
             statement.setInt(1, Integer.parseInt(id));
 
             // Thực thi câu lệnh
-                user = new User(resultSet.getInt(1), 
-                        resultSet.getString(2), 
-                        resultSet.getString(3), 
-                        resultSet.getString(4), 
-                        resultSet.getString(5), 
-                        resultSet.getString(6), 
-                        resultSet.getDate(7), 
-                        resultSet.getInt(8), 
-                        resultSet.getInt(9), 
-                        resultSet.getDate(10), resultSet.getString(11), resultSet.getInt(12));
-                
-                UserAddress ud = new UserAddress(resultSet.getString(13), resultSet.getInt(1));
-               
-                user.setUserAddress(ud);
-            }
-        catch (SQLException e) {
+            user = new User(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getDate(7),
+                    resultSet.getInt(8),
+                    resultSet.getInt(9),
+                    resultSet.getDate(10), resultSet.getString(11), resultSet.getInt(12));
+
+            UserAddress ud = new UserAddress(resultSet.getString(13), resultSet.getInt(1));
+
+            user.setUserAddress(ud);
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return user;
-    
+
     }
 
     public void updateUserToDB(User user) {
@@ -529,11 +491,9 @@ public boolean updatePassword(String email, String newPassword) {
             statement.setString(7, user.getImage());
             statement.setInt(8, user.getId());
 
-         
             // Thực thi câu lệnh SQL
             statement.executeUpdate();
             updateUserAddressToDB(user.getUserAddress());
-            
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -554,7 +514,8 @@ public boolean updatePassword(String email, String newPassword) {
             }
         }
     }
-        public void updateUserAddressToDB(UserAddress ua) {
+
+    public void updateUserAddressToDB(UserAddress ua) {
         try {
             // Kết nối với cơ sở dữ liệu
             connection = getConnection();
@@ -567,14 +528,11 @@ public boolean updatePassword(String email, String newPassword) {
             // Gán giá trị vào câu lệnh SQL
             statement = connection.prepareStatement(sql);
             statement.setString(1, ua.getUserAddress());
-           
+
             statement.setInt(2, ua.getUserId());
 
-         
             // Thực thi câu lệnh SQL
             statement.executeUpdate();
-
-            
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -595,5 +553,58 @@ public boolean updatePassword(String email, String newPassword) {
             }
         }
     }
-    
+
+    public boolean updateUserPassword(User u) {
+        boolean isUpdated = false;
+        connection = getConnection();
+        String sql = "UPDATE user SET password = ? WHERE email = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, u.getPassword()); 
+            statement.setString(2, u.getEmail());
+            
+            //kiểm tra xem có bao nhiêu row được cập nhật dù đc cập nhật 1 row vẫn tính.
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                isUpdated = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating user password: " + e.getMessage());
+        }
+        return isUpdated;
+    }
+
+    public static void main(String[] args) {
+        AccountDAO d = new AccountDAO();
+
+//        User a = new User("gggg@gmail.com", "a12345");
+//        User isExist = d.findEmailPasswordUser(a);
+//        System.out.println(isExist);
+//        
+//         User b = new User("gggg@gmail.com");
+//         System.out.println(d.checkUserEmailExist(b));
+//         
+//        String emailUser = "gggg@gmail.com";
+//        String password = "a12345";
+//        String username = "Pham Thanh Vinh";
+//        String phone = "1234567890";
+//        String gender = "Male";
+//        Date registrationDate = new Date(System.currentTimeMillis());
+//        int status = 1;
+//        int updatedBy = 0;
+//        Date updatedDate = null;
+//        String image = null;
+//        int settingsId = 1;
+//        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+//        d.insertUserToDB(ru);
+//        System.out.println(d.checkUserEmailExistString("john.doe@example.com"));
+//        System.out.println(d.checkOldPassword("john.doe@example.com", "pass123"));
+//        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
+//        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
+
+        User u = new User("lbienvda@gmail.com", "2");
+        System.out.println(d.updateUserPassword(u));
+    }
+
 }
