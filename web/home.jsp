@@ -23,6 +23,7 @@
       <link href="css/animate.css" rel="stylesheet">
       <link href="css/main.css" rel="stylesheet">
       <link href="css/responsive.css" rel="stylesheet">
+      <link href="css/slider.css" rel="stylesheet">
       <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
@@ -285,33 +286,23 @@
             </div>
             <div class="col-sm-2"> <!--hot_post-->
                <h2 class="title text-center">Hot Posts</h2>
-               <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-inner">
-                     <c:forEach items="${list}" var="b" varStatus="status">
-                        <div class="carousel-item ${status.first ? 'active' : ''}">
-                           <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
-                              <h3>${b.title}</h3>
-                              <div class="post-meta">
-                                 <ul>
-                                    <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
-                                    <li><i class="fa fa-bars"></i> ${b.getName()}</li>
-                                 </ul>
-                              </div>
-                              <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
-                              <p>${b.brief_info}</p>
-                           </div>
-                        </div>
-                     </c:forEach>
-                  </div>
 
-                  <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
-                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                     <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
-                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                     <span class="visually-hidden">Next</span>
-                  </button>
+               <div class="hot_post_container">
+                  <div class="hot_post_warpper">
+                     <ul class="blog_list">
+                        <c:forEach items="${list}" var="b" varStatus="status">
+                           <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                              <li class="blog_item">
+                                 <a href="url" class="blog_link">
+                                    <p class="badge">${b.getFull_name()}</p>
+                                    <img src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image">
+                                    <h3>${b.title}</h3>
+                                 </a>
+                              </li>
+                           </div>
+                        </c:forEach>
+                     </ul>
+                  </div>
                </div>
             </div><!--hot_post-->
 
@@ -325,9 +316,7 @@
                   window.location.href = "BlogDetail?id=" + id;
                }
             </script>
-
-
-
+            
             </section>
             <section>
                <div class="container">
