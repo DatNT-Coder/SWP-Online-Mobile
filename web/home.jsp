@@ -311,6 +311,7 @@
                   window.location.href = "BlogDetail?id=" + id;
                }
             </script>
+            
             <script>
                function redirectToBlogDetail(id) {
                   window.location.href = "BlogDetail?id=" + id;
