@@ -88,5 +88,4 @@ public class CustomerDetailDAO extends DBContext {
       }
       return customers;
    }
-
 }
