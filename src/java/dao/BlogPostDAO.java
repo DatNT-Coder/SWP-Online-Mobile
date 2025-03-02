@@ -8,7 +8,6 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,8 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.BlogPost;
 import java.sql.Connection;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -647,6 +644,14 @@ public class BlogPostDAO extends DBContext {
          ex.printStackTrace();
       }
       return n;
+   }
+
+   public Map<String, Object> getPostbyPostID(int postID) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public int updatePost(BlogPost blogPost) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
    }
 
 }

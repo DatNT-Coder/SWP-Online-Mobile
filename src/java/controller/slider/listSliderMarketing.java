@@ -6,22 +6,17 @@ package controller.slider;
 
 import com.google.gson.Gson;
 import dao.BrandDAO;
-import dao.DAOProduct;
-import dao.DAOProductCategory;
+import dao.ProductCategoryDAO;
 import dao.SliderDAO;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.http.HttpSession;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Vector;
-import model.Brand;
-import model.ProductCategory;
 
 /**
  *
@@ -45,7 +40,7 @@ public class listSliderMarketing extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             SliderDAO daoProduct = new SliderDAO();
-            DAOProductCategory daoProductCategory = new DAOProductCategory();
+            ProductCategoryDAO ProductCategoryDAO = new ProductCategoryDAO();
             BrandDAO brandDAO = new BrandDAO();
             String message = request.getParameter("msg");
             if (message == null) {
@@ -109,11 +104,6 @@ public class listSliderMarketing extends HttpServlet {
                     isSuccess = daoProduct.updateSliderStatus(productID, 1);
                 } else if (status != 0) {
                     isSuccess = daoProduct.updateSliderStatus(productID, 0);
-                }
-                if (isSuccess > 0) {
-                    msg = "<span style=\"color:green;\">Cập nhật trạng thái slider thành công cho \"" + daoProduct.getSliderById(productID).getTitle() + "\"</span>";
-                } else {
-                    msg = "<span style=\"color:red;\">Đã có lỗi xảy ra, không thể cập nhật</span>";
                 }
 
                 //Gọi lại load page
