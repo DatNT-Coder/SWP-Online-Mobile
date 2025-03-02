@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.cart;
 
 import com.google.gson.JsonObject;
@@ -36,8 +35,6 @@ public class CartContactController extends HttpServlet {
 
     private final CartDAO cartDAO = new CartDAO();
 
-   
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,28 +43,29 @@ public class CartContactController extends HttpServlet {
         response.setContentType("application/json");
         JsonObject result = new JsonObject();
         if (session.getAttribute("user") == null) {
-            response.sendRedirect(request.getContextPath() + "/listProduct");
+            response.sendRedirect(request.getContextPath() + "/ProductList");
             return;
         }
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
 
         String address = cartDAO.getUserAddress(userId);
+        String phone = cartDAO.getUserPhone(userId);  // Lấy số điện thoại
+        String email = user.getEmail();  // Lấy email
 
         ArrayList<CartItem> cart = cartDAO.getUserCart(userId);
 
-        
         double total = 0;
         if (cart == null) {
             result.addProperty("status", "failed");
-        }else{
-        result.addProperty("status", "successed");
+        } else {
+            result.addProperty("status", "successed");
 
-        out.write(result.toString());
-        
-        for (CartItem item : cart) {
-            total += item.getPrice() * 1.0d * item.getQuantity();
-        }
+            out.write(result.toString());
+
+            for (CartItem item : cart) {
+                total += item.getPrice() * 1.0d * item.getQuantity();
+            }
         }
         String qrImageLink = this.getVietQRLink((int) (total * 24640), "Thanh toán hóa đơn có mã khách hàng " + user.getId());
 
@@ -75,7 +73,8 @@ public class CartContactController extends HttpServlet {
         request.setAttribute("total", total);
         request.setAttribute("qr", qrImageLink);
         request.setAttribute("address", address);
-
+        request.setAttribute("phone", phone);  // Gửi phone
+        request.setAttribute("email", email);  // Gửi email
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 

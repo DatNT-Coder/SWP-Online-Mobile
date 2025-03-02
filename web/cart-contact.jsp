@@ -85,8 +85,8 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="/mobileshop/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
-                                    <li><a href="/mobileshop/customer/cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
+                                    <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
                                             <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
                                             <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
@@ -266,16 +266,16 @@
                             <form action="${pageContext.request.contextPath}/customer/cart/checkout" method="POST" style="margin-left: 2.5rem;">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Địa chỉ</label>
-                                    <input name="address"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Address" required="không thể bỏ trống địa chỉ">
+                                    <input name="address" value="${address}" type="text" class="form-control" id="exampleInputEmail1" placeholder="Address" required="không thể bỏ trống địa chỉ">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Số Điện Thoại</label>
-                                    <input name="phone"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone" required="không thể bỏ trống địa chỉ">
+                                    <input name="phone" value="${phone}"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone" required="không thể bỏ trống địa chỉ">
                                     <!--<label style="color: red" > số điện thoại không đúng định dạng!!!</label>-->
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input name="email"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" required="không thể bỏ trống địa chỉ">
+                                    <input name="email" value="${email}"   type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" required="không thể bỏ trống địa chỉ">
                                     <!--<label style="color: red" > email không tồn tại!!!</label>-->
                                 </div>
                                 <div class="form-group">

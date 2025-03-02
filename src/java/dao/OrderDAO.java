@@ -74,4 +74,30 @@ public class OrderDAO {
         }
         return null;
     }
+    public static void main(String[] args) {
+    OrderDAO orderDAO = new OrderDAO(); // Đảm bảo đã khởi tạo connection trong OrderDAO
+    Order newOrder = new Order();
+    
+    // Thiết lập dữ liệu cho Order (Thay thế giá trị phù hợp với database của bạn)
+    newOrder.setuId(1);
+    newOrder.setDate(java.sql.Date.valueOf("2025-03-02"));
+    newOrder.setTotalMoney(500.0);
+    newOrder.setStatus(1);
+    newOrder.setAddress("Hà Nội");
+    newOrder.setPhone("0123456789");
+    newOrder.setEmail("test@example.com");
+    newOrder.setNote("Giao hàng nhanh");
+    newOrder.setSaleId(1);
+    newOrder.setSettingId(1);
+    
+    // Gọi addOrder
+    Order addedOrder = orderDAO.addOrder(newOrder);
+    
+    if (addedOrder != null) {
+        System.out.println("Thêm đơn hàng thành công! ID: " + addedOrder.getId());
+    } else {
+        System.out.println("Thêm đơn hàng thất bại!");
+    }
+}
+
 }

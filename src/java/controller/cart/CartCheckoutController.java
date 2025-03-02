@@ -47,7 +47,7 @@ public class CartCheckoutController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("user") == null) {
-            response.sendRedirect(request.getContextPath() + "/listProduct");
+            response.sendRedirect(request.getContextPath() + "/ProductList");
             return;
         }
         User user = (User) session.getAttribute("user");
@@ -224,7 +224,7 @@ public class CartCheckoutController extends HttpServlet {
                 + "        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"max-width: 600px;\">\n"
                 + "          <tr>\n"
                 + "            <td align=\"center\" valign=\"top\" style=\"padding: 36px 24px;\">\n"
-                + "              <a href=\"http://localhost:8080/mobileshop/Home\" target=\"_blank\" style=\"display: inline-block;\">\n"
+                + "              <a href=\"http://localhost:8080/mobileshop/HomePage\" target=\"_blank\" style=\"display: inline-block;\">\n"
                 + "                <img src=\"logo.png\" alt=\"Logo\" border=\"0\" width=\"48\" style=\"display: block; width: 48px; max-width: 48px; min-width: 48px;\">\n"
                 + "              </a>\n"
                 + "            </td>\n"

@@ -18,8 +18,8 @@ import javax.mail.internet.MimeMessage;
  * @author Asus
  */
 public class Email {
-    static final String from = "";
-	static final String password = "";
+    static final String from = "swp391fptg3@gmail.com";
+	static final String password = "phugenmwaebwnhwn";
 
 	public static boolean sendEmail(String to, String tieuDe, String noiDung) {
 
