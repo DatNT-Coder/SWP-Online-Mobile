@@ -42,7 +42,7 @@ public class CartUpdateItemController extends HttpServlet {
 
         HttpSession session = request.getSession();
         if (session.getAttribute("user") == null) {
-            response.sendRedirect(request.getContextPath() + "/listProduct");
+            response.sendRedirect(request.getContextPath() + "/ProductList");
             return;
         }
         User user = (User) session.getAttribute("user");
@@ -83,7 +83,7 @@ public class CartUpdateItemController extends HttpServlet {
         result.addProperty("total", updatedItem.getTotal());
         out.write(result.toString());
 
-//        response.sendRedirect(request.getContextPath() + "/listProduct");
+        response.sendRedirect(request.getContextPath() + "/ProductList");
     }
 
 }

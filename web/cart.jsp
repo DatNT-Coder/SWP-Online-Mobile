@@ -83,8 +83,8 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="/mobileshop/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
-                                    <li><a href="/mobileshop/customer/cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
+                                    <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
                                           <c:when test="${sessionScope.user == null}">
                                             <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
@@ -121,11 +121,8 @@
                                             <li><a href="cart">Giỏ Hàng</a></li> 
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Danh sách Bài Đăng</a></li>
-                                            <li><a href="blog-single.html">Bài đăng đơn</a></li>
-                                        </ul>
+                                    <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
+                                        
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
