@@ -183,8 +183,23 @@ public class CartDAO extends DBContext {
             Logger.getLogger(CartDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";}
-    
-    
+    public String getUserPhone(int userId) {
+    String sql = "SELECT phone FROM User WHERE id = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString("phone");  // Lấy số điện thoại từ cột "phone"
+            }
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(CartDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return "";
+}
+
+
+
    public static void main(String[] args) {
         // 1. Khởi tạo CartDAO
         CartDAO cartDAO = new CartDAO();
