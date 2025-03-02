@@ -148,4 +148,5 @@
         <servlet-name>productDetailController</servlet-name>
         <url-pattern>/productDetail</url-pattern>
     </servlet-mapping>
+    
 </web-app>
