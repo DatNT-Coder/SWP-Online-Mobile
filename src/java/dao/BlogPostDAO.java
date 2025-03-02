@@ -428,73 +428,225 @@ public class BlogPostDAO extends DBContext {
 
    public LinkedHashMap<Integer, Map<String, Object>> showPostWithOrder(String id, String asc) {
       LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
-        String query = "SELECT b.*, u.full_name, p.name\n"
-                + "FROM blogs_posts b\n"
-                + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
-                + "INNER JOIN user u ON b.User_id = u.id\n"
-                 + "ORDER BY " + sortBy + " "+order+";";
-        try {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            int id = 1;
-            while (rs.next()) {
-                BlogPost blog = new BlogPost(rs.getInt("id"), // id
-                        rs.getString(2), // title
-                        rs.getString(3), // brief_info
-                        rs.getString(4), // thumbnail
-                        rs.getString(5), // details
-                        rs.getDate(6), // updatedDate
-                        rs.getInt(7), // PostCategories_id
-                        rs.getInt(8), // User_id
-                        rs.getBoolean(9), // flag_feature
-                        rs.getInt(10),
-                        rs.getString(11), // full_name
-                        rs.getString(12)
-                );
-                Map<String, Object> details = new HashMap<>();
-                details.put("post", blog);
-                details.put("full_name", rs.getString("full_name"));
-                details.put("name", rs.getString("name"));
-                postDetails.put(id, details);
-                id++;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return postDetails;
+      String query = "SELECT b.*, u.full_name, p.name\n"
+              + "FROM blogs_posts b\n"
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
+              + "INNER JOIN user u ON b.User_id = u.id\n"
+              + "ORDER BY " + sortBy + " " + order + ";";
+      try {
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery();
+         int id = 1;
+         while (rs.next()) {
+            BlogPost blog = new BlogPost(rs.getInt("id"), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10),
+                    rs.getString(11), // full_name
+                    rs.getString(12)
+            );
+            Map<String, Object> details = new HashMap<>();
+            details.put("post", blog);
+            details.put("full_name", rs.getString("full_name"));
+            details.put("name", rs.getString("name"));
+            postDetails.put(id, details);
+            id++;
+         }
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return postDetails;
 
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> showPostWithSearch(String pSearch) {
-      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
+      String query = "SELECT b.*, u.full_name, p.name\n"
+              + "FROM blogs_posts b\n"
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
+              + "INNER JOIN user u ON b.User_id = u.id\n"
+              + "AND (b.title LIKE CONCAT('%', ?, '%') \n"
+              + "       OR b.details LIKE CONCAT('%',?, '%') \n"
+              + "       OR u.full_name LIKE CONCAT('%', ? '%') \n"
+              + "       OR p.name LIKE CONCAT('%', ?, '%'))\n"
+              + "ORDER BY b.ID ASC;";
+
+      try {
+         PreparedStatement ps = conn.prepareStatement(query);
+         ps.setString(1, pSearch);
+         ps.setString(2, pSearch);
+         ps.setString(3, pSearch);
+         ps.setString(4, pSearch);
+         ResultSet rs = ps.executeQuery();
+         int id = 1;
+         while (rs.next()) {
+            BlogPost blog = new BlogPost(rs.getInt("id"), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10),
+                    rs.getString(11), // full_name
+                    rs.getString(12)
+            );
+            Map<String, Object> details = new HashMap<>();
+            details.put("post", blog);
+            details.put("full_name", rs.getString("full_name"));
+            details.put("name", rs.getString("name"));
+            postDetails.put(id, details);
+            id++;
+         }
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return postDetails;
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> getPostByCategoryId(int cid) {
-      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
+      String query = "SELECT b.*, u.full_name, p.name\n"
+              + "FROM blogs_posts b\n"
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
+              + "INNER JOIN user u ON b.User_id = u.id\n"
+              + "WHERE p.id = ?\n"
+              + "ORDER BY b.ID ASC;";
+
+      try {
+         PreparedStatement ps = conn.prepareStatement(query);
+         ps.setInt(1, cid);
+         ResultSet rs = ps.executeQuery();
+         int id = 1;
+         while (rs.next()) {
+            BlogPost blog = new BlogPost(rs.getInt("id"), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10),
+                    rs.getString(11), // full_name
+                    rs.getString(12)
+            );
+            Map<String, Object> details = new HashMap<>();
+            details.put("post", blog);
+            details.put("full_name", rs.getString("full_name"));
+            details.put("name", rs.getString("name"));
+            postDetails.put(id, details);
+            id++;
+         }
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return postDetails;
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> getPostByUserId(int bId) {
-      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
+      String query = "SELECT b.*, u.full_name, p.name\n"
+              + "FROM blogs_posts b\n"
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
+              + "INNER JOIN user u ON b.User_id = u.id\n"
+              + "WHERE u.id = ?\n"
+              + "ORDER BY b.ID ASC;";
+
+      try {
+         PreparedStatement ps = conn.prepareStatement(query);
+         ps.setInt(1, bid);
+         ResultSet rs = ps.executeQuery();
+         int id = 1;
+         while (rs.next()) {
+            BlogPost blog = new BlogPost(rs.getInt("id"), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10),
+                    rs.getString(11), // full_name
+                    rs.getString(12)
+            );
+            Map<String, Object> details = new HashMap<>();
+            details.put("post", blog);
+            details.put("full_name", rs.getString("full_name"));
+            details.put("name", rs.getString("name"));
+            postDetails.put(id, details);
+            id++;
+         }
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return postDetails;
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> getPostByStatus(int status) {
-      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
+      String query = "SELECT b.*, u.full_name, p.name\n"
+              + "FROM blogs_posts b\n"
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
+              + "INNER JOIN user u ON b.User_id = u.id\n"
+              + "WHERE b.status = ?\n"
+              + "ORDER BY b.ID ASC;";
+
+      try {
+         PreparedStatement ps = conn.prepareStatement(query);
+         ps.setInt(1, status);
+         ResultSet rs = ps.executeQuery();
+         int id = 1;
+         while (rs.next()) {
+            BlogPost blog = new BlogPost(rs.getInt("id"), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10),
+                    rs.getString(11), // full_name
+                    rs.getString(12)
+            );
+            Map<String, Object> details = new HashMap<>();
+            details.put("post", blog);
+            details.put("full_name", rs.getString("full_name"));
+            details.put("name", rs.getString("name"));
+            postDetails.put(id, details);
+            id++;
+         }
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return postDetails;
    }
 
    public int updatePostStatus(int productID, int i) {
       String query = "UPDATE mydb.blogs_posts SET status = ? WHERE id = ?";
-        int n = 0;
-        try {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, status);
-            ps.setInt(2, pid);
-            n = ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return n;
+      int n = 0;
+      try {
+         PreparedStatement ps = conn.prepareStatement(query);
+         ps.setInt(1, status);
+         ps.setInt(2, pid);
+         n = ps.executeUpdate();
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return n;
    }
-   
 
-   
 }
