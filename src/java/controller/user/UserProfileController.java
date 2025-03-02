@@ -4,7 +4,7 @@
  */
 package controller.user;
 
-import dao.DAOProductCategory;
+import dao.ProductCategoryDAO;
 import dao.ProductCategoryDAO;
 import dao.UserProfileDAO;
 import jakarta.servlet.ServletException;
@@ -58,7 +58,6 @@ public class UserProfileController extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      UserProfileDAO userDAO = new UserProfileDAO();
       HttpSession session = request.getSession();
       User userProfile = (User) session.getAttribute("user");
       ProductCategoryDAO pcg = new ProductCategoryDAO();

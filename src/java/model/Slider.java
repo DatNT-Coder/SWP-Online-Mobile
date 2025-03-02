@@ -35,6 +35,10 @@ public class Slider {
                     this.updatedDate = updatedDate;
           }
 
+   public Slider(String title, String fileName, String backlink, int i, String notes, int i0, java.sql.Date updatedDate) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
           public int getId() {
                     return id;
           }

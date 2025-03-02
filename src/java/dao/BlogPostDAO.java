@@ -423,85 +423,51 @@ public class BlogPostDAO extends DBContext {
       }
    }
 
-   public LinkedHashMap<Integer, Map<String, Object>> showPostWithOrder(String id, String asc) {
+   public LinkedHashMap<Integer, Map<String, Object>> showPostWithOrder(String sortBy, String order) {
       LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
-      String query = "SELECT b.*, u.full_name, p.name\n"
-              + "FROM blogs_posts b\n"
-              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
-              + "INNER JOIN user u ON b.User_id = u.id\n"
+      String query = "SELECT b.*, u.full_name, p.name FROM blogs_posts b "
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id "
+              + "INNER JOIN user u ON b.User_id = u.id "
               + "ORDER BY " + sortBy + " " + order + ";";
-      try {
-         PreparedStatement ps = conn.prepareStatement(query);
-         ResultSet rs = ps.executeQuery();
+
+      try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
          int id = 1;
          while (rs.next()) {
-            BlogPost blog = new BlogPost(rs.getInt("id"), // id
-                    rs.getString(2), // title
-                    rs.getString(3), // brief_info
-                    rs.getString(4), // thumbnail
-                    rs.getString(5), // details
-                    rs.getDate(6), // updatedDate
-                    rs.getInt(7), // PostCategories_id
-                    rs.getInt(8), // User_id
-                    rs.getBoolean(9), // flag_feature
-                    rs.getInt(10),
-                    rs.getString(11), // full_name
-                    rs.getString(12)
-            );
+            BlogPost blog = extractBlogPost(rs);
             Map<String, Object> details = new HashMap<>();
             details.put("post", blog);
             details.put("full_name", rs.getString("full_name"));
             details.put("name", rs.getString("name"));
-            postDetails.put(id, details);
-            id++;
+            postDetails.put(id++, details);
          }
       } catch (SQLException ex) {
          ex.printStackTrace();
       }
       return postDetails;
-
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> showPostWithSearch(String pSearch) {
       LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
-      String query = "SELECT b.*, u.full_name, p.name\n"
-              + "FROM blogs_posts b\n"
-              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
-              + "INNER JOIN user u ON b.User_id = u.id\n"
-              + "AND (b.title LIKE CONCAT('%', ?, '%') \n"
-              + "       OR b.details LIKE CONCAT('%',?, '%') \n"
-              + "       OR u.full_name LIKE CONCAT('%', ? '%') \n"
-              + "       OR p.name LIKE CONCAT('%', ?, '%'))\n"
+      String query = "SELECT b.*, u.full_name, p.name FROM blogs_posts b "
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id "
+              + "INNER JOIN user u ON b.User_id = u.id "
+              + "WHERE b.title LIKE ? OR b.details LIKE ? OR u.full_name LIKE ? OR p.name LIKE ? "
               + "ORDER BY b.ID ASC;";
 
-      try {
-         PreparedStatement ps = conn.prepareStatement(query);
-         ps.setString(1, pSearch);
-         ps.setString(2, pSearch);
-         ps.setString(3, pSearch);
-         ps.setString(4, pSearch);
+      try (PreparedStatement ps = connection.prepareStatement(query)) {
+         String searchPattern = "%" + pSearch + "%";
+         for (int i = 1; i <= 4; i++) {
+            ps.setString(i, searchPattern);
+         }
          ResultSet rs = ps.executeQuery();
          int id = 1;
          while (rs.next()) {
-            BlogPost blog = new BlogPost(rs.getInt("id"), // id
-                    rs.getString(2), // title
-                    rs.getString(3), // brief_info
-                    rs.getString(4), // thumbnail
-                    rs.getString(5), // details
-                    rs.getDate(6), // updatedDate
-                    rs.getInt(7), // PostCategories_id
-                    rs.getInt(8), // User_id
-                    rs.getBoolean(9), // flag_feature
-                    rs.getInt(10),
-                    rs.getString(11), // full_name
-                    rs.getString(12)
-            );
+            BlogPost blog = extractBlogPost(rs);
             Map<String, Object> details = new HashMap<>();
             details.put("post", blog);
             details.put("full_name", rs.getString("full_name"));
             details.put("name", rs.getString("name"));
-            postDetails.put(id, details);
-            id++;
+            postDetails.put(id++, details);
          }
       } catch (SQLException ex) {
          ex.printStackTrace();
@@ -510,121 +476,45 @@ public class BlogPostDAO extends DBContext {
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> getPostByCategoryId(int cid) {
-      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
-      String query = "SELECT b.*, u.full_name, p.name\n"
-              + "FROM blogs_posts b\n"
-              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
-              + "INNER JOIN user u ON b.User_id = u.id\n"
-              + "WHERE p.id = ?\n"
-              + "ORDER BY b.ID ASC;";
-
-      try {
-         PreparedStatement ps = conn.prepareStatement(query);
-         ps.setInt(1, cid);
-         ResultSet rs = ps.executeQuery();
-         int id = 1;
-         while (rs.next()) {
-            BlogPost blog = new BlogPost(rs.getInt("id"), // id
-                    rs.getString(2), // title
-                    rs.getString(3), // brief_info
-                    rs.getString(4), // thumbnail
-                    rs.getString(5), // details
-                    rs.getDate(6), // updatedDate
-                    rs.getInt(7), // PostCategories_id
-                    rs.getInt(8), // User_id
-                    rs.getBoolean(9), // flag_feature
-                    rs.getInt(10),
-                    rs.getString(11), // full_name
-                    rs.getString(12)
-            );
-            Map<String, Object> details = new HashMap<>();
-            details.put("post", blog);
-            details.put("full_name", rs.getString("full_name"));
-            details.put("name", rs.getString("name"));
-            postDetails.put(id, details);
-            id++;
-         }
-      } catch (SQLException ex) {
-         ex.printStackTrace();
-      }
-      return postDetails;
+      String query = "SELECT b.*, u.full_name, p.name "
+              + "FROM blogs_posts b "
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id "
+              + "INNER JOIN user u ON b.User_id = u.id "
+              + "WHERE p.id = ? ORDER BY b.ID ASC;";
+      return getFilteredPosts(query, cid);
    }
 
-   public LinkedHashMap<Integer, Map<String, Object>> getPostByUserId(int bId) {
-      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
-      String query = "SELECT b.*, u.full_name, p.name\n"
-              + "FROM blogs_posts b\n"
-              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
-              + "INNER JOIN user u ON b.User_id = u.id\n"
-              + "WHERE u.id = ?\n"
-              + "ORDER BY b.ID ASC;";
-
-      try {
-         PreparedStatement ps = conn.prepareStatement(query);
-         ps.setInt(1, bid);
-         ResultSet rs = ps.executeQuery();
-         int id = 1;
-         while (rs.next()) {
-            BlogPost blog = new BlogPost(rs.getInt("id"), // id
-                    rs.getString(2), // title
-                    rs.getString(3), // brief_info
-                    rs.getString(4), // thumbnail
-                    rs.getString(5), // details
-                    rs.getDate(6), // updatedDate
-                    rs.getInt(7), // PostCategories_id
-                    rs.getInt(8), // User_id
-                    rs.getBoolean(9), // flag_feature
-                    rs.getInt(10),
-                    rs.getString(11), // full_name
-                    rs.getString(12)
-            );
-            Map<String, Object> details = new HashMap<>();
-            details.put("post", blog);
-            details.put("full_name", rs.getString("full_name"));
-            details.put("name", rs.getString("name"));
-            postDetails.put(id, details);
-            id++;
-         }
-      } catch (SQLException ex) {
-         ex.printStackTrace();
-      }
-      return postDetails;
+   public LinkedHashMap<Integer, Map<String, Object>> getPostByUserId(int bid) {
+      String query = "SELECT b.*, u.full_name, p.name "
+              + "FROM blogs_posts b "
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id "
+              + "INNER JOIN user u ON b.User_id = u.id "
+              + "WHERE u.id = ? ORDER BY b.ID ASC;";
+      return getFilteredPosts(query, bid);
    }
 
    public LinkedHashMap<Integer, Map<String, Object>> getPostByStatus(int status) {
-      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
-      String query = "SELECT b.*, u.full_name, p.name\n"
-              + "FROM blogs_posts b\n"
-              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id\n"
-              + "INNER JOIN user u ON b.User_id = u.id\n"
-              + "WHERE b.status = ?\n"
-              + "ORDER BY b.ID ASC;";
+      String query = "SELECT b.*, u.full_name, p.name "
+              + "FROM blogs_posts b "
+              + "INNER JOIN postcategories p ON p.id = b.PostCategories_id "
+              + "INNER JOIN user u ON b.User_id = u.id "
+              + "WHERE b.status = ? ORDER BY b.ID ASC;";
+      return getFilteredPosts(query, status);
+   }
 
-      try {
-         PreparedStatement ps = conn.prepareStatement(query);
-         ps.setInt(1, status);
+   private LinkedHashMap<Integer, Map<String, Object>> getFilteredPosts(String query, int param) {
+      LinkedHashMap<Integer, Map<String, Object>> postDetails = new LinkedHashMap<>();
+      try (PreparedStatement ps = connection.prepareStatement(query)) {
+         ps.setInt(1, param);
          ResultSet rs = ps.executeQuery();
          int id = 1;
          while (rs.next()) {
-            BlogPost blog = new BlogPost(rs.getInt("id"), // id
-                    rs.getString(2), // title
-                    rs.getString(3), // brief_info
-                    rs.getString(4), // thumbnail
-                    rs.getString(5), // details
-                    rs.getDate(6), // updatedDate
-                    rs.getInt(7), // PostCategories_id
-                    rs.getInt(8), // User_id
-                    rs.getBoolean(9), // flag_feature
-                    rs.getInt(10),
-                    rs.getString(11), // full_name
-                    rs.getString(12)
-            );
+            BlogPost blog = extractBlogPost(rs);
             Map<String, Object> details = new HashMap<>();
             details.put("post", blog);
             details.put("full_name", rs.getString("full_name"));
             details.put("name", rs.getString("name"));
-            postDetails.put(id, details);
-            id++;
+            postDetails.put(id++, details);
          }
       } catch (SQLException ex) {
          ex.printStackTrace();
@@ -632,18 +522,16 @@ public class BlogPostDAO extends DBContext {
       return postDetails;
    }
 
-   public int updatePostStatus(int productID, int i) {
-      String query = "UPDATE mydb.blogs_posts SET status = ? WHERE id = ?";
-      int n = 0;
-      try {
-         PreparedStatement ps = conn.prepareStatement(query);
+   public int updatePostStatus(int postID, int status) {
+      String query = "UPDATE blogs_posts SET status = ? WHERE id = ?";
+      try (PreparedStatement ps = connection.prepareStatement(query)) {
          ps.setInt(1, status);
-         ps.setInt(2, pid);
-         n = ps.executeUpdate();
+         ps.setInt(2, postID);
+         return ps.executeUpdate();
       } catch (SQLException ex) {
          ex.printStackTrace();
       }
-      return n;
+      return 0;
    }
 
    public Map<String, Object> getPostbyPostID(int postID) {
@@ -654,4 +542,20 @@ public class BlogPostDAO extends DBContext {
       throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
    }
 
+   private BlogPost extractBlogPost(ResultSet rs) throws SQLException {
+      return new BlogPost(
+              rs.getInt("id"),
+              rs.getString("title"),
+              rs.getString("brief_info"),
+              rs.getString("thumbnail"),
+              rs.getString("details"),
+              rs.getDate("updatedDate"),
+              rs.getInt("PostCategories_id"),
+              rs.getInt("User_id"),
+              rs.getBoolean("flag_feature"),
+              rs.getInt("status"),
+              rs.getString("full_name"),
+              rs.getString("name")
+      );
+   }
 }
