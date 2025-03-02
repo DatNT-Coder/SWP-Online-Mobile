@@ -140,4 +140,12 @@
         <servlet-name>PostList</servlet-name>
         <url-pattern>/PostList</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>productDetailController</servlet-name>
+        <servlet-class>controller.product.productDetailController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>productDetailController</servlet-name>
+        <url-pattern>/productDetail</url-pattern>
+    </servlet-mapping>
 </web-app>
