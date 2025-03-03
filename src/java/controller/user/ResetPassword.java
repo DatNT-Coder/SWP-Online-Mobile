@@ -12,15 +12,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 import model.User;
-import static org.apache.coyote.http11.Constants.a;
 
 /**
  *
  * @author vuduc
  */
-public class VerifyServlet extends HttpServlet {
+public class ResetPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class VerifyServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyServlet</title>");
+            out.println("<title>Servlet ResetPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VerifyServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResetPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,29 +72,45 @@ public class VerifyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String emailFromVerify = request.getParameter("e");
-        String codeFromVerify = request.getParameter("vCode");
 
-        VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailFromVerify);
-        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeFromVerify);
+        String pw1 = request.getParameter("pw1");
+        String pw2 = request.getParameter("pw2");
+        String emailReseter = request.getParameter("e");
+        String codeReseter = request.getParameter("vCode");
+
+        boolean hasError = false;
+        if (pw1 == null || pw2 == null || pw1.trim().isEmpty() || pw2.trim().isEmpty()) {
+            request.setAttribute("erPass", "Password cannot be empty.");
+            hasError = true;
+        } else if (pw1.contains(" ") || pw2.contains(" ")) {
+            request.setAttribute("erPass", "Password cannot contain spaces.");
+            hasError = true;
+        } else if (!pw1.equals(pw2)) { // Kiểm tra xem pw1 và pw2 có giống nhau không
+            request.setAttribute("erPass", "Passwords do not match.");
+            hasError = true;
+        }
+        if (hasError){
+            request.getRequestDispatcher("reset.jsp").forward(request, response);
+        }
+
+        VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailReseter);
+        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeReseter);
 
         if (isCodeValid) {
 
-            AuthenticationServlet.getVerificationCodes().remove(emailFromVerify);
+            AuthenticationServlet.getVerificationCodes().remove(emailReseter);
 
             AccountDAO dao = new AccountDAO();
-            User u = (User) request.getSession().getAttribute("registerUser"); //request.getSession().getAttribute("registerUser") trả về kiểu object nên cần cast về kiểu User
+            //request.getSession().getAttribute("registerUser") trả về kiểu object nên cần cast về kiểu User
+            User u = new User( (String) request.getSession().getAttribute("resetUserMail"), pw2);
             
-            dao.insertUserToDB(u);
-            
-            request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, u);
+            boolean isUpdate = dao.updateUserPassword(u);
             request.getRequestDispatcher("HomePage").forward(request, response);
 
         } else {
             // Gửi thông báo lỗi về trang trước hoặc trang lỗi
             request.setAttribute("errorMessage", "Mã xác nhận không hợp lệ hoặc đã hết hạn.");
-            request.getRequestDispatcher("verify.jsp").forward(request, response);
+            request.getRequestDispatcher("HomePage").forward(request, response);
         }
 
     }

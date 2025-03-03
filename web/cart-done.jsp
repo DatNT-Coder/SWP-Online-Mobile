@@ -20,7 +20,7 @@
         <script src="${pageContext.request.contextPath}/js/html5shiv.js"></script>
         <script src="${pageContext.request.contextPath}/js/respond.min.js"></script>
         <![endif]-->       
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/ico/favicon.ico">
+        <link rel="shortcut icon" href="images/ico/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-72-precomposed.png">
@@ -38,7 +38,7 @@
                         <div class="col-sm-6 ">
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
-                                    <li><a href=""><i class="fa fa-phone"></i> </a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> +84 985 350 491</a></li>
                                     <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
@@ -84,10 +84,10 @@
                                         </ul>
                                     </li>
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
-                                    <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
-                                          <c:when test="${sessionScope.user == null}">
-                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
                                             <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
@@ -102,6 +102,7 @@
 
             <div class="header-bottom"><!--header-bottom-->
                 <div class="container">
+                    
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="navbar-header">
@@ -114,15 +115,18 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="HomePage">Trang chủ</a></li>
-                                    <li class="dropdown"><a href="/ProjectSWP391/HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="Home">Trang chủ</a></li>
+                                    <li class="dropdown"><a href="Home" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
+                                            <li><a href="/mobileshop/listProduct" class="active">Sản phẩm</a></li>
                                             <li><a href="cart">Giỏ Hàng</a></li> 
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
-                                        
+                                    <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+                                            <li><a href="blog.html">Danh sách Bài Đăng</a></li>
+                                            <li><a href="blog-single.html">Bài đăng đơn</a></li>
+                                        </ul>
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
@@ -145,107 +149,21 @@
         <section id="cart_items">
             <div class="container">
                 <div class="breadcrumbs">
-                    <ol style="color: #009981;" class="breadcrumb">
-                        
+                    <ol class="breadcrumb">
+                        <li><a href="Home.jsp">Home</a></li>
+                        <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
-                <div style="color: #009981;" class="table-responsive cart_info">
-                    <table  class="table table-condensed">
-                        <thead>
-                            <tr  class="cart_menu">
-                                <td class="image">Sản phẩm</td>
-                                <td class="description"></td>
-                                <td class="price">Giá tiền</td>
-                                <td class="quantity">Số Lượng</td>
-                                <td class="total">Tổng Giá</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="item" items="${cart}">
-                                <tr id="item-${item.productId}">
-                                    <td class="cart_product">
-                                        <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
-                                    </td>
-                                    <td class="cart_description">
-                                        <h4><a href="">${item.name}</a></h4>
-                                        <!--<p>Web ID: 1089772</p>-->
-                                    </td>
-                                    <td class="cart_price">
-                                        <p id="item-price-${item.productId}">$${item.price}</p>
-                                    </td>
-                                    <td class="cart_quantity">
-                                        <div class="cart_quantity_button">
-                                            <a onclick="updateQuantity('${item.productId}', -1)" class="cart_quantity_down"> - </a>
-                                            <input readOnly id="item-quantity-${item.productId}" class="cart_quantity_input" type="text" name="quantity" value="${item.quantity}" autocomplete="off" size="2">
-                                            <a onclick="updateQuantity('${item.productId}', 1)" class="cart_quantity_up"> + </a>
-                                        </div>
-                                    </td>
-                                    <td  class="cart_total">
-                                        <p id="item-total-${item.productId}" class="cart_total_price">$${item.total}</p>
-                                    </td>
-                                    <td class="cart_delete">
-                                        <a onclick="updateQuantity('${item.productId}', 0)" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    <script>
-                        async function updateQuantity(productId, amount) {
-                            const quantityDiv = document.getElementById('item-quantity-' + productId);
-
-                            if (!document.querySelector('.cart_info table tbody tr')) {
-                                await FuiToast.error('Your cart is empty. Add items to your cart before updating quantities.');
-                                return false;
-                            }
-                            const postData = new URLSearchParams();
-                            postData.append("productId", productId);
-                            if (amount === 0) {
-                                postData.append("amount", -quantityDiv.value);
-                            } else {
-                                postData.append("amount", amount);
-                            }
-                            const response = await fetch('${pageContext.request.contextPath}/customer/cart/update', {
-                                method: "POST",
-                                body: postData
-                            });
-                            const data = await response.json();
-                            const status = data.status;
-
-                            console.log(data);
-                            if (status === 'successed') {
-                                const newQuantity = data.quantity;
-                                if (+newQuantity === 0) {
-                                    document.getElementById('item-' + productId).remove();
-                                    await FuiToast.success('Đã xóa sản phẩm!');
-                                    return false;
-                                }
-                                const price = data.price;
-                                const total = data.total;
-                                const priceDiv = document.getElementById('item-price-' + productId);
-                                const totalDiv = document.getElementById('item-total-' + productId);
-                                quantityDiv.value = newQuantity;
-                                priceDiv.innerHTML = '$' + price;
-                                totalDiv.innerHTML = '$' + total;
-//                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
-                            } else {
-                                await FuiToast.error('Update product quantity failed!');
-                            }
-                            return false;
-                        }
-                    </script>
-                    
-                </div>
-                <div  class="row">
-                    <div class="col" style="color: #FE0F9E; display: flex; justify-content: center; margin-top: -20px; margin-bottom: 30px;">
-                        
-                        <a  href="${pageContext.request.contextPath}/customer/cart/contact" class="btn btn-default add-to-cart" href="">Đi đến thanh toán</a>
+                <div class="table-responsive cart_info">
+                    <div class="text-center">
+                        <h2 class="text-success">Bạn đã hoàn tất đơn đặt hàng</h2>
+                        <h3>Mã Đơn hàn của bạn là: #${orderId}</h3>
+                        <a href="${pageContext.request.contextPath}/Home"  class="btn btn-default add-to-cart"><i ></i>Trở về trang chủ</a>
+                        <a href="${pageContext.request.contextPath}/feedback"  class="btn btn-default add-to-cart"><i ></i>Đi đến bình luận</a>
                     </div>
                 </div>
             </div>
         </section> <!--/#cart_items-->
-
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -333,19 +251,19 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Dịch vụ</h2>
+                                <h2>Service</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Hỗ trợ online</a></li>
-                                    <li><a href="">Liên hệ</a></li>
-                                    <li><a href="">Trạng thái đơn hàng</a></li>
-                                    <li><a href="">Thay đổi địa chỉ</a></li>
+                                    <li><a href="">Online Help</a></li>
+                                    <li><a href="">Contact Us</a></li>
+                                    <li><a href="">Order Status</a></li>
+                                    <li><a href="">Change Location</a></li>
                                     <li><a href="">FAQ’s</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Mua nhanh</h2>
+                                <h2>Quock Shop</h2>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a href="">T-Shirt</a></li>
                                     <li><a href="">Mens</a></li>
@@ -357,33 +275,35 @@
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Chính sách</h2>
+                                <h2>Policies</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Điều khoản sử dụng</a></li>
-                                    <li><a href="">Quyền riêng tư</a></li>
-                                    <li><a href="">Chính sách đổi trả</a></li>
-                                    <li><a href="">Hệ thống hóa đơn</a></li>
+                                    <li><a href="">Terms of Use</a></li>
+                                    <li><a href="">Privecy Policy</a></li>
+                                    <li><a href="">Refund Policy</a></li>
+                                    <li><a href="">Billing System</a></li>
+                                    <li><a href="">Ticket System</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Về người bán hàng</h2>
+                                <h2>About Shopper</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Thông tin công ty</a></li>
-                                    <li><a href="">Địa chỉ cửa hàng</a></li>
-                                    <li><a href="">Tiếp thị liên kết</a></li>
-                                    <li><a href="">Bản quyền</a></li>
+                                    <li><a href="">Company Information</a></li>
+                                    <li><a href="">Careers</a></li>
+                                    <li><a href="">Store Location</a></li>
+                                    <li><a href="">Affillate Program</a></li>
+                                    <li><a href="">Copyright</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-3 col-sm-offset-1">
                             <div class="single-widget">
-                                <h2>Về người bán hàng</h2>
+                                <h2>About Shopper</h2>
                                 <form action="#" class="searchform">
-                                    <input type="text" placeholder="Địa chỉ email..." />
-                                    <button style="background-color: #FE0F9E" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                                    <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
+                                    <input type="text" placeholder="Your email address" />
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <p>Get the most recent updates from <br />our site and be updated your self...</p>
                                 </form>
                             </div>
                         </div>
@@ -395,8 +315,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2025 . All rights reserved.</p>
-                        <p class="pull-right">Designed by <span><a target="_blank" href=""></a></span></p>
+                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
                     </div>
                 </div>
             </div>

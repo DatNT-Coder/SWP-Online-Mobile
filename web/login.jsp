@@ -168,8 +168,11 @@
                             </span>
                             <button type="submit" class="btn btn-default">Login</button>
                         </form>
-                        <form action="#">
+                        <form style="padding-top: 50px" action="authen?action=reset" method="post">
+                            <h2>Input Email to reset your password</h2>
+                            <input name="email" type="email" placeholder="Your Email" />
                             <button type="submit" class="btn btn-default">Reset</button>
+                            <h5 style="color: red"> ${erEmailNotExist} </h5>
                         </form>
                     </div><!--/login form & reset form-->
 

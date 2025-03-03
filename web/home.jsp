@@ -552,7 +552,7 @@
                      //Product Detail ở đây.
                      productsToDisplay.forEach(function (product) {
                         var productHtml = '<div class="col-md-4">' +
-                                '<a href="productDetail?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                                '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
                                 '<div class="product-image-wrapper">' +
                                 '<div class="single-products">' +
                                 '<div class="productinfo text-center">' +

@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="Home"><img src="images/home/logo.png" alt="" /></a>
+                                <a href="HomePage"><img src="images/home/logo.png" alt="" /></a>
                             </div>              
                         </div>
                         <div class="col-sm-8">
@@ -120,7 +120,7 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="Home" class="active">Trang Chủ</a></li>
+                                    <li><a href="HomePage" class="active">Trang Chủ</a></li>
                                     <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="listProduct">Sản Phẩm</a></li>
@@ -170,7 +170,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a href="Home">
+                                            <a href="HomePage">
                                                 <span class="badge pull-right"></span>
                                                 Tất cả
                                             </a>
@@ -182,7 +182,7 @@
                                         <div class="panel-heading ">
                                             <h4 class="panel-title">
                                                 <c:if test="${listPC.id == sessionScope.pickedCategory}">
-                                                    <a style="color: #FE0F9E;"  href="HomeCategory?action=pickCategory&cid=${listPC.id}">
+                                                    <a style="color: #009981;"  href="HomeCategory?action=pickCategory&cid=${listPC.id}">
                                                         <span class="badge pull-right"></span>
                                                         ${listPC.categoryName}
                                                     </a>
@@ -208,7 +208,7 @@
                                     <ul class="nav nav-pills nav-stacked">
                                         <c:forEach items="${requestScope.listBrand}" var="listBrand">
                                             <c:if test="${listBrand.brandID == sessionScope.pickedBrand}">
-                                                <li><a style="color: #FE0F9E;" href="HomeCategory?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
+                                                <li><a style="color: #009981;" href="HomeCategory?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
                                                     </c:if>
                                                     <c:if test="${listBrand.brandID != sessionScope.pickedBrand}">
                                                 <li><a href="HomeCategory?action=pickBrand&brandId=${listBrand.brandID}"> <span class="pull-right"></span>${listBrand.brandName}</a></li>
@@ -226,14 +226,14 @@
                                         <input type="hidden" name="action" value="searchByPrice"/>
                                         <input style="padding:0.5rem;width:100%" placeholder="Từ..."  type="text" name="fromPrice" class="span2" value="${sessionScope.fromP}" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" ><br />
                                         <input style="padding:0.5rem;width:100%;margin-top:6px;" placeholder="Đến..." type="text" name="toPrice" class="span2" value="${sessionScope.toP}"  pattern="^\d+(\.\d+)?$" title="vui lòng nhập số"  ><br />
-                                        <button style="background-color: #FE0F9E;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
+                                        <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
                                     </div>
                                 </form>
 
                             </div><!--/price-range-->
 
                             <div class="shipping text-center"><!--shipping-->
-                                <img src="images/home/shipping.jpg" alt="" />
+                                <!--<img src="images/home/shipping.jpg" alt="" />-->
                             </div><!--/shipping-->
 
                         </div>
@@ -241,7 +241,7 @@
 
                     <div class="col-sm-9 padding-right">
                         <div class="container mt-5">
-                            <h2 style="color: #fe0f9e">ĐÁNH GIÁ CHUNG</h2>
+                            <h2 style="color: #009981">ĐÁNH GIÁ CHUNG</h2>
                             <form action="feedback" method="POST">
                                 <div class="form-group">
                                     <label for="name">Họ và tên</label>
@@ -284,7 +284,7 @@
                                     <label for="feedback">Phản hồi của bạn</label>
                                     <textarea name="comment"   style="width: 50%;"  class="form-control" id="feedback" rows="3" required=""></textarea>
                                 </div>
-                                <button style="background-color: #fe0f9e;" type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
+                                <button style="background-color: #009981;" type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
                             </form>
                         </div>
                     </div>
@@ -298,8 +298,6 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="companyinfo">
-                                <h2><span style="color: #FE0F9E;">Pink</span>-Mobile</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -427,7 +425,7 @@
                                 <h2>Về người bán hàng</h2>
                                 <form action="#" class="searchform">
                                     <input type="text" placeholder="Địa chỉ email..." />
-                                    <button style="background-color: #FE0F9E" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <button style="background-color: #009981" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
                                     <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
                                 </form>
                             </div>
@@ -440,7 +438,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2024 PinkMobile. All rights reserved.</p>
+                        <p class="pull-left">Copyright © 2024. All rights reserved.</p>
                         <p class="pull-right">Designed by <span><a target="_blank" href=""></a></span></p>
                     </div>
                 </div>
