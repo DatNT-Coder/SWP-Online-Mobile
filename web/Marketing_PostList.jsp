@@ -1,327 +1,210 @@
 <%-- 
-    Document   : Marketing_productList
-    Created on : Feb 7, 2024, 8:24:37 PM
-    Author     : alexf
+    Document   : PostList
+    Created on : Feb 18, 2025, 11:01:01 PM
+    Author     : naokh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.BlogPostDAO"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List, model.BlogPost" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+<%
+    List<BlogPost> posts = (List<BlogPost>) request.getAttribute("posts");
+%>
+<link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Marketing | Quản lý bài đăng</title>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
-        <style>
-            *{
-                box-sizing: border-box;
-                margin:0;
-                padding:0;
-            }
-            .header{
-                padding: 0.4rem .2rem;
-                margin-bottom: 1rem;
-            }
-            .add-product-btn{
-                text-align: center;
-                display: block;
-                border:none;
-                color: black;
-                text-decoration: none;
-                padding:.7rem .2rem;
-                margin-top: 10px;
-                width: 100%;
-            }
-            .add-product-btn:hover{
-                color: black;
-                text-decoration: none;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <jsp:include page="sidebar.jsp"></jsp:include>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="col-md-12">
-                            <div class="header">
-                                <h1>Danh sách bài đăng</h1>
-                            </div>
-                            <div class="product-list-content text-center">
-                                <a class="add-product-btn btn btn-primary" href="managePostMarketing?msg=loadAddPost"><i class="fa-solid fa-plus fa-xl" style="color: black;"></i> Thêm mới Bài Đăng</a>
-                            </div>
-                            <div class="search-filter-section">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div class="form-group select-filter">
-                                            <label for="filter">
-                                                <h3>Lọc bài đăng:</h3>
-                                            </label>
-                                            <select class="form-control" id="listFilter">
-                                                <option selected="" disabled="">Chọn theo...</option>
+   <head>
+      <title>Post List</title>
+      <link href="css/PostListStyle.css" rel="stylesheet">
+   </head>
+   <body>
+      <h2>Blog Posts</h2>
+      <button onclick="$('#addPostModal').show()">Add New Post</button
 
-                                                <option value="name">Loại Bài Đăng</option>
-                                                <option value="full_name">Người Đăng</option>
-                                                <option value="status">Trạng Thái</option>
-                                            </select>
-                                            <select class="form-control" id="filterDetail" style="margin-top: 10px;">
-                                                <option selected="" disabled="">Lựa chọn</option>
-                                                <!-- lựa chọn ở đây. -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <form action="listPostMarketing">
-                                        <input type="hidden" name="msg" value="searchPost"/>
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label for="pSearch">
-                                                    <h3>Tìm kiếm:</h3>
-
-                                                </label>
-                                                <input type="text" name="pSearch" class="form-control" placeholder="Loại bài đăng, tựa đề..."/>
-                                                <button class="add-product-btn btn btn-primary" type="submit">Tìm kiếm</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                            <div>
-                                <h4>${requestScope.message}</h4>
-                        </div>
-                        <div class="product-table">
-                            <table class="table table-striped" style="width: 100%;border: 1px solid #DDDDDD;border-radius: 6px;">
-                                <thead>
-                                    <tr>
-                                        <th><a href="listPostMarketing?msg=sortPost&sortBy=id">ID</a></th>
-                                        <th><a href="listPostMarketing?msg=sortPost&sortBy=full_name">Người Đăng</a></th>
-                                        <th><a href="listPostMarketing?msg=sortPost&sortBy=name">Loại Bài Đăng</a></th>
-                                        <th><a href="listPostMarketing?msg=sortPost&sortBy=title">Tựa Đề</a></th>
-                                        <th><a href="listPostMarketing?msg=sortPost&sortBy=brief_info">Thông tin tóm tắt</a></th>
-
-                                        <th>Ảnh</th>
-                                        <th><a href="listPostMarketing?msg=sortPost&sortBy=updatedDate">Ngày Đăng</a></th>
+      <label for="searchField">Search By:</label>
+      <select id="searchField">
+         <option value="0">Status</option>
+         <option value="1">Update Date</option>
+         <option value="2">Thumnail</option>
+         <option value="3">CatID</option>
+         <option value="4">Brief Info</option>
+         <option value="5">Title</option>
+         <option value="6">ID</option><!-- Column index in the table (0-based) -->
+      </select>
+      <input type="text" id="searchQuery" placeholder="Enter search text">
+      <button onclick="filterTable()">Search</button>
+      <table id="postTable">
+         <thead>
+            <tr>
+               <th>ID</th>
+               <th>CatID</th>
+               <th>Title</th>
+               <th>Brief Info</th>
+               <th>Thumbnail</th>
+               <th>Updated Date</th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody>
+            <% for (BlogPost post : posts) { %>
+            <tr id="post.<%= post.getId() %>">
+               <td><%= post.getId() %></td>
+               <td><%= post.getPostCategories_id() %></td>
+               <td><%= post.getTitle() %></td>
+               <td><%= post.getBrief_info() %></td>
+               <td><img src="<%= post.getThumbnail() %>" width="50"></td>
+               <td><%= post.getUpdatedDate() %></td>
+               <td>
+                  <button onclick="viewPost(<%= post.getId() %>)">View</button>
+                  <button onclick="editPost(<%= post.getId() %>)">Edit</button>
+                  <button onclick="toggleStatus(<%= post.getId() %>, <%= post.getStatus() %>)">
+                     <%= post.getStatus() == 1 ? "Hide" : "Show" %>
+                  </button>
+               </td>
+            </tr>
+            <% } %>
+         </tbody>
+      </table>
 
 
-                                        <th>Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Sản phẩm sẽ được chèn vào đây -->
-                                </tbody>
-                            </table>
-                            <ul class="pagination">
-                                <li class="active"><a href="">1</a></li>
-                                <li><a href="">2</a></li>
-                                <li><a href="">3</a></li>
-                                <li><a href="">&raquo;</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <form action="PostList?action=add" method="post" enctype="multipart/form-data">
+         <input type="hidden" name="action" value="add">
 
-        </div>
-        <!-- icon -->
-        <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
-        <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
-        <script src="${pageContext.request.contextPath}/js/price-range.js"></script>
-        <script src="${pageContext.request.contextPath}/js/jquery.scrollUp.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
-        <script src="${pageContext.request.contextPath}/js/main.js"></script>
-        <script>
-            // Convert the product details from Java to JavaScript
-            var postDetails = JSON.parse('${listPost}');
+         <label>Title:</label>
+         <input type="text" name="title" required>
 
-            var currentPage = 1; // Current page
-            var itemsPerPage = 8; // Number of items per page
+         <label>Brief Info:</label>
+         <textarea name="brief_info" required></textarea>
 
-            // Display products for the current page
-            function displayPosts() {
-                var start = (currentPage - 1) * itemsPerPage;
-                var end = start + itemsPerPage;
-                // Tạo một mảng để lưu trữ các keyS
-                var keys = [];
-                for (var key in postDetails) {
-                    if (postDetails.hasOwnProperty(key)) {
-                        keys.push(key);
-                    }
-                }
-                var postsToDisplay = keys.slice(start, end);
+         <label>Details:</label>
+         <textarea name="details" required></textarea>
 
-                // Clear the current products
-                $('tbody').empty();
+         <label>Thumbnail:</label>
+         <input type="file" name="thumbnail">
 
-                // Add each product
-                postsToDisplay.forEach(function (postid) {
-                    var post = postDetails[postid].post;
-                    var statusIcon = post.status === 0 ? 'fa-eye-slash' : 'fa-eye';
+         <label>Category:</label>
+         <select name="PostCategories_id">
+            <c:forEach var="category" items="${categories}">
+               <option value="${category.id}">${category.name}</option>
+            </c:forEach>
+         </select>
 
-                    // Chuyển đổi chuỗi ngày tháng năm sang đối tượng Date
-                    var date = new Date(post.updatedDate);
+         <label>User ID:</label>
+         <input type="number" name="User_id" required>
 
-                    // Định dạng ngày tháng năm theo dd-mm-yyyy
-                    var formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+         <label>Feature:</label>
+         <input type="checkbox" name="Flag_feature" value="true">
+
+         <label>Status:</label>
+         <select name="status">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+         </select>
+
+         <button type="submit">Add Post</button>
+      </form>
 
 
-                    var productHtml = '<tr>' +
-                            '<td>' + post.id + '</td>' +
-                            '<td>' + postDetails[postid].full_name + '</td>' +
-                            '<td>' + postDetails[postid].name + '</td>' +
-                            '<td><a href="viewPostMarketing?pid=' + post.id + '" style="color: black; text-decoration: none;">' + post.title + '</a></td>' +
-                            '<td><a href="#" style="color: black; text-decoration: none;">' + post.brief_info + '</a></td>' +
-                            '<td><img width="100px" src="../assets/img/blogImage/' + post.thumbnail + '" class="img-thumbnail" alt="Ảnh sản phẩm"></td>' +
-                            '<td><a href="#" style="color: black; text-decoration: none;">' + formattedDate + '</a></td>' +
-                            ' <td>' +
-                            '  <a href="listPostMarketing?pid=' + post.id + '&msg=toggleStatus&status=' + post.status + '"><i class="fa-solid ' + statusIcon + ' fa-lg"></i></a>' +
-                            ' <a href="managePostMarketing?msg=loadEditPost&pid=' + post.id + '"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>' +
-                            ' </td>' +
-                            ' </tr>';
-                    $('tbody').append(productHtml);
-                });
 
-            }
+      <div id="postDetails">
+         <h3>Post Details</h3>
+         <p id="detailTitle"></p>
+         <p id="detailBrief"></p>
+         <img id="detailThumbnail" src="" width="100">
+         <p id="detailContent"></p>
+         <button id="saveChanges" style="display:none;">Save Changes</button>
+      </div>
 
-            // Update the pagination links
-            function updatePagination() {
-                var totalPages = Math.ceil(Object.keys(postDetails).length / itemsPerPage);
-
-                // Clear the current pagination links
-                $('.pagination').empty();
-
-                // Add "Previous" button
-                var prevClass = currentPage === 1 ? 'disabled' : '';
-                var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
-                $('.pagination').append(prevHtml);
-
-                // Add each pagination link
-                for (var i = 1; i <= totalPages; i++) {
-                    var liClass = i === currentPage ? 'active' : '';
-                    var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
-                    $('.pagination').append(liHtml);
-                }
-
-                // Add "Next" button
-                var nextClass = currentPage === totalPages ? 'disabled' : '';
-                var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
-                $('.pagination').append(nextHtml);
-
-                // Add event handlers to the pagination links
-                $('.pagination a').click(function (e) {
-                    e.preventDefault();
-
-                    var pageText = $(this).text();
-
-                    if (pageText === 'Trước' && currentPage !== 1) {
-                        currentPage--;
-                    } else if (pageText === 'Sau' && currentPage !== totalPages) {
-                        currentPage++;
-                    } else if (pageText !== 'Sau' && pageText !== 'Trước') {
-                        currentPage = parseInt(pageText);
-                    }
-
-                    displayPosts();
-                    updatePagination();
-                });
-            }
-            //Xử lý với filter.
-            let selectedOption;
-            $('#listFilter').change(function () {
-                selectedOption = $(this).val();
-                if (selectedOption === 'name') {
-                    $.ajax({
-                        url: "listPostMarketing",
-                        type: 'GET',
-                        data: {
-                            msg: 'selectFilter',
-                            selected: selectedOption
-                        },
-                        success: function (data) {
-                            var filterDetail = $('#filterDetail');
-                            filterDetail.empty();
-                            filterDetail.append('<option selected="" disabled="">Lựa chọn</option>');
-                            $.each(data, function (index, value) {
-                                filterDetail.append('<option value="' + value.id + '">' + value.name + '</option>');
-                            });
-                        }
-                    });
-                }
-                if (selectedOption === 'full_name') {
-                    $.ajax({
-                        url: "listPostMarketing",
-                        type: 'GET',
-                        data: {
-                            msg: 'selectFilter',
-                            selected: selectedOption
-                        },
-                        success: function (data) {
-                            var filterDetail = $('#filterDetail');
-                            filterDetail.empty();
-                            filterDetail.append('<option selected="" disabled="">Lựa chọn</option>');
-
-                            $.each(data, function (index, value) {
-                                filterDetail.append('<option value="' + value.ID + '">' + value.full_name + '</option>');
-                            });
-                        }
-                    });
-                }
-                if (selectedOption === 'status') {
-                    var filterDetail = $('#filterDetail');
-                    filterDetail.empty();
-                    filterDetail.append('<option selected disabled>Lựa chọn</option>');
-                    filterDetail.append('<option value="1">Khả dụng</option>');
-                    filterDetail.append('<option value="0">Không khả dụng</option>');
-                }
-
+      <script>
+         $(document).ready(function () {
+            $('#postTable').DataTable({
+               "pageLength": 5,
+               "order": [[4, "asc"]]
             });
-            $('#filterDetail').change(function () {
-                var filterDetail = $(this).val();
-                window.location.href = 'listPostMarketing?msg=postFilter&selected=' + selectedOption + '&value=' + filterDetail;
-            });
-            // Display the initial products and pagination
-            displayPosts();
-            updatePagination();
+         });
 
+         function viewPost(postId) {
+            fetch("PostList?action=view&id=" + postId)
+                    .then(response => response.json())
+                    .then(post => {
+                       document.getElementById("detailTitle").innerText = post.title;
+                       document.getElementById("detailBrief").innerText = post.brief_info;
+                       document.getElementById("detailThumbnail").src = post.thumbnail;
+                       document.getElementById("detailContent").innerText = post.details;
+                       document.getElementById("saveChanges").style.display = "none";
+                    });
+         }
 
-        </script>
-        <script>
+         function editPost(postId) {
+            fetch("PostList?action=view&id=" + postId)
+                    .then(response => response.json())
+                    .then(post => {
+                       document.getElementById("detailTitle").innerHTML = `<input type='text' id='editTitle' value='${post.title}'>`;
+                       document.getElementById("detailBrief").innerHTML = `<input type='text' id='editBrief' value='${post.brief_info}'>`;
+                       document.getElementById("detailThumbnail").src = post.thumbnail;
+                       document.getElementById("detailContent").innerHTML = `<textarea id='editDetails'>${post.details}</textarea>`;
+                       document.getElementById("saveChanges").style.display = "block";
+                       document.getElementById("saveChanges").onclick = function () {
+                          savePost(postId);
+                       };
+                    });
+         }
 
-            var sortState = JSON.parse(sessionStorage.getItem('sortState')) || {
-                id: false,
-                full_name: false,
-                name: false,
-                title: false,
-                brief_info: false,
-                updatedDate: false
+         function savePost(postId) {
+            let title = document.getElementById("editTitle").value;
+            let briefInfo = document.getElementById("editBrief").value;
+            let details = document.getElementById("editDetails").value;
+
+            fetch("PostList?action=update", {
+               method: "POST",
+               headers: {"Content-Type": "application/x-www-form-urlencoded"},
+               body: `id=${postId}&title=${title}&briefInfo=${briefInfo}&details=${details}`
+            })
+                    .then(response => response.json())
+                    .then(data => {
+                       if (data.success) {
+                          location.reload();
+                       } else {
+                          alert("Failed to update post.");
+                       }
+                    }).catch(error => console.error("Error:", error));
+
+         }
+
+         function toggleStatus(postId, status) {
+            fetch("PostList?action=hide&id=" + postId, {method: "POST"})
+                    .then(() => document.getElementById("post_" + postId).remove());
+         }
+
+      </script>
+      <script>
+         $(document).ready(function () {
+            var table = $('#postTable').DataTable(); // Initialize DataTable
+
+            window.filterTable = function () {
+               var columnIndex = $('#searchField').val(); // Get selected column index
+               var query = $('#searchQuery').val(); // Get search query
+
+               table.columns().search(''); // Clear all previous filters
+               table.column(columnIndex).search(query).draw(); // Apply new search
             };
-
-
-            document.querySelectorAll('th a').forEach(function (link) {
-                var column = link.getAttribute('href').split('=')[2];
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    // Đảo ngược trạng thái sắp xếp
-                    sortState[column] = !sortState[column];
-                    sessionStorage.setItem('sortState', JSON.stringify(sortState));
-                    // Xác định thứ tự sắp xếp dựa trên trạng thái
-                    var order = sortState[column] ? 'ASC' : 'DESC';
-
-                    // Cập nhật href của liên kết với thứ tự sắp xếp mới
-                    link.setAttribute('href', 'listPostMarketing?msg=sortPost&sortBy=' + column + '&order=' + order);
-
-                    // Kích hoạt liên kết
-                    window.location.href = link.getAttribute('href');
-                });
-            });
-
-        </script>
-    </body>
+         });
+      </script>
+      <script>
+         // Toggle between file input and URL input
+         document.getElementById("thumbnailUrlInput").addEventListener("input", function () {
+            if (this.value) {
+               document.getElementById("thumbnailFileInput").disabled = true; // Disable file upload if URL is provided
+            } else {
+               document.getElementById("thumbnailFileInput").disabled = false; // Enable file upload if URL is cleared
+            }
+         });
+      </script>
+   </body>
 </html>

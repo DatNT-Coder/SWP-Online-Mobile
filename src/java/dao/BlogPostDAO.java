@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.BlogPost;
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -407,17 +409,23 @@ public class BlogPostDAO extends DBContext {
       }
    }
 
-   public void addPost(BlogPost newPost) {
-      String sql = "INSERT INTO BlogPost (title, brief_info, thumbnail, details, updatedDate, PostCategories_id, User_id, status) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
-      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-         stmt.setString(1, newPost.getTitle());
-         stmt.setString(2, newPost.getBrief_info());
-         stmt.setString(3, newPost.getThumbnail());
-         stmt.setString(4, newPost.getDetails());
-         stmt.setInt(5, newPost.getPostCategories_id());
-         stmt.setInt(6, newPost.getUser_id());
-         stmt.setInt(8, newPost.getStatus());
-         stmt.executeUpdate();
+   public void addPost(BlogPost post) {
+      String sql = "INSERT INTO blog_posts (title, brief_info, thumbnail, details, PostCategories_id, User_id, flag_feature, status, blogs_postscol, full_name, updatedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+      try (PreparedStatement stmt = connection.prepareStatement(sql)) { // Use 'connection' field
+
+         stmt.setString(1, post.getTitle());
+         stmt.setString(2, post.getBrief_info());
+         stmt.setString(3, post.getThumbnail());
+         stmt.setString(4, post.getDetails());
+         stmt.setInt(5, post.getPostCategories_id());
+         stmt.setInt(6, post.getUser_id());
+         stmt.setBoolean(7, post.isFlag_feature());
+         stmt.setInt(8, post.getStatus());
+         stmt.setString(9, post.getBlogs_postscol());
+         stmt.setString(10, post.getFull_name());
+         int rowsAffected = stmt.executeUpdate();
+         System.out.println("Rows inserted: " + rowsAffected);
       } catch (SQLException e) {
          e.printStackTrace();
       }
