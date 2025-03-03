@@ -118,7 +118,7 @@
                                     <li class="dropdown"><a href="/ProjectSWP391/HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
-                                            <li><a href="cart">Giỏ Hàng</a></li> 
+                                           
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
