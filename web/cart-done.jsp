@@ -87,7 +87,7 @@
                                     <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
                                             <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
                                             <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
@@ -115,18 +115,15 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="Home">Trang chủ</a></li>
-                                    <li class="dropdown"><a href="Home" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="/ProjectSWP391/HomePage">Trang chủ</a></li>
+                                    <li class="dropdown"><a href="/ProjectSWP391/HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="/mobileshop/listProduct" class="active">Sản phẩm</a></li>
-                                            <li><a href="cart">Giỏ Hàng</a></li> 
+                                            <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
+                                         
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Danh sách Bài Đăng</a></li>
-                                            <li><a href="blog-single.html">Bài đăng đơn</a></li>
-                                        </ul>
+                                    <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
+                                      
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
@@ -150,7 +147,7 @@
             <div class="container">
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
-                        <li><a href="Home.jsp">Home</a></li>
+                        <li><a href="home.jsp">Home</a></li>
                         <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
@@ -158,7 +155,7 @@
                     <div class="text-center">
                         <h2 class="text-success">Bạn đã hoàn tất đơn đặt hàng</h2>
                         <h3>Mã Đơn hàn của bạn là: #${orderId}</h3>
-                        <a href="${pageContext.request.contextPath}/Home"  class="btn btn-default add-to-cart"><i ></i>Trở về trang chủ</a>
+                        <a href="/ProjectSWP391/HomePage"  class="btn btn-default add-to-cart"><i ></i>Trở về trang chủ</a>
                         <a href="${pageContext.request.contextPath}/feedback"  class="btn btn-default add-to-cart"><i ></i>Đi đến bình luận</a>
                     </div>
                 </div>
