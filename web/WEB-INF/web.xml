@@ -23,6 +23,7 @@
         <filter-name>MarketingFilter</filter-name>
         <filter-class>filter.MarketingFilter</filter-class>
     </filter>
+    
     <filter-mapping>
         <filter-name>MarketingFilter</filter-name>
         <url-pattern>/customerList</url-pattern>
