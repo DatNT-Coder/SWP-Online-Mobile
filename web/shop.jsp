@@ -557,7 +557,7 @@
                     //không dùng $\{product.ID} mà dùng + product.ID +
                     // if (sessionStorage.getItem('user') !== null) {
                     // User is logged in, add "Add to cart" button with onclick attribute
-                    productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>';
+                    productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>';
                     productHtml += '<a onclick="#" class="btn btn-default add-to-cart"><i class="fa fa-star"></i>Đánh giá</a>';
 	
 //                    else {

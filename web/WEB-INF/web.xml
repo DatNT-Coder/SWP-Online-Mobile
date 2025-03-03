@@ -23,6 +23,7 @@
         <filter-name>MarketingFilter</filter-name>
         <filter-class>filter.MarketingFilter</filter-class>
     </filter>
+    
     <filter-mapping>
         <filter-name>MarketingFilter</filter-name>
         <url-pattern>/customerList</url-pattern>
@@ -140,4 +141,13 @@
         <servlet-name>PostList</servlet-name>
         <url-pattern>/PostList</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>productDetailController</servlet-name>
+        <servlet-class>controller.product.productDetailController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>productDetailController</servlet-name>
+        <url-pattern>/productDetail</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

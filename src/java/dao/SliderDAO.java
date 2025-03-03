@@ -8,7 +8,9 @@ import model.Slider;
 import context.DBContext;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -97,5 +99,37 @@ public class SliderDAO extends DBContext {
                     }
                     return 1; // Default to first page if error
           }
+
+   public int updateSliderStatus(int productID, int i) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public Object getSliderById(int productID) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public LinkedHashMap<Integer, Map<String, Object>> showSliderWithOrder(String id, String asc) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public LinkedHashMap<Integer, Map<String, Object>> showSliderWithSearch(String pSearch) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public LinkedHashMap<Integer, Map<String, Object>> getSliderByStatus(int status) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public int addSlider(Slider slider) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public Map<String, Object> getSliderBySliderID(int productID) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
+
+   public int updateSlider(Slider slider) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
 
 }

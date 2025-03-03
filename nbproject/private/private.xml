@@ -4,10 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/model/User.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/feedbackGeneral.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/dao/FeedbackDAO.java</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/shop.jsp</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/dao/BlogPostDAO.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/FeedbackGeneral.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/product-details.html</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductList.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/home.jsp</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/product-details.jsp</file>
         </group>
     </open-files>
 </project-private>
