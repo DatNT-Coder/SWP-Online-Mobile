@@ -5,51 +5,26 @@
 package controller.post;
 
 import dao.BlogPostDAO;
+import dao.PostCategoryDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import model.BlogPost;
+import model.PostCategory;
 
-/**
- *
- * @author naokh
- */
 @WebServlet(name = "PostList", urlPatterns = {"/PostList"})
 public class PostList extends HttpServlet {
 
-   /**
-    * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
-   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
-      response.setContentType("text/html;charset=UTF-8");
-      try (PrintWriter out = response.getWriter()) {
-         /* TODO output your page here. You may use following sample code. */
-         out.println("<!DOCTYPE html>");
-         out.println("<html>");
-         out.println("<head>");
-         out.println("<title>Servlet PostList</title>");
-         out.println("</head>");
-         out.println("<body>");
-         out.println("<h1>Servlet PostList at " + request.getContextPath() + "</h1>");
-         out.println("</body>");
-         out.println("</html>");
-      }
-   }
    private BlogPostDAO blogPostDAO;
 
    @Override
@@ -57,100 +32,93 @@ public class PostList extends HttpServlet {
       blogPostDAO = new BlogPostDAO();
    }
 
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-   /**
-    * Handles the HTTP <code>GET</code> method.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      BlogPostDAO blogPostDAO = new BlogPostDAO();
       List<BlogPost> posts = blogPostDAO.getAllPosts();
+      PostCategoryDAO categoryDAO = new PostCategoryDAO();
+      Vector<PostCategory> categories = categoryDAO.getAllCategories(); // Fetch categories
 
       // Debugging output
-      System.out.println("Servlet: posts count = " + (posts == null ? "null" : posts.size()));
-
-      if (posts == null) {
-         posts = new ArrayList<>(); // Prevents NullPointerException
+      System.out.println("Categories Retrieved: " + (categories == null ? "null" : categories.size()));
+      if (categories != null) {
+         for (PostCategory category : categories) {
+            System.out.println("Category ID: " + category.getId() + ", Name: " + category.getName());
+         }
       }
 
-      request.setAttribute("posts", posts);
-      System.out.println("Servlet: posts attribute set in request with size = " + posts.size());
+      if (posts == null) {
+         posts = new ArrayList<>();
+      }
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("PostList.jsp");
+      request.setAttribute("categories", categories);
+      request.setAttribute("posts", posts);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("Marketing_PostList.jsp");
       dispatcher.forward(request, response);
    }
 
-   /**
-    * Handles the HTTP <code>POST</code> method.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
    @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
       String action = request.getParameter("action");
+
+      System.out.println("Received POST request with action: " + action);
 
       if ("add".equals(action)) {
          try {
-            // Parsing required fields
-            int Id = Integer.parseInt(request.getParameter("id")); // Ensure id is an integer
-            String Title = request.getParameter("title");
+            // Parse the form data
+            String title = request.getParameter("title");
             String briefInfo = request.getParameter("brief_info");
-            String Thumbnail = request.getParameter("thumbnail");
-            String Details = request.getParameter("details");
+            String details = request.getParameter("details");
 
-            // Fixing typo and parsing date
+            System.out.println("Title: " + title);
+            System.out.println("Brief Info: " + briefInfo);
+
+            // Handle file upload for thumbnail
+            Part thumbnailPart = request.getPart("thumbnail");
+            String thumbnail = null;
+
+            if (thumbnailPart != null && thumbnailPart.getSize() > 0) {
+               String fileName = getFileName(thumbnailPart);
+               thumbnail = "uploads/" + fileName;  // Change this to your upload folder
+               thumbnailPart.write(thumbnail);
+               System.out.println("Uploaded Thumbnail: " + thumbnail);
+            } else {
+               thumbnail = request.getParameter("thumbnailUrl");
+               System.out.println("Thumbnail from URL: " + thumbnail);
+            }
+
+            // Handle date parsing
             String updatedDateStr = request.getParameter("updatedDate");
             Date updatedDate = null;
+
             if (updatedDateStr != null && !updatedDateStr.isEmpty()) {
                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                updatedDate = dateFormat.parse(updatedDateStr);
             }
 
-            // Parsing integer fields
-            int PostCategoriesId = Integer.parseInt(request.getParameter("PostCategories_id"));
-            int UserId = Integer.parseInt(request.getParameter("User_id"));
-            boolean flagFeature = Boolean.parseBoolean(request.getParameter("Flag_feature"));
-            int Status = Integer.parseInt(request.getParameter("status"));
-            String BlogsPostsCol = request.getParameter("Blogs_postcol");
-            String FullName = request.getParameter("Full_name");
+            // Parse other form fields
+            int postCategoriesId = Integer.parseInt(request.getParameter("PostCategories_id"));
+            int userId = Integer.parseInt(request.getParameter("User_id"));
+            boolean flagFeature = request.getParameter("Flag_feature") != null;
+            int status = Integer.parseInt(request.getParameter("status"));
+            String blogsPostsCol = request.getParameter("Blogs_postcol");
+            String fullName = request.getParameter("Full_name");
 
-            // Creating new BlogPost object
-            BlogPost newPost = new BlogPost(Id, Title, briefInfo, Thumbnail, Details, (java.sql.Date) updatedDate, PostCategoriesId, UserId, flagFeature, Status, BlogsPostsCol, FullName);
+            // Debugging output
+            System.out.println("PostCategories_id: " + postCategoriesId);
+            System.out.println("User_id: " + userId);
+            System.out.println("Flag_feature: " + flagFeature);
+            System.out.println("Status: " + status);
 
-            // Add post to database
+            // Create new BlogPost object
+            BlogPost newPost = new BlogPost(0, title, briefInfo, thumbnail, details, (java.sql.Date) updatedDate,
+                    postCategoriesId, userId, flagFeature, status, blogsPostsCol, fullName);
+
+            // Add the new post to the database
             blogPostDAO.addPost(newPost);
-            response.sendRedirect("PostList");
-         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("error.jsp"); // Redirect to error page if exception occurs
-         }
-      } else if ("update".equals(action)) {
-         try {
-            int postId = Integer.parseInt(request.getParameter("post_id"));
-            String title = request.getParameter("title");
-            String briefInfo = request.getParameter("brief_info");
-            String thumbnail = request.getParameter("thumbnail");
-            String details = request.getParameter("details");
+            System.out.println("Post added successfully!");
 
-            blogPostDAO.updatePost(postId, title, briefInfo, thumbnail, details);
-            response.sendRedirect("PostList");
-         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("error.jsp");
-         }
-      } else if ("hide".equals(action)) {
-         try {
-            int postId = Integer.parseInt(request.getParameter("post_id"));
-            blogPostDAO.hidePost(postId);
             response.sendRedirect("PostList");
          } catch (Exception e) {
             e.printStackTrace();
@@ -159,14 +127,18 @@ public class PostList extends HttpServlet {
       }
    }
 
-   /**
-    * Returns a short description of the servlet.
-    *
-    * @return a String containing servlet description
-    */
+   private String getFileName(Part part) {
+      for (String cd : part.getHeader("Content-Disposition").split(";")) {
+         if (cd.trim().startsWith("filename")) {
+            String fileName = cd.substring(cd.indexOf("=") + 2, cd.length() - 1);
+            return fileName;
+         }
+      }
+      return null;
+   }
+
    @Override
    public String getServletInfo() {
-      return "Short description";
-   }// </editor-fold>
-
+      return "Servlet for managing blog posts";
+   }
 }

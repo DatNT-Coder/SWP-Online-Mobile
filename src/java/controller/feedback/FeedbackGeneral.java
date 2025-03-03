@@ -150,7 +150,7 @@ public class FeedbackGeneral extends HttpServlet {
 
 //        Email.sendEmail(email, subject, content);
         // Redirect or forward user after successful insert
-        response.sendRedirect("Home");
+        response.sendRedirect("HomePage");
     }
 
     /**
