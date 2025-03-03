@@ -83,7 +83,7 @@
          <textarea name="brief_info" required></textarea>
 
          <label>Details:</label>
-         <textarea name="details" required></textarea>
+         <textarea name="details" required></textarea> 
 
          <label>Thumbnail:</label>
          <input type="file" name="thumbnail">

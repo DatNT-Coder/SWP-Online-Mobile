@@ -114,6 +114,7 @@
                         <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
                            <ul role="menu" class="sub-menu">
                               <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
+                              <li><a href="PostList"> Quản lý bài đăng</a></li>
                            </ul>
                         </li>
 
@@ -311,13 +312,13 @@
                   window.location.href = "BlogDetail?id=" + id;
                }
             </script>
-            
+
             <script>
                function redirectToBlogDetail(id) {
                   window.location.href = "BlogDetail?id=" + id;
                }
             </script>
-            
+
             </section>
             <section>
                <div class="container">
