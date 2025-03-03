@@ -4,10 +4,17 @@
  */
 package dao;
 
+import java.util.Vector;
+import model.UserMKT;
+
 /**
  *
  * @author naokh
  */
 public class UserDAOMKT {
+
+   public Vector<UserMKT> getAllUser() {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
    
 }

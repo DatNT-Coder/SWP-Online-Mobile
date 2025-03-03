@@ -4,7 +4,8 @@
  */
 package controller.user;
 
-import dao.DAOProductCategory;
+import dao.ProductCategoryDAO;
+import dao.ProductCategoryDAO;
 import dao.UserProfileDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -31,84 +32,82 @@ import model.User;
 )
 public class UserProfileController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+   /**
+    * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    *
+    * @param request servlet request
+    * @param response servlet response
+    * @throws ServletException if a servlet-specific error occurs
+    * @throws IOException if an I/O error occurs
+    */
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
+      response.setContentType("text/html;charset=UTF-8");
 
-    }
+   }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet reques t
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        UserProfileDAO userDAO = new UserProfileDAO();
-        HttpSession session = request.getSession();
-        User userProfile = (User) session.getAttribute("user");
-        DAOProductCategory pcg = new DAOProductCategory();
-        Vector<ProductCategory> listC = pcg.getAllCategories();
-        request.setAttribute("listC", listC);
-        if (userProfile == null) {
-            request.getRequestDispatcher("signIn.jsp").forward(request, response);
+   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+   /**
+    * Handles the HTTP <code>GET</code> method.
+    *
+    * @param request servlet reques t
+    * @param response servlet response
+    * @throws ServletException if a servlet-specific error occurs
+    * @throws IOException if an I/O error occurs
+    */
+   @Override
+   protected void doGet(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
+      HttpSession session = request.getSession();
+      User userProfile = (User) session.getAttribute("user");
+      ProductCategoryDAO pcg = new ProductCategoryDAO();
+      Vector<ProductCategory> listC = pcg.getAllCategories();
+      request.setAttribute("listC", listC);
+      if (userProfile == null) {
+         request.getRequestDispatcher("signIn.jsp").forward(request, response);
 
-        } else {
-            request.setAttribute("userProfile", userProfile);
-            request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+      } else {
+         request.setAttribute("userProfile", userProfile);
+         request.getRequestDispatcher("userProfile.jsp").forward(request, response);
 
-        }
-    }
+      }
+   }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User userProfile = (User) session.getAttribute("user");
-        UserProfileDAO userProfileDAO = new UserProfileDAO();
-        int id = userProfile.getID();
-        String fullname = request.getParameter("full_name");
-        String gender = request.getParameter("gender");
-        String phone = request.getParameter("phone");
-        Part filePart = request.getPart("imageProfile");
-        String fileName = filePart.getSubmittedFileName();
-        if (filePart.getSubmittedFileName().isEmpty() || filePart.getSubmittedFileName() == null) {
-            userProfileDAO.editUserInfo(id, " ", fullname, gender, phone);
-        } else {
-            //thay URL theo máy của cá nhân
-            filePart.write("D:\\group6_shopmobile\\web\\assets\\img\\ProfilePicture\\" + fileName);
-            userProfileDAO.editUserInfo(id, fileName, fullname, gender, phone);
-        }
-        try {
-            // Thời gian chờ (được đặt bằng mili giây)
-            Thread.sleep(1500);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+   @Override
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
+      HttpSession session = request.getSession();
+      User userProfile = (User) session.getAttribute("user");
+      UserProfileDAO userProfileDAO = new UserProfileDAO();
+      int id = userProfile.getId();
+      String fullname = request.getParameter("full_name");
+      String gender = request.getParameter("gender");
+      String phone = request.getParameter("phone");
+      Part filePart = request.getPart("imageProfile");
+      String fileName = filePart.getSubmittedFileName();
+      if (filePart.getSubmittedFileName().isEmpty() || filePart.getSubmittedFileName() == null) {
+         userProfileDAO.editUserInfo(id, " ", fullname, gender, phone);
+      } else {
+         //thay URL theo máy của cá nhân
+         filePart.write("D:\\group6_shopmobile\\web\\assets\\img\\ProfilePicture\\" + fileName);
+         userProfileDAO.editUserInfo(id, fileName, fullname, gender, phone);
+      }
+      try {
+         // Thời gian chờ (được đặt bằng mili giây)
+         Thread.sleep(1500);
+      } catch (InterruptedException ex) {
+         ex.printStackTrace();
+      }
 
-        userProfile = userProfileDAO.getUserById(id);
-        session.setAttribute("user", userProfile);
-        response.sendRedirect("user-profile");
+      userProfile = userProfileDAO.getUserById(id);
+      session.setAttribute("user", userProfile);
+      response.sendRedirect("user-profile");
 
-    }
+   }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+   @Override
+   public String getServletInfo() {
+      return "Short description";
+   }// </editor-fold>
 
 }

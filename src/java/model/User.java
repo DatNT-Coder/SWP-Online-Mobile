@@ -244,4 +244,5 @@ public class User {
     public void setUserAddress(UserAddress userAddress) {
         this.userAddress = userAddress;
     }
+
 }
