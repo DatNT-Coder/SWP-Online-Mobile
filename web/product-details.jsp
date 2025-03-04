@@ -151,10 +151,10 @@
                                             <li><a href="ProductList">Sản Phẩm</a></li>
                                                 <c:choose>
                                                     <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                                    <li><a href="login.jsp">Đăng Nhập</a></li> 
+                                                    <li><a href="Login.jsp">Đăng Nhập</a></li> 
                                                     </c:when>
                                                     <c:otherwise>
-                                                    <li><a href="logOut.jsp">Đăng Xuất</a></li>
+                                                    <li><a href="LogOut.jsp">Đăng Xuất</a></li>
 
                                                 </c:otherwise>
                                             </c:choose>
