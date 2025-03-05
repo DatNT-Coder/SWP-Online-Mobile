@@ -101,7 +101,7 @@
                         <div class="col-sm-8">
                            <div class="shop-menu pull-right">
                               <ul class="nav navbar-nav">
-                                 <li><a href="uerprofile.jsp"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                 <li><a data-toggle="modal" data-target="#editProfileModal"><i class="fa fa-user"></i> Tài khoản</a></li>
                                  <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Đơn Mua</a></li>
                                  <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                     <c:if test="${account != null}">
@@ -129,7 +129,7 @@
                <div class="col-sm-9">
                   <div class="navbar-header">
                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigatioen</span>
+                        <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -150,10 +150,7 @@
                            <li class="dropdown"><a href="customerList">Danh sách khách hàng</a>
                            </li>
                         </c:if>
-<c:if test="${account.getRole_id() == 4}">
-                                    <li class="dropdown"><a href="udashboard">Users List</a>
-                                    </li>
-                                </c:if>
+
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
                                 <li class="dropdown"><a href="customerList">Customer List</a>
@@ -176,7 +173,50 @@
          </div>
       </div><!--/header-bottom-->
    </header><!--/header-->
+   <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title" id="editProfileModalLabel">Edit Profile</h4>
+            </div>
+            <div class="modal-body">
+               <form class="edit-form" action="user-profile" enctype="multipart/form-data" method="post">
+                  <div class="form-group">
+                     <label for="edit-full-name">Full Name</label>
+                     <input type="text" name="fullName" class="form-control" id="edit-full-name" value="${sessionScope.profileUser.full_name}">
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-email">Email</label>
+                     <input type="email" name="email" class="form-control" disabled="true"id="edit-email" value="${sessionScope.profileUser.email}">
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-phone">Phone</label>
+                     <input type="tel" name="phone" class="form-control" id="edit-phone" value="${sessionScope.profileUser.phone}">
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-gender">Gender</label>
+                     <select class="form-control" id="edit-gender" name="gender">
+                        <option value="Male" ${sessionScope.profileUser.gender == "Male" ?"selected" : ""}>Male</option>
+                        <option value="Female" ${sessionScope.profileUser.gender == "Female" ?"selected" : ""}>Female</option>
+                        <option value="Other"${sessionScope.profileUser.gender == "Other" ?"selected" : ""}>Other</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="profile-image">Profile Image</label>
+                     <input type="file" id="profile-image" accept="image/*">
+                     <p class="help-block">Choose a new profile image</p>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn secondary" data-dismiss="modal">Cancel</button>
+                     <button type="submit" class="btn primary">Save Changes</button>
+                  </div>
+               </form>
+            </div>
 
+         </div>
+      </div>
+   </div>
 
    <section id="slider"><!--slider-->
       <div class="container">
@@ -511,9 +551,9 @@
                <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
                <script>
-                                          function redirectToBlogDetail(id) {
-                                             window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                          }
+                                                  function redirectToBlogDetail(id) {
+                                                     window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                                  }
                </script>
                <script>
                   async function addToCart(id) {
