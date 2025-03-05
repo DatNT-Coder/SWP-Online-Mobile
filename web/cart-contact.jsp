@@ -89,7 +89,7 @@
                                     <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
                                             <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
                                             <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
@@ -116,18 +116,14 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="${pageContext.request.contextPath}/Home">Trang chủ</a></li>
-                                    <li class="dropdown"><a href="Home" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="${pageContext.request.contextPath}/HomePage">Trang chủ</a></li>
+                                    <li class="dropdown"><a href="HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="/mobileshop/listProduct" class="active">Sản phẩm</a></li>
-                                            <li><a href="cart">Giỏ Hàng</a></li> 
+                                            <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Danh sách Bài Đăng</a></li>
-                                            <li><a href="blog-single.html">Bài đăng đơn</a></li>
-                                        </ul>
+                                    <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
+                                       
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>

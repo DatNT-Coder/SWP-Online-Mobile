@@ -75,7 +75,7 @@ public class CartCheckoutController extends HttpServlet {
         order.setTotalMoney(total);
         order.setSaleId(30);
         order.setStatus(1);
-        order.setSettingId(user.getSettings_id());
+        order.setSettingId(1);
 
         Order addedOrder = orderDAO.addOrder(order);
 
@@ -278,8 +278,8 @@ public class CartCheckoutController extends HttpServlet {
                 + "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">\n"
                 + "              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n"
                 + "                <tr>\n"
-                + "                  <td align=\"left\" bgcolor=\"#fe0f9e\" width=\"75%\" style=\"padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\"><strong>Mã đơn hàng #</strong></td>\n"
-                + "                  <td align=\"left\" bgcolor=\"#fe0f9e\" width=\"25%\" style=\"padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\"><strong>" + addedOrder.getId() + "</strong></td>\n"
+                + "                  <td align=\"left\" bgcolor=\"#009981\" width=\"75%\" style=\"padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\"><strong>Mã đơn hàng #</strong></td>\n"
+                + "                  <td align=\"left\" bgcolor=\"#009981\" width=\"25%\" style=\"padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\"><strong>" + addedOrder.getId() + "</strong></td>\n"
                 + "                </tr>\n"
                 + "                <tr>\n"
                 + "                  <td align=\"left\"  width=\"75%\" style=\"padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\"><strong>Tên sản phẩm</strong></td>\n"

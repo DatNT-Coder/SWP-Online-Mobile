@@ -74,6 +74,10 @@
         <servlet-class>controller.customer.AddCustomerServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ProductDetailController</servlet-name>
+        <servlet-class>controller.product.ProductDetailController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CartAddItemController</servlet-name>
         <servlet-class>controller.cart.CartAddItemController</servlet-class>
     </servlet>
@@ -141,13 +145,10 @@
         <servlet-name>PostList</servlet-name>
         <url-pattern>/PostList</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>productDetailController</servlet-name>
-        <servlet-class>controller.product.productDetailController</servlet-class>
-    </servlet>
+    
     <servlet-mapping>
-        <servlet-name>productDetailController</servlet-name>
-        <url-pattern>/productDetail</url-pattern>
+        <servlet-name>ProductDetailController</servlet-name>
+        <url-pattern>/ProductDetail</url-pattern>
     </servlet-mapping>
     
 </web-app>
