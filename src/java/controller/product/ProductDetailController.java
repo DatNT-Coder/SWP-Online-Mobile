@@ -150,7 +150,7 @@ public class ProductDetailController extends HttpServlet {
                 dao.addFeedback(feedback);
             } else {
 
-                filePart.write("D:\\ProjectSWP391\\web\\assets\\img\\feedbackImage\\" + fileName);
+                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage" + fileName);
                 feedback.setFull_name(fullName);
                 feedback.setEmail(email);
                 feedback.setPhone(phone);
@@ -171,10 +171,10 @@ public class ProductDetailController extends HttpServlet {
             }
             Product b = daoP.getProductById(productId);
             // You may want to redirect the user to a confirmation page
-            response.sendRedirect("productDetail?bid=" + b.getBrandId() + "&cid=" + b.getProductCategory_ID() + "&pid=" + productId);
+            response.sendRedirect("ProductDetails?bid=" + b.getBrandId() + "&cid=" + b.getProductCategory_ID() + "&pid=" + productId);
         } 
         else {
-            response.sendRedirect("/ProjectSWP391/404.jsp"); 
+            response.sendRedirect("/ProjectSWP391/404.html"); 
         }
 
     }

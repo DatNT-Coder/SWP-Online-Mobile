@@ -101,23 +101,11 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a href="user-profile">
-                                            <i class="fa fa-user"></i>
-                                            ${empty sessionScope.user.email ? "Tài khoản" : sessionScope.user.full_name}</a>
-                                        <ul class="sub-menu" style=" background-color: #ffffff;padding-top: 0.8rem;max-width: 180px;" >
-                                            <li  style="color: #696763; font-size: 20px; text-align: center;padding:1rem;">
-                                                <a class="dropdown-hover" href="changepassword" style="color: #696763">Đổi mật khẩu</a>
-                                            </li>
-                                            <li  style="color: #696763; font-size: 20px; text-align: center;padding: 1rem;">
-                                                <a class="dropdown-hover" href="user-profile" style="color: #696763;">Thông tin người dùng</a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                    
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
-                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                           <c:when test="${sessionScope.user == null}">
                                             <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
@@ -300,6 +288,7 @@
                                     <li class="active"><a href="#reviews"  data-toggle="tab">Đánh giá</a></li>
                                 </ul>
                             </div>
+                            
                             <div class="tab-content">
                                 <div class="tab-pane fade" id="details" >
                                     <div class="col-sm-12">
@@ -307,10 +296,12 @@
 
                                     </div>
                                 </div>
+                               
+
                                 <c:if test="${sessionScope.role == 1}">
                                     <div class="col-sm-12">
                                         <p><b>Viết đánh giá của bạn</b></p>
-                                        <form action="productDetails" method="POST" enctype="multipart/form-data">
+                                        <form action="ProductDetails" method="POST" enctype="multipart/form-data">
                                             <input type="hidden" name="pickedProduct" value="${productDetail.ID}">
                                             <div class="form-group" style="display: flex; justify-content: space-between;">
                                                 <div style="width: 48%;">
