@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 import model.ProductCategory;
@@ -22,13 +23,13 @@ import model.User;
 
 /**
  *
- * @author Admin
+ * @author naokh
  */
 @WebServlet(name = "UserProfileController", urlPatterns = {"/user-profile"})
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-        maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
 )
 public class UserProfileController extends HttpServlet {
 
@@ -59,16 +60,15 @@ public class UserProfileController extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
       HttpSession session = request.getSession();
-      User userProfile = (User) session.getAttribute("user");
-      ProductCategoryDAO pcg = new ProductCategoryDAO();
-      Vector<ProductCategory> listC = pcg.getAllCategories();
-      request.setAttribute("listC", listC);
+      User userProfile = (User) session.getAttribute("account");
+
+      request.setAttribute("account", userProfile);
       if (userProfile == null) {
          request.getRequestDispatcher("signIn.jsp").forward(request, response);
 
       } else {
          request.setAttribute("userProfile", userProfile);
-         request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+         request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
 
       }
    }
@@ -77,37 +77,51 @@ public class UserProfileController extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
       HttpSession session = request.getSession();
-      User userProfile = (User) session.getAttribute("user");
-      UserProfileDAO userProfileDAO = new UserProfileDAO();
-      int id = userProfile.getId();
-      String fullname = request.getParameter("full_name");
-      String gender = request.getParameter("gender");
+      User userProfile = (User) session.getAttribute("profileUser");
+      String fileName = uploadFile(request);
+      String fullName = request.getParameter("fullName");
+      String email = request.getParameter("email");
       String phone = request.getParameter("phone");
-      Part filePart = request.getPart("imageProfile");
-      String fileName = filePart.getSubmittedFileName();
-      if (filePart.getSubmittedFileName().isEmpty() || filePart.getSubmittedFileName() == null) {
-         userProfileDAO.editUserInfo(id, " ", fullname, gender, phone);
-      } else {
-         //thay URL theo máy của cá nhân
-         filePart.write("D:\\group6_shopmobile\\web\\assets\\img\\ProfilePicture\\" + fileName);
-         userProfileDAO.editUserInfo(id, fileName, fullname, gender, phone);
-      }
-      try {
-         // Thời gian chờ (được đặt bằng mili giây)
-         Thread.sleep(1500);
-      } catch (InterruptedException ex) {
-         ex.printStackTrace();
-      }
-
-      userProfile = userProfileDAO.getUserById(id);
-      session.setAttribute("user", userProfile);
-      response.sendRedirect("user-profile");
+      String gender = request.getParameter("0gender");
+      UserProfileDAO profile = new UserProfileDAO();
+      profile.editUserInfo(userProfile.getId(), fileName, fullName, gender, phone);
+      request.getSession().setAttribute("profileUser", profile.getUserById(userProfile.getId()));
+      response.sendRedirect("HomePage");
 
    }
 
    @Override
    public String getServletInfo() {
       return "Short description";
-   }// </editor-fold>
+   }
 
+   public String uploadFile(HttpServletRequest request) throws IOException, ServletException {
+      String fileName = "";
+      String uploadPath = getServletContext().getRealPath("") + File.separator + "images/avatar";
+      File uploadDir = new File(uploadPath);
+
+      if (!uploadDir.exists()) {
+         boolean created = uploadDir.mkdir();
+      }
+
+      for (Part part : request.getParts()) {
+         fileName = getFileName(part);
+         if (!fileName.isEmpty()) {
+            part.write(uploadPath + File.separator + fileName);
+            return fileName;
+         }
+      }
+      return "";
+   }
+
+   private String getFileName(Part part) {
+      String contentDisposition = part.getHeader("content-disposition");
+      String[] tokens = contentDisposition.split(";");
+      for (String token : tokens) {
+         if (token.trim().startsWith("filename")) {
+            return token.substring(token.indexOf("=") + 2, token.length() - 1);
+         }
+      }
+      return "";
+   }
 }
