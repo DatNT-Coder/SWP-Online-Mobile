@@ -25,23 +25,45 @@ public class CartDAO extends DBContext {
         DBContext dbContext = new DBContext();
         this.connection = dbContext.getConnection(); // Lấy kết nối từ DBContext
     }
-    public CartItem addCartItem(CartItem item) {
-        String sql = "insert into cart_item(user_id, product_ID, quantity, status) VALUES (?, ?, ?, ?)";
-        try ( PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, item.getUserId());
-            ps.setInt(2, item.getProductId());
-            ps.setInt(3, item.getQuantity());
-            ps.setDouble(4, item.getStatus());
-            int re = ps.executeUpdate();
-            if (re > 0) {
-                return item;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CartDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+ public CartItem addCartItem(CartItem item) {
+    String checkSql = "SELECT quantity FROM cart_item WHERE user_id = ? AND product_ID = ?";
+    String updateSql = "UPDATE cart_item SET quantity = quantity + 1 WHERE user_id = ? AND product_ID = ?";
+    String insertSql = "INSERT INTO cart_item (user_id, product_ID, quantity, status) VALUES (?, ?, ?, ?)";
 
+    try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
+        checkStmt.setInt(1, item.getUserId());
+        checkStmt.setInt(2, item.getProductId());
+
+        ResultSet rs = checkStmt.executeQuery();
+        if (rs.next()) {
+            // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng lên 1
+            try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                updateStmt.setInt(1, item.getUserId());
+                updateStmt.setInt(2, item.getProductId());
+                int re = updateStmt.executeUpdate();
+                if (re > 0) {
+                    item.setQuantity(rs.getInt("quantity") + 1); // Cập nhật số lượng mới
+                    return item;
+                }
+            }
+        } else {
+            // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới
+            try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
+                insertStmt.setInt(1, item.getUserId());
+                insertStmt.setInt(2, item.getProductId());
+                insertStmt.setInt(3, item.getQuantity());
+                insertStmt.setInt(4, item.getStatus());
+                int re = insertStmt.executeUpdate();
+                if (re > 0) {
+                    return item;
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(CartDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+}
     public CartItem updateCartItem(CartItem item) {
         String sql = "update cart_item set quantity = ?, status = ? where user_id = ? and product_ID = ?;";
         try ( PreparedStatement ps = connection.prepareStatement(sql)) {
