@@ -9,14 +9,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
 
 .blog_list .blog_item .blog_link{
-   width: 400px;
+   width: 100px;
    display: block;
 }
 
 .blog_list .blog_link .blog_image{
-   width: 400px;
+   width: 100px;
    display: block;
-   background: #fff;
+   background: black;
    padding: 18px;
    border-radius: 12px;
    border-color: black;

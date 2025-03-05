@@ -147,7 +147,7 @@
             <div class="container">
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="/ProjectSWP391/HomePage">Home</a></li>
                         <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
@@ -424,7 +424,7 @@
                                 <h2>Về người bán hàng</h2>
                                 <form action="#" class="searchform">
                                     <input type="text" placeholder="Địa chỉ email..." />
-                                    <button style="background-color: #FE0F9E" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <button style="background-color: #009981" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
                                     <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
                                 </form>
                             </div>

@@ -39,7 +39,6 @@
         <filter-name>MarketingFilter</filter-name>
         <filter-class>filter.MarketingFilter</filter-class>
     </filter>
-    
     <filter-mapping>
         <filter-name>MarketingFilter</filter-name>
         <url-pattern>/customerList</url-pattern>
@@ -107,7 +106,7 @@
     </servlet>
     <servlet>
         <servlet-name>PostList</servlet-name>
-        <servlet-class>controller.post.PostList</servlet-class>
+        <servlet-class>controller.blog.PostList</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
@@ -161,10 +160,8 @@
         <servlet-name>PostList</servlet-name>
         <url-pattern>/PostList</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>ProductDetailController</servlet-name>
         <url-pattern>/ProductDetail</url-pattern>
     </servlet-mapping>
-    
 </web-app>
