@@ -142,19 +142,19 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="BlogPostList">Blog List</a></li>
                                     </ul>
-                                </li>
-                                
-                                <c:if test="${account != null}">
-                                    <li class="dropdown"><a href="customerList">Customer List</a>
-                                    </li>
-                                </c:if>
+                                </li>                              
                                     
-                            <%-- popup khi đúng role --%>  
-                            <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
+                              <%-- popup khi đúng role --%>  
+                              <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
                                     <li class="dropdown"><a href="customerList">Customer List</a>
                                     </li>
-                                </c:if> --%>
+                                </c:if> 
                             
+                              <c:if test="${account.getRole_id() == 4}">
+                                    <li class="dropdown"><a href="udashboard">Users List</a>
+                                    </li>
+                                </c:if>      
+                                    
                             </ul>
                         </div>
                     </div>

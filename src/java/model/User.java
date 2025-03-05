@@ -27,6 +27,16 @@ public class User {
     private int role_id;
     private UserAddress userAddress;
 
+    public User(int id, String email, String full_name, String phone, String gender, int status, int role_id) {
+        this.id = id;
+        this.email = email;
+        this.full_name = full_name;
+        this.phone = phone;
+        this.gender = gender;
+        this.status = status;
+        this.role_id = role_id;
+    }
+
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", full_name=" + full_name + ", phone=" + phone + ", gender=" + gender + ", registration_date=" + registration_date + ", status=" + status + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", image=" + image + ", settings_id=" + settings_id + ", role_id=" + role_id + '}';
