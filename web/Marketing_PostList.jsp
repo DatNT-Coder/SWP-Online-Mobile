@@ -67,56 +67,54 @@
             <% } %>
          </tbody>
       </table>
+      <section>
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-4">
+                  <h2>Add New Post</h2>
 
-      <div class="container">
-         <div class="row">
-            <div class="col-sm-4">
-               <h2>Add New Post</h2>
+                  <form action="PostList?action=add" method="post" enctype="multipart/form-data">
+                     <input type="hidden" name="action" value="add">
 
-               <form action="PostList?action=add" method="post" enctype="multipart/form-data">
-                  <input type="hidden" name="action" value="add">
+                     <label>Title:</label>
+                     <input type="text" name="title" required>
 
-                  <label>Title:</label>
-                  <input type="text" name="title" required>
+                     <label>Brief Info:</label>
+                     <textarea name="brief_info" required></textarea>
 
-                  <label>Brief Info:</label>
-                  <textarea name="brief_info" required></textarea>
+                     <label>Details:</label>
+                     <textarea name="details" required></textarea> 
 
-                  <label>Details:</label>
-                  <textarea name="details" required></textarea> 
+                     <label>Thumbnail:</label>
+                     <input type="file" name="thumbnail">
 
-                  <label>Thumbnail:</label>
-                  <input type="file" name="thumbnail">
+                     <label>Category:</label>
+                     <select name="PostCategories_id">
+                        <c:forEach var="category" items="${categories}">
+                           <option value="${category.id}">${category.name}</option>
+                        </c:forEach>
+                     </select>
 
-                  <label>Category:</label>
-                  <select name="PostCategories_id">
-                     <c:forEach var="category" items="${categories}">
-                        <option value="${category.id}">${category.name}</option>
-                     </c:forEach>
-                  </select>
+                     <label>User ID:</label>
+                     <input type="number" name="User_id" required>
 
-                  <label>User ID:</label>
-                  <input type="number" name="User_id" required>
+                     <label>Feature:</label>
+                     <input type="checkbox" name="Flag_feature" value="true">
 
-                  <label>Feature:</label>
-                  <input type="checkbox" name="Flag_feature" value="true">
-
-                  <label>Status:</label>
-                  <select name="status">
-                     <option value="1">Active</option>
-                     <option value="0">Inactive</option>
-                  </select>
-                  <button type="submit">Add Post</button>
-               </form>
+                     <label>Status:</label>
+                     <select name="status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                     </select>
+                     <button type="submit">Add Post</button>
+                  </form>
+               </div>
+               <div class="col-sm-8">
+                  <h2>Add New Post</h2>
+               </div 
             </div>
-            <div class="col-sm-8">
-               <h2>Add New Post</h2>
-            </div 
          </div>
-      </div>
-         
-         
-         
+      </section>
       <script>
          $(document).ready(function () {
             $('#postTable').DataTable({
