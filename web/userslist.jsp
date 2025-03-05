@@ -1,3 +1,9 @@
+<%-- 
+    Document   : userslist
+    Created on : Mar 5, 2025, 1:39:36 PM
+    Author     : vuduc
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -38,18 +44,13 @@
                     <div class="col-12 mb-3 mb-lg-5">
                         <div class="card table-nowrap table-card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Customer List</h5>
-                                
-                                <!-- add -->
+                                <h5 class="mb-0">Users List</h5>
                                 <div>
                                     <a href="create-customer" class="btn btn-primary btn-sm">Add New</a>
 <!--                                    <a href="#" class="btn btn-info btn-sm">View</a>
                                     <a href="#" class="btn btn-warning btn-sm">Edit</a>-->
                                 </div>
-                                
                             </div>
-                            
-                            <!-- thanh search -->
                             <div class="card-body">
                                 <div class="col-md-5">
                                     <div class="input-group">
@@ -59,9 +60,7 @@
                                         ${err}
                                     </div>
                                 </div>
-                            <!-- end -->
-                                    
-                            <!-- filter -->
+
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <select class="form-control" name="statusFilter">
@@ -72,9 +71,7 @@
                                         <button type="submit" class="btn btn-secondary">Filter by Status</button>
                                     </div>
                                 </div>
-                            <!-- end -->
-                            
-                            
+
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
@@ -90,7 +87,11 @@
                                                 <a href="?sortField=full_name&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
                                                 <a href="?sortField=full_name&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
                                             </th>
-                                            <th>Gender</th>
+                                            <th>
+                                                Gender
+                                                <a href="?sortField=full_name&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=full_name&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
                                             <th>
                                                 Email
                                                 <a href="?sortField=email&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
@@ -106,24 +107,32 @@
                                                 <a href="?sortField=status&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
                                                 <a href="?sortField=status&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
                                             </th>
-                                            <th></th>
+                                            <th>
+                                                Role Id
+                                                <a href="?sortField=status&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=status&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                            </th>
+                                            <th>
+                                                Option
+                                            </th>
                                         </tr>
                                     </thead>
 
 
 
                                     <tbody>
-                                        <c:forEach var="customer" items="${customers}">
+                                        <c:forEach var="u" items="${userList}">
                                             <tr>
-                                                <td>${customer.id}</td>
-                                                <td>${customer.full_name}</td>
-                                                <td>${customer.gender}</td>
-                                                <td>${customer.email}</td>
-                                                <td>${customer.phone}</td>
-                                                <td>${customer.status == 1 ? 'Active' : 'InActive'}</td>
+                                                <td>${u.id}</td>
+                                                <td>${u.full_name}</td>
+                                                <td>${u.gender}</td>
+                                                <td>${u.email}</td>
+                                                <td>${u.phone}</td>
+                                                <td>${u.status == 1 ? 'Active' : 'In Active'}</td>
+                                                <td>${u.role_id}</td>
                                                 <td>
                                                 <a href="customerDetail?id=${customer.id}" class="btn btn-info btn-sm">View Detail</a>
-                                    <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
+                                                <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -132,7 +141,8 @@
 
                             </div>
 
-                            <!-- Phân trang --><nav aria-label="Page navigation">
+                            <!-- Phân trang đang làm -->
+                            <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center mt-3">
                                     <c:if test="${currentPage > 1}">
                                         <li class="page-item">
@@ -140,23 +150,20 @@
                                         </li>
                                     </c:if>
 
-                                    <c:forEach var="i" begin="1" end="${totalPages}">
+                                    <c:forEach var="i" begin="1" end="${totalPage}">
                                         <li class="page-item ${i == currentPage ? 'active' : ''}">
                                             <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}">${i}</a>
                                         </li>
                                     </c:forEach>
 
-                                    <c:if test="${currentPage < totalPages}">
+                                    <c:if test="${currentPage < totalPage}">
                                         <li class="page-item">
                                             <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}">Next</a>
                                         </li>
                                     </c:if>
                                 </ul>
                             </nav>
-
-
-
-
+                            
                         </div>
                     </div>
                 </div>
@@ -167,3 +174,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
+

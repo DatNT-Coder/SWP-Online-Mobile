@@ -4,6 +4,14 @@
         <servlet-name>ResetPassword</servlet-name>
         <servlet-class>controller.user.ResetPassword</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UsersListServlet</servlet-name>
+        <servlet-class>controller.user.UsersListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsersListDashboard</servlet-name>
+        <servlet-class>controller.user.UsersListDashboard</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RejectServlet</servlet-name>
         <url-pattern>/reject</url-pattern>
@@ -11,6 +19,14 @@
     <servlet-mapping>
         <servlet-name>ResetPassword</servlet-name>
         <url-pattern>/resetpw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersListServlet</servlet-name>
+        <url-pattern>/userlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersListDashboard</servlet-name>
+        <url-pattern>/udashboard</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>HomePage</welcome-file>
@@ -29,10 +45,10 @@
         <url-pattern>/customerList</url-pattern>
         <url-pattern>/customerlist</url-pattern>
     </filter-mapping>
-    <filter-mapping>
+    <!--    <filter-mapping>
         <filter-name>HomeFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <servlet>
         <servlet-name>HomePage</servlet-name>
         <servlet-class>controller.home.HomePage</servlet-class>
@@ -72,6 +88,10 @@
     <servlet>
         <servlet-name>AddCustomerServlet</servlet-name>
         <servlet-class>controller.customer.AddCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductDetailController</servlet-name>
+        <servlet-class>controller.product.ProductDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CartAddItemController</servlet-name>
@@ -141,13 +161,10 @@
         <servlet-name>PostList</servlet-name>
         <url-pattern>/PostList</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>productDetailController</servlet-name>
-        <servlet-class>controller.product.productDetailController</servlet-class>
-    </servlet>
+    
     <servlet-mapping>
-        <servlet-name>productDetailController</servlet-name>
-        <url-pattern>/productDetail</url-pattern>
+        <servlet-name>ProductDetailController</servlet-name>
+        <url-pattern>/ProductDetail</url-pattern>
     </servlet-mapping>
     
 </web-app>
