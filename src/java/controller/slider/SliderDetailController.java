@@ -5,21 +5,22 @@
 package controller.slider;
 
 import dao.SliderDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
+import model.Slider;
 
 /**
  *
- * @author ADMIN
+ * @author naokh
  */
-@WebServlet(name = "viewSliderMarketing", urlPatterns = {"/marketing/viewSliderMarketing"})
-public class viewSliderMarketing extends HttpServlet {
+@WebServlet(name = "SliderDetailController", urlPatterns = {"/slider-detail"})
+public class SliderDetailController extends HttpServlet {
 
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,12 +34,16 @@ public class viewSliderMarketing extends HttpServlet {
            throws ServletException, IOException {
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
-         int productID = Integer.parseInt(request.getParameter("pid"));
          /* TODO output your page here. You may use following sample code. */
-         SliderDAO daoProduct = new SliderDAO();
-         Map<String, Object> productDetail = daoProduct.getSliderBySliderID(productID);
-         request.setAttribute("productDetails", productDetail);
-         request.getRequestDispatcher("/Marketing_viewSlider.jsp").forward(request, response);
+         out.println("<!DOCTYPE html>");
+         out.println("<html>");
+         out.println("<head>");
+         out.println("<title>Servlet SliderDetailController</title>");
+         out.println("</head>");
+         out.println("<body>");
+         out.println("<h1>Servlet SliderDetailController at " + request.getContextPath() + "</h1>");
+         out.println("</body>");
+         out.println("</html>");
       }
    }
 
@@ -54,7 +59,15 @@ public class viewSliderMarketing extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      processRequest(request, response);
+//        processRequest(request, response;
+      int sliderId = Integer.parseInt(request.getParameter("id"));
+
+      Slider listSliderById = new SliderDAO().getListSliderBySliderId(sliderId);
+
+      request.setAttribute("listSliderById", listSliderById);
+      request.getSession().setAttribute("backlink", "slider-detail?id=" + sliderId);
+
+      request.getRequestDispatcher("SliderDetail.jsp").forward(request, response);
    }
 
    /**

@@ -11,6 +11,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<!-- jQuery (Required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
 
 <%
     List<BlogPost> posts = (List<BlogPost>) request.getAttribute("posts");
@@ -22,23 +30,11 @@
    <head>
       <title>Post List</title>
       <link href="css/PostListStyle.css" rel="stylesheet">
+      <link href="css/main.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
    </head>
    <body>
       <h2>Blog Posts</h2>
-      <button onclick="$('#addPostModal').show()">Add New Post</button
-
-      <label for="searchField">Search By:</label>
-      <select id="searchField">
-         <option value="0">Status</option>
-         <option value="1">Update Date</option>
-         <option value="2">Thumnail</option>
-         <option value="3">CatID</option>
-         <option value="4">Brief Info</option>
-         <option value="5">Title</option>
-         <option value="6">ID</option><!-- Column index in the table (0-based) -->
-      </select>
-      <input type="text" id="searchQuery" placeholder="Enter search text">
-      <button onclick="filterTable()">Search</button>
       <table id="postTable">
          <thead>
             <tr>
@@ -71,56 +67,54 @@
             <% } %>
          </tbody>
       </table>
+      <section>
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-4">
+                  <h2>Add New Post</h2>
 
+                  <form action="PostList?action=add" method="post" enctype="multipart/form-data">
+                     <input type="hidden" name="action" value="add">
 
-      <form action="PostList?action=add" method="post" enctype="multipart/form-data">
-         <input type="hidden" name="action" value="add">
+                     <label>Title:</label>
+                     <input type="text" name="title" required>
 
-         <label>Title:</label>
-         <input type="text" name="title" required>
+                     <label>Brief Info:</label>
+                     <textarea name="brief_info" required></textarea>
 
-         <label>Brief Info:</label>
-         <textarea name="brief_info" required></textarea>
+                     <label>Details:</label>
+                     <textarea name="details" required></textarea> 
 
-         <label>Details:</label>
-         <textarea name="details" required></textarea> 
+                     <label>Thumbnail:</label>
+                     <input type="file" name="thumbnail">
 
-         <label>Thumbnail:</label>
-         <input type="file" name="thumbnail">
+                     <label>Category:</label>
+                     <select name="PostCategories_id">
+                        <c:forEach var="category" items="${categories}">
+                           <option value="${category.id}">${category.name}</option>
+                        </c:forEach>
+                     </select>
 
-         <label>Category:</label>
-         <select name="PostCategories_id">
-            <c:forEach var="category" items="${categories}">
-               <option value="${category.id}">${category.name}</option>
-            </c:forEach>
-         </select>
+                     <label>User ID:</label>
+                     <input type="number" name="User_id" required>
 
-         <label>User ID:</label>
-         <input type="number" name="User_id" required>
+                     <label>Feature:</label>
+                     <input type="checkbox" name="Flag_feature" value="true">
 
-         <label>Feature:</label>
-         <input type="checkbox" name="Flag_feature" value="true">
-
-         <label>Status:</label>
-         <select name="status">
-            <option value="1">Active</option>
-            <option value="0">Inactive</option>
-         </select>
-
-         <button type="submit">Add Post</button>
-      </form>
-
-
-
-      <div id="postDetails">
-         <h3>Post Details</h3>
-         <p id="detailTitle"></p>
-         <p id="detailBrief"></p>
-         <img id="detailThumbnail" src="" width="100">
-         <p id="detailContent"></p>
-         <button id="saveChanges" style="display:none;">Save Changes</button>
-      </div>
-
+                     <label>Status:</label>
+                     <select name="status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                     </select>
+                     <button type="submit">Add Post</button>
+                  </form>
+               </div>
+               <div class="col-sm-8">
+                  <h2>Add New Post</h2>
+               </div 
+            </div>
+         </div>
+      </section>
       <script>
          $(document).ready(function () {
             $('#postTable').DataTable({

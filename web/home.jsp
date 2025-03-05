@@ -101,7 +101,7 @@
                         <div class="col-sm-8">
                            <div class="shop-menu pull-right">
                               <ul class="nav navbar-nav">
-                                 <li><a href="uerprofile.jsp"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                 <li><a data-toggle="modal" data-target="#editProfileModal"><i class="fa fa-user"></i> Tài khoản</a></li>
                                  <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Đơn Mua</a></li>
                                  <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                     <c:if test="${account != null}">
@@ -150,10 +150,7 @@
                            <li class="dropdown"><a href="customerList">Danh sách khách hàng</a>
                            </li>
                         </c:if>
-<c:if test="${account.getRole_id() == 4}">
-                                    <li class="dropdown"><a href="udashboard">Users List</a>
-                                    </li>
-                                </c:if>
+
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
                                 <li class="dropdown"><a href="customerList">Customer List</a>
@@ -176,7 +173,50 @@
          </div>
       </div><!--/header-bottom-->
    </header><!--/header-->
+   <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title" id="editProfileModalLabel">Edit Profile</h4>
+            </div>
+            <div class="modal-body">
+               <form class="edit-form" action="user-profile" enctype="multipart/form-data" method="post">
+                  <div class="form-group">
+                     <label for="edit-full-name">Full Name</label>
+                     <input type="text" name="fullName" class="form-control" id="edit-full-name" value="${sessionScope.profileUser.full_name}">
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-email">Email</label>
+                     <input type="email" name="email" class="form-control" disabled="true"id="edit-email" value="${sessionScope.profileUser.email}">
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-phone">Phone</label>
+                     <input type="tel" name="phone" class="form-control" id="edit-phone" value="${sessionScope.profileUser.phone}">
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-gender">Gender</label>
+                     <select class="form-control" id="edit-gender" name="gender">
+                        <option value="Male" ${sessionScope.profileUser.gender == "Male" ?"selected" : ""}>Male</option>
+                        <option value="Female" ${sessionScope.profileUser.gender == "Female" ?"selected" : ""}>Female</option>
+                        <option value="Other"${sessionScope.profileUser.gender == "Other" ?"selected" : ""}>Other</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="profile-image">Profile Image</label>
+                     <input type="file" id="profile-image" accept="image/*">
+                     <p class="help-block">Choose a new profile image</p>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn secondary" data-dismiss="modal">Cancel</button>
+                     <button type="submit" class="btn primary">Save Changes</button>
+                  </div>
+               </form>
+            </div>
 
+         </div>
+      </div>
+   </div>
 
    <section id="slider"><!--slider-->
       <div class="container">
@@ -417,34 +457,22 @@
 
                         <div>
                            <h2 class="title text-center">Hot Posts</h2>
-                           <div id="hotPostCarousel" class="carousel slide" data-bs-ride="carousel">
-                              <div class="carousel-inner">
-                                 <c:forEach items="${list}" var="b" varStatus="status">
-                                    <div class="carousel-item ${status.first ? 'active' : ''}">
+                           <div class="hot_post_container">
+                              <div class="hot_post_warpper">
+                                 <ul class="blog_list">
+                                    <c:forEach items="${list}" var="b" varStatus="status">
                                        <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
-                                          <h3>${b.title}</h3>
-                                          <div class="post-meta">
-                                             <ul>
-                                                <li><i class="fa fa-user"></i> ${b.getFull_name()}</li>
-                                                <li><i class="fa fa-bars"></i> ${b.getName()}</li>
-                                                <li><i class="fa fa-calendar"></i> ${b.updatedDate}</li>
-                                             </ul>
-                                          </div>
-                                          <img src="assets/img/blogImage/${b.thumbnail}" alt="" class="d-block w-100">
-                                          <p>${b.brief_info}</p>
+                                          <li class="blog_item">
+                                             <a href="url" class="blog_link">
+                                                <p class="badge">${b.getFull_name()}</p>
+                                                <img src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image">
+                                                <h3>${b.title}</h3>
+                                             </a>
+                                          </li>
                                        </div>
-                                    </div>
-                                 </c:forEach>
+                                    </c:forEach>
+                                 </ul>
                               </div>
-
-                              <button class="carousel-control-prev" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="prev">
-                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                 <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#hotPostCarousel" data-bs-slide="next">
-                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                 <span class="visually-hidden">Next</span>
-                              </button>
                            </div>
                         </div>
                      </div>
@@ -523,9 +551,9 @@
                <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
                <script>
-                                          function redirectToBlogDetail(id) {
-                                             window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                          }
+                                                  function redirectToBlogDetail(id) {
+                                                     window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                                  }
                </script>
                <script>
                   async function addToCart(id) {
