@@ -25,7 +25,7 @@ import model.ProductFeedback;
  * @author tiend
  */
 @WebServlet(name="listFeedbackMarketing", urlPatterns={"/marketing/listFeedbackMarketing"})
-public class listFeedbackMarketing extends HttpServlet {
+public class ListFeedbackMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -55,7 +55,7 @@ public class listFeedbackMarketing extends HttpServlet {
                 String listFeedbackGson = gson.toJson(listFeedback);
                 //test pagination with JSON and Jquery here
                 request.setAttribute("listFeedback", listFeedbackGson);
-                request.getRequestDispatcher("/marketing-feedbackList.jsp").forward(request, response);
+                request.getRequestDispatcher("/Marketing_FeedbackList.jsp").forward(request, response);
             }
             if (message.equals("sortFeedback")) {
                 String sortBy = request.getParameter("sortBy");
@@ -70,7 +70,7 @@ public class listFeedbackMarketing extends HttpServlet {
                 //test pagination with JSON and Jquery here
                 request.setAttribute("listFeedback", listFeedbackGson);
 
-                request.getRequestDispatcher("/marketing-feedbackList.jsp").forward(request, response);
+                request.getRequestDispatcher("/Marketing_FeedbackList.jsp").forward(request, response);
             }
             if (message.equals("searchFeedback")) {
                 String fSearch = request.getParameter("fSearch");
@@ -80,7 +80,7 @@ public class listFeedbackMarketing extends HttpServlet {
                 //test pagination with JSON and Jquery here
                 request.setAttribute("message", "Tìm thấy <span style=\"color:red;\">" + listFeedback.size() + "</span> feedback trùng khớp với \"<span style=\"color:red;\">" + fSearch + "</span>\"");
                 request.setAttribute("listFeedback", listFeedbackGson);
-                request.getRequestDispatcher("/marketing-feedbackList.jsp").forward(request, response);
+                request.getRequestDispatcher("/Marketing_FeedbackList.jsp").forward(request, response);
             }
           
             if (message.equals("feedbackFilter")) {
@@ -93,7 +93,7 @@ public class listFeedbackMarketing extends HttpServlet {
                     listFeedbackGSon = new Gson().toJson(listFeedback);
                 }
                 request.setAttribute("listFeedback", listFeedbackGSon);
-                request.getRequestDispatcher("/marketing-feedbackList.jsp").forward(request, response);
+                request.getRequestDispatcher("/Marketing_FeedbackList.jsp").forward(request, response);
             }
             if (message.equals("toggleStatus")) {
                 int status = Integer.parseInt(request.getParameter("status"));
@@ -120,7 +120,7 @@ public class listFeedbackMarketing extends HttpServlet {
                 //test pagination with JSON and Jquery here
                 request.setAttribute("listFeedback", listProductGson);
                 request.setAttribute("message", msg);
-                request.getRequestDispatcher("/marketing-feedbackList.jsp").forward(request, response);
+                request.getRequestDispatcher("/Marketing_FeedbackList.jsp").forward(request, response);
             }
         }
     } 
