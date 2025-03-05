@@ -9,44 +9,52 @@
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/BloglistCategory.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/VerifyServlet.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/ProductListMarketing.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserProfileDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/ProductDetail.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/RejectServlet.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/UserProfileController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/UsersListServlet.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/viewPostMarketing.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/UserProfile.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/shop.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/User.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/UserMKT.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/AuthenticationServlet.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/css/main.css</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/PostcategoryController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/HideSliderController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/ResetPassword.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/ProductDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/AddSliderController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/EditSliderController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/post/PostList.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/VerificationCode.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserProfileDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderDetailController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/UserProfileController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SearchSliderController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_PostList.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/UsersListDashboard.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Blogdetail.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/base-view/baseTag.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderList.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/user-profile.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/home/HomePage.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/shop.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogPostList.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/home.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductListMarketingController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductAction.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/User.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/UserMKT.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/AuthenticationServlet.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductEditController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/css/main.css</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/PostcategoryController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/css/slider.css</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/verify.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/ShowSliderController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/BlogPostDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/ResetPassword.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/ProductDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/SliderDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/base-view/footer.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderListController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/CustomerDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/css/PostListStyle.css</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/EmailSender.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/post/PostList.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/VerificationCode.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/CustomerDetailDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderDetail.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/PostCategoryDAO.java</file>
