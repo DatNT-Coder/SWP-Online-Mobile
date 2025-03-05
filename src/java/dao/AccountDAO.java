@@ -603,8 +603,47 @@ public class AccountDAO extends DBContext {
 //        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
 //        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
 
-        User u = new User("lbienvda@gmail.com", "2");
-        System.out.println(d.updateUserPassword(u));
+//        User u = new User("lbienvda@gmail.com", "2");
+//        System.out.println(d.updateUserPassword(u));
+        
+        List<User> u = d.findAll();
+        System.out.println(u.size());    
+    }
+
+    public List<User> findAll() {
+        List<User> listFound = new ArrayList<>();
+        connection = getConnection();
+                String sql = "SELECT u.*, ur.role_id FROM User u JOIN user_role ur ON u.id = ur.user_id ";
+        try {
+            //- Tạo đối tượng PrepareStatement
+            statement = connection.prepareStatement(sql);
+            //- Set parameter ( optional )
+            //- Thực thi câu lệnh
+            resultSet = statement.executeQuery();
+            //- trả về kết quả
+            while (resultSet.next()) {
+                    int idUser = resultSet.getInt("id");
+                    String emailFound = resultSet.getString("email").trim();
+                    String passwordFound = resultSet.getString("password").trim();
+                    String fullNameFound = resultSet.getString("full_name");
+                    String phoneNumberFound = resultSet.getString("phone");
+                    String genderFound = resultSet.getString("gender");
+                    Date registrationDateFound = resultSet.getDate("registration_date");
+                    int statusFound = resultSet.getInt("status");
+                    int updatedByFound = resultSet.getInt("updatedBy");
+                    Date updatedDateFound = resultSet.getDate("updatedDate");
+                    String imageFound = resultSet.getString("image");
+                    int settingsIdFound = resultSet.getInt("settings_id");
+                    int roleIdFound = resultSet.getInt("role_id");
+                    User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound);
+                listFound.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return listFound;
     }
 
 }
+ 
+                

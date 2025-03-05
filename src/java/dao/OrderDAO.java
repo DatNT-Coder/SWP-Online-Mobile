@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
 import model.OrderDetail;
+import model.User;
 
 /**
  *
@@ -74,30 +75,66 @@ public class OrderDAO {
         }
         return null;
     }
+     public User getCustomerById(int id) {
+
+        try {
+            String sql = "select * from mydb.user where ID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                User user = new User(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("phone"),
+                        rs.getString("gender"),
+                        rs.getDate("registration_date"),
+                        rs.getInt("status"),
+                        rs.getInt("updatedBy"),
+                        rs.getDate("updatedDate"),
+                        rs.getString("image"),
+                        rs.getInt("settings_id"));
+
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+     
+
     public static void main(String[] args) {
-    OrderDAO orderDAO = new OrderDAO(); // Đảm bảo đã khởi tạo connection trong OrderDAO
-    Order newOrder = new Order();
-    
-    // Thiết lập dữ liệu cho Order (Thay thế giá trị phù hợp với database của bạn)
-    newOrder.setuId(1);
-    newOrder.setDate(java.sql.Date.valueOf("2025-03-02"));
-    newOrder.setTotalMoney(500.0);
-    newOrder.setStatus(1);
-    newOrder.setAddress("Hà Nội");
-    newOrder.setPhone("0123456789");
-    newOrder.setEmail("test@example.com");
-    newOrder.setNote("Giao hàng nhanh");
-    newOrder.setSaleId(1);
-    newOrder.setSettingId(1);
-    
-    // Gọi addOrder
-    Order addedOrder = orderDAO.addOrder(newOrder);
-    
-    if (addedOrder != null) {
-        System.out.println("Thêm đơn hàng thành công! ID: " + addedOrder.getId());
-    } else {
-        System.out.println("Thêm đơn hàng thất bại!");
+        // Tạo đối tượng DAO để truy vấn dữ liệu
+        OrderDAO userDAO = new OrderDAO();
+
+        // ID của khách hàng cần tìm (thay đổi tùy vào dữ liệu có trong DB)
+        int customerId = 1;
+
+        // Gọi phương thức để tìm khách hàng
+        User user = userDAO.getCustomerById(customerId);
+
+        // Kiểm tra kết quả và hiển thị
+        if (user != null) {
+            System.out.println("User found:");
+            System.out.println("ID: " + user.getId());
+            System.out.println("Email: " + user.getEmail());
+            System.out.println("Full Name: " + user.getFull_name());
+            System.out.println("Phone: " + user.getPhone());
+            System.out.println("Gender: " + user.getGender());
+            System.out.println("Registration Date: " + user.getRegistration_date());
+            System.out.println("Status: " + user.getStatus());
+            System.out.println("Updated By: " + user.getUpdatedBy());
+            System.out.println("Updated Date: " + user.getUpdatedDate());
+            System.out.println("Image: " + user.getImage());
+            System.out.println("Settings ID: " + user.getSettings_id());
+        } else {
+            System.out.println("User not found with ID: " + customerId);
+        }
     }
 }
 
-}
+
+
