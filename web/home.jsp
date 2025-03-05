@@ -150,7 +150,10 @@
                            <li class="dropdown"><a href="customerList">Danh sách khách hàng</a>
                            </li>
                         </c:if>
-
+<c:if test="${account.getRole_id() == 4}">
+                                    <li class="dropdown"><a href="udashboard">Users List</a>
+                                    </li>
+                                </c:if>
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
                                 <li class="dropdown"><a href="customerList">Customer List</a>
