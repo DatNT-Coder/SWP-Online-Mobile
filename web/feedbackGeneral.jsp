@@ -90,13 +90,13 @@
                                 <ul class="nav navbar-nav">
                                     <li><a href="user-profile"><i class="fa fa-user"></i> Tài Khoản</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
-                                    <li><a href="cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
-                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                           <c:when test="${sessionScope.user == null}">
+                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
-                                            <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
+                                            <li><a href="authen?action=logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
                                             </c:otherwise>
                                         </c:choose>
                                 </ul>
@@ -121,18 +121,10 @@
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
                                     <li><a href="HomePage" class="active">Trang Chủ</a></li>
-                                    <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
+                                    <li class="dropdown"><a href="ProductList">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="listProduct">Sản Phẩm</a></li>
-                                                <c:choose>
-                                                    <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                                    <li><a href="signIn.jsp">Đăng Nhập</a></li> 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <li><a href="logOut.jsp">Đăng Xuất</a></li>
-
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <li><a href="ProductList">Sản Phẩm</a></li>
+                                                
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>

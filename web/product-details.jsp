@@ -103,13 +103,13 @@
                                 <ul class="nav navbar-nav">
                                     
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
-                                    <li><a href="cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
                                            <c:when test="${sessionScope.user == null}">
                                             <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
-                                            <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
+                                            <li><a href="authen?action=logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
                                             </c:otherwise>
                                         </c:choose>
                                 </ul>
@@ -137,15 +137,7 @@
                                     <li class="dropdown"><a href="ProductList">Cửa Hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="ProductList">Sản Phẩm</a></li>
-                                                <c:choose>
-                                                    <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                                    <li><a href="Login.jsp">Đăng Nhập</a></li> 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <li><a href="LogOut.jsp">Đăng Xuất</a></li>
-
-                                                </c:otherwise>
-                                            </c:choose>
+                                                
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
@@ -296,7 +288,7 @@
 
                                     </div>
                                 </div>
-                               
+
 
                                 <c:if test="${sessionScope.role == 1}">
                                     <div class="col-sm-12">
@@ -430,7 +422,7 @@
                                                                 <img style="width: 200px;height: 200px;object-fit: contain;" src="${pageContext.request.contextPath}/assets/img/productImage/${latestP.image}" alt="" />
                                                                 <h2>$${latestP.originalPrice}</h2>
                                                                 <p>${latestP.name}</p>
-                                                                <a href="cartHere" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                <a href="CartViewController" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -453,7 +445,7 @@
                                                                 <img style="width: 200px;height: 200px;object-fit: contain;" src="${pageContext.request.contextPath}/assets/img/productImage/${latestP.image}" alt="" />
                                                                 <h2>${latestP.originalPrice}</h2>
                                                                 <p>${latestP.name}</p>
-                                                                <a href="cartHere" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                <a href="CartViewController" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                             </div>
                                                         </div>
                                                     </div>
