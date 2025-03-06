@@ -73,7 +73,6 @@
                   </div>
 
                   </main>
-                  <%@include file="base-view/footer.jsp" %>
                   </body>
                   <script src="./assets/js/core/popper.min.js"></script>
                   <script src="./assets/js/core/bootstrap.min.js"></script>

@@ -566,4 +566,43 @@ public class BlogPostDAO extends DBContext {
               rs.getString("name")
       );
    }
+   public List<BlogPost> listBlog(String search, int page, int size, String cateId, String status) {
+      List<BlogPost> list = new ArrayList<>();
+      String query = "SELECT * FROM blogs_posts WHERE title LIKE ? AND (PostCategories_id = ? OR '' = ?) AND (status = ? OR '' = ?) LIMIT ? OFFSET ?";
+      if(search == null) search = "";
+        if(cateId == null) cateId = "";
+        if(status == null) status = "";
+        
+      try {
+         PreparedStatement ps = connection.prepareStatement(query);
+         ps.setString(1, "%" + search + "%");
+         ps.setString(2, cateId);
+         ps.setString(3, cateId);
+         ps.setString(4, status);
+         ps.setString(5, status);
+         ps.setInt(6, size);
+         ps.setInt(7, (page - 1) * size);
+         ResultSet rs = ps.executeQuery();
+         while (rs.next()) {
+            list.add(new BlogPost(
+                    rs.getInt(1), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10), // status
+                    rs.getString(11)
+            ));
+         }
+      } catch (SQLException e) {
+         System.out.println(e);
+      }
+      return list;
+   }
+
+   
 }
