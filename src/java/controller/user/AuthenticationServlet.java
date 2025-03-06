@@ -153,6 +153,8 @@ public class AuthenticationServlet extends HttpServlet {
             request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
             request.getSession().setAttribute("user", foundUserAccount);
             request.getSession().setAttribute("profileUser", d.getDataUser(email,password));
+            request.getSession().setAttribute("role", userRole);
+            
             url = "HomePage";
             //false => quay tro lai trang login ( set them thong bao loi )
          } else {
