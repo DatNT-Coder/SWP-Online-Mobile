@@ -547,7 +547,22 @@ public class BlogPostDAO extends DBContext {
    }
 
    public int updatePost(BlogPost blogPost) {
-      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "UPDATE blogs_posts SET title = ?, brief_info = ?, thumbnail = ?, details = ?, PostCategories_id = ?, flag_feature = ?, status = ? WHERE id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, blogPost.getTitle());
+            ps.setString(2, blogPost.getBrief_info());
+            ps.setString(3, blogPost.getThumbnail());
+            ps.setString(4, blogPost.getDetails());
+            ps.setInt(5, blogPost.getPostCategories_id());
+            ps.setBoolean(6, blogPost.isFlag_feature());
+            ps.setInt(7, blogPost.getStatus());
+            ps.setInt(8, blogPost.getId());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
    }
 
    private BlogPost extractBlogPost(ResultSet rs) throws SQLException {
