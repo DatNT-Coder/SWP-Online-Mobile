@@ -3,18 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/utils/Helper.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/listFeedbackMarketing.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/cart/Email.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/cart/CartContactController.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/cart/CartCheckoutController.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/FeedbackGeneral.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/ViewFeedbackMarketing.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/user/AuthenticationServlet.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/home.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/sidebar.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/feedbackGeneral.jsp</file>
             <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/product-details.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/cart/CartViewController.java</file>
         </group>
     </open-files>
 </project-private>
