@@ -74,35 +74,11 @@
                            <div class="logo pull-left">
                               <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
                            </div>
-                           <div class="btn-group pull-right">
-                              <div class="btn-group">
-                                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    USA
-                                    <span class="caret"></span>
-                                 </button>
-                                 <ul class="dropdown-menu">
-                                    <li><a href="">Canada</a></li>
-                                    <li><a href="">UK</a></li>
-                                 </ul>
-                              </div>
-
-                              <div class="btn-group">
-                                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    DOLLAR
-                                    <span class="caret"></span>
-                                 </button>
-                                 <ul class="dropdown-menu">
-                                    <li><a href="">Canadian Dollar</a></li>
-                                    <li><a href="">Pound</a></li>
-                                 </ul>
-                              </div>
-                           </div>
                         </div>
                         <div class="col-sm-8">
                            <div class="shop-menu pull-right">
                               <ul class="nav navbar-nav">
                                  <li><a data-toggle="modal" data-target="#editProfileModal"><i class="fa fa-user"></i> Tài khoản</a></li>
-                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Đơn Mua</a></li>
                                  <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                     <c:if test="${account != null}">
                                     <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Đăng Xuất</a></li>
@@ -142,7 +118,6 @@
                         <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
                            <ul role="menu" class="sub-menu">
                               <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
-                              <li><a href="PostList"> Quản lý bài đăng</a></li>
                            </ul>
                         </li>
 
@@ -156,7 +131,6 @@
                                 <li class="dropdown"><a href="customerList">Customer List</a>
                                 </li>
                             </c:if> --%>
-
                      </ul>
                   </div>
                </div>
@@ -551,9 +525,9 @@
                <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
                <script>
-                                                  function redirectToBlogDetail(id) {
-                                                     window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                                  }
+                                          function redirectToBlogDetail(id) {
+                                             window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                          }
                </script>
                <script>
                   async function addToCart(id) {
