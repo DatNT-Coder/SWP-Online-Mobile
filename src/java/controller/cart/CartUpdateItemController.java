@@ -83,7 +83,8 @@ public class CartUpdateItemController extends HttpServlet {
         result.addProperty("total", updatedItem.getTotal());
         out.write(result.toString());
 
-        response.sendRedirect(request.getContextPath() + "/ProductList");
+        out.flush();  // Đảm bảo dữ liệu được gửi đi đầy đủ
+        out.close();
     }
 
 }

@@ -33,6 +33,6 @@
       <li><a href="/ProjectSWP391/marketing/listFeedbackMarketing">Danh sách phản hồi</a></li>
       <li><a href="/ProjectSWP391/slider-list">Slider List</a></li>
       <li><a href="/ProjectSWP391/product-listAdmin">Product List</a></li>
-      <li><a href="/ProjectSWP391/PostList">PostList</a></li>
+      <li><a href="/ProjectSWP391/blog-list">PostList</a></li>
    </ul>
 </div>

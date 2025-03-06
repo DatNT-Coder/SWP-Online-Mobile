@@ -279,11 +279,11 @@
                                                                 <p>${latestP.name}</p>
                                                                 <c:if test="${sessionScope.user != null}">
 
-                                                                    <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 
                                                                 </c:if>
                                                                 <c:if test="${sessionScope.user == null}">
-                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 
                                                                 </c:if>
                                                             </div>
@@ -308,11 +308,11 @@
                                                                 <p>${latestP.name}</p>
                                                                 <c:if test="${sessionScope.user != null}">
 
-                                                                    <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 
                                                                 </c:if>
                                                                 <c:if test="${sessionScope.user == null}">
-                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                                                    <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 
 
                                                                 </c:if>
