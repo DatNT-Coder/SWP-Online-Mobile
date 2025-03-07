@@ -80,6 +80,9 @@
                               <ul class="nav navbar-nav">
                                  <li><a data-toggle="modal" data-target="#editProfileModal"><i class="fa fa-user"></i> Tài khoản</a></li>
                                  <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                    <c:if test="${sessionScope.user != null}">
+                                    <li><a href="${pageContext.request.contextPath}/customer/orders"><i class="fa fa-star"></i> Đơn Mua</a></li>
+                                    </c:if>
                                     <c:if test="${account != null}">
                                     <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Đăng Xuất</a></li>
                                     </c:if>
