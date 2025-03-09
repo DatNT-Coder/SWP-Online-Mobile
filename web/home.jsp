@@ -199,7 +199,7 @@
                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
 
                   <ol class="carousel-indicators">
-                     <c:forEach items="${sl}" var="s" varStatus="loop">
+                     <c:forEach items="${requestScope.sliders}" var="s" varStatus="loop">
                         <c:if test="${loop.index == 0}">
                            <li data-target="#slider-carousel" data-slide-to="${loop.index}" class="active"></li>
                            </c:if>
@@ -209,7 +209,7 @@
                         </c:forEach>
                   </ol>  
                   <div class="carousel-inner">
-                     <c:forEach items="${sl}" var="s" varStatus="loop">
+                     <c:forEach items="${requestScope.sliders}" var="s" varStatus="loop">
                         <c:if test="${loop.index == 0}">
                            <div class="item active">
                            </c:if>
@@ -221,11 +221,11 @@
                                  <h2>${s.title}</h2>
                                  <p>${s.notes} </p>
                                  <a href="${s.backlink}">
-                                    <button type="button" class="btn btn-default get">Thêm vào giỏ hàng</button>
+                                    <button type="button" class="btn btn-default get">Xem thông tin</button>
                                  </a>
                               </div>
                               <div class="col-sm-6">
-                                 <img src="images/slider/${s.image}" class="girl img-responsive" alt="" />
+                                 <img src="images/slider/${s.image}" class="girl img-responsive" alt="Test Debug" />
 
                               </div>
                            </div>
@@ -339,14 +339,16 @@
                         <c:forEach items="${list}" var="b" varStatus="status">
                            <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
                               <li class="blog_item">
-                                 <a href="url" class="blog_link">
+                                 <a href="BlogDetail?pid=${b.id}" class="blog_link">
                                     <p class="badge">${b.getFull_name()}</p>
                                     <img src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image">
-                                    <h3>${b.title}</h3>
+                                    <h5>${b.title}</h5>
                                  </a>
+
                               </li>
                            </div>
                         </c:forEach>
+                        <a href="BlogDetail?pid=${b.id}" class="btn btn-primary">Xem thêm</a>
                      </ul>
                   </div>
                </div>
@@ -397,7 +399,7 @@
                                     </c:forEach>
                                  </div>
                                  <div class="item">	
-                                    <c:forEach begin="3" items="${requestScope.latestP}" var="latestP">
+                                    <c:forEach begin="2" items="${requestScope.latestP}" var="latestP">
                                        <div class="col-sm-4">
                                           <a href="productDetail?pid=${latestP.ID}">
                                              <div class="product-image-wrapper">
@@ -429,26 +431,51 @@
                            </div>
                         </div>
 
-                        <div>
-                           <h2 class="title text-center">Hot Posts</h2>
-                           <div class="hot_post_container">
-                              <div class="hot_post_warpper">
-                                 <ul class="blog_list">
-                                    <c:forEach items="${list}" var="b" varStatus="status">
-                                       <div class="single-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
-                                          <li class="blog_item">
-                                             <a href="url" class="blog_link">
-                                                <p class="badge">${b.getFull_name()}</p>
-                                                <img src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image">
-                                                <h3>${b.title}</h3>
-                                             </a>
-                                          </li>
-                                       </div>
+                        <div class="recommended_items"><!--recommended_items-->
+                           <h2 class="title text-center">Hot Post</h2>
+                           <div id="recommended-item-carousel2" class="carousel slide" data-ride="carousel">
+                              <div class="carousel-inner">
+                                 <div class="item active">
+                                    <c:forEach begin="0" end="2" items="${requestScope.list}" var="b">
+                                       <div class="col-sm-4">
+                                          <div class="multiple-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                                             <div class="blog_item">
+                                                <a href="BlogDetail?pid=${b.id}" class="blog_link">
+                                                   <p class="badge">${b.getFull_name()}</p>
+                                                   <img style="height: 100px;" src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image img-responsive">
+                                                   <h3>${b.title}</h3>
+                                                </a>
+                                             </div>
+                                          </div>
+                                       </div>  
                                     </c:forEach>
-                                 </ul>
+                                 </div>
+                                 <div class="item">	
+                                    <c:forEach begin="3" items="${requestScope.list}" var="b">
+                                       <div class="col-sm-4">
+                                          <div class="multiple-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
+                                             <div class="blog_item">
+                                                <a href="BlogDetail?pid=${b.id}" class="blog_link">
+                                                   <p class="badge">${b.getFull_name()}</p>
+                                                   <img style="height: 100px;" src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image img-responsive">
+                                                   <h3>${b.title}</h3>
+                                                </a>
+                                             </div>
+                                          </div>
+                                       </div>  
+                                    </c:forEach>
+                                 </div>
                               </div>
+                              <a class="left recommended-item-control" href="#recommended-item-carousel2" data-slide="prev">
+                                 <i class="fa fa-angle-left"></i>
+                              </a>
+                              <a class="right recommended-item-control" href="#recommended-item-carousel2" data-slide="next">
+                                 <i class="fa fa-angle-right"></i>
+                              </a>			
                            </div>
                         </div>
+
+
                      </div>
                   </div><!--/recommended_items-->
             </section>
@@ -525,9 +552,9 @@
                <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
                <script>
-                                          function redirectToBlogDetail(id) {
-                                             window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
-                                          }
+                                             function redirectToBlogDetail(id) {
+                                                window.location.href = "http://localhost:8080/ProjectSWP391/BlogDetail?pid=" + id;
+                                             }
                </script>
                <script>
                   async function addToCart(id) {

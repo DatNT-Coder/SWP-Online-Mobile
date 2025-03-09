@@ -619,5 +619,41 @@ public class BlogPostDAO extends DBContext {
       return list;
    }
 
+   public ArrayList<BlogPost> Get5BlogList() {
+      ArrayList<BlogPost> list = new ArrayList<>();
+
+      try {
+         String sql = "SELECT bp.*, u.full_name \n"
+                 + "FROM `mydb`.`blogs_posts` AS bp \n"
+                 + "LEFT JOIN `mydb`.`user` AS u ON bp.User_id = u.id \n"
+                 + "WHERE bp.status != 0 \n"
+                 + "ORDER BY bp.updatedDate DESC \n"
+                 + "LIMIT 5;";
+         PreparedStatement statement = connection.prepareStatement(sql);
+
+         ResultSet rs = statement.executeQuery();
+
+         while (rs.next()) {
+            list.add(new BlogPost(
+                    rs.getInt(1), // id
+                    rs.getString(2), // title
+                    rs.getString(3), // brief_info
+                    rs.getString(4), // thumbnail
+                    rs.getString(5), // details
+                    rs.getDate(6), // updatedDate
+                    rs.getInt(7), // PostCategories_id
+                    rs.getInt(8), // User_id
+                    rs.getBoolean(9), // flag_feature
+                    rs.getInt(10), // status
+                    rs.getString(11), // full_name
+                    rs.getString(12)
+            ));
+         }
+
+      } catch (SQLException ex) {
+         Logger.getLogger(BlogPostDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return list;
+   }
    
 }
