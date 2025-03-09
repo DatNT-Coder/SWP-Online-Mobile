@@ -42,8 +42,7 @@
     
     <filter-mapping>
         <filter-name>MarketingFilter</filter-name>
-        <url-pattern>/customerList</url-pattern>
-        <url-pattern>/customerlist</url-pattern>
+        <url-pattern>/marketing/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HomeFilter</filter-name>

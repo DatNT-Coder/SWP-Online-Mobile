@@ -25,7 +25,7 @@ import model.ProductFeedback;
  * @author tiend
  */
 @WebServlet(name="listFeedbackMarketing", urlPatterns={"/marketing/listFeedbackMarketing"})
-public class ListFeedbackMarketing extends HttpServlet {
+public class listFeedbackMarketing extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
