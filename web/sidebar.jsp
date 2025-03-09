@@ -31,8 +31,9 @@
               <li><a href="/ProjectSWP391/marketing/listSliderMarketing">Danh sách Slider</a></li>
               <li><a href="/ProjectSWP391/marketing/listCustomerMarketing">Danh sách khách hàng</a></li>-->
       <li><a href="/ProjectSWP391/marketing/listFeedbackMarketing">Danh sách phản hồi</a></li>
-      <li><a href="/ProjectSWP391/slider-list">Slider List</a></li>
-      <li><a href="/ProjectSWP391/product-listAdmin">Product List</a></li>
-      <li><a href="/ProjectSWP391/blog-list">PostList</a></li>
+      <li><a href="/ProjectSWP391/slider-list">Danh sách slider</a></li>
+      <li><a href="/ProjectSWP391/product-listAdmin">Danh sách sản phẩm</a></li>
+      <li><a href="/ProjectSWP391/blog-list">Danh sách bài đăng</a></li>
+      <li><a href="/ProjectSWP391/customerList">Danh sách người dùng</a></li>
    </ul>
 </div>
