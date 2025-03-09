@@ -21,8 +21,9 @@
       <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
       <script defer data-site="http://localhost:8080/QuizPracticeOnline/home" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
       <%@include file="base-view/baseTag.jsp" %>
-      <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-      <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="css/styles.css">
       <style>
          *{
             box-sizing: border-box;
