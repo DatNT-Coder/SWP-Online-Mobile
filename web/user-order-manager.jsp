@@ -85,7 +85,10 @@
                                         </c:if>
                                         <c:if test="${account == null}">
                                         <li><a href="authen?action=login"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
-                                       
+                                        </c:if> 
+                                        <c:if test="${account != null}">
+                                        <li><a href="authen?action=change"><i class="fa fa-lock"></i> Đổi mật khẩu</a></li>
+                                        </c:if>
                                     <li><a href="authen?action=regis"><i class="fa fa-shopping-cart"></i> Đăng kí</a></li>
                                 </ul>
                             </div>
