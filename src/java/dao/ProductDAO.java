@@ -169,7 +169,7 @@ public class ProductDAO extends DBContext {
 
    public Vector<Product> top6LastestProduct() {
       Vector<Product> list = new Vector<>();
-      String query = "SELECT * FROM `mydb`.`product` where status != 0 ORDER BY `updatedDate` DESC LIMIT 6";
+      String query = "SELECT * FROM `mydb`.`product` where status != 0 ORDER BY `updatedDate` DESC LIMIT 5";
       try {
          this.connection = getConnection();
          PreparedStatement ps = connection.prepareStatement(query);

@@ -78,6 +78,9 @@ public class SliderDAO extends DBContext {
                 Slider slider = new Slider();
                 slider.setId(rs.getInt("id"));
                 slider.setImage(rs.getString("image"));
+                slider.setBacklink(rs.getString("backlink"));
+                slider.setNotes(rs.getString("notes"));
+                slider.setTitle(rs.getString("title"));
                 slider.setStatus(rs.getInt("status"));
                 sliders.add(slider);
             }
@@ -435,5 +438,6 @@ public class SliderDAO extends DBContext {
         }
         return list;
     }
+    
 
 }
