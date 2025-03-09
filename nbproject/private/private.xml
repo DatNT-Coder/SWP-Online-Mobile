@@ -3,17 +3,47 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/Marketing_viewFeedback.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/ListFeedbackMarketing.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/feedbackGeneral.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/dao/FeedbackDAO.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/shop.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/feedback/ViewFeedbackMarketing.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/home.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/ProductDetail.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductList.java</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/product-details.jsp</file>
-            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductEditController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/css/bootstrap.min.css</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/feedback/ListFeedbackMarketing.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/CreateCustomer.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/BloglistCategory.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/feedback/ViewFeedbackMarketing.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Blog.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/ProductListMarketing.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/sidebar.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserProfileDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/customer/CustomerListServlet.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/feedbackGeneral.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/UserProfileController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductSearch.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_FeedbackList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_PostList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/EditBlogController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/bloglist.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Blogdetail.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/home/HomePage.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Slider.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogPostList.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductDetailController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/home.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductListMarketingController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductEditController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogListController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_viewFeedback.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/context/DBContext.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/BlogPostDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/blogedit.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductList.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_addPost.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/blog.html</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/userslist.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderListMarketing.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/ProductDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/SliderDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/customer/CreateCustomerController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderDetail.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/customer/CustomerDetailServlet.java</file>
         </group>
     </open-files>
 </project-private>
