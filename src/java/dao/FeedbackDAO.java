@@ -382,6 +382,25 @@ public class FeedbackDAO extends DBContext {
         }
         return feedbacks;
     }
+    
+     public double getAverageRating(int productId) {
+        double avgRating = 0;
+        String query = "SELECT AVG(rating) FROM productfeedback WHERE Product_ID = ?";
+        
+        try (            Connection connection = getConnection(); 
+
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                avgRating = rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return avgRating;
+    }
 
     public static void main(String[] args) {
         FeedbackDAO feedbackDAO = new FeedbackDAO();
