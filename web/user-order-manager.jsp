@@ -44,7 +44,7 @@
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
                                     <li><a href=""><i class="fa fa-phone"></i> +84 985 350 491</a></li>
-                                    <li><a href=""><i class="fa fa-envelope"></i> group6_shopmobile@gmail.com</a></li>
+                                    <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -75,29 +75,12 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a href="${pageContext.request.contextPath}/user-profile">
-                                            <i class="fa fa-user"></i>
-                                            ${empty sessionScope.user.email ? "Tài khoản" : sessionScope.user.full_name}</a>
-                                        <ul class="sub-menu" style=" background-color: #ffffff;padding-top: 0.8rem;max-width: 180px;" >
-                                            <li  style="color: #696763; font-size: 20px; text-align: center;padding:1rem;">
-                                                <a class="dropdown-hover" href="changepassword" style="color: #696763">Đổi mật khẩu</a>
-                                            </li>
-                                            <li  style="color: #696763; font-size: 20px; text-align: center;padding: 1rem;">
-                                                <a class="dropdown-hover" href="user-profile" style="color: #696763;">Thông tin người dùng</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    
-                                    <li><a href="/mobileshop/customer/cart"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
-                                        <c:choose>
-                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                            <li><a href="signIn.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                            <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                    <li><a data-toggle="modal" data-target="#editProfileModal"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                    <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
+                                        <c:if test="${sessionScope.user != null}">
+                                        <li><a href="${pageContext.request.contextPath}/customer/orders"><i class="fa fa-star"></i> Đơn Mua</a></li>
+                                        </c:if>
+                                        
                                 </ul>
                             </div>
                         </div>
@@ -119,19 +102,18 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="${pageContext.request.contextPath}/Home">Trang chủ</a></li>
-                                    <li class="dropdown"><a href="Home" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="${pageContext.request.contextPath}/HomePage">Trang chủ</a></li>
+                                    <li class="dropdown"><a href="HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="/mobileshop/listProduct" class="active">Sản phẩm</a></li>
-                                            <li><a href="cart">Giỏ Hàng</a></li> 
+                                            <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
+                                            <li><a href="/ProjectSWP391/CartViewController">Giỏ Hàng</a></li> 
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Danh sách Bài Đăng</a></li>
-                                            <li><a href="blog-single.html">Bài đăng đơn</a></li>
+                                            <li><a href="/ProjectSWP391/BlogPostList">Danh sách Bài Đăng</a></li>
                                         </ul>
-                                    </li> 
+                                    </li>
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
                             </div>
@@ -184,16 +166,16 @@
                                     <td>${item.phone}</td>
                                     <td>${item.note}</td>
                                     <c:if test="${item.status==1}">
-                                    <td>Đã đặt hàng</td>
+                                        <td>Đã đặt hàng</td>
                                     </c:if>
                                     <c:if test="${item.status==2}">
-                                    <td>Đang xử lí</td>
+                                        <td>Đang xử lí</td>
                                     </c:if>
                                     <c:if test="${item.status==3}">
-                                    <td>Đã giao</td>
+                                        <td>Đã giao</td>
                                     </c:if>
                                     <c:if test="${item.status==4}">
-                                    <td>Đã hủy đơn hàng</td>
+                                        <td>Đã hủy đơn hàng</td>
                                     </c:if>
                                     <td>
                                         <a class="btn btn-primary" style="margin-top: 0px;"
