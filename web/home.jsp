@@ -256,10 +256,6 @@
                      <div class="panel panel-default">
                         <div class="panel-heading">
                            <h4 class="panel-title">
-                              <a href="listProduct">
-                                 <span class="badge pull-right"></span>
-                                 Tất cả
-                              </a>
                            </h4>
                         </div>
                      </div>
@@ -348,7 +344,7 @@
                               </li>
                            </div>
                         </c:forEach>
-                        <a href="BlogDetail?pid=${b.id}" class="btn btn-primary">Xem thêm</a>
+                        <a href="BlogPostList" class="btn btn-primary">Xem thêm</a>
                      </ul>
                   </div>
                </div>

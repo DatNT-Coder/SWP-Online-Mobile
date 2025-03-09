@@ -82,7 +82,7 @@ public class UserProfileController extends HttpServlet {
       String fullName = request.getParameter("fullName");
       String email = request.getParameter("email");
       String phone = request.getParameter("phone");
-      String gender = request.getParameter("0gender");
+      String gender = request.getParameter("gender");
       UserProfileDAO profile = new UserProfileDAO();
       profile.editUserInfo(userProfile.getId(), fileName, fullName, gender, phone);
       request.getSession().setAttribute("profileUser", profile.getUserById(userProfile.getId()));
