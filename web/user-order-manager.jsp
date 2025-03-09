@@ -80,7 +80,13 @@
                                         <c:if test="${sessionScope.user != null}">
                                         <li><a href="${pageContext.request.contextPath}/customer/orders"><i class="fa fa-star"></i> Đơn Mua</a></li>
                                         </c:if>
-                                        
+                                        <c:if test="${account != null}">
+                                        <li><a href="authen?action=logout"><i class="fa fa-lock"></i> Đăng Xuất</a></li>
+                                        </c:if>
+                                        <c:if test="${account == null}">
+                                        <li><a href="authen?action=login"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
+                                       
+                                    <li><a href="authen?action=regis"><i class="fa fa-shopping-cart"></i> Đăng kí</a></li>
                                 </ul>
                             </div>
                         </div>
