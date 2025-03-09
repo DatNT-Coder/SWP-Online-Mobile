@@ -6,10 +6,12 @@ package dao;
 
 import context.DBContext;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
@@ -104,7 +106,42 @@ public class OrderDAO {
         }
         return null;
     }
-     
+         public ArrayList<Order> getAllUserOrder(int userId) {
+        String sql = "select id, user_id, order_date, total, status, discount,\n"
+                + " address, phone, email, notes, gender, saleid, settings_id from orders where User_id = ?";
+        try ( PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                ArrayList<Order> orders = new ArrayList<>();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    Date orderDate = rs.getDate("order_date");
+                    double total = rs.getDouble("total");
+                    int status = rs.getInt("status");
+                    String address = rs.getString("address");
+                    String phone = rs.getString("phone");
+                    String email = rs.getString("email");
+                    String note = rs.getString("notes");
+                    int settingId = rs.getInt("settings_id");
+                    Order order = new Order();
+                    order.setId(id);
+                    order.setDate(orderDate);
+                    order.setTotalMoney(total);
+                    order.setStatus(status);
+                    order.setAddress(address);
+                    order.setPhone(phone);
+                    order.setEmail(email);
+                    order.setNote(note);
+                    order.setSettingId(settingId);
+                    orders.add(order);
+                }
+                return orders;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         // Tạo đối tượng DAO để truy vấn dữ liệu
