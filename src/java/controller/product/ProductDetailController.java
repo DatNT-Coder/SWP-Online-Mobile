@@ -149,8 +149,7 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setStatus(1);
                 dao.addFeedback(feedback);
             } else {
-
-                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage" + fileName);
+                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
                 feedback.setFull_name(fullName);
                 feedback.setEmail(email);
                 feedback.setPhone(phone);
