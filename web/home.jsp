@@ -309,6 +309,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <img src="images/slider/${s.image}" class="girl img-responsive" alt="" />
+                                </c:forEach>
 
                   <div class="price-range"><!--price-range-->
                      <h2>Khoảng giá</h2>
