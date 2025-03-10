@@ -142,9 +142,9 @@
                            <div class="row g-3">
                               <form class="d-flex justify-content-between" action="product-listAdmin?page=${requestScope.page}" method="get">
                               <div class="col-md-4">
-                                 <div class="input-group">
+                                 <div class="input-group" name="search">
                                     <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                    <input  name="search" type="text" class="form-control" id="searchInput" placeholder="Search by title">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Search by title">
                                  </div>
                               </div>
                               <div class="col-md-3">
