@@ -124,10 +124,7 @@
                            </ul>
                         </li>
 
-                        <c:if test="${account != null}">
-                           <li class="dropdown"><a href="customerList">Danh sách khách hàng</a>
-                           </li>
-                        </c:if>
+                        
 
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
