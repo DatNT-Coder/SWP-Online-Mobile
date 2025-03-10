@@ -99,11 +99,13 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="postStatus" class="form-label">Trạng thái</label>
-                                                <select name="postStatus" class="form-select" id="postStatus">
+<!--                                                <select name="postStatus" class="form-select" id="postStatus">
                                                   
                                                     <option value="1" ${ requestScope.blog.status == 1 ? "selected" : ""}>Đã đăng</option>
                                                     <option value="0" ${ requestScope.blog.status == 0 ? "selected" : ""}>Nháp</option>
-                                                </select>
+                                                </select>-->
+                                                <input type="radio" name="postStatus" value="1" ${ requestScope.blog.status == 1 ? "checked" : ""}> Đã Đăng
+                                                <input type="radio" name="postStatus" value="0" ${ requestScope.blog.status == 0 ? "checked" : ""}> Ẩn
                                             </div>
                                             
                                             <div class="mb-3">
@@ -122,6 +124,7 @@
                                             
                                             <div class="form-check mb-3">
                                                 <input name="featuredPost" class="form-check-input" type="checkbox" id="featuredPost" ${requestScope.blog.isFlag_feature() ? "checked" : ""}>
+                                                <input name="featuredPost" class="form-check-input" type="hidden" value="off">
                                                 <label class="form-check-label" for="featuredPost">
                                                     Bài viết nổi bật
                                                 </label>
