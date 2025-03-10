@@ -9,6 +9,8 @@
       <title>Quản lý bài viết blog</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
       <style>
          *{
             box-sizing: border-box;
@@ -140,22 +142,22 @@
                      <form class="d-flex just-content-between" action="blog-list?page=${requestScope.page}" method="get">
                      <div class="col-md-6">
                         <div class="input-group">
-                           <input type="text" class="form-control" placeholder="Tìm kiếm bài viết...">
+                           <input name="search" type="text" class="form-control" placeholder="Tìm kiếm bài viết...">
 
                         </div>
                      </div>
                      <div class="col-md-6">
                         <div class="d-flex justify-content-md-end">
-                           <select class="form-select me-2" style="max-width: 150px;">
-                              <option ${empty requestScope.category ? "selected" : ""}>Tất cả danh mục</option>
+                           <select name="category" name="" class="form-select me-2" style="max-width: 150px;">
+                              <option value="" ${empty requestScope.category ? "selected" : ""}>Tất cả danh mục</option>
                               <c:forEach var="category" items="${requestScope.listCategory}">
                                  <option ${requestScope.category == category.id ? "selected" : ""} value="${category.id}">${category.name}</option>
                               </c:forEach>
                            </select>
-                           <select class="form-select" style="max-width: 150px;">
-                              <option ${empty requestScope.status ? "selected" : ""}>Tất cả trạng thái</option>
-                              <option ${ requestScope.status == 1 ? "selected" : ""}>Đã đăng</option>
-                              <option ${ requestScope.status == 0 ? "selected" : ""}>Nháp</option>
+                           <select name="status" class="form-select" style="max-width: 150px;">
+                              <option value="" ${empty requestScope.status ? "selected" : ""}>Tất cả trạng thái</option>
+                              <option value="1" ${ requestScope.status == 1 ? "selected" : ""}>Đã đăng</option>
+                              <option value="0" ${ requestScope.status == 0 ? "selected" : ""}>Nháp</option>
                            </select>
                            <button type="submit" class="btn btn-outline-secondary" >
                               <i class="bi bi-search"></i>
@@ -167,7 +169,7 @@
 
                <!-- Posts Table -->
                <div class="table-responsive">
-                  <table class="table table-hover">
+                  <table id="myTable" class="table table-hover">
                      <thead class="table-light">
                         <tr>
                            <th scope="col" width="50px">ID</th>
@@ -302,8 +304,8 @@
                         <div class="col-md-6">
                            <label for="postStatus" class="form-label">Trạng thái</label>
                            <select name = "postStatus" class="form-select" id="postStatus">
-                              <option value="1">Đăng</option>
-                              <option value="0">Nháp</option>
+                              <option value="1">Active</option>
+                              <option value="0">InActive</option>
                            </select>
                         </div>
                      </div>
@@ -338,6 +340,19 @@
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+      <script>
+         $(document).ready(function() {
+            $('#myTable').DataTable(
+//                    {
+//                "paging": false,       
+//                "searching": false,    
+//                "info": false,    
+//                "ordering": true       
+//            }
+                    );
+        });
+   </<script>
    </body>
 </html>
 
