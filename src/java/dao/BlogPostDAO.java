@@ -410,7 +410,7 @@ public class BlogPostDAO extends DBContext {
    }
 
    public void addPost(BlogPost post) {
-      String sql = "INSERT INTO blog_posts (title, brief_info, thumbnail, details, PostCategories_id, User_id, flag_feature, status, blogs_postscol, full_name, updatedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      String sql = "INSERT INTO blogs_posts (title, brief_info, thumbnail, details, PostCategories_id, User_id, flag_feature, status, blogs_postscol, updatedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       try (PreparedStatement stmt = connection.prepareStatement(sql)) { // Use 'connection' field
 
@@ -423,7 +423,8 @@ public class BlogPostDAO extends DBContext {
          stmt.setBoolean(7, post.isFlag_feature());
          stmt.setInt(8, post.getStatus());
          stmt.setString(9, post.getBlogs_postscol());
-         stmt.setString(10, post.getFull_name());
+         
+         stmt.setDate(10, post.getUpdatedDate());
          int rowsAffected = stmt.executeUpdate();
          System.out.println("Rows inserted: " + rowsAffected);
       } catch (SQLException e) {

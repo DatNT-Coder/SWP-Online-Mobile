@@ -151,12 +151,14 @@ public class AuthenticationServlet extends HttpServlet {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
+                    request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
                     url = "HomePage";
                     //false => quay tro lai trang login ( set them thong bao loi )
                 } else if (foundUserAccount.getRole_id() == 5 || foundUserAccount.getRole_id() == 4) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
+                    request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
                     url = "marketing/listFeedbackMarketing";
                 }
             } else {
