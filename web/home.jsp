@@ -220,7 +220,7 @@
                               <div class="item">
                               </c:if>
                               <div class="col-sm-6">
-                                 <h1><span>Pink</span>-Mobile</h1>
+                                 <h1><span>E</span>-Shopper</h1>
                                  <h2>${s.title}</h2>
                                  <p>${s.notes} </p>
                                  <a href="${s.backlink}">
@@ -450,7 +450,7 @@
                                     </c:forEach>
                                  </div>
                                  <div class="item">	
-                                    <c:forEach begin="3" items="${requestScope.list}" var="b">
+                                    <c:forEach begin="2" items="${requestScope.list}" var="b">
                                        <div class="col-sm-4">
                                           <div class="multiple-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
                                              <div class="blog_item">

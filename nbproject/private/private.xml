@@ -17,7 +17,9 @@
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/user/UserProfileController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductSearch.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_FeedbackList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/viewPostMarketing.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_PostList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/CustomerList.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/EditBlogController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/bloglist.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Blogdetail.jsp</file>
@@ -27,6 +29,7 @@
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductDetailController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/home.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductListMarketingController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_viewPost.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/product/ProductEditController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogListController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_viewFeedback.jsp</file>
@@ -37,11 +40,13 @@
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_addPost.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/blog.html</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/userslist.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_editPost.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderListMarketing.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/ProductDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/SliderDAO.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderList.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/customer/CreateCustomerController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/blog-single.html</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderDetail.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/customer/CustomerDetailServlet.java</file>
         </group>
