@@ -86,7 +86,7 @@
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
                                         <c:choose>
-                                          <c:when test="${sessionScope.user == null}">
+                                            <c:when test="${sessionScope.user == null}">
                                             <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
                                             </c:when>
                                             <c:otherwise>
@@ -118,11 +118,11 @@
                                     <li class="dropdown"><a href="/ProjectSWP391/HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
-                                           
+
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
-                                        
+
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
@@ -146,7 +146,7 @@
             <div class="container">
                 <div class="breadcrumbs">
                     <ol style="color: #009981;" class="breadcrumb">
-                        
+
                     </ol>
                 </div>
                 <div style="color: #009981;" class="table-responsive cart_info">
@@ -202,6 +202,10 @@
                             const postData = new URLSearchParams();
                             postData.append("productId", productId);
                             if (amount === 0) {
+                                const confirmDelete = confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng không?');
+                                if (!confirmDelete) {
+                                    return false; // Người dùng không xác nhận xóa
+                                }
                                 postData.append("amount", -quantityDiv.value);
                             } else {
                                 postData.append("amount", amount);
@@ -235,11 +239,11 @@
                             return false;
                         }
                     </script>
-                    
+
                 </div>
                 <div  class="row">
                     <div class="col" style="color: #FE0F9E; display: flex; justify-content: center; margin-top: -20px; margin-bottom: 30px;">
-                        
+
                         <a  href="${pageContext.request.contextPath}/customer/cart/contact" class="btn btn-default add-to-cart" href="">Đi đến thanh toán</a>
                     </div>
                 </div>
