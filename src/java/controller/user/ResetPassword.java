@@ -76,20 +76,18 @@ public class ResetPassword extends HttpServlet {
         String pw1 = request.getParameter("pw1");
         String pw2 = request.getParameter("pw2");
         String emailReseter = request.getParameter("e");
+        System.out.println(emailReseter);
         String codeReseter = request.getParameter("vCode");
 
         boolean hasError = false;
-        if (pw1 == null || pw2 == null || pw1.trim().isEmpty() || pw2.trim().isEmpty()) {
-            request.setAttribute("erPass", "Password cannot be empty.");
-            hasError = true;
-        } else if (pw1.contains(" ") || pw2.contains(" ")) {
+        if (pw1.contains(" ") || pw2.contains(" ")) {
             request.setAttribute("erPass", "Password cannot contain spaces.");
             hasError = true;
         } else if (!pw1.equals(pw2)) { // Kiểm tra xem pw1 và pw2 có giống nhau không
             request.setAttribute("erPass", "Passwords do not match.");
             hasError = true;
         }
-        if (hasError){
+        if (hasError) {
             request.getRequestDispatcher("reset.jsp").forward(request, response);
         }
 
@@ -102,8 +100,8 @@ public class ResetPassword extends HttpServlet {
 
             AccountDAO dao = new AccountDAO();
             //request.getSession().getAttribute("registerUser") trả về kiểu object nên cần cast về kiểu User
-            User u = new User( (String) request.getSession().getAttribute("resetUserMail"), pw2);
-            
+            User u = new User((String) request.getSession().getAttribute("resetUserMail"), pw2);
+
             boolean isUpdate = dao.updateUserPassword(u);
             request.getRequestDispatcher("HomePage").forward(request, response);
 

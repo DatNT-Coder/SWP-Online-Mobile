@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import model.User;
+import model.UserAddress;
 
 /**
  *
@@ -153,7 +154,7 @@ public class AuthenticationServlet extends HttpServlet {
             if (a != null) {
                 userRole = accdal.getUserRole(a.getId()); // Chỉ gọi getId() khi a không null
             }
-            
+
             if (foundUserAccount != null) {
                 if (foundUserAccount.getRole_id() == 1) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
@@ -189,6 +190,7 @@ public class AuthenticationServlet extends HttpServlet {
         String emailUser = request.getParameter("email");
         String password = request.getParameter("password");
         String username = request.getParameter("full_name");
+        UserAddress address = new UserAddress(request.getParameter("address"));
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
         Date registrationDate = new Date(System.currentTimeMillis());
@@ -220,11 +222,15 @@ public class AuthenticationServlet extends HttpServlet {
             request.setAttribute("erEmail", "Email cannot be empty.");
             hasError = true;
         }
+        if (address.getUserAddress() == null || address.getUserAddress().isEmpty()) {
+            request.setAttribute("erAddress", "Address cannot be empty.");
+            hasError = true;
+        }
         if (hasError) {
             return url = "regis.jsp";
         }
-
-        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+                            
+        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId, address);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
 
@@ -342,7 +348,7 @@ public class AuthenticationServlet extends HttpServlet {
         }
 
         String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // Mã hết hạn sau 1 phút
 
         VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
         verificationCodes.put(emailReset, codeExpire); //biến hashmap lưu giá trị 

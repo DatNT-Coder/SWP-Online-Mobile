@@ -185,66 +185,129 @@ public User findEmailPasswordUser(User u) {
     }
 
     
-    public void insertUserToDB(User user) {
+    
+    
+public void insertUserToDB(User user) {
+    try {
+        // Kết nối với cơ sở dữ liệu
+        connection = getConnection();
+
+        // Tạo câu lệnh SQL để chèn user
+        String userSQL = "INSERT INTO `user` "
+                + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Chuẩn bị câu lệnh SQL
+        statement = connection.prepareStatement(userSQL, statement.RETURN_GENERATED_KEYS);
+
+        // Gán giá trị vào câu lệnh SQL
+        statement.setString(1, user.getEmail());
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        statement.setString(2, hashedPassword);
+        statement.setString(3, user.getFull_name());
+        statement.setString(4, user.getPhone());
+        statement.setString(5, user.getGender());
+        statement.setDate(6, new java.sql.Date(user.getRegistration_date().getTime()));
+        statement.setInt(7, user.getStatus());
+        statement.setInt(8, user.getUpdatedBy());
+
+        // Xử lý giá trị NULL cho updated_date và image
+        if (user.getUpdatedDate() != null) {
+            statement.setDate(9, new java.sql.Date(user.getUpdatedDate().getTime()));
+        } else {
+            statement.setNull(9, java.sql.Types.DATE);
+        }
+
+        if (user.getImage() != null) {
+            statement.setString(10, user.getImage());
+        } else {
+            statement.setNull(10, java.sql.Types.VARCHAR);
+        }
+
+        statement.setInt(11, user.getSettings_id());
+
+        // Thực thi câu lệnh SQL
+        statement.executeUpdate();
+        resultSet = statement.getGeneratedKeys();
+
+        // Kiểm tra nếu có ID được sinh tự động
+        if (resultSet.next()) {
+            int newUserId = resultSet.getInt(1);
+            System.out.println("User inserted with ID: " + newUserId);
+
+            //  Thêm user_id vào bảng user_role (gán mặc định role_id = 1)
+            insertToUserRole(newUserId, 1);
+
+            //  Chèn địa chỉ vào bảng user_address
+            insertUserAddress(newUserId, user.getUserAddress().getUserAddress());
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Đóng tài nguyên
         try {
-            // Kết nối với cơ sở dữ liệu
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+private void insertUserAddress(int userId, String userAddress) {
+    PreparedStatement addressStmt = null;
+
+    try {
+        // Kết nối với cơ sở dữ liệu
+        connection = getConnection();
+
+        // Câu lệnh SQL chèn vào bảng user_address
+        String addressSQL = "INSERT INTO useraddress (user_id, user_address) VALUES (?, ?)";
+
+        // Chuẩn bị câu lệnh SQL
+        addressStmt = connection.prepareStatement(addressSQL);
+        addressStmt.setInt(1, userId);
+        addressStmt.setString(2, userAddress);
+
+        // Thực thi câu lệnh
+        int rowsInserted = addressStmt.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("User address inserted successfully for user_id: " + userId);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Đóng tài nguyên
+        try {
+            if (addressStmt != null) addressStmt.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+    
+// Phương thức thêm user vào bảng user_role
+    private void insertToUserRole(int idFromUser, int roleId) {
+        try {
             connection = getConnection();
+            String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idFromUser);
+            statement.setInt(2, roleId);
 
-            // Tạo câu lệnh SQL để chèn user
-            String sql = "INSERT INTO `user` "
-                    + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            // Chuẩn bị câu lệnh SQL
-            statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
-
-            // Gán giá trị vào câu lệnh SQL
-            statement.setString(1, user.getEmail());
-            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-            statement.setString(2, hashedPassword);
-            statement.setString(3, user.getFull_name());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getGender());
-            statement.setDate(6, new java.sql.Date(user.getRegistration_date().getTime()));
-            statement.setInt(7, user.getStatus());
-            statement.setInt(8, user.getUpdatedBy());
-
-            // Xử lý giá trị NULL cho updated_date và image
-            if (user.getUpdatedDate() != null) {
-                statement.setDate(9, new java.sql.Date(user.getUpdatedDate().getTime()));
-            } else {
-                statement.setNull(9, java.sql.Types.DATE);
-            }
-
-            if (user.getImage() != null) {
-                statement.setString(10, user.getImage());
-            } else {
-                statement.setNull(10, java.sql.Types.VARCHAR);
-            }
-
-            statement.setInt(11, user.getSettings_id());
-
-            // Thực thi câu lệnh SQL
             statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
-
-            // Kiểm tra nếu có ID được sinh tự động
-            if (resultSet.next()) {
-                int userId = resultSet.getInt(1);
-                System.out.println("User inserted with ID: " + userId);
-
-                // Sau khi chèn user, thêm user_id vào bảng user_role
-                insertToUserRole(userId, 1); // Gán mặc định role_id = 1
-            }
+            System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Đóng tài nguyên
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
                 if (statement != null) {
                     statement.close();
                 }
@@ -255,10 +318,13 @@ public User findEmailPasswordUser(User u) {
                 e.printStackTrace();
             }
         }
-    }
+    }    
+
+
 
     
     
+
     public void insertUserToDB(User user, String address) {
         try {
             // Kết nối với cơ sở dữ liệu
@@ -331,33 +397,6 @@ public User findEmailPasswordUser(User u) {
         }
     }
 
-// Phương thức thêm user vào bảng user_role
-    private void insertToUserRole(int idFromUser, int roleId) {
-        try {
-            connection = getConnection();
-            String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, idFromUser);
-            statement.setInt(2, roleId);
-
-            statement.executeUpdate();
-            System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private void insertToUserAddress(int idFromUser, String address) {
         try {
@@ -633,8 +672,8 @@ public boolean checkOldPassword(String email, String oldPassword) {
 //        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
 //        User u = new User("lbienvda@gmail.com", "2");
 //        System.out.println(d.updateUserPassword(u));
-        List<User> u = d.findAll();
-        System.out.println(u.size());
+//        List<User> u = d.findAll();
+//        System.out.println(u.size());
     }
 
     public List<User> findAll() {
@@ -670,5 +709,6 @@ public boolean checkOldPassword(String email, String oldPassword) {
         }
         return listFound;
     }
+
 
 }
