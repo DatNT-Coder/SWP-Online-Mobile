@@ -98,4 +98,56 @@
                 </div>
             </div><!--/header-middle-->
 
-           
+            <div class="header-bottom"><!--header-bottom-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <div class="mainmenu pull-left">
+                                <ul class="nav navbar-nav collapse navbar-collapse">
+                                    <li><a href="Home" class="active">Trang Chủ</a></li>
+                                    <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+                                            <li><a href="listProduct">Sản Phẩm</a></li>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                                    <li><a href="signIn.jsp">Đăng Nhập</a></li> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <li><a href="logOut.jsp">Đăng Xuất</a></li>
+
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </ul>
+                                    </li> 
+                                    <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+                                            <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
+
+                                        </ul>
+                                    </li> 
+
+                                    <li><a href="contact-us.html">Liên Hệ</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class=" pull-right">
+                                <form action="HomeCategory">
+                                    <input type="hidden" name="action" value="searchByWord"/>
+                                    <input name="searchBox" type="text" placeholder="Tìm kiếm..." required=""/>
+                                    <button type="submit" value="search">Tìm kiếm</button>
+                                </form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/header-bottom-->
+        </header><!--/header-->
