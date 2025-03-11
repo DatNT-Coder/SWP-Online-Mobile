@@ -448,3 +448,29 @@
                     </div>
                 </div>
             </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </footer><!--/Footer-->
+
+
+
+        <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery.scrollUp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
+        <script src="${pageContext.request.contextPath}/js/main.js"></script>
+        <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
+        <script>
+
+        </script>
+    </body>
+</html>
