@@ -108,7 +108,7 @@ public class ResetPassword extends HttpServlet {
         } else {
             // Gửi thông báo lỗi về trang trước hoặc trang lỗi
             request.setAttribute("errorMessage", "Mã xác nhận không hợp lệ hoặc đã hết hạn.");
-            request.getRequestDispatcher("HomePage").forward(request, response);
+            request.getRequestDispatcher("reset.jsp").forward(request, response);
         }
 
     }

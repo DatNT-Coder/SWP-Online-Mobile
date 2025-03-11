@@ -229,7 +229,7 @@ public class AuthenticationServlet extends HttpServlet {
         if (hasError) {
             return url = "regis.jsp";
         }
-                            
+
         User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId, address);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
@@ -265,26 +265,49 @@ public class AuthenticationServlet extends HttpServlet {
     }
 
     private String resendDoPost(HttpServletRequest request, HttpServletResponse response) {
-        String url;
+        String url = null;
+        String type = request.getParameter("type");
+        
+        if (type.equalsIgnoreCase("reset")) {
+            User u = new User((String) request.getSession().getAttribute("resetUserMail"));
 
-        User u = (User) request.getSession().getAttribute("registerUser");
+            // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
+            verificationCodes.remove(u.getEmail());
 
-        // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
-        verificationCodes.remove(u.getEmail());
+            String codeToUser = generateVerificationCode();
+            LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // Mã hết hạn sau 2 phút
 
-        String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+            VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+            verificationCodes.put(u.getEmail(), codeExpire);
 
-        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
-        verificationCodes.put(u.getEmail(), codeExpire);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+            String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
-        String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+            //gui email o day
+            EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
 
-        //gui email o day
-        EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+            url = "reset.jsp";
+            
+        } else if (type.equalsIgnoreCase("regis")) {
+            User u = (User) request.getSession().getAttribute("registerUser");
 
-        url = "verify.jsp";
+            // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
+            verificationCodes.remove(u.getEmail());
+
+            String codeToUser = generateVerificationCode();
+            LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // Mã hết hạn sau 2 phút
+
+            VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+            verificationCodes.put(u.getEmail(), codeExpire);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+            String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+
+            //gui email o day
+            EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+
+            url = "verify.jsp";
+        }
         return url;
     }
 
