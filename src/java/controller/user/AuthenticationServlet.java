@@ -140,7 +140,6 @@ public class AuthenticationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UserDAO accdal = new UserDAO();
-        User a = accdal.checkUser(email, password);
 
         if (email.isEmpty() || password.isEmpty()) {
             request.setAttribute("emp", "Fill email, password !");
@@ -149,7 +148,12 @@ public class AuthenticationServlet extends HttpServlet {
         } else {
             User u = new User(email, password);
             User foundUserAccount = d.findEmailPasswordUser(u);
-            int userRole = accdal.getUserRole(a.getId());
+            User a = accdal.checkUser(email, password); // Đảm bảo biến a được khởi tạo
+            int userRole = 0; // Giá trị mặc định
+            if (a != null) {
+                userRole = accdal.getUserRole(a.getId()); // Chỉ gọi getId() khi a không null
+            }
+            
             if (foundUserAccount != null) {
                 if (foundUserAccount.getRole_id() == 1) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
@@ -233,9 +237,9 @@ public class AuthenticationServlet extends HttpServlet {
         }
 
         String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // set thgian mã hết hạn
 
-        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime); // code có chứa expire
         verificationCodes.put(emailUser, codeExpire);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
