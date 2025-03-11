@@ -3,9 +3,11 @@
     Created on : Feb 9, 2025, 1:16:53 AM
     Author     : naokh
 --%>
-<%@page import="java.util.List"%>
-<%@page import="model.BlogPost"%>
-<%@page import="model.BlogPost"%>
+<%@ page import="java.util.List"%>
+<%@ page import="model.BlogPost"%>
+<%@ page import="model.BlogPost"%>
+<%@ page import="model.User"%>
+<%@ page import="constant.CommonConst"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -123,11 +125,16 @@
                               <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
                            </ul>
                         </li>
-
-                        <c:if test="${account != null}">
-                           <li class="dropdown"><a href="customerList">Danh sách khách hàng</a>
-                           </li>
-                        </c:if>
+                        <li>
+                           <% 
+                           User loggedInUser = (User) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+                           if (loggedInUser != null && loggedInUser.getRole_id() == 5) { 
+                           %>
+                           <a href="/ProjectSWP391/marketing/listFeedbackMarketing">Bảng Điều Khiển</a>
+                           <% 
+                               } 
+                           %>
+                        </li>
 
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
