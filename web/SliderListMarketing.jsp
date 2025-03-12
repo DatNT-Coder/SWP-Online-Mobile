@@ -1,344 +1,151 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>Slider List | EShopee</title>
-
-      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-      <!-- Nucleo Icons -->
-      <link href="./css/nucleo-icons.css" rel="stylesheet" />
-      <link href="./css/nucleo-svg.css" rel="stylesheet" />
-      <!-- Font Awesome Icons -->
-      <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-      <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-      <!-- Material Icons -->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-      <!-- CSS Files -->
-      <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
-      <!-- Nepcha Analytics (nepcha.com) -->
-      <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-      <script defer data-site="http://localhost:8080/QuizPracticeOnline/home" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-      <%@include file="base-view/baseTag.jsp" %>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Slider List | E-Shopee</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="css/styles.css">
-      <style>
-         *{
-            box-sizing: border-box;
-            margin:0;
-            padding:0;
-         }
-         .header{
-            padding: 0.4rem .2rem;
-            margin-bottom: 1rem;
-         }
-         .add-product-btn{
-            text-align: center;
-            display: block;
-            border:none;
-            color: black;
-            text-decoration: none;
-            padding:.7rem .2rem;
-            margin-top: 10px;
-            width: 100%;
-         }
-         .add-product-btn:hover{
-            color: black;
-            text-decoration: none;
-         }
-         .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #009981; /* Bright green */
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-         }
-
-         .user-avatar {
-            text-align: center;
-            margin-bottom: 20px;
-         }
-
-         .user-avatar img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid white;
-         }
-
-         .user-avatar p {
-            margin-top: 10px;
-            font-size: 14px;
-            color: white;
-         }
-
-         .user-avatar a {
-            color: #154734; /* Dark green for contrast */
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-         }
-
-         h2 {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #219150; /* Slightly darker shade */
-            padding-bottom: 5px;
-         }
-
-         ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-         }
-
-         ul li {
-            padding: 12px;
-            margin: 5px 0;
-            border-radius: 5px;
-            background: white; /* Lighter green for contrast */
-            transition: all 0.3s;
-         }
-
-         ul li a {
-            text-decoration: none;
-            color: black;
-            font-size: 16px;
-            font-weight: bold;
-            display: block;
-            transition: background 0.3s, padding-left 0.3s;
-         }
-
-         ul li:hover {
-            background: white; /* Darker green for hover effect */
-            padding-left: 10px;
-         }
-
-         .text-success {
-            color: black;
-         }
-
-         /* Responsive */
-         @media screen and (max-width: 768px) {
-            .sidebar {
-               width: 200px;
-            }
-         }
-      </style>
+      <link rel="stylesheet" href="css/datatable.css">
    </head>
-   <body class="g-sidenav-show  bg-gray-200">
-
-      <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-         <div class="container-fluid">
-            <div class="row">
-               <!-- Sidebar -->
-               <div class="col-md-2">
-                  <jsp:include page="sidebar.jsp"></jsp:include>
-                  </div>
-                  <div class="col-md-10 mt-8" id="listSliderItems">
-                     <div class="card">
-                        <div class="card-header pb-0 p-3">
-                           <div class="row">
-                              <div class="col-3 d-flex align-items-center">
-                                 <h6 class="mb-0">Slider List</h6>
-                              </div>
-                              <form action="search-slider" method="POST" class="d-flex col-6" style="width: 600px; float: right !important">
-                                 <div
-                                    class="col-6 ms-md-auto pe-md-3 d-flex align-items-center">
-                                    <div
-                                       class="input-group input-group-outline">
-
-                                       <input id="inputSearchSlider" name="keyword" type="text" class="form-control"
-                                              placeholder="Search Slider">
-                                    </div>
-                                 </div>
-                                 <div
-                                    class="col-6 ms-md-auto pe-md-3 d-flex align-items-center">
-
-                                    <select
-                                       class="form-select input-group-outline" name="status">
-
-                                       <option value="1" checked>Active</option>
-                                       <option value="0">Inactive</option>
-                                    </select>
-
-
-                                 </div>
-                                 <div
-                                    class=" ms-md-auto pe-md-3 d-flex align-items-center">
-                                    <button type="submit" class="btn btn-primary mb-0">
-                                       <i class="fas fa-search"></i>
-                                    </button>   
-                                 </div>
-
-                              </form>
-                              <div class="col-3 ms-md-auto pe-md-3 mb-0 text-end" >
-                                 <a class="btn text-white bg-primary mb-0"
-                                    href="add-slider"><i class="bi text-white bi-plus h6 m-0 p-0"></i>&nbsp;&nbsp;Add
-                                    New Slider</a>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="card-body pt-4 p-3">
-                           <ul class="list-group" >
-                           <c:forEach var="sl" items="${sessionScope.listSlidersByPagging}">
-                              <li
-                                 class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                                 <img
-                                    src="images/slider/${sl.image}"
-                                    alt class="border"
-                                    style="width: 200px; height: auto;">
-                                 <div class="d-flex flex-column ms-3">
-
-                                    <h6 class="mb-3 text-sm">${sl.title}</h6>
-                                    <span class="mb-2 text-xs">ID: <span
-                                          class="text-dark ms-sm-2 font-weight-bold">${sl.id}</span></span>
-
-                                    <span class="mb-2 text-xs">Back
-                                       link<span
-                                          class="text-dark ms-sm-2 font-weight-bold"><a
-                                             href="${sl.backlink}"
-                                             class="__cf_email__"
-                                             data-cfemail="fb9497928d9e89bb998e8989928f94d5989496">
-                                             ${sl.notes}</a></span></span>
-                                    <span class="text-xs ">Status: 
-                                       <span class="text-xs ${sl.status == 1?"text-success":"text-danger"}">
-                                          ${sl.status == 1?"Active":"Inactive"}
-                                       </span>
-                                    </span>
-
-                                 </div>
-                                 <div class="ms-auto text-end">
-                                    <c:choose>
-                                       <c:when test="${sl.status == 1}">
-                                          <a
-                                             class="btn btn-link text-danger text-gradient mb-0 m-0"
-                                             href="hide-slider?id=${sl.id}"><i
-                                                class="bi bi-eye-slash-fill m-0 me-1 h6"></i>Hide</a>
-
-                                       </c:when>
-                                       <c:otherwise>
-                                          <a
-                                             class="btn btn-link text-success text-gradient px-3 m-0"
-                                             href="show-slider?id=${sl.id}"><i
-                                                class="bi bi-eye-fill m-0 me-1 h6"></i>Show</a>
-
-                                       </c:otherwise>
-                                    </c:choose>
-
-
-                                    <a
-                                       class="btn btn-link text-dark px-3 mb-0"
-                                       href="edit-slider?id=${sl.id}"><i class="bi bi-pencil-fill m-0 me-1 h6"></i>Edit</a>
-                                    <a
-                                       class="btn btn-link text-dark px-3 mb-0"
-                                       href="slider-detail?id=${sl.id}"><i class="bi bi-view-list m-0 me-1 h6"></i>View</a>
-                                 </div>
-                              </li>
-                           </c:forEach>
-                        </ul>
-                     </div>
-                     <c:choose>
-                        <c:when test="${sessionScope.listSlidersByPagging==null || sessionScope.listSlidersByPagging.size()==0}">
-                           Not founds
-                        </c:when>
-                        <c:when test="${totalPage < 2}">
-                           <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                 <c:forEach begin="1" end="${totalPage}" var="i">
-                                    <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
-                                    </c:forEach>
-                              </ul>
-                           </nav>
-                        </c:when>
-                        <c:when test="${page < 2}">
-                           <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                              <ul class="pagination">                               
-                                 <c:forEach begin="1" end="${totalPage}" var="i">
-                                    <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
-                                    </c:forEach>
-                                 <li class="page-item"><a class="page-link" href="${pagination_url}page=${page+1}">>></a></li>
-                              </ul>
-                           </nav>
-                        </c:when>
-                        <c:when test="${page+1 > totalPage}">
-                           <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                 <li class="page-item"><a class="page-link" href="${pagination_url}page=${page-1}"><<</a></li>
-                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                    <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
-                                    </c:forEach>
-                              </ul>
-                           </nav>
-                        </c:when>
-                        <c:otherwise>
-                           <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                 <li class="page-item"><a class="page-link" href="${pagination_url}page=${page-1}"><<</a></li>
-                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                    <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
-                                    </c:forEach>
-                                 <li class="page-item"><a class="page-link" href="${pagination_url}page=${page+1}">>></a></li>
-                              </ul>
-                           </nav>
-                        </c:otherwise>
-                     </c:choose>
-                  </div>
+   <body>
+      <div class="container-fluid">
+         <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+               <jsp:include page="sidebar.jsp"></jsp:include>
                </div>
-               </main>
-               </main>
-               </body>
-               <script src="./assets/js/core/popper.min.js"></script>
-               <script src="./assets/js/core/bootstrap.min.js"></script>
-               <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
-               <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
-               <script src="./assets/js/plugins/chartjs.min.js"></script>
-               <script>
-                  var win = navigator.platform.indexOf('Win') > -1;
-                  if (win && document.querySelector('#sidenav-scrollbar')) {
-                     var options = {
-                        damping: '0.5'
-                     }
-                     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-                  }
-               </script>
-               <!-- Github buttons -->
-               <script async defer src="https://buttons.github.io/buttons.js"></script>
-               <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-               <script src="./assets/js/material-dashboard.min.js?v=3.1.0"></script>
-               <script src="./js/home.js"></script>
-               <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-               <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-               <script>
-                  function searchSlider() {
-                     var keyword = $("#inputSearchSlider").val();
-                     var status = $("select[name='status']").val();
-                     var page = $(".page-item.active a").text();
-                     loadingSliderAjax(keyword, status, page);
-                  }
-                  function loadingSliderAjax(keyword, status, page) {
+               <!-- Main Content -->
+               <div class="col-lg-10 main-content">
+                  <div class="container-fluid py-4">
+                     <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Slider List</h2>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                           <button class="add-slider-btn" onclick="location.href = 'add-slider';">
+                              &nbsp;&nbsp;Add New Slider
+                           </button>
+                        </div>
+                     </div>
+                     <!-- Filters and Search -->
+                     <div class="card mb-4">
+                        <div class="card-body">
+                           <div class="row g-3">
+                              <form action="search-slider" method="get" class="d-flex col-md-4" style="width: 100%; float: right !important">
+                                 <button type="button" onclick="window.location.href = '/ProjectSWP391/slider-list'" class="reset-btn">
+                                    Reset Filter and Search
+                                 </button>
+                                 <div class="col-md-4">
+                                    <select class="form-select input-group-outline" name="status" onchange="this.form.submit()">
+                                       <option value="1" <%= (request.getAttribute("status") != null && (int) request.getAttribute("status") == 1) ? "selected" : "" %>>Active</option>
+                                    <option value="0" <%= (request.getAttribute("status") != null && (int) request.getAttribute("status") == 0) ? "selected" : "" %>>Inactive</option>
+                                 </select>
+                              </div>
+                              <div class="d-flex col-md-4">
+                                 <input type="text" name="keyword" placeholder="Search by title..." value="${keyword}" class="search-input">
+                                 <button type="submit" class="search-button">Search</button>
+                              </div>
+                           </form>
+                        </div>
+                     </div>  
+                  </div>
 
-                     $.ajax({
-                        url: "search-slider",
-                        type: "GET",
-                        data: {
-                           keyword: keyword,
-                           status: status,
-                           page: page
-                        },
-                        success: function (data) {
-                           $("#listSliderItems").html(data);
-                        }
-                     });
-                  }
 
-               </script>
+                  <!-- Sliders Table -->
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="table-responsive">
+                           <table id="sliderTable" class="table table-hover">
+                              <thead>
+                                 <tr>
+                                    <th class="col-id">ID</th>
+                                    <th class="col-image">Image</th>
+                                    <th class="col-title">Title</th>
+                                    <th class="col-backlink">Back link</th>
+                                    <th class="col-status">Status</th>
+                                    <th class="col-actions">Actions</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <c:forEach var="sl" items="${sessionScope.listSlidersByPagging}">
+                                    <tr>
+                                       <td class="col-id">${sl.id}</td>
+                                       <td class="col-image">
+                                          <img src="images/slider/${sl.image}" class="slider-image" alt="Slider Image">
+                                       </td>
+                                       <td class="col-title">${sl.title}</td>
+                                       <td class="col-backlink">
+                                          <a href="${sl.backlink}" target="_blank">${sl.notes}</a>
+                                       </td>
+                                       <td class="col-status ${sl.status == 1 ? 'text-success' : 'text-danger'}">
+                                          ${sl.status == 1 ? "<span class='badge badge-active'>Active</span>" : "<span class='badge badge-inactive'>Inactive</span>"}
+                                       </td>
+                                       <td class="col-actions">
+                                          <c:choose>
+                                             <c:when test="${sl.status == 1}">
+                                                <a href="hide-slider?id=${sl.id}" class="btn btn-danger btn-sm">Hide</a>
+                                             </c:when>
+                                             <c:otherwise>
+                                                <a href="show-slider?id=${sl.id}" class="btn btn-success btn-sm">Show</a>
+                                             </c:otherwise>
+                                          </c:choose>
+                                          <a href="edit-slider?id=${sl.id}" class="btn btn-primary btn-sm">Edit</a>
+                                          <a href="slider-detail?id=${sl.id}" class="btn btn-secondary btn-sm">View</a>
+                                       </td>
+                                    </tr>
+                                 </c:forEach>
+                              </tbody>
+                           </table>
+                        </div>
 
-               </html>
+                        <div class="d-flex justify-content-center mt-3">
+                           <nav>
+                              <ul class="pagination">
+                                 <c:if test="${page > 1}">
+                                    <li class="page-item">
+                                       <a class="page-link pagination-btn" href="slider-list?page=${page - 1}"><</a>
+                                    </li>
+                                 </c:if>
+
+                                 <c:forEach begin="1" end="${totalPage}" var="i">
+                                    <li class="page-item">
+                                       <a href="${pagination_url}page=${i}" 
+                                          class="page-link pagination-btn <c:if test='${page == i}'>active</c:if>">
+                                          ${i}
+                                       </a>
+                                    </li>
+                                 </c:forEach>
+
+                                 <c:if test="${page < totalPage}">
+                                    <li class="page-item">
+                                       <a class="page-link pagination-btn" href="slider-list?page=${page + 1}">></a>
+                                    </li>
+                                 </c:if>
+                              </ul>
+                           </nav>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- jQuery and DataTables JS -->
+                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+                  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+                  <script>
+                                       $('#sliderTable').DataTable({
+                                          "paging": false,
+                                          "searching": true,
+                                          "ordering": true,
+                                          "info": false,
+                                          "columnDefs": [
+                                             {"orderable": false, "targets": [1, 5]}
+                                          ],
+                                          "dom": 't' // This removes DataTables' default styling (search bar, pagination, etc.)
+                                       });
+                  </script>
+
+                  </body>
+                  </html>

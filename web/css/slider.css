@@ -9,15 +9,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
 
 .blog_list .blog_item .blog_link{
-   width: 100px;
+   width: 100%;
    display: block;
+   border-color: black;
 }
 
 .blog_list .blog_link .blog_image{
    width: 100px;
    display: block;
    background: black;
-   padding: 18px;
+   padding: 1px;
    border-radius: 12px;
    border-color: black;
    text-decoration: none;
@@ -27,16 +28,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
    width: 100%;
    aspect-ratio: 16 / 9;
    object-fit: cover;
+   border-color: black;
    border-radius: 10px;
 }
 
 .blog_list .blog_link .badge{
    color: #5372F0;
-   padding 8px 16px;
+   padding 1px 2px;
    font-size: 0.95rem;
    font-weight: 500;
-   margin: 16px 0 18px;
+   margin: 1px 0 1px;
    background: #DDE4FF;
    width: fit-content;
    border-radius: 50px;
+   border-color: black;
+}
+
+ul {
+   display: block;
+   list-style-type: disc;
+   margin-block-start: 1em;
+   margin-block-end: 1em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+   padding-inline-start: 0px;
+   unicode-bidi: isolate;
 }

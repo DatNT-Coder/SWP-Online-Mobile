@@ -137,6 +137,7 @@ public class AuthenticationServlet extends HttpServlet {
         String password = request.getParameter("password");
         UserDAO accdal = new UserDAO();
         User a = accdal.checkUser(email, password);
+        String fullName = accdal.getUserFullName(email, password);
 
         if (email.isEmpty() || password.isEmpty()) {
             request.setAttribute("emp", "Fill email, password !");
@@ -152,6 +153,7 @@ public class AuthenticationServlet extends HttpServlet {
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
                     request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
+                    request.getSession().setAttribute("full_name", fullName); 
                     url = "HomePage";
                     //false => quay tro lai trang login ( set them thong bao loi )
                 } else if (foundUserAccount.getRole_id() == 5 || foundUserAccount.getRole_id() == 4) {
@@ -159,6 +161,7 @@ public class AuthenticationServlet extends HttpServlet {
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
                     request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
+                    request.getSession().setAttribute("full_name", fullName);
                     url = "marketing/listFeedbackMarketing";
                 }
             } else {

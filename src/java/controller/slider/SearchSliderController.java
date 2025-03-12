@@ -59,32 +59,29 @@ public class SearchSliderController extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      String search = (String) request.getSession().getAttribute("search_url");
-      String keyword = (String) request.getSession().getAttribute("keyword");
-      keyword = keyword.trim();
-      request.getSession().setAttribute("keyword", keyword);
-      final int PAGE_SIZE_6 = 6;
-      final int PAGE_SIZE_3 = 3;
+      final int PAGE_SIZE = 3;
       int page = 1;
       String pageStr = request.getParameter("page");
       if (pageStr != null) {
          page = Integer.parseInt(pageStr);
       }
-      int totalSearch = 0;
-      String keywordStr;
-//        int status = Integer.parseInt(request.getParameter("status"));
-      int status = (int) request.getSession().getAttribute("status");
-      totalSearch = new SliderDAO().getTotalSlider(keyword, status);
-      List<Slider> listSlidersByKeywordAndPagging = new SliderDAO().getListSliderByKeywordAndPagging(keyword, page, PAGE_SIZE_3, status);
-      int totalPage = totalSearch / PAGE_SIZE_3;
-      if (totalSearch % PAGE_SIZE_3 != 0) {
-         totalPage += 1;
+
+      String statusStr = request.getParameter("status");
+      int status = 1; // Default status
+      if (statusStr != null) {
+         status = Integer.parseInt(statusStr);
       }
 
-      request.getSession().setAttribute("listSlidersByPagging", listSlidersByKeywordAndPagging);
+      int totalSliders = new SliderDAO().getTotalSlider("", status);
+      List<Slider> listSlidersByPagging = new SliderDAO().getListSliderByKeywordAndPagging("", page, PAGE_SIZE, status);
+      int totalPage = (totalSliders + PAGE_SIZE - 1) / PAGE_SIZE; // Round up for pagination
+
+      request.getSession().setAttribute("listSlidersByPagging", listSlidersByPagging);
       request.setAttribute("page", page);
       request.setAttribute("totalPage", totalPage);
-      request.setAttribute("pagination_url", "search-slider?keyword=" + keyword + "&");
+      request.setAttribute("pagination_url", "search-slider?");
+      request.setAttribute("status", status);
+
       request.getRequestDispatcher("SliderListMarketing.jsp").forward(request, response);
    }
 
@@ -99,38 +96,7 @@ public class SearchSliderController extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      String search = (String) request.getSession().getAttribute("search_url");
-      String keyword = request.getParameter("keyword");
-      keyword = keyword.trim();
-      request.getSession().setAttribute("keyword", keyword);
-      final int PAGE_SIZE_6 = 6;
-      final int PAGE_SIZE_3 = 3;
-      int page = 1;
-      String pageStr = request.getParameter("page");
-      if (pageStr != null) {
-         page = Integer.parseInt(pageStr);
-      }
-      int totalSearch = 0;
-      String keywordStr;
-      String statusStr = request.getParameter("status");
-      int status = Integer.parseInt(statusStr);
-      totalSearch = new SliderDAO().getTotalSlider(keyword, status);
-      List<Slider> listSlidersByKeywordAndPagging = new SliderDAO().getListSliderByKeywordAndPagging(keyword, page, PAGE_SIZE_3, status);
-      int totalPage = totalSearch / PAGE_SIZE_3;
-      if (totalSearch % PAGE_SIZE_3 != 0) {
-         totalPage += 1;
-      }
-
-      request.getSession().setAttribute("listSlidersByPagging", listSlidersByKeywordAndPagging);
-      request.setAttribute("page", page);
-      request.getSession().setAttribute("status", status);
-      request.setAttribute("statusStr", statusStr);
-      request.setAttribute("keyword", keyword);
-      request.setAttribute("totalPage", totalPage);
-      request.setAttribute("pagination_url", "search-slider?keyword=" + keyword + "&");
-
-      request.getRequestDispatcher("SliderListMarketing.jsp").forward(request, response);
-
+      doGet(request, response);
    }
 
    /**

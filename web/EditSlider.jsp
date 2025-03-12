@@ -36,6 +36,13 @@
       <%@include file="base-view/baseTag.jsp" %>
    </head>
 
+   <style>
+      .img-fluid {
+         max-width: 500px;
+         height: auto;
+      }
+   </style>
+
    <body>
 
       <main class="container pt-8">
