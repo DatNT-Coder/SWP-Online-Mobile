@@ -164,45 +164,7 @@
                            
                         </tbody>
                     </table>
-                    <script>
-                        async function updateQuantity(productId, amount) {
-                            const quantityDiv = document.getElementById('item-quantity-' + productId);
-                            const postData = new URLSearchParams();
-                            postData.append("productId", productId);
-                            if (amount === 0) {
-                                postData.append("amount", -quantityDiv.value);
-                            } else {
-                                postData.append("amount", amount);
-                            }
-                            const response = await fetch('${pageContext.request.contextPath}/cart/update', {
-                                method: "POST",
-                                body: postData
-                            });
-                            const data = await response.json();
-                            const status = data.status;
-
-                            console.log(data);
-                            if (status === 'successed') {
-                                const newQuantity = data.quantity;
-                                if (+newQuantity === 0) {
-                                    document.getElementById('item-' + productId).remove();
-                                    await FuiToast.success('Updated product quantity successfully!');
-                                    return false;
-                                }
-                                const price = data.price;
-                                const total = data.total;
-                                const priceDiv = document.getElementById('item-price-' + productId);
-                                const totalDiv = document.getElementById('item-total-' + productId);
-                                quantityDiv.value = newQuantity;
-                                priceDiv.innerHTML = '$' + price;
-                                totalDiv.innerHTML = '$' + total;
-                                await FuiToast.success('Updated product quantity successfully!');
-                            } else {
-                                await FuiToast.error('Update product quantity failed!');
-                            }
-                            return false;
-                        }
-                    </script>
+                
                 </div>
             </div>
         </section> <!--/#cart_items-->
