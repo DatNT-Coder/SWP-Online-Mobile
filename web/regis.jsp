@@ -128,7 +128,7 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="HomePage">Home</a></li>
+                                    <li><a href="index.html">Home</a></li>
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="shop.html">Products</a></li>
@@ -169,7 +169,6 @@
                             <input name="full_name" type="text" placeholder="Enter Full Name"/>
                             <input name="email" type="email" placeholder="Enter Email Address"/>
                             <input name="password" type="password" placeholder="Enter New Password"/>
-                            <input name="address" type="text" placeholder="Enter Your Address"/>
                             <label for="gender">Gender:</label>
                             <select id="gender" name="gender" required>
                                 <option value="" disabled selected>Select your gender</option>
@@ -179,7 +178,7 @@
                             <label for="phone">Phone Number:</label>
                             <input name="phone" type="text" id="phone" placeholder="Enter your phone number"
                                    pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required/>
-                            <button type="submit" class="btn btn-default">Signup</button> <h5 style="color: red"> ${erAddress} ${erEmail} ${erPass} ${erName} ${erEmailExist} </h5>
+                            <button type="submit" class="btn btn-default">Signup</button> <h5 style="color: red"> ${erEmail} ${erPass} ${erName} ${erEmailExist} </h5>
                         </form>
                     </div><!--/sign up form-->
                 </div>
