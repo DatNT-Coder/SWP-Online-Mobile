@@ -113,7 +113,20 @@
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
                                     <li><a href="Home" class="active">Trang Chủ</a></li>
-                                    
+                                    <li class="dropdown"><a href="listProduct">Cửa Hàng<i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+                                            <li><a href="listProduct">Sản Phẩm</a></li>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
+                                                    <li><a href="signIn.jsp">Đăng Nhập</a></li> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <li><a href="logOut.jsp">Đăng Xuất</a></li>
+
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </ul>
+                                    </li> 
                                     <li class="dropdown"><a href="#">Bài Đăng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
@@ -161,10 +174,85 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
+                            <c:forEach var="item" items="${cart}">
+                                <tr id="item-${item.productId}">
+                                    <td class="cart_product">
+                                        <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="">${item.name}</a></h4>
+                                        <!--<p>Web ID: 1089772</p>-->
+                                    </td>
+                                    <td class="cart_price">
+                                        <p id="item-price-${item.productId}">$${item.price}</p>
+                                    </td>
+                                    <td class="cart_quantity">
+                                        <div class="cart_quantity_button">
+                                            <!--<a onclick="updateQuantity('${item.productId}', -1)" class="cart_quantity_down"> - </a>-->
+                                            <input readOnly id="item-quantity-${item.productId}" class="cart_quantity_input" type="text" name="quantity" value="${item.quantity}" autocomplete="off" size="2">
+                                            <!--<a onclick="updateQuantity('${item.productId}', 1)" class="cart_quantity_up"> + </a>-->
+                                        </div>
+                                    </td>
+                                    <td class="cart_total">
+                                        <p id="item-total-${item.productId}" class="cart_total_price">$${item.total}</p>
+                                    </td>
+<!--                                    <td class="cart_delete">
+                                        <a onclick="updateQuantity('${item.productId}', 0)" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
+                                    </td>-->
+                                    <td class="cart_delete">
+                                        
+                                        <a  href="${pageContext.request.contextPath}/ProductDetails?pid=${item.productId}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua lại</a>
+                                        
+                                    </td>
+
+                                    <td class="cart_delete">
+                                        <c:if test="${status==3}">
+                                        <a  href="${pageContext.request.contextPath}/productDetail?pid=${item.productId}" class="btn btn-default add-to-cart"></i>Phản hồi</a>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
-                
+                    <script>
+                        async function updateQuantity(productId, amount) {
+                            const quantityDiv = document.getElementById('item-quantity-' + productId);
+                            const postData = new URLSearchParams();
+                            postData.append("productId", productId);
+                            if (amount === 0) {
+                                postData.append("amount", -quantityDiv.value);
+                            } else {
+                                postData.append("amount", amount);
+                            }
+                            const response = await fetch('${pageContext.request.contextPath}/cart/update', {
+                                method: "POST",
+                                body: postData
+                            });
+                            const data = await response.json();
+                            const status = data.status;
+
+                            console.log(data);
+                            if (status === 'successed') {
+                                const newQuantity = data.quantity;
+                                if (+newQuantity === 0) {
+                                    document.getElementById('item-' + productId).remove();
+                                    await FuiToast.success('Updated product quantity successfully!');
+                                    return false;
+                                }
+                                const price = data.price;
+                                const total = data.total;
+                                const priceDiv = document.getElementById('item-price-' + productId);
+                                const totalDiv = document.getElementById('item-total-' + productId);
+                                quantityDiv.value = newQuantity;
+                                priceDiv.innerHTML = '$' + price;
+                                totalDiv.innerHTML = '$' + total;
+                                await FuiToast.success('Updated product quantity successfully!');
+                            } else {
+                                await FuiToast.error('Update product quantity failed!');
+                            }
+                            return false;
+                        }
+                    </script>
                 </div>
             </div>
         </section> <!--/#cart_items-->
