@@ -146,7 +146,7 @@ public class AuthenticationServlet extends HttpServlet {
         } else {
             User u = new User(email, password);
             User foundUserAccount = d.findEmailPasswordUser(u);
-            User a = accdal.checkUser(email, password); // Đảm bảo biến a được khởi tạo
+            //User a = accdal.checkUser(email, password); // Đảm bảo biến a được khởi tạo
         int userRole = 0; // Giá trị mặc định
         if (a != null) {
             userRole = accdal.getUserRole(a.getId()); // Chỉ gọi getId() khi a không null
