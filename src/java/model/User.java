@@ -42,6 +42,21 @@ public class User {
         return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", full_name=" + full_name + ", phone=" + phone + ", gender=" + gender + ", registration_date=" + registration_date + ", status=" + status + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", image=" + image + ", settings_id=" + settings_id + ", role_id=" + role_id + '}';
     }
 
+    public User(String email, String password, String full_name, String phone, String gender, Date registration_date, int status, int updatedBy, Date updatedDate, String image, int settings_id, UserAddress userAddress) {
+        this.email = email;
+        this.password = password;
+        this.full_name = full_name;
+        this.phone = phone;
+        this.gender = gender;
+        this.registration_date = registration_date;
+        this.status = status;
+        this.updatedBy = updatedBy;
+        this.updatedDate = updatedDate;
+        this.image = image;
+        this.settings_id = settings_id;
+        this.userAddress = userAddress;
+    }
+
     public User(int id, String email, String password, String full_name, String phone, String gender, Date registration_date, int status, int updatedBy, Date updatedDate, String image, int settings_id, int role_id, UserAddress userAddress) {
         this.id = id;
         this.email = email;

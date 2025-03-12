@@ -39,13 +39,26 @@
                 <div class="mb-4">
                     <input class="w-full px-4 py-2 border border-gray-400 rounded" name="vCode" placeholder="Input Verification Code" required="" type="text"/>
                 </div>
-                <button class="w-full px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600" type="submit">
+                <button style="background-color: #009981; color:white;" class="w-full px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600" type="submit">
                     Confirm
                 </button>
                 <h1 class="mt-4 text-red-500">
                     ${erPass} ${errorMessage}
                 </h1>
             </form>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <form action="authen?action=resend" method="post">
+                    <input type="hidden" name="type" value="reset">
+                    <button style="margin-right: 10px; background-color: #009981; color:white;" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                        Resend
+                    </button>
+                </form>
+                <form action="HomePage">
+                    <button style="margin-left: 10px; background-color: #009981; color:white;" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                        Home
+                    </button>
+                </form>
+            </div>
         </div>
     </body>
 </html>
