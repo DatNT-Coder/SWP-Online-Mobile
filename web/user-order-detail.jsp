@@ -161,44 +161,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="item" items="${cart}">
-                                <tr id="item-${item.productId}">
-                                    <td class="cart_product">
-                                        <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
-                                    </td>
-                                    <td class="cart_description">
-                                        <h4><a href="">${item.name}</a></h4>
-                                        <!--<p>Web ID: 1089772</p>-->
-                                    </td>
-                                    <td class="cart_price">
-                                        <p id="item-price-${item.productId}">$${item.price}</p>
-                                    </td>
-                                    <td class="cart_quantity">
-                                        <div class="cart_quantity_button">
-                                            <!--<a onclick="updateQuantity('${item.productId}', -1)" class="cart_quantity_down"> - </a>-->
-                                            <input readOnly id="item-quantity-${item.productId}" class="cart_quantity_input" type="text" name="quantity" value="${item.quantity}" autocomplete="off" size="2">
-                                            <!--<a onclick="updateQuantity('${item.productId}', 1)" class="cart_quantity_up"> + </a>-->
-                                        </div>
-                                    </td>
-                                    <td class="cart_total">
-                                        <p id="item-total-${item.productId}" class="cart_total_price">$${item.total}</p>
-                                    </td>
-<!--                                    <td class="cart_delete">
-                                        <a onclick="updateQuantity('${item.productId}', 0)" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
-                                    </td>-->
-                                    <td class="cart_delete">
-                                        
-                                        <a  href="${pageContext.request.contextPath}/ProductDetails?pid=${item.productId}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Mua lại</a>
-                                        
-                                    </td>
-
-                                    <td class="cart_delete">
-                                        <c:if test="${status==3}">
-                                        <a  href="${pageContext.request.contextPath}/productDetail?pid=${item.productId}" class="btn btn-default add-to-cart"></i>Phản hồi</a>
-                                        </c:if>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+                           
                         </tbody>
                     </table>
                     <script>
