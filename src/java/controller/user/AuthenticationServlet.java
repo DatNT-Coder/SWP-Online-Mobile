@@ -146,7 +146,11 @@ public class AuthenticationServlet extends HttpServlet {
         } else {
             User u = new User(email, password);
             User foundUserAccount = d.findEmailPasswordUser(u);
-            int userRole = accdal.getUserRole(a.getId());
+            User a = accdal.checkUser(email, password); // Đảm bảo biến a được khởi tạo
+        int userRole = 0; // Giá trị mặc định
+        if (a != null) {
+            userRole = accdal.getUserRole(a.getId()); // Chỉ gọi getId() khi a không null
+        }
             if (foundUserAccount != null) {
                 if (foundUserAccount.getRole_id() == 1) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
