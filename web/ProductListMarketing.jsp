@@ -77,6 +77,9 @@
                      <div class="card mb-4">
                         <div class="card-body">
                            <form class="d-flex col-6" action="product-listAdmin?page=${requestScope.page}" method="get">
+                           <button type="button" onclick="window.location.href = '/ProjectSWP391/product-listAdmin'" class="reset-btn">
+                              Reset Filter and Search
+                           </button>
                            <div class="col-md-4 d-flex align-items-center">
                               <select class="form-select custom-select" id="categoryFilter" name="category">
                                  <option value="">All Categories</option>
