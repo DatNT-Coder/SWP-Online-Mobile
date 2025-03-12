@@ -340,7 +340,6 @@
                                     <img src="assets/img/blogImage/${b.thumbnail}" alt="Blog_image" class="blog_image">
                                     <h5>${b.title}</h5>
                                  </a>
-
                               </li>
                            </div>
                         </c:forEach>
@@ -428,7 +427,7 @@
                         </div>
 
                         <div class="recommended_items"><!--recommended_items-->
-                           <h2 class="title text-center">Hot Post</h2>
+                           <h2 class="title text-center">Latest Post</h2>
                            <div id="recommended-item-carousel2" class="carousel slide" data-ride="carousel">
                               <div class="carousel-inner">
                                  <div class="item active">

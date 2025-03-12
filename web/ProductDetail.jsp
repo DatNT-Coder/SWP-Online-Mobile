@@ -230,9 +230,6 @@
 
                                           </select>
                                        </div>
-
-
-
                                        <div class="mb-3">
                                           <label for="updatedDate" class="form-label">Last Updated</label>
                                           <input type="text" class="form-control" id="updatedDate" value="2023-05-15" readonly>
@@ -243,15 +240,6 @@
                                           <input name="productID" type="text" class="form-control" id="productID" value="${requestScope.product.ID}" readonly>
                                        </div>
                                     </div>
-                                 </div>
-                              </div>
-                           </div>
-
-                           <div class="row mt-4">
-                              <div class="col-12">
-                                 <div class="d-flex justify-content-end">
-                                    <a href="index.html" class="btn btn-outline-secondary me-2">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                  </div>
                               </div>
                            </div>

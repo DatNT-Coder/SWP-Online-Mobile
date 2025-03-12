@@ -59,8 +59,10 @@ public class SliderListController extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      final int PAGE_SIZE = 3;
+      final int PAGE_SIZE = 5;  // Set number of items per page
       int page = 1;
+
+      // Get current page number from request
       String pageStr = request.getParameter("page");
       if (pageStr != null) {
          try {
@@ -69,13 +71,11 @@ public class SliderListController extends HttpServlet {
             response.sendRedirect("error");
             return;
          }
+      }
 
-      }
-      int totalSearch = new SliderDAO().getTotalSlider();
-      int totalPage = totalSearch / PAGE_SIZE;
-      if (totalSearch % PAGE_SIZE != 0) {
-         totalPage += 1;
-      }
+      SliderDAO sliderDAO = new SliderDAO();
+      int totalSliders = sliderDAO.getTotalSlider(); // Get total number of sliders
+      int totalPage = (int) Math.ceil((double) totalSliders / PAGE_SIZE); // Calculate total pages
 
       List<Slider> listSliders = new SliderDAO().getAllSliders();
       List<Slider> listSlidersByPagging = new SliderDAO().getListSlidersByPagging(page, PAGE_SIZE);
@@ -103,7 +103,7 @@ public class SliderListController extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      final int PAGE_SIZE = 3;
+      final int PAGE_SIZE = 5;
       int page = 1;
       String pageStr = request.getParameter("page");
       if (pageStr != null) {

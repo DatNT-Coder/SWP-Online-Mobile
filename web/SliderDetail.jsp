@@ -30,6 +30,14 @@
       <script defer data-site="http://localhost:8080/QuizPracticeOnline/home" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
       <%@include file="base-view/baseTag.jsp" %>
    </head>
+
+   <style>
+      .img-fluid {
+         max-width: 500px;
+         height: auto;
+      }
+   </style>
+
    <body class="g-sidenav-show  bg-gray-200">
 
 

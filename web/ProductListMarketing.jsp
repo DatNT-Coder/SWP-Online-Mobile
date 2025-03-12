@@ -1,124 +1,60 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Product Management</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+      <title>Product List | E-Shopee</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
       <link rel="stylesheet" href="css/styles.css">
-      <style>
-         *{
-            box-sizing: border-box;
-            margin:0;
-            padding:0;
-         }
-         .header{
-            padding: 0.4rem .2rem;
-            margin-bottom: 1rem;
-         }
-         .add-product-btn{
-            text-align: center;
-            display: block;
-            border:none;
-            color: black;
-            text-decoration: none;
-            padding:.7rem .2rem;
-            margin-top: 10px;
-            width: 100%;
-         }
-         .add-product-btn:hover{
-            color: black;
-            text-decoration: none;
-         }
-         .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #009981; /* Bright green */
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-         }
-
-         .user-avatar {
-            text-align: center;
-            margin-bottom: 20px;
-         }
-
-         .user-avatar img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid white;
-         }
-
-         .user-avatar p {
-            margin-top: 10px;
-            font-size: 14px;
-            color: white;
-         }
-
-         .user-avatar a {
-            color: #154734; /* Dark green for contrast */
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-         }
-
-         h2 {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #219150; /* Slightly darker shade */
-            padding-bottom: 5px;
-         }
-
-         ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-         }
-
-         ul li {
-            padding: 12px;
-            margin: 5px 0;
-            border-radius: 5px;
-            background: white; /* Lighter green for contrast */
-            transition: all 0.3s;
-         }
-
-         ul li a {
-            text-decoration: none;
-            color: black;
-            font-size: 16px;
-            font-weight: bold;
-            display: block;
-            transition: background 0.3s, padding-left 0.3s;
-         }
-
-         ul li:hover {
-            background: white; /* Darker green for hover effect */
-            padding-left: 10px;
-         }
-
-         .text-success {
-            color: black;
-         }
-
-         /* Responsive */
-         @media screen and (max-width: 768px) {
-            .sidebar {
-               width: 200px;
-            }
-         }
-      </style>
+      <link rel="stylesheet" href="css/datatable.css">
    </head> 
+   <style>
+      /* General Form Styling */
+      form {
+         max-width: 100%;
+         border-radius: 10px;
+      }
+
+      /* Input Fields */
+      .form-control, .form-select {
+         border-radius: 8px;
+         border: 1px solid #ccc;
+         padding: 10px;
+         font-size: 16px;
+         transition: all 0.3s ease;
+      }
+
+      .form-control:focus, .form-select:focus {
+         border-color: #007bff;
+         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+
+      /* Search Button */
+      .search-btn {
+         background-color: #007bff;
+         color: white;
+         font-weight: bold;
+         border: none;
+         padding: 10px;
+         border-radius: 8px;
+         font-size: 16px;
+         transition: background-color 0.3s ease;
+      }
+
+      .search-btn:hover {
+         background-color: #0056b3;
+      }
+
+      /* Dropdown Customization */
+      .custom-select {
+         background-color: white;
+         cursor: pointer;
+      }
+   </style>
    <body>
       <div class="container-fluid">
          <div class="row">
@@ -129,47 +65,47 @@
                <!-- Main Content -->
                <div class="col-lg-10 main-content">
                   <div class="container-fluid py-4">
-
                      <div class="d-flex justify-content-between align-items-center mb-4">
                         <h2>Product Management</h2>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                           <i class="bi bi-plus-lg"></i> Add New Product
+                        <button class="add-slider-btn" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                           <i class="bi bi-plus-circle me-1"></i> Add New Product
                         </button>
                      </div>
+
+
                      <!-- Filters and Search -->
                      <div class="card mb-4">
                         <div class="card-body">
-                           <div class="row g-3">
-                              <form class="d-flex justify-content-between" action="product-listAdmin?page=${requestScope.page}" method="get">
-                              <div class="col-md-4">
-                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                                    <input  name="search" type="text" class="form-control" id="searchInput" placeholder="Search by title">
-                                 </div>
-                              </div>
-                              <div class="col-md-3">
-                                 <select class="form-select" id="categoryFilter" name="category">
-                                    <option value="">All Categories</option>
-                                    <c:forEach var="category" items="${requestScope.listCategory}">
-                                       <option value="${category.id}">${category.categoryName}</option>
-                                    </c:forEach>
-                                 </select>
-                              </div>
-                              <div class="col-md-3">
-                                 <select class="form-select" id="statusFilter" name="brand">
-                                    <option value="">Brand</option>
-                                    <c:forEach var="brand" items="${requestScope.brandList}">
-                                       <option value="${brand.brandID}">${brand.brandName}</option>
-                                    </c:forEach>
-                                 </select>
-                              </div>
-                              <div class="col-md-2">
-                                 <button type="submit" class="btn btn-primary w-100" id="resetFilters">
-                                    Search
-                                 </button>
-                              </div>
-                           </form>
-                        </div>
+                           <form class="d-flex col-6" action="product-listAdmin?page=${requestScope.page}" method="get">
+                           <button type="button" onclick="window.location.href = '/ProjectSWP391/product-listAdmin'" class="reset-btn">
+                              Reset Filter and Search
+                           </button>
+                           <div class="col-md-4 d-flex align-items-center">
+                              <select class="form-select custom-select" id="categoryFilter" name="category">
+                                 <option value="">All Categories</option>
+                                 <c:forEach var="category" items="${requestScope.listCategory}">
+                                    <option value="${category.id}">${category.categoryName}</option>
+                                 </c:forEach>
+                              </select>
+                           </div>
+
+                           <div class="col-md-4">
+                              <select class="form-select custom-select" id="statusFilter" name="brand">
+                                 <option value="">Brand</option>
+                                 <c:forEach var="brand" items="${requestScope.brandList}">
+                                    <option value="${brand.brandID}">${brand.brandName}</option>
+                                 </c:forEach>
+                              </select>
+                           </div>
+                           <div class="col-md-4">
+                              <input name="search" type="text" class="search-input" id="searchInput" placeholder="Search by title">
+                           </div>
+                           <div class="col-md-2">
+                              <button type="submit" class="search-button">
+                                 Search
+                              </button>
+                           </div>
+                        </form>
                      </div>
                   </div>
 
@@ -180,14 +116,14 @@
                            <table class="table table-hover">
                               <thead>
                                  <tr>
-                                    <th scope="col" class="sortable" data-sort="id">ID <i class="bi bi-arrow-down-up"></i></th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col" class="sortable" data-sort="name">Title <i class="bi bi-arrow-down-up"></i></th>
-                                    <th scope="col" class="sortable" data-sort="category">Category <i class="bi bi-arrow-down-up"></i></th>
-                                    <th scope="col" class="sortable" data-sort="originalPrice">List Price <i class="bi bi-arrow-down-up"></i></th>
-                                    <th scope="col" class="sortable" data-sort="salePrice">Sale Price <i class="bi bi-arrow-down-up"></i></th>
-                                    <th scope="col" class="sortable" data-sort="status">Status <i class="bi bi-arrow-down-up"></i></th>
-                                    <th scope="col">Actions</th>
+                                    <th class="col-id">ID <i class="bi bi-arrow-down-up"></i></th>
+                                    <th class="col-image">Image</th>
+                                    <th class="col-title">Title <i class="bi bi-arrow-down-up"></i></th>
+                                    <th class="col-cate">Category <i class="bi bi-arrow-down-up"></i></th>
+                                    <th class="col-list">List Price <i class="bi bi-arrow-down-up"></i></th>
+                                    <th class="col-sale">Sale Price <i class="bi bi-arrow-down-up"></i></th>
+                                    <th class="col-status">Status <i class="bi bi-arrow-down-up"></i></th>
+                                    <th class="col-actions">Actions</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -216,10 +152,6 @@
                                                 </a>
                                              </c:otherwise>
                                           </c:choose>
-
-<!--                                                        <button class="btn btn-sm btn-outline-info action-btn" data-bs-toggle="modal" data-bs-target="#viewProductModal${product.ID}">
-                                                            <i class="bi bi-eye"></i> View
-                                                        </button>-->
                                           <a href="edit-product?id=${product.ID}" class="btn btn-sm btn-outline-primary action-btn">
                                              <i class="bi bi-pencil"></i> Edit
                                           </a>
