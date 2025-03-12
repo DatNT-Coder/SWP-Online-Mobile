@@ -12,10 +12,6 @@ public class UserAddress {
      private String userAddress;
     private int userId;
 
-    public UserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
     // Constructor
     public UserAddress(String userAddress, int userId) {
         this.userAddress = userAddress;
