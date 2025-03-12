@@ -11,6 +11,13 @@
       <link rel="stylesheet" href="css/styles.css">
       <link rel="stylesheet" href="css/datatable.css">
    </head>
+   <style>
+      .card-body {
+         flex: 1 1 auto;
+         padding: 20px;
+         color: var(--bs-card-color);
+      }
+   </style>
    <body>
       <div class="container-fluid">
          <div class="row">
