@@ -15,11 +15,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import java.sql.Date;
-import model.BlogPost;
-import model.User;
 
 @WebServlet(name="BlogListController", urlPatterns={"/blog-list"})
 @MultipartConfig(
@@ -107,36 +102,7 @@ public class BlogListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String postTitle = request.getParameter("postTitle");
-        String postCategory = request.getParameter("postCategory");
-        String postStatus = request.getParameter("postStatus");
-        String postBrief = request.getParameter("postBrief");
-        String postContent = request.getParameter("postContent");
-        String postThumbnail = uploadFile(request);
-        String featuredPost = request.getParameter("featuredPost");
-        BlogPostDAO blogDAO = new BlogPostDAO();
-        User user = (User) request.getSession().getAttribute("profileUser");
-        try{
-            BlogPost post = new BlogPost();
-            post.setTitle(postTitle);
-            post.setPostCategories_id(Integer.parseInt(postCategory));
-            post.setStatus(Integer.parseInt(postStatus));
-            post.setBrief_info(postBrief);
-            post.setDetails(postContent);
-            post.setThumbnail(postThumbnail);
-            post.setFlag_feature(Boolean.parseBoolean(featuredPost));
-            post.setUser_id(user.getId());
-            post.setFull_name(user.getFull_name());
-            long createdDate = System.currentTimeMillis();
-            Date updatedDate = new Date(createdDate);
-            post.setUpdatedDate(updatedDate);
-            blogDAO.addPost(post);
-            response.sendRedirect("blog-list");
-        }
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        
+        processRequest(request, response);
     }
 
     /** 
@@ -146,37 +112,6 @@ public class BlogListController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
-
-    public String uploadFile(HttpServletRequest request) throws IOException, ServletException {
-        String fileName = "";
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "images/blog";
-        File uploadDir = new File(uploadPath);
-
-        if (!uploadDir.exists()) {
-            boolean created = uploadDir.mkdir();
-        }
-
-        for (Part part : request.getParts()) {
-            fileName = getFileName(part);
-            if (!fileName.isEmpty()) {
-                part.write(uploadPath + File.separator + fileName);
-                return fileName;
-            }
-        }
-        return "";
-    }
-
-    private String getFileName(Part part) {
-        String contentDisposition = part.getHeader("content-disposition");
-        String[] tokens = contentDisposition.split(";");
-        for (String token : tokens) {
-            if (token.trim().startsWith("filename")) {
-                return token.substring(token.indexOf("=") + 2, token.length() - 1);
-            }
-        }
-        return "";
-    }
+    }// </editor-fold>
 
 }
-

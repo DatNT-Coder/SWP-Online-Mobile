@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.CartItem;
 import model.Order;
 import model.OrderDetail;
 import model.User;
@@ -136,6 +137,73 @@ public class OrderDAO {
                     orders.add(order);
                 }
                 return orders;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+         
+             public Order getOrderById(int orderId) {
+        String sql = "select id, user_id, order_date, total, status, discount,\n"
+                + " address, phone, email, notes, gender, saleid, settings_id from orders where id = ?";
+        try ( PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    Date orderDate = rs.getDate("order_date");
+                    double total = rs.getDouble("total");
+                    int status = rs.getInt("status");
+                    String address = rs.getString("address");
+                    String phone = rs.getString("phone");
+                    String email = rs.getString("email");
+                    String note = rs.getString("notes");
+                    int settingId = rs.getInt("settings_id");
+                    Order order = new Order();
+                    order.setId(id);
+                    order.setDate(orderDate);
+                    order.setTotalMoney(total);
+                    order.setStatus(status);
+                    order.setAddress(address);
+                    order.setPhone(phone);
+                    order.setEmail(email);
+                    order.setNote(note);
+                    order.setSettingId(settingId);
+                    return order;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+             
+              public ArrayList<CartItem> getOrderDetailsAsCart(Integer orderId) {
+        String sql = "select user_id, product_ID, quantity, p.status as status, price, name, image\n"
+                + "from orders join orderdetails on orders.ID = orderdetails.Orders_ID and Orders_ID = ?\n"
+                + "join mydb.product p on orderdetails.Product_ID = p.ID;";
+        try ( PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                ArrayList<CartItem> items = new ArrayList<>();
+                while (rs.next()) {
+                    int userId = rs.getInt("user_id");
+                    int productId = rs.getInt("product_id");
+                    int quantity = rs.getInt("quantity");
+                    int status = rs.getInt("status");
+                    double price = rs.getDouble("price");
+                    double total = price * quantity;
+                    String name = rs.getString("name");
+                    String image = rs.getString("image");
+                    CartItem item = new CartItem(userId, productId, quantity, status);
+                    item.setPrice(price);
+                    item.setTotal(total);
+                    item.setName(name);
+                    item.setImage(image);
+                    items.add(item);
+                }
+                return items;
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);

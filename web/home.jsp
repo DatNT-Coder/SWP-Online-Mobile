@@ -3,11 +3,9 @@
     Created on : Feb 9, 2025, 1:16:53 AM
     Author     : naokh
 --%>
-<%@ page import="java.util.List"%>
-<%@ page import="model.BlogPost"%>
-<%@ page import="model.BlogPost"%>
-<%@ page import="model.User"%>
-<%@ page import="constant.CommonConst"%>
+<%@page import="java.util.List"%>
+<%@page import="model.BlogPost"%>
+<%@page import="model.BlogPost"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -456,7 +454,7 @@
                                     </c:forEach>
                                  </div>
                                  <div class="item">	
-                                    <c:forEach begin="2" items="${requestScope.list}" var="b">
+                                    <c:forEach begin="3" items="${requestScope.list}" var="b">
                                        <div class="col-sm-4">
                                           <div class="multiple-blog-post" onclick="redirectToBlogDetail(${b.id})" style="cursor: pointer;">
                                              <div class="blog_item">
