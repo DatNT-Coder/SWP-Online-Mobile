@@ -114,7 +114,7 @@
                               </select>
                            </div>
                            <div class="col-md-4">
-                              <input name="search" type="text" class="search-input" id="searchInput" placeholder="Search by title">
+                              <input name="search" type="text" class="search-input" id="searchInput" placeholder="Search by title" value="${param.search}">
                            </div>
                            <div class="col-md-2">
                               <button type="submit" class="search-button">

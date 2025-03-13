@@ -51,7 +51,8 @@
                                  </select>
                               </div>
                               <div class="d-flex col-md-4">
-                                 <input type="text" name="keyword" placeholder="Search by title..." value="${keyword}" class="search-input">
+                                 <input type="text" name="keyword" placeholder="Search by title..." 
+                                        value="<c:out value='${param.keyword}'/>" class="search-input">
                                  <button type="submit" class="search-button">Search</button>
                               </div>
                            </form>
