@@ -59,7 +59,7 @@ public class SliderListController extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      final int PAGE_SIZE = 5;  // Set number of items per page
+      final int PAGE_SIZE = 4;  // Set number of items per page
       int page = 1;
 
       // Get current page number from request
@@ -103,7 +103,7 @@ public class SliderListController extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      final int PAGE_SIZE = 5;
+      final int PAGE_SIZE = 4;
       int page = 1;
       String pageStr = request.getParameter("page");
       if (pageStr != null) {

@@ -78,9 +78,9 @@ public class BlogListController extends HttpServlet {
       }
       BlogPostDAO blogDAO = new BlogPostDAO();
       PostCategoryDAO cate = new PostCategoryDAO();
-      request.setAttribute("listBlog", blogDAO.listBlog(search, intPage, 10, category, status));
-      int totalPage = blogDAO.listBlog(search, 1, 2000000000, category, status).size() / 10;
-      if (blogDAO.listBlog(search, 1, 2000000000, category, status).size() % 10 != 0) {
+      request.setAttribute("listBlog", blogDAO.listBlog(search, intPage, 5, category, status));
+      int totalPage = blogDAO.listBlog(search, 1, 2000000000, category, status).size() / 5;
+      if (blogDAO.listBlog(search, 1, 2000000000, category, status).size() % 5 != 0) {
          totalPage += 1;
       }
       request.setAttribute("totalPage", totalPage);
