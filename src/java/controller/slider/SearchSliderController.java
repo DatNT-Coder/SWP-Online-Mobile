@@ -62,6 +62,7 @@ public class SearchSliderController extends HttpServlet {
       final int PAGE_SIZE = 3;
       int page = 1;
       String pageStr = request.getParameter("page");
+      String keyword = request.getParameter("keyword");
       if (pageStr != null) {
          page = Integer.parseInt(pageStr);
       }
@@ -72,8 +73,8 @@ public class SearchSliderController extends HttpServlet {
          status = Integer.parseInt(statusStr);
       }
 
-      int totalSliders = new SliderDAO().getTotalSlider("", status);
-      List<Slider> listSlidersByPagging = new SliderDAO().getListSliderByKeywordAndPagging("", page, PAGE_SIZE, status);
+      int totalSliders = new SliderDAO().getTotalSlider(keyword, status);
+      List<Slider> listSlidersByPagging = new SliderDAO().getListSliderByKeywordAndPagging(keyword, page, PAGE_SIZE, status);
       int totalPage = (totalSliders + PAGE_SIZE - 1) / PAGE_SIZE; // Round up for pagination
 
       request.getSession().setAttribute("listSlidersByPagging", listSlidersByPagging);

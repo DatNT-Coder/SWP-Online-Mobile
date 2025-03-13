@@ -63,40 +63,33 @@ public class BlogListController extends HttpServlet {
       String search = request.getParameter("search");
       String category = request.getParameter("category");
       String status = request.getParameter("status");
-
-      // Fix: Ensure 'status' is not null
-      if (status == null || status.isEmpty()) {
-         status = "all"; // Represents "Tất cả trạng thái"
+      String page = request.getParameter("page");
+      int intPage = -1;
+      if (page == null) {
+         page = "1";
       }
-
-      int page = 1;
+      if (status == "" || status == null) {
+         status = "";
+      }
       try {
-         page = Integer.parseInt(request.getParameter("page"));
-         if (page < 1) {
-            page = 1;
-         }
-      } catch (NumberFormatException e) {
-         page = 1; // Default to page 1 if invalid
+         intPage = Integer.parseInt(page);
+      } catch (Exception e) {
+         response.sendRedirect("blog-list");
       }
-
-      int pageSize = 10;
       BlogPostDAO blogDAO = new BlogPostDAO();
-      PostCategoryDAO cateDAO = new PostCategoryDAO();
-
-      var blogList = blogDAO.listBlog(search, page, pageSize, category, status);
-      int totalPosts = blogDAO.countBlogs(search, category, status);
-      int totalPages = (int) Math.ceil((double) totalPosts / pageSize);
-
-      // Set attributes
-      request.setAttribute("listBlog", blogList);
-      request.setAttribute("totalPage", totalPages);
+      PostCategoryDAO cate = new PostCategoryDAO();
+      request.setAttribute("listBlog", blogDAO.listBlog(search, intPage, 10, category, status));
+      int totalPage = blogDAO.listBlog(search, 1, 2000000000, category, status).size() / 10;
+      if (blogDAO.listBlog(search, 1, 2000000000, category, status).size() % 10 != 0) {
+         totalPage += 1;
+      }
+      request.setAttribute("totalPage", totalPage);
       request.setAttribute("search", search);
-      request.setAttribute("listCategory", cateDAO.getAllCategories());
+      request.setAttribute("listCategory", cate.getAllCategories());
       request.setAttribute("category", category);
-      request.setAttribute("status", status); // Fix: Keep selected status
+      request.setAttribute("statusA", status);
       request.setAttribute("page", page);
       request.setAttribute("pagination_url", "blog-list?");
-
       request.getSession().setAttribute("backlink", "blog-list");
       request.getRequestDispatcher("bloglist.jsp").forward(request, response);
    }

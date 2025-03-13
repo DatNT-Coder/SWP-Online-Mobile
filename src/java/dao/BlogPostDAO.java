@@ -655,5 +655,9 @@ public class BlogPostDAO extends DBContext {
       }
       return list;
    }
+
+   public int countBlogs(String search, String category, String status) {
+      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   }
    
 }
