@@ -14,7 +14,7 @@
    <style>
       .card-body {
          flex: 1 1 auto;
-         padding: 20px;
+         padding: 20px; 
          color: var(--bs-card-color);
       }
    </style>
@@ -32,12 +32,12 @@
                         <h2>Slider List</h2>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                            <button class="add-slider-btn" onclick="location.href = 'add-slider';">
-                              &nbsp;&nbsp;Add New Slider
+                              &nbsp;&nbsp;Thêm Slider
                            </button>
                         </div>
                      </div>
                      <!-- Filters and Search -->
-                     <div class="card mb-4">
+                     <div class="row mb-4">
                         <div class="card-body">
                            <div class="row g-3">
                               <form action="search-slider" method="get" class="d-flex col-md-4" style="width: 100%; float: right !important">
@@ -78,17 +78,23 @@
                               <tbody>
                                  <c:forEach var="sl" items="${sessionScope.listSlidersByPagging}">
                                     <tr>
+                                       
                                        <td class="col-id">${sl.id}</td>
+                                       
                                        <td class="col-image">
                                           <img src="images/slider/${sl.image}" class="slider-image" alt="Slider Image">
                                        </td>
+                                       
                                        <td class="col-title">${sl.title}</td>
+                                       
                                        <td class="col-backlink">
                                           <a href="${sl.backlink}" target="_blank">${sl.notes}</a>
                                        </td>
+                                       
                                        <td class="col-status ${sl.status == 1 ? 'text-success' : 'text-danger'}">
                                           ${sl.status == 1 ? "<span class='badge badge-active'>Active</span>" : "<span class='badge badge-inactive'>Inactive</span>"}
                                        </td>
+                                       
                                        <td class="col-actions">
                                           <c:choose>
                                              <c:when test="${sl.status == 1}">
