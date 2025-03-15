@@ -92,7 +92,7 @@ public class ResetPassword extends HttpServlet {
         }
 
         VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailReseter);
-        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeReseter);
+        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeReseter.trim());
 
         if (isCodeValid) {
 
