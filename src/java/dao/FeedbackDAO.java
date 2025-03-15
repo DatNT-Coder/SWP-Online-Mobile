@@ -359,6 +359,7 @@ public class FeedbackDAO extends DBContext {
                 + "WHERE\n"
                 + "    Product_ID = ?;";
         try ( 
+                
             Connection connection = getConnection(); 
 
             PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -407,19 +408,27 @@ public class FeedbackDAO extends DBContext {
 
         int testProductId = 1; // ID sản phẩm để kiểm tra
         List<ProductFeedback> feedbacks = feedbackDAO.findFeedbackbyProductID(testProductId);
-        if (feedbacks != null && !feedbacks.isEmpty()) {
-            System.out.println("Danh sách phản hồi cho sản phẩm có ID " + testProductId + " là:");
-            for (ProductFeedback feedback : feedbacks) {
-                System.out.println("Tên: " + feedback.getFull_name());
-                System.out.println("Đánh giá: " + feedback.getRating());
-                System.out.println("Bình luận: " + feedback.getComment());
-                System.out.println("ID người dùng: " + feedback.getUser_Id());
-                System.out.println("Trạng thái: " + feedback.getStatus());
-                System.out.println("-------------------------");
-            }
-        } else {
-            System.out.println("Không tìm thấy phản hồi nào cho sản phẩm có ID " + testProductId);
-        }
+//        if (feedbacks != null && !feedbacks.isEmpty()) {
+//            System.out.println("Danh sách phản hồi cho sản phẩm có ID " + testProductId + " là:");
+//            for (ProductFeedback feedback : feedbacks) {
+//                System.out.println("Tên: " + feedback.getFull_name());
+//                System.out.println("Đánh giá: " + feedback.getRating());
+//                System.out.println("Bình luận: " + feedback.getComment());
+//                System.out.println("ID người dùng: " + feedback.getUser_Id());
+//                System.out.println("Trạng thái: " + feedback.getStatus());
+//                System.out.println("-------------------------");
+//            }
+//        } else {
+//            System.out.println("Không tìm thấy phản hồi nào cho sản phẩm có ID " + testProductId);
+//        }
+
+        double avgRating = feedbackDAO.getAverageRating(testProductId);
+    
+    if (avgRating > 0) {
+        System.out.println("Đánh giá trung bình của sản phẩm có ID " + testProductId + " là: " + avgRating);
+    } else {
+        System.out.println("Không có đánh giá nào cho sản phẩm có ID " + testProductId);
+    }
     }
 }
 

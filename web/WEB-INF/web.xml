@@ -163,4 +163,5 @@
         <servlet-name>ProductDetailController</servlet-name>
         <url-pattern>/ProductDetail</url-pattern>
     </servlet-mapping>
+    
 </web-app>
