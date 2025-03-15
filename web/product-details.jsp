@@ -309,7 +309,7 @@
                                 </div>
 
 
-                                <c:if test="${sessionScope.profileUser.role_id == 1}">
+                                <c:if test="${sessionScope.profileUser.role_id == 1 and hasPurchased}">
                                     <div class="col-sm-12">
                                         <p><b>Viết đánh giá của bạn</b></p>
                                         <form action="ProductDetails" method="POST" enctype="multipart/form-data">
@@ -369,6 +369,10 @@
                                         </form>
                                     </div>
                                 </c:if>
+                                        <c:if test="${sessionScope.profileUser.role_id == 1 and not hasPurchased}">
+    <p>Bạn cần mua hàng trước khi viết đánh giá.</p>
+</c:if>
+                                        
                                 <div class="tab-pane fade active in" id="reviews" >
 
                                     <div>

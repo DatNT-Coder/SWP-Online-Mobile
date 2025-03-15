@@ -6,6 +6,7 @@ package controller.product;
 
 import dao.BrandDAO;
 import dao.FeedbackDAO;
+import dao.OrderDAO;
 import dao.ProductCategoryDAO;
 import dao.ProductDAO;
 import dao.ProductDetailDAO;
@@ -70,7 +71,23 @@ public class ProductDetailController extends HttpServlet {
         String id = request.getParameter("pid");
         String cateID_r = request.getParameter("cid");
         String brandID_r = request.getParameter("bid");
-        
+        User profileUser = (User) session.getAttribute("profileUser");
+        int productId = Integer.parseInt(request.getParameter("pid"));
+    
+        // Kiểm tra nếu user đã đăng nhập và có role_id = 1
+       // Kiểm tra nếu user đã đăng nhập và có role_id = 1
+    boolean hasPurchased = false;
+    if (profileUser != null) {
+        System.out.println("Người dùng hiện tại: " + profileUser.getFull_name() + " (ID: " + profileUser.getId() + ")"); // ✅ In thông tin người dùng
+
+        if (profileUser.getRole_id() == 1) {
+            OrderDAO orderDAO = new OrderDAO();
+            hasPurchased = orderDAO.checkUserHasPurchased(profileUser.getId(), productId);
+            System.out.println("Người dùng đã mua sản phẩm này chưa? " + hasPurchased); // ✅ In kết quả kiểm tra
+        }
+    } else {
+        System.out.println("Không tìm thấy thông tin người dùng trong session."); // ✅ In nếu không tìm thấy user
+    }
         int cateID = 0;
         int brandID = 0;
         if (cateID_r != null && brandID_r != null) {
@@ -97,8 +114,11 @@ public class ProductDetailController extends HttpServlet {
         request.setAttribute("listPC", listPCategories);
         request.setAttribute("listFeedback", listFeedback);
         request.setAttribute("avgRating", avgRating);
+        request.setAttribute("hasPurchased", hasPurchased);
+System.out.println("Lấy thông tin sản phẩm với ID: " + productId);
         session.setAttribute("pickedCategory", pById.getProductCategory_ID());
         session.setAttribute("pickedBrand", pById.getBrandId());
+
         //get all Brand
         Vector<Brand> listBrand = daoBrand.getAllBrand();
         request.setAttribute("listBrand", listBrand);
