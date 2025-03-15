@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/css/datatable.css</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SearchSliderController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogListController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderListMarketing.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/bloglist.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderList.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderDetailController.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductDetailController.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/home.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/product-details.jsp</file>
         </group>
     </open-files>
 </project-private>
