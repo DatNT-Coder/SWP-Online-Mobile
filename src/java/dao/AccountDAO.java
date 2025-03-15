@@ -4,6 +4,7 @@
  */
 package dao;
 
+import org.mindrot.jbcrypt.BCrypt;
 import com.mysql.cj.xdevapi.Statement;
 import context.DBContext;
 import java.sql.PreparedStatement;
@@ -14,7 +15,6 @@ import java.util.Date;
 import java.util.List;
 import model.User;
 import model.UserAddress;
-import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -304,7 +304,7 @@ public class AccountDAO extends DBContext {
     }
 
 // Phương thức thêm user vào bảng user_role
-        private void insertToUserRole(int idFromUser, int roleId) {
+    private void insertToUserRole(int idFromUser, int roleId) {
         try {
             connection = getConnection();
             String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
@@ -485,7 +485,8 @@ public class AccountDAO extends DBContext {
             statement = connection.prepareStatement(sql);
 
             // Đặt giá trị cho tham số
-            statement.setString(1, newPassword);
+            String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+            statement.setString(1, hashedPassword); // Lưu mật khẩu đã mã hóa;
             statement.setString(2, email);
 
             // Thực thi câu lệnh SQL
@@ -635,10 +636,11 @@ public class AccountDAO extends DBContext {
         String sql = "UPDATE user SET password = ? WHERE email = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, u.getPassword()); 
+            // Mã hóa mật khẩu từ User
+            String hashedPassword = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt());
+            statement.setString(1, hashedPassword); // Lưu mật khẩu đã mã hóa
             statement.setString(2, u.getEmail());
-            
+
             //kiểm tra xem có bao nhiêu row được cập nhật dù đc cập nhật 1 row vẫn tính.
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
@@ -677,7 +679,6 @@ public class AccountDAO extends DBContext {
 //        System.out.println(d.checkOldPassword("john.doe@example.com", "pass123"));
 //        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
 //        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
-
 //        User u = new User("lbienvda@gmail.com", "2");
 //        System.out.println(d.updateUserPassword(u));
 //        List<User> u = d.findAll();
@@ -690,7 +691,7 @@ public class AccountDAO extends DBContext {
     public List<User> findAll() {
         List<User> listFound = new ArrayList<>();
         connection = getConnection();
-                String sql = "SELECT u.*, ur.role_id FROM User u JOIN user_role ur ON u.id = ur.user_id ";
+        String sql = "SELECT u.*, ur.role_id FROM User u JOIN user_role ur ON u.id = ur.user_id ";
         try {
             //- Tạo đối tượng PrepareStatement
             statement = connection.prepareStatement(sql);
@@ -699,20 +700,20 @@ public class AccountDAO extends DBContext {
             resultSet = statement.executeQuery();
             //- trả về kết quả
             while (resultSet.next()) {
-                    int idUser = resultSet.getInt("id");
-                    String emailFound = resultSet.getString("email").trim();
-                    String passwordFound = resultSet.getString("password").trim();
-                    String fullNameFound = resultSet.getString("full_name");
-                    String phoneNumberFound = resultSet.getString("phone");
-                    String genderFound = resultSet.getString("gender");
-                    Date registrationDateFound = resultSet.getDate("registration_date");
-                    int statusFound = resultSet.getInt("status");
-                    int updatedByFound = resultSet.getInt("updatedBy");
-                    Date updatedDateFound = resultSet.getDate("updatedDate");
-                    String imageFound = resultSet.getString("image");
-                    int settingsIdFound = resultSet.getInt("settings_id");
-                    int roleIdFound = resultSet.getInt("role_id");
-                    User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound);
+                int idUser = resultSet.getInt("id");
+                String emailFound = resultSet.getString("email").trim();
+                String passwordFound = resultSet.getString("password").trim();
+                String fullNameFound = resultSet.getString("full_name");
+                String phoneNumberFound = resultSet.getString("phone");
+                String genderFound = resultSet.getString("gender");
+                Date registrationDateFound = resultSet.getDate("registration_date");
+                int statusFound = resultSet.getInt("status");
+                int updatedByFound = resultSet.getInt("updatedBy");
+                Date updatedDateFound = resultSet.getDate("updatedDate");
+                String imageFound = resultSet.getString("image");
+                int settingsIdFound = resultSet.getInt("settings_id");
+                int roleIdFound = resultSet.getInt("role_id");
+                User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound);
                 listFound.add(user);
             }
         } catch (SQLException e) {
@@ -722,5 +723,3 @@ public class AccountDAO extends DBContext {
     }
 
 }
- 
-                

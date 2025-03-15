@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import model.User;
+import model.UserAddress;
 
 /**
  *
@@ -136,8 +137,6 @@ public class AuthenticationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UserDAO accdal = new UserDAO();
-        User a = accdal.checkUser(email, password);
-        String fullName = accdal.getUserFullName(email, password);
 
         if (email.isEmpty() || password.isEmpty()) {
             request.setAttribute("emp", "Fill email, password !");
@@ -146,18 +145,19 @@ public class AuthenticationServlet extends HttpServlet {
         } else {
             User u = new User(email, password);
             User foundUserAccount = d.findEmailPasswordUser(u);
-            //User a = accdal.checkUser(email, password); // Đảm bảo biến a được khởi tạo
-        int userRole = 0; // Giá trị mặc định
-        if (a != null) {
-            userRole = accdal.getUserRole(a.getId()); // Chỉ gọi getId() khi a không null
-        }
+            User a = accdal.checkUser(email, password); // Đảm bảo biến a được khởi tạo
+            int userRole = 0; // Giá trị mặc định
+            if (a != null) {
+                userRole = accdal.getUserRole(a.getId()); // Chỉ gọi getId() khi a không null
+            }
+
             if (foundUserAccount != null) {
                 if (foundUserAccount.getRole_id() == 1) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
                     request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
-                    request.getSession().setAttribute("full_name", fullName); 
+//                    request.getSession().setAttribute("full_name", fullName); 
                     url = "HomePage";
                     //false => quay tro lai trang login ( set them thong bao loi )
                 } else if (foundUserAccount.getRole_id() == 5 || foundUserAccount.getRole_id() == 4) {
@@ -165,7 +165,7 @@ public class AuthenticationServlet extends HttpServlet {
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
                     request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
-                    request.getSession().setAttribute("full_name", fullName);
+//                    request.getSession().setAttribute("full_name", fullName);
                     url = "marketing/listFeedbackMarketing";
                 }
             } else {
@@ -190,6 +190,7 @@ public class AuthenticationServlet extends HttpServlet {
         String emailUser = request.getParameter("email");
         String password = request.getParameter("password");
         String username = request.getParameter("full_name");
+        UserAddress address = new UserAddress(request.getParameter("address"));
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
         Date registrationDate = new Date(System.currentTimeMillis());
@@ -221,11 +222,15 @@ public class AuthenticationServlet extends HttpServlet {
             request.setAttribute("erEmail", "Email cannot be empty.");
             hasError = true;
         }
+        if (address.getUserAddress() == null || address.getUserAddress().isEmpty()) {
+            request.setAttribute("erAddress", "Address cannot be empty.");
+            hasError = true;
+        }
         if (hasError) {
             return url = "regis.jsp";
         }
 
-        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId, address);
 
         boolean isExistUserEmail = dao.checkUserEmailExist(ru);
 
@@ -238,9 +243,9 @@ public class AuthenticationServlet extends HttpServlet {
         }
 
         String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // set thgian mã hết hạn
 
-        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime); // code có chứa expire
         verificationCodes.put(emailUser, codeExpire);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
@@ -260,26 +265,49 @@ public class AuthenticationServlet extends HttpServlet {
     }
 
     private String resendDoPost(HttpServletRequest request, HttpServletResponse response) {
-        String url;
+        String url = null;
+        String type = request.getParameter("type");
+        
+        if (type.equalsIgnoreCase("reset")) {
+            User u = new User((String) request.getSession().getAttribute("resetUserMail"));
 
-        User u = (User) request.getSession().getAttribute("registerUser");
+            // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
+            verificationCodes.remove(u.getEmail());
 
-        // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
-        verificationCodes.remove(u.getEmail());
+            String codeToUser = generateVerificationCode();
+            LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // Mã hết hạn sau 2 phút
 
-        String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+            VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+            verificationCodes.put(u.getEmail(), codeExpire);
 
-        VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
-        verificationCodes.put(u.getEmail(), codeExpire);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+            String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
-        String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+            //gui email o day
+            EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
 
-        //gui email o day
-        EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+            url = "reset.jsp";
+            
+        } else if (type.equalsIgnoreCase("regis")) {
+            User u = (User) request.getSession().getAttribute("registerUser");
 
-        url = "verify.jsp";
+            // xóa key cũ đi để tránh tốn dung lượng k xóa đi cũng k sao nhưng sẽ có thể lag máy
+            verificationCodes.remove(u.getEmail());
+
+            String codeToUser = generateVerificationCode();
+            LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // Mã hết hạn sau 2 phút
+
+            VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
+            verificationCodes.put(u.getEmail(), codeExpire);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy"); // Định dạng thời gian
+            String formattedExpiryTime = codeExpire.getExpiryTime().format(formatter); // Format thời gian hết hạn
+
+            //gui email o day
+            EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
+
+            url = "verify.jsp";
+        }
         return url;
     }
 
@@ -343,7 +371,7 @@ public class AuthenticationServlet extends HttpServlet {
         }
 
         String codeToUser = generateVerificationCode();
-        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(2); // Mã hết hạn sau 2 phút
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(1); // Mã hết hạn sau 1 phút
 
         VerificationCode codeExpire = new VerificationCode(codeToUser, expiryTime);
         verificationCodes.put(emailReset, codeExpire); //biến hashmap lưu giá trị 
