@@ -525,9 +525,14 @@
                                                                             return false;
                                                                         }
         </script>
+        
+        
+        
         <script>
             // Convert the list of products from Java to JavaScript
             var products = JSON.parse('${listProduct}');
+            var productRatingsJSON = '${productRatingsJSON}';
+            var productRatings = JSON.parse(productRatingsJSON.trim());
 
             var currentPage = 1; // Current page
             var itemsPerPage = 6; // Number of items per page
@@ -557,8 +562,25 @@
                     //không dùng $\{product.ID} mà dùng + product.ID +
                     // if (sessionStorage.getItem('user') !== null) {
                     // User is logged in, add "Add to cart" button with onclick attribute
-                    productHtml += '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>';
-                    productHtml += '<a onclick="#" class="btn btn-default add-to-cart"><i class="fa fa-star"></i>Đánh giá</a>';
+                    
+                    
+                    
+             productHtml += '<div style="display: flex; align-items: center;">' + 
+                   '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart">' +
+                       '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng' +
+                   '</a>' +
+                   (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+                       ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
+                         + productRatings[product.ID] + ' ★</a>'
+                       : '') +
+               '</div>';
+
+
+
+
+
+
+
 	
 //                    else {
 //                        // User is not logged in, add a link to the sign-in page
