@@ -60,7 +60,7 @@ public class ShowSliderController extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
 //        processRequest(request, response);
-      final int PAGE_SIZE = 3;
+      final int PAGE_SIZE = 4;
       int page = 1;
       String pageStr = request.getParameter("page");
       if (pageStr != null) {
@@ -98,7 +98,7 @@ public class ShowSliderController extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
 //        processRequest(request, response);
-      final int PAGE_SIZE = 3;
+      final int PAGE_SIZE = 4;
       int page = 1;
       String pageStr = request.getParameter("page");
       if (pageStr != null) {

@@ -11,6 +11,13 @@
       <link rel="stylesheet" href="css/styles.css">
       <link rel="stylesheet" href="css/datatable.css">
    </head>
+   <style>
+      .card-body {
+         flex: 1 1 auto;
+         padding: 20px;
+         color: var(--bs-card-color);
+      }
+   </style>
    <body>
       <div class="container-fluid">
          <div class="row">
@@ -44,7 +51,8 @@
                                  </select>
                               </div>
                               <div class="d-flex col-md-4">
-                                 <input type="text" name="keyword" placeholder="Search by title..." value="${keyword}" class="search-input">
+                                 <input type="text" name="keyword" placeholder="Search by title..." 
+                                        value="<c:out value='${param.keyword}'/>" class="search-input">
                                  <button type="submit" class="search-button">Search</button>
                               </div>
                            </form>

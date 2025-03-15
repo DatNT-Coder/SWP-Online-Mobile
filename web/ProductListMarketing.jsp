@@ -26,6 +26,7 @@
          padding: 10px;
          font-size: 16px;
          transition: all 0.3s ease;
+         margin-right: 10px;
       }
 
       .form-control:focus, .form-select:focus {
@@ -34,15 +35,15 @@
       }
 
       /* Search Button */
-      .search-btn {
+      .search-button {
          background-color: #007bff;
          color: white;
          font-weight: bold;
          border: none;
-         padding: 10px;
          border-radius: 8px;
          font-size: 16px;
          transition: background-color 0.3s ease;
+         margin-left: 30px;
       }
 
       .search-btn:hover {
@@ -53,6 +54,21 @@
       .custom-select {
          background-color: white;
          cursor: pointer;
+      }
+      .card-body {
+         flex: 1 1 auto;
+         padding: 20px;
+         color: var(--bs-card-color);
+      }
+      .col-md-4{
+         margin: 0px;
+      }
+      .custom-select{
+         margin-right: 10px;
+      }
+      .search-input{
+         margin-left: 10px;
+         margin-right: 10px
       }
    </style>
    <body>
@@ -76,7 +92,7 @@
                      <!-- Filters and Search -->
                      <div class="card mb-4">
                         <div class="card-body">
-                           <form class="d-flex col-6" action="product-listAdmin?page=${requestScope.page}" method="get">
+                           <form class="p d-flex col-md-4" style="width: 100%; float: right !important" action="product-listAdmin?page=${requestScope.page}" method="get">
                            <button type="button" onclick="window.location.href = '/ProjectSWP391/product-listAdmin'" class="reset-btn">
                               Reset Filter and Search
                            </button>
@@ -98,7 +114,7 @@
                               </select>
                            </div>
                            <div class="col-md-4">
-                              <input name="search" type="text" class="search-input" id="searchInput" placeholder="Search by title">
+                              <input name="search" type="text" class="search-input" id="searchInput" placeholder="Search by title" value="${param.search}">
                            </div>
                            <div class="col-md-2">
                               <button type="submit" class="search-button">
@@ -142,17 +158,17 @@
                                        <td>
                                           <c:choose>
                                              <c:when test="${product.status == 1}">
-                                                <a href="productaction?action=hide&id=${product.ID}" class="btn btn-sm btn-outline-secondary action-btn">
+                                                <a href="productaction?action=hide&id=${product.ID}" class="btn btn-danger btn-sm">
                                                    <i class="bi bi-eye-slash"></i> Hide
                                                 </a>
                                              </c:when>
                                              <c:otherwise>
-                                                <a href="productaction?action=show&id=${product.ID}" class="btn btn-sm btn-outline-secondary action-btn">
+                                                <a href="productaction?action=show&id=${product.ID}" class="btn btn-success btn-sm">
                                                    <i class="bi bi-eye"></i> Show
                                                 </a>
                                              </c:otherwise>
                                           </c:choose>
-                                          <a href="edit-product?id=${product.ID}" class="btn btn-sm btn-outline-primary action-btn">
+                                          <a href="edit-product?id=${product.ID}" class="btn btn-primary btn-sm">
                                              <i class="bi bi-pencil"></i> Edit
                                           </a>
                                        </td>
@@ -183,14 +199,14 @@
                                     <c:forEach begin="1" end="${totalPage}" var="i">
                                        <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
                                        </c:forEach>
-                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page+1}">>></a></li>
+                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page+1}">></a></li>
                                  </ul>
                               </nav>
                            </c:when>
                            <c:when test="${page+1 > totalPage}">
                               <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                                  <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page-1}"><<</a></li>
+                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page-1}"><</a></li>
                                        <c:forEach begin="1" end="${totalPage}" var="i">
                                        <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
                                        </c:forEach>
@@ -200,11 +216,11 @@
                            <c:otherwise>
                               <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                                  <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page-1}"><<</a></li>
+                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page-1}"><</a></li>
                                        <c:forEach begin="1" end="${totalPage}" var="i">
                                        <li class="page-item ${i == page?"active":""}"><a class="page-link" href="${pagination_url}page=${i}">${i}</a></li>
                                        </c:forEach>
-                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page+1}">>></a></li>
+                                    <li class="page-item"><a class="page-link" href="${pagination_url}page=${page+1}">></a></li>
                                  </ul>
                               </nav>
                            </c:otherwise>

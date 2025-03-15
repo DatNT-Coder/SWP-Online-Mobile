@@ -237,35 +237,6 @@ ul li:hover {
    transform: scale(0.95);
 }
 
-.pagination {
-   display: flex;
-   gap: 8px;
-   padding: 0;
-   list-style: none;
-}
-
-.pagination-btn {
-   background-color: #28a745; /* Dark Green */
-   color: white;
-   font-weight: bold;
-   border: none;
-   padding: 10px 15px;
-   border-radius: 8px;
-   text-align: center;
-   text-decoration: none;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 16px;
-   width: 40px; /* Fixed width */
-   height: 40px; /* Fixed height */
-}
-
-.pagination-btn.active {
-   background-color: #0d3d13; /* Darker green for active */
-   border: 2px solid black;
-}
-
 .page-item {
    display: inline-block;
 }
