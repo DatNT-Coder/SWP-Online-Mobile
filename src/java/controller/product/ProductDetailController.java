@@ -171,8 +171,16 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setImageStatus(1);
                 dao.addFeedback(feedback);
             } else {
-                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
+//                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
 //                filePart.write("C:\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
+
+                // Lấy đường dẫn thư mục gốc của dự án
+                String appPath = request.getServletContext().getRealPath(""); 
+                String savePath = appPath + "assets\\img\\feedbackImage\\" + fileName;
+
+                // Ghi file vào đường dẫn tương đối
+                filePart.write(savePath);
+
 
                 feedback.setFull_name(fullName);
                 feedback.setEmail(email);
