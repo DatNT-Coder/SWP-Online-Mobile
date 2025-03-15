@@ -317,23 +317,23 @@
                                             <div class="form-group" style="display: flex; justify-content: space-between;">
                                                 <div style="width: 48%;">
                                                     <label for="name">Họ và tên</label>
-                                                    <input name="full_name" style="width: 100%;" type="text" class="form-control" id="name" value="${sessionScope.user.full_name}" readonly required="">
+                                                    <input name="full_name" style="width: 100%;" type="text" class="form-control" id="name" value="${sessionScope.profileUser.full_name}" readonly required="">
                                                 </div>
                                                 <div style="width: 48%;">
                                                     <label for="address">Email</label>
-                                                    <input name="email" style="width: 100%;" type="text" class="form-control" id="address" value="${sessionScope.user.email}" readonly required="">
+                                                    <input name="email" style="width: 100%;" type="text" class="form-control" id="address" value="${sessionScope.profileUser.email}" readonly required="">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="phone">Số điện thoại</label>
-                                                <input style="width: 48%;"  name="phone" style="width: 50%;" type="tel" class="form-control" id="phone" value="${sessionScope.user.phone}" readonly required="">
+                                                <input style="width: 48%;"  name="phone" style="width: 50%;" type="tel" class="form-control" id="phone" value="${sessionScope.profileUser.phone}" readonly required="">
                                             </div>
                                             <div class="form-group">
                                                 <label>Giới Tính</label>
                                                 <div>
-                                                    <input <c:if test="${sessionScope.user.gender == 'Male'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Male" required="">
+                                                    <input <c:if test="${sessionScope.profileUser.gender == 'Male'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Male" required="">
                                                         <label class="form-label">Nam</label>
-                                                        <input <c:if test="${sessionScope.user.gender == 'Female'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Female" required="">
+                                                        <input <c:if test="${sessionScope.profileUser.gender == 'Female'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Female" required="">
                                                         <label class="form-label">Nữ</label>
                                                     </div>
                                                 </div>
