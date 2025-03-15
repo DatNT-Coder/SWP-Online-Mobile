@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import model.User;
 import model.UserAddress;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -26,28 +27,32 @@ public class AccountDAO extends DBContext {
         connection = getConnection();
         String sql = "SELECT u.*, ur.role_id FROM User u "
                 + "JOIN user_role ur ON u.id = ur.user_id "
-                + "WHERE u.email = ? AND u.password = ?";
+                + "WHERE u.email = ?";
+
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
-            statement.setString(2, password);
+
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
 
-                    int idUser = resultSet.getInt("id");
-                    String emailFound = resultSet.getString("email").trim();
-                    String passwordFound = resultSet.getString("password").trim();
-                    String fullNameFound = resultSet.getString("full_name");
-                    String phoneNumberFound = resultSet.getString("phone");
-                    String genderFound = resultSet.getString("gender");
-                    Date registrationDateFound = resultSet.getDate("registration_date");
-                    int statusFound = resultSet.getInt("status");
-                    int updatedByFound = resultSet.getInt("updatedBy");
-                    Date updatedDateFound = resultSet.getDate("updatedDate");
-                    String imageFound = resultSet.getString("image");
-                    int settingsIdFound = resultSet.getInt("settings_id");
-                    int roleIdFound = resultSet.getInt("role_id");
+                    String hashedPasswordFromDB = resultSet.getString("password").trim();
 
-                    user = new User(idUser, emailFound, passwordFound, fullNameFound, phoneNumberFound, genderFound, registrationDateFound, statusFound, updatedByFound, updatedDateFound, imageFound, settingsIdFound, roleIdFound);
+                    if (BCrypt.checkpw(password, hashedPasswordFromDB)) {
+                        int idUser = resultSet.getInt("id");
+                        String emailFound = resultSet.getString("email").trim();
+                        String fullNameFound = resultSet.getString("full_name");
+                        String phoneNumberFound = resultSet.getString("phone");
+                        String genderFound = resultSet.getString("gender");
+                        Date registrationDateFound = resultSet.getDate("registration_date");
+                        int statusFound = resultSet.getInt("status");
+                        int updatedByFound = resultSet.getInt("updatedBy");
+                        Date updatedDateFound = resultSet.getDate("updatedDate");
+                        String imageFound = resultSet.getString("image");
+                        int settingsIdFound = resultSet.getInt("settings_id");
+                        int roleIdFound = resultSet.getInt("role_id");
+
+                        user = new User(idUser, emailFound, hashedPasswordFromDB, fullNameFound, phoneNumberFound, genderFound, registrationDateFound, statusFound, updatedByFound, updatedDateFound, imageFound, settingsIdFound, roleIdFound);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -58,33 +63,57 @@ public class AccountDAO extends DBContext {
 
     public User findEmailPasswordUser(User u) {
         List<User> listFound = new ArrayList<>();
-        connection = getConnection();
-        // Chuẩn bị câu lệnh SQL
-        String sql = "SELECT u.*, ur.role_id\n"
-                + "FROM User u\n"
-                + "JOIN user_role ur ON u.id = ur.user_id\n"
-                + "WHERE u.email = ? AND u.password = ?;";
+
         try {
+            // Kết nối cơ sở dữ liệu
+            connection = getConnection();
+
+            // Chuẩn bị câu lệnh SQL chỉ tìm theo email
+            String sql = "SELECT u.*, ur.role_id "
+                    + "FROM User u "
+                    + "JOIN user_role ur ON u.id = ur.user_id "
+                    + "WHERE u.email = ?";
+
             // Tạo đối tượng PreparedStatement
             statement = connection.prepareStatement(sql);
-            // Lấy giá trị username và password từ đối tượng u để gán vào các vị trí ?
-            statement.setObject(1, u.getEmail());
-            statement.setObject(2, u.getPassword());
+            statement.setString(1, u.getEmail()); // Chỉ cần email
 
             // Thực thi câu lệnh
             resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
+                // Lấy thông tin từ cơ sở dữ liệu
                 int idUser = resultSet.getInt("id");
                 String emailFound = resultSet.getString("email").trim();
-                String passwordFound = resultSet.getString("password").trim();
+                String passwordFound = resultSet.getString("password").trim(); // Mật khẩu mã hóa
                 int roleIdFound = resultSet.getInt("role_id");
-                System.out.println("role_id from database: " + roleIdFound);
-                User userFound = new User(idUser, emailFound, passwordFound, roleIdFound);
-                listFound.add(userFound);
 
+                // Kiểm tra mật khẩu plaintext với mật khẩu mã hóa
+                if (BCrypt.checkpw(u.getPassword(), passwordFound)) {
+                    System.out.println("role_id from database: " + roleIdFound);
+                    User userFound = new User(idUser, emailFound, passwordFound, roleIdFound);
+                    listFound.add(userFound);
+                } else {
+                    System.out.println("Mật khẩu không khớp");
+                }
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Lỗi truy vấn cơ sở dữ liệu: " + e.getMessage());
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Lỗi đóng tài nguyên: " + e.getMessage());
+            }
         }
         return listFound.isEmpty() ? null : listFound.get(0);
     }
@@ -167,16 +196,17 @@ public class AccountDAO extends DBContext {
             connection = getConnection();
 
             // Tạo câu lệnh SQL để chèn user
-            String sql = "INSERT INTO `user` "
+            String userSQL = "INSERT INTO `user` "
                     + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // Chuẩn bị câu lệnh SQL
-            statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(userSQL, statement.RETURN_GENERATED_KEYS);
 
             // Gán giá trị vào câu lệnh SQL
             statement.setString(1, user.getEmail());
-            statement.setString(2, user.getPassword());
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            statement.setString(2, hashedPassword);
             statement.setString(3, user.getFull_name());
             statement.setString(4, user.getPhone());
             statement.setString(5, user.getGender());
@@ -205,11 +235,14 @@ public class AccountDAO extends DBContext {
 
             // Kiểm tra nếu có ID được sinh tự động
             if (resultSet.next()) {
-                int userId = resultSet.getInt(1);
-                System.out.println("User inserted with ID: " + userId);
+                int newUserId = resultSet.getInt(1);
+                System.out.println("User inserted with ID: " + newUserId);
 
-                // Sau khi chèn user, thêm user_id vào bảng user_role
-                insertToUserRole(userId, 1); // Gán mặc định role_id = 1
+                //  Thêm user_id vào bảng user_role (gán mặc định role_id = 1)
+                insertToUserRole(newUserId, 1);
+
+                //  Chèn địa chỉ vào bảng user_address
+                insertUserAddress(newUserId, user.getUserAddress().getUserAddress());
             }
 
         } catch (SQLException e) {
@@ -220,6 +253,72 @@ public class AccountDAO extends DBContext {
                 if (resultSet != null) {
                     resultSet.close();
                 }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void insertUserAddress(int userId, String userAddress) {
+        PreparedStatement addressStmt = null;
+
+        try {
+            // Kết nối với cơ sở dữ liệu
+            connection = getConnection();
+
+            // Câu lệnh SQL chèn vào bảng user_address
+            String addressSQL = "INSERT INTO useraddress (user_id, user_address) VALUES (?, ?)";
+
+            // Chuẩn bị câu lệnh SQL
+            addressStmt = connection.prepareStatement(addressSQL);
+            addressStmt.setInt(1, userId);
+            addressStmt.setString(2, userAddress);
+
+            // Thực thi câu lệnh
+            int rowsInserted = addressStmt.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("User address inserted successfully for user_id: " + userId);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (addressStmt != null) {
+                    addressStmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+// Phương thức thêm user vào bảng user_role
+        private void insertToUserRole(int idFromUser, int roleId) {
+        try {
+            connection = getConnection();
+            String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idFromUser);
+            statement.setInt(2, roleId);
+
+            statement.executeUpdate();
+            System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
                 if (statement != null) {
                     statement.close();
                 }
@@ -304,34 +403,6 @@ public class AccountDAO extends DBContext {
         }
     }
 
-// Phương thức thêm user vào bảng user_role
-    private void insertToUserRole(int idFromUser, int roleId) {
-        try {
-            connection = getConnection();
-            String sql = "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, idFromUser);
-            statement.setInt(2, roleId);
-
-            statement.executeUpdate();
-            System.out.println("Id của User " + idFromUser + " được thêm vào user_role với role ID " + roleId);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void insertToUserAddress(int idFromUser, String address) {
         try {
             connection = getConnection();
@@ -361,22 +432,26 @@ public class AccountDAO extends DBContext {
     public boolean checkOldPassword(String email, String oldPassword) {
         boolean isValid = false;
 
-        // Kết nối với cơ sở dữ liệu
-        connection = getConnection();
-
-        // Câu lệnh SQL để kiểm tra email và mật khẩu
-        String sql = "SELECT * FROM `user` WHERE `email` = ? AND `password` = ?";
-
         try {
+            // Kết nối với cơ sở dữ liệu
+            connection = getConnection();
+
+            // Câu lệnh SQL chỉ tìm theo email
+            String sql = "SELECT `password` FROM `user` WHERE `email` = ?";
+
             // Tạo PreparedStatement
             statement = connection.prepareStatement(sql);
-            // Đặt giá trị cho tham số
             statement.setString(1, email);
-            statement.setString(2, oldPassword);
+
             // Thực thi câu lệnh SQL
             resultSet = statement.executeQuery();
-            // Nếu có dữ liệu trả về, nghĩa là mật khẩu cũ đúng
-            isValid = resultSet.next();
+
+            // Nếu có dữ liệu trả về, kiểm tra mật khẩu mã hóa
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password").trim();
+                // So sánh mật khẩu plaintext với mật khẩu mã hóa
+                isValid = BCrypt.checkpw(oldPassword, hashedPassword);
+            }
         } catch (SQLException e) {
             System.out.println("Lỗi kiểm tra mật khẩu cũ: " + e.getMessage());
         } finally {
@@ -605,9 +680,11 @@ public class AccountDAO extends DBContext {
 
 //        User u = new User("lbienvda@gmail.com", "2");
 //        System.out.println(d.updateUserPassword(u));
-        
-        List<User> u = d.findAll();
-        System.out.println(u.size());    
+//        List<User> u = d.findAll();
+//        System.out.println(u.size());
+
+        System.out.println(d.getDataUser("lbienvda@gmail.com", "222"));
+
     }
 
     public List<User> findAll() {

@@ -290,7 +290,7 @@
                                 </div>
 
 
-                                <c:if test="${sessionScope.role == 1}">
+                                <c:if test="${sessionScope.profileUser.role_id == 1}">
                                     <div class="col-sm-12">
                                         <p><b>Viết đánh giá của bạn</b></p>
                                         <form action="ProductDetails" method="POST" enctype="multipart/form-data">
