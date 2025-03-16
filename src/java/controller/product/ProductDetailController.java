@@ -116,7 +116,8 @@ public class ProductDetailController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User userProfile = (User) session.getAttribute("user");
-        int role = (Integer) session.getAttribute("role");
+        User profileUser = (User) session.getAttribute("profileUser");
+        int role = (profileUser != null) ? profileUser.getRole_id() : 0;
         if (role == 1) {
             FeedbackDAO dao = new FeedbackDAO();
             ProductDAO daoP = new ProductDAO();
@@ -149,7 +150,7 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setStatus(1);
                 dao.addFeedback(feedback);
             } else {
-                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
+                filePart.write("C:\\Users\\vuduc\\Documents\\NetBeansProjects\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
                 feedback.setFull_name(fullName);
                 feedback.setEmail(email);
                 feedback.setPhone(phone);
@@ -171,9 +172,8 @@ public class ProductDetailController extends HttpServlet {
             Product b = daoP.getProductById(productId);
             // You may want to redirect the user to a confirmation page
             response.sendRedirect("ProductDetails?bid=" + b.getBrandId() + "&cid=" + b.getProductCategory_ID() + "&pid=" + productId);
-        } 
-        else {
-            response.sendRedirect("/ProjectSWP391/404.html"); 
+        } else {
+            response.sendRedirect("/ProjectSWP391/404.html");
         }
 
     }
@@ -189,4 +189,3 @@ public class ProductDetailController extends HttpServlet {
     }// </editor-fold>
 
 }
-
