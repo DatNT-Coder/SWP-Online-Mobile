@@ -6,6 +6,7 @@ package controller.product;
 
 import dao.BrandDAO;
 import dao.FeedbackDAO;
+import dao.OrderDAO;
 import dao.ProductCategoryDAO;
 import dao.ProductDAO;
 import dao.ProductDetailDAO;
@@ -70,7 +71,20 @@ public class ProductDetailController extends HttpServlet {
         String id = request.getParameter("pid");
         String cateID_r = request.getParameter("cid");
         String brandID_r = request.getParameter("bid");
+        User profileUser = (User) session.getAttribute("profileUser");
+        int productId = Integer.parseInt(request.getParameter("pid"));
+    
+        // Kiểm tra nếu user đã đăng nhập và có role_id = 1
+       // Kiểm tra nếu user đã đăng nhập và có role_id = 1
+    boolean hasPurchased = false;
+    if (profileUser != null) {
 
+        if (profileUser.getRole_id() == 1) {
+            OrderDAO orderDAO = new OrderDAO();
+            hasPurchased = orderDAO.checkUserHasPurchased(profileUser.getId(), productId);
+        }
+    } else {
+    }
         int cateID = 0;
         int brandID = 0;
         if (cateID_r != null && brandID_r != null) {
@@ -89,18 +103,24 @@ public class ProductDetailController extends HttpServlet {
         BrandDAO daoBrand = new BrandDAO();
         Vector<ProductCategory> listC = pcg.getAllCategories();
         Vector<ProductCategory> listPCategories = daoProductCategory.getAllCategories();
+        double avgRating = daoFeedback.getAverageRating(Integer.parseInt(id));
 
         request.setAttribute("listC", listC);
         request.setAttribute("productDetail", productDetail);
         request.setAttribute("latestP", latestProduct);
         request.setAttribute("listPC", listPCategories);
         request.setAttribute("listFeedback", listFeedback);
+        request.setAttribute("avgRating", avgRating);
+        request.setAttribute("hasPurchased", hasPurchased);
         session.setAttribute("pickedCategory", pById.getProductCategory_ID());
         session.setAttribute("pickedBrand", pById.getBrandId());
+
         //get all Brand
         Vector<Brand> listBrand = daoBrand.getAllBrand();
         request.setAttribute("listBrand", listBrand);
         request.getRequestDispatcher("product-details.jsp").forward(request, response);
+        
+
     }
 
     /**
@@ -148,9 +168,12 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setProduct_Id(productId);
                 feedback.setUser_Id(userId);
                 feedback.setStatus(1);
+                feedback.setImageStatus(1);
                 dao.addFeedback(feedback);
             } else {
-                filePart.write("C:\\Users\\vuduc\\Documents\\NetBeansProjects\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
+                filePart.write("C:\\Users\\tiend\\Desktop\\SWP\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
+//                filePart.write("C:\\swp391-group3\\web\\assets\\img\\feedbackImage\\" + fileName);
+
                 feedback.setFull_name(fullName);
                 feedback.setEmail(email);
                 feedback.setPhone(phone);
@@ -161,6 +184,7 @@ public class ProductDetailController extends HttpServlet {
                 feedback.setProduct_Id(productId);
                 feedback.setUser_Id(userId);
                 feedback.setStatus(1);
+                feedback.setImageStatus(1);
                 dao.addFeedback(feedback);
             }
             try {

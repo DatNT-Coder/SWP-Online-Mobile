@@ -210,7 +210,27 @@ public class OrderDAO {
         }
         return null;
     }
+              
+    public boolean checkUserHasPurchased(int userId, int productId) {
+    String sql = "SELECT COUNT(*) FROM orders o "
+               + "JOIN orderdetails od ON o.id = od.Orders_ID "
+               + "WHERE o.user_id = ? AND od.Product_ID = ?";
+    
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        ps.setInt(2, productId);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getInt(1) > 0; // Trả về true nếu người dùng đã từng mua sản phẩm
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 
+              
     public static void main(String[] args) {
         // Tạo đối tượng DAO để truy vấn dữ liệu
         OrderDAO userDAO = new OrderDAO();
@@ -239,6 +259,24 @@ public class OrderDAO {
             System.out.println("User not found with ID: " + customerId);
         }
     }
+    
+//    public static void main(String[] args) {
+//        OrderDAO orderDAO = new OrderDAO();
+//        
+//        // Giả sử bạn muốn kiểm tra user_id = 1 và product_id = 2
+//        int userId = 50;
+//        int productId = 2;
+//
+//        // Gọi phương thức kiểm tra
+//        boolean hasPurchased = orderDAO.checkUserHasPurchased(userId, productId);
+//
+//        // In kết quả ra console
+//        if (hasPurchased) {
+//            System.out.println("Người dùng có ID = " + userId + " đã từng mua sản phẩm có ID = " + productId);
+//        } else {
+//            System.out.println("Người dùng có ID = " + userId + " chưa từng mua sản phẩm có ID = " + productId);
+//        }
+//    }
 }
 
 
