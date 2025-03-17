@@ -20,14 +20,14 @@
             </c:choose>
         <p style="color: white">Welcome, ${sessionScope.user.full_name}</p>
 
-        <p style="color: white"><a href="/mobileshop/Home">Back to home</a></p>
+        <p style="color: white"><a href="HomePage">Back to home</a></p>
 
     </div>
     <h2>Admin</h2>
     <ul>
         <li><a href="/mobileshop/admin/adminDashBoard">Thống kê</a></li>
         <li><a href="/mobileshop/admin/listSettingAdmin">Danh sách cài đặt</a></li>
-        <li><a href="/mobileshop/admin/UserListServlet">Danh sách người dùng</a></li>
+        <li><a href="admin/udashboard">Danh sách người dùng</a></li>
     </ul>
 </div>
 

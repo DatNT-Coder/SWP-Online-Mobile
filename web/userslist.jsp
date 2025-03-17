@@ -37,7 +37,6 @@
         </style>
     </head>
     <body>
-        <form action="customerList" method="post">
 
             <div class="container">
                 <div class="row">
@@ -47,18 +46,20 @@
                                 <h5 class="mb-0">Users List</h5>
                                 <div>
                                     <a href="create-customer" class="btn btn-primary btn-sm">Add New</a>
-<!--                                    <a href="#" class="btn btn-info btn-sm">View</a>
-                                    <a href="#" class="btn btn-warning btn-sm">Edit</a>-->
+                                    <!--                                    <a href="#" class="btn btn-info btn-sm">View</a>
+                                                                        <a href="#" class="btn btn-warning btn-sm">Edit</a>-->
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body d-flex justify-content-between">
                                 <div class="col-md-5">
+                                    <form action="udashboard?action=search" method="post">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="searchKeyword" 
-                                               placeholder="Search by name, email, mobile" value="${searchKeyword}">
+                                        <input type="text" class="form-control" name="keyword" 
+                                               placeholder="Search by name, email, mobile">
                                         <button type="submit" class="btn btn-secondary">Search</button>
-                                        ${err}
+                                        ${er}
                                     </div>
+                                        </form>
                                 </div>
 
                                 <div class="col-md-4">
@@ -71,8 +72,23 @@
                                         <button type="submit" class="btn btn-secondary">Filter by Status</button>
                                     </div>
                                 </div>
-
+                                        
+                               <div class="form-group select-filter">
+                                 <label for="filter">
+                                    <h3>Lọc phản hồi:</h3>
+                                 </label>
+                                 <select class="form-control" id="listFilter">
+                                    <option selected="" disabled="">Chọn theo...</option>
+                                    <option value="status">Trạng thái</option>
+                                 </select>
+                                 <select class="form-control" id="filterDetail" style="margin-top: 10px;">
+                                    <option selected="" disabled="">Lựa chọn</option>
+                                    <!-- lựa chọn ở đây. -->
+                                 </select>
+                              </div>
+                                        
                             </div>
+
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead class="small text-uppercase bg-body text-muted">
@@ -89,8 +105,8 @@
                                             </th>
                                             <th>
                                                 Gender
-                                                <a href="?sortField=full_name&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=full_name&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                                <a href="?sortField=gender&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=gender&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
                                             </th>
                                             <th>
                                                 Email
@@ -108,9 +124,9 @@
                                                 <a href="?sortField=status&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
                                             </th>
                                             <th>
-                                                Role Id
-                                                <a href="?sortField=status&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=status&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
+                                                Role
+                                                <a href="?sortField=role_name&sortOrder=asc"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="?sortField=role_name&sortOrder=desc"><i class="fa fa-arrow-down"></i></a>
                                             </th>
                                             <th>
                                                 Option
@@ -121,7 +137,7 @@
 
 
                                     <tbody>
-                                        <c:forEach var="u" items="${userList}">
+                                        <c:forEach var="u" items="${listUser}">
                                             <tr>
                                                 <td>${u.id}</td>
                                                 <td>${u.full_name}</td>
@@ -129,10 +145,10 @@
                                                 <td>${u.email}</td>
                                                 <td>${u.phone}</td>
                                                 <td>${u.status == 1 ? 'Active' : 'In Active'}</td>
-                                                <td>${u.role_id}</td>
+                                                <td>${u.role_name}</td>
                                                 <td>
-                                                <a href="customerDetail?id=${customer.id}" class="btn btn-info btn-sm">View Detail</a>
-                                                <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="customerDetail?id=${customer.id}" class="btn btn-info btn-sm">View Detail</a>
+                                                    <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -163,13 +179,11 @@
                                     </c:if>
                                 </ul>
                             </nav>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-
-        </form>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>

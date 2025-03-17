@@ -681,45 +681,118 @@ public class AccountDAO extends DBContext {
 //        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
 //        User u = new User("lbienvda@gmail.com", "2");
 //        System.out.println(d.updateUserPassword(u));
-//        List<User> u = d.findAll();
-//        System.out.println(u.size());
+        List<User> u = d.findAll();
+        u = d.searchUserInfo("89");
+//        System.out.println(u.get(0).getRole_name());
+//        System.out.println(u.get(0).getFull_name());
+//        System.out.println(u.get(0));
+//        System.out.println(d.getDataUser("lbienvda@gmail.com", "222"));
 
-        System.out.println(d.getDataUser("lbienvda@gmail.com", "222"));
 
+        System.out.println(u);
     }
 
     public List<User> findAll() {
         List<User> listFound = new ArrayList<>();
         connection = getConnection();
-        String sql = "SELECT u.*, ur.role_id FROM User u JOIN user_role ur ON u.id = ur.user_id ";
+        String sql = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id";
+
         try {
-            //- Tạo đối tượng PrepareStatement
             statement = connection.prepareStatement(sql);
-            //- Set parameter ( optional )
-            //- Thực thi câu lệnh
             resultSet = statement.executeQuery();
-            //- trả về kết quả
             while (resultSet.next()) {
                 int idUser = resultSet.getInt("id");
                 String emailFound = resultSet.getString("email").trim();
-                String passwordFound = resultSet.getString("password").trim();
                 String fullNameFound = resultSet.getString("full_name");
                 String phoneNumberFound = resultSet.getString("phone");
                 String genderFound = resultSet.getString("gender");
-                Date registrationDateFound = resultSet.getDate("registration_date");
                 int statusFound = resultSet.getInt("status");
-                int updatedByFound = resultSet.getInt("updatedBy");
-                Date updatedDateFound = resultSet.getDate("updatedDate");
-                String imageFound = resultSet.getString("image");
-                int settingsIdFound = resultSet.getInt("settings_id");
                 int roleIdFound = resultSet.getInt("role_id");
-                User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound);
+                String roleNameFound = resultSet.getString("role_name"); // Lấy role_name
+
+                // Thêm roleName vào User object (cần cập nhật constructor User)
+                User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound, roleNameFound);
                 listFound.add(user);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return listFound;
+    }
+
+    public List<User> getUserByPage(int offset, int limit, String sortField, String sortOrder) {
+        List<User> u = new ArrayList<>();
+
+        String query = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id "
+                + "ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "desc" : "asc")
+                + " LIMIT ? OFFSET ?";
+
+        try {
+            this.connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFull_name(rs.getString("full_name"));
+                user.setGender(rs.getString("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setStatus(rs.getInt("status"));
+                user.setRole_id(rs.getInt("role_id"));
+                user.setRole_name(rs.getString("role_name"));
+                u.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching customers: " + e.getMessage());
+        }
+        return u;
+    }
+
+    public List<User> searchUserInfo(String kw) {
+        List<User> u = new ArrayList<>();
+        String query = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id "
+                + "WHERE LOWER(full_name) LIKE LOWER(?) "
+                + "   OR LOWER(email) LIKE LOWER(?) "
+                + "   OR phone LIKE ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            String searchKeyword = "%" + kw + "%";
+            ps.setString(1, searchKeyword);
+            ps.setString(2, searchKeyword);
+            ps.setString(3, searchKeyword);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFull_name(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setStatus(rs.getInt("status"));
+                user.setGender(rs.getString("gender"));
+                user.setRole_id(rs.getInt("role_id"));
+                user.setRole_name(rs.getString("role_name"));
+                u.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return u;
     }
 
 }

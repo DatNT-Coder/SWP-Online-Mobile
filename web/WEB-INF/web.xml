@@ -26,7 +26,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UsersListDashboard</servlet-name>
-        <url-pattern>/udashboard</url-pattern>
+        <url-pattern>/admin/udashboard</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>HomePage</welcome-file>
