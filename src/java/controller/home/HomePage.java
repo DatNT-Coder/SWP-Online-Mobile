@@ -7,6 +7,7 @@ package controller.home;
 import com.google.gson.Gson;
 import dao.BlogPostDAO;
 import dao.BrandDAO;
+import dao.FeedbackDAO;
 import dao.PostCategoryDAO;
 import dao.ProductCategoryDAO;
 import dao.ProductDAO;
@@ -17,7 +18,9 @@ import java.io.PrintWriter;
 import java.util.Vector;
 import jakarta.servlet.ServletException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.BlogPost;
 import model.Brand;
 import model.PostCategory;
@@ -52,6 +55,7 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
          ProductDAO daoProduct = new ProductDAO();
          ProductCategoryDAO daoProductCategory = new ProductCategoryDAO();
          BrandDAO daoBrand = new BrandDAO();
+         FeedbackDAO feedbackDAO = new FeedbackDAO();
 
          //get latest product
          Vector<Product> latestProduct = daoProduct.top6LastestProduct();
@@ -60,9 +64,26 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
          Vector<ProductCategory> listPCategories = daoProductCategory.getAllCategories();
          Vector<Product> listProduct = daoProduct.getAllProduct();
 
+          // Tạo một Map để chứa avgRating cho từng sản phẩm dưới dạng chuỗi
+            Map<Integer, String> productRatings = new HashMap<>();
+            // Lặp qua từng sản phẩm và lấy avgRating từ FeedbackDAO
+            for (Product product : listProduct) {
+                double avgRating = feedbackDAO.getAverageRating(product.getID());
+
+                // Nếu không có đánh giá (avgRating là NaN), đặt giá trị là "0"
+                if (Double.isNaN(avgRating)) {
+                    productRatings.put(product.getID(), "0");
+                } else {
+                    // Chuyển avgRating thành chuỗi và làm tròn đến 1 chữ số thập phân
+                    productRatings.put(product.getID(), String.format("%.1f", avgRating));
+                }
+            }
+
+         
          //Using JSON to pagination with client render
          Gson gson = new Gson();
          String listProductGson = gson.toJson(listProduct);
+         String productRatingsJSON = gson.toJson(productRatings);
 
          //get all Brand
          Vector<Brand> listBrand = daoBrand.getAllBrand();
@@ -119,6 +140,9 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
 
          request.setAttribute("listPC", listPCategories);
          request.setAttribute("latestP", latestProduct);
+         
+         request.setAttribute("productRatingsJSON", productRatingsJSON);
+
          request.getRequestDispatcher("home.jsp").forward(request, response);
       }
 

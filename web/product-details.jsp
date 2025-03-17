@@ -6,6 +6,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -256,7 +258,7 @@
                                 <div class="product-information"><!--/product-information-->
                                     <h2>${productDetail.name}</h2>
                                     <p>ID: ${productDetail.ID}</p>
-                                    <p><b>Loại sản phẩm:</b>${productDetail.categoryName}</p>
+                                    <p><b>Loại sản phẩm: </b>${productDetail.categoryName}</p>
                                     <span>
                                         <h5><s> US $${productDetail.originalPrice}</s></h5>
                                         <h4 id="salePrice"> US $${productDetail.salePrice}</h4>
@@ -264,8 +266,29 @@
                                             <label for="quantityInput">Số lượng: </label>
                                             <input type="number" id="quantityInput" name="quantity" value="1" min="1">
                                         </div>
+                                        <p class="rating-container" style="font-size: 1.5em; font-weight: bold; display: flex; align-items: center; gap: 5px; line-height: 1;">
+                                            <label for="quantityInput" style="margin-right: 5px;">Đánh giá:</label>
+                                            <span style="display: flex; align-items: center;">
+                                                <fmt:formatNumber value="${avgRating}" type="number" minFractionDigits="2" maxFractionDigits="2"/>
+                                                <span style="color: gold; font-size: 1em; margin-left: 10px;">★</span>
+                                            </span>
+                                        </p>
 
-                                        <a  onclick="addToCart(${productDetail.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <span class="stars">
+                                            <c:forEach var="i" begin="1" end="${avgRating}">
+                                                <i class="fa fa-star"></i>
+                                            </c:forEach>
+                                            <c:if test="${avgRating % 1 != 0}">
+                                                <i class="fa fa-star-half-alt"></i>
+                                            </c:if>
+                                        </span>
+
+                                        <!-- Nút Add to cart xuống dòng -->
+                                        <div>
+                                            <a onclick="addToCart(${productDetail.ID})" class="btn btn-default add-to-cart">
+                                                <i class="fa fa-shopping-cart"></i> Add to cart
+                                            </a>
+                                        </div>
                                     </span>
 
                                     <a href=""><img src="${pageContext.request.contextPath}/images/product-details/share.png" class="share img-responsive"  alt="" /></a>
@@ -290,7 +313,7 @@
                                 </div>
 
 
-                                <c:if test="${sessionScope.profileUser.role_id == 1}">
+                                <c:if test="${sessionScope.profileUser.role_id == 1 and hasPurchased}">
                                     <div class="col-sm-12">
                                         <p><b>Viết đánh giá của bạn</b></p>
                                         <form action="ProductDetails" method="POST" enctype="multipart/form-data">
@@ -298,23 +321,23 @@
                                             <div class="form-group" style="display: flex; justify-content: space-between;">
                                                 <div style="width: 48%;">
                                                     <label for="name">Họ và tên</label>
-                                                    <input name="full_name" style="width: 100%;" type="text" class="form-control" id="name" value="${sessionScope.user.full_name}" readonly required="">
+                                                    <input name="full_name" style="width: 100%;" type="text" class="form-control" id="name" value="${sessionScope.profileUser.full_name}" readonly required="">
                                                 </div>
                                                 <div style="width: 48%;">
                                                     <label for="address">Email</label>
-                                                    <input name="email" style="width: 100%;" type="text" class="form-control" id="address" value="${sessionScope.user.email}" readonly required="">
+                                                    <input name="email" style="width: 100%;" type="text" class="form-control" id="address" value="${sessionScope.profileUser.email}" readonly required="">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="phone">Số điện thoại</label>
-                                                <input style="width: 48%;"  name="phone" style="width: 50%;" type="tel" class="form-control" id="phone" value="${sessionScope.user.phone}" readonly required="">
+                                                <input style="width: 48%;"  name="phone" style="width: 50%;" type="tel" class="form-control" id="phone" value="${sessionScope.profileUser.phone}" readonly required="">
                                             </div>
                                             <div class="form-group">
                                                 <label>Giới Tính</label>
                                                 <div>
-                                                    <input <c:if test="${sessionScope.user.gender == 'Male'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Male" required="">
+                                                    <input <c:if test="${sessionScope.profileUser.gender == 'Male'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Male" required="">
                                                         <label class="form-label">Nam</label>
-                                                        <input <c:if test="${sessionScope.user.gender == 'Female'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Female" required="">
+                                                        <input <c:if test="${sessionScope.profileUser.gender == 'Female'}">checked</c:if> required="" type="radio" id="html" name="gender" value="Female" required="">
                                                         <label class="form-label">Nữ</label>
                                                     </div>
                                                 </div>
@@ -350,6 +373,10 @@
                                         </form>
                                     </div>
                                 </c:if>
+                                        <c:if test="${sessionScope.profileUser.role_id == 1 and not hasPurchased}">
+    <p>Bạn cần mua hàng trước khi viết đánh giá.</p>
+</c:if>
+                                        
                                 <div class="tab-pane fade active in" id="reviews" >
 
                                     <div>
@@ -365,6 +392,7 @@
                                                     <ul>
                                                         <li><a href=""><i style="color: #009981;" class="fa fa-user"></i>${listFeedback.full_name}</a></li>
                                                     </ul>
+
                                                     <label>Ảnh phản hồi:</label>
                                                     <div class="d-flex justify-content-center align-items-center">
                                                         <img style="width: 220px; height: 130px;" id="preview" src="./assets/img/feedbackImage/${listFeedback.image}" alt="ảnh phản hồi" class="img-thumbnail"/>

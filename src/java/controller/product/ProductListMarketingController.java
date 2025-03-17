@@ -25,7 +25,7 @@ import model.ProductCategory;
 
 /**
  *
- * @author KieuVietPhuoc
+ * @author naokh
  */
 @WebServlet(name = "ProductListMarketingController", urlPatterns = {"/product-listAdmin"})
 @MultipartConfig(
@@ -76,12 +76,12 @@ public class ProductListMarketingController extends HttpServlet {
       ProductDAO prdList = new ProductDAO();
       ProductCategoryDAO prdCategory = new ProductCategoryDAO();
       BrandDAO brandDAO = new BrandDAO();
-      List<Product> list = prdList.searchProduct(search, category, brand, null, null, "10", page, status);
+      List<Product> list = prdList.searchProduct(search, category, brand, null, null, "5", page, status);
       List<Product> listA = prdList.searchProduct(search, category, brand, null, null, "999999999999999999999", "1", status);
       List<ProductCategory> listCategory = prdCategory.getAllCategories();
       int totalSearch = listA.size();
-      int totalPage = totalSearch / 10;
-      if (totalSearch % 10 != 0) {
+      int totalPage = totalSearch / 5;
+      if (totalSearch % 5 != 0) {
          totalPage += 1;
       }
 
@@ -159,7 +159,7 @@ public class ProductListMarketingController extends HttpServlet {
       }
 
       List<Brand> brandList = brandDAO.getAllBrand();
-      List<Product> list = prdList.searchProduct("", "", "", null, null, "10", "1", "");
+      List<Product> list = prdList.searchProduct("", "", "", null, null, "5", "1", "");
       request.setAttribute("totalPage", totalPage);
       request.setAttribute("search", "");
       request.setAttribute("list", list);
