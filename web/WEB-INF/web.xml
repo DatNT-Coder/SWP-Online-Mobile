@@ -163,5 +163,12 @@
         <servlet-name>ProductDetailController</servlet-name>
         <url-pattern>/ProductDetail</url-pattern>
     </servlet-mapping>
-    
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>controller.dashboard.AdminDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin/adminDashBoard</url-pattern>
+    </servlet-mapping>
 </web-app>
