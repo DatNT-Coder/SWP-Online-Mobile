@@ -266,10 +266,14 @@
                                             <label for="quantityInput">Số lượng: </label>
                                             <input type="number" id="quantityInput" name="quantity" value="1" min="1">
                                         </div>
-                                        <p class="rating-container">
-                                            <label for="quantityInput">Đánh giá: </label>
-                                            <fmt:formatNumber value="${avgRating}" type="number" minFractionDigits="2" maxFractionDigits="2"/>
+                                        <p class="rating-container" style="font-size: 1.5em; font-weight: bold; display: flex; align-items: center; gap: 5px; line-height: 1;">
+                                            <label for="quantityInput" style="margin-right: 5px;">Đánh giá:</label>
+                                            <span style="display: flex; align-items: center;">
+                                                <fmt:formatNumber value="${avgRating}" type="number" minFractionDigits="2" maxFractionDigits="2"/>
+                                                <span style="color: gold; font-size: 1em; margin-left: 10px;">★</span>
+                                            </span>
                                         </p>
+
                                         <span class="stars">
                                             <c:forEach var="i" begin="1" end="${avgRating}">
                                                 <i class="fa fa-star"></i>

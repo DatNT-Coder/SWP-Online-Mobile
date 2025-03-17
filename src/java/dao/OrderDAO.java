@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.CartItem;
@@ -230,7 +231,114 @@ public class OrderDAO {
     return false;
 }
 
-              
+    public int getTotalEarningsMonthly() {
+        String query = "select sum(total) as total from orders where YEAR(order_date) = Year(curdate()) and Month(order_date) = Month(curdate())";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
+    public int getTotalEarningsAnnual() {
+        String query = "select sum(total) as total from orders where YEAR(order_date) = Year(CURDATE())";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public int getTotalUser() {
+        String query = "Select COUNT(*) as total from User where status = 1";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
+     public int getTotalUserInLastWeek() {
+        String query = "Select COUNT(*) as total from User where registration_date >= date_sub(now(),interval 7 day);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+               public int getTotalProducts() {
+        String query = "Select count(*) as total from Product where status = 1";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public HashMap<Integer, Integer> getEarningsByMonths() {
+        HashMap<Integer, Integer> maps = new HashMap<>();
+        String query = "WITH months AS (\n"
+                + "    SELECT 1 AS month_num UNION ALL\n"
+                + "    SELECT 2 UNION ALL\n"
+                + "    SELECT 3 UNION ALL\n"
+                + "    SELECT 4 UNION ALL\n"
+                + "    SELECT 5 UNION ALL\n"
+                + "    SELECT 6 UNION ALL\n"
+                + "    SELECT 7 UNION ALL\n"
+                + "    SELECT 8 UNION ALL\n"
+                + "    SELECT 9 UNION ALL\n"
+                + "    SELECT 10 UNION ALL\n"
+                + "    SELECT 11 UNION ALL\n"
+                + "    SELECT 12\n"
+                + ")\n"
+                + "SELECT \n"
+                + "    m.month_num AS month,\n"
+                + "    COALESCE(SUM(t.total), 0) AS total_amount\n"
+                + "FROM \n"
+                + "    months m\n"
+                + "LEFT JOIN \n"
+                + "    mydb.orders t ON MONTH(t.order_date) = m.month_num and Year(t.order_date) = year(CURDATE())\n"
+                + "GROUP BY \n"
+                + "    YEAR(t.order_date),\n"
+                + "    m.month_num";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                maps.put(rs.getInt(1), rs.getInt(2));
+            }
+            return maps;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
         // Tạo đối tượng DAO để truy vấn dữ liệu
         OrderDAO userDAO = new OrderDAO();
@@ -260,23 +368,6 @@ public class OrderDAO {
         }
     }
     
-//    public static void main(String[] args) {
-//        OrderDAO orderDAO = new OrderDAO();
-//        
-//        // Giả sử bạn muốn kiểm tra user_id = 1 và product_id = 2
-//        int userId = 50;
-//        int productId = 2;
-//
-//        // Gọi phương thức kiểm tra
-//        boolean hasPurchased = orderDAO.checkUserHasPurchased(userId, productId);
-//
-//        // In kết quả ra console
-//        if (hasPurchased) {
-//            System.out.println("Người dùng có ID = " + userId + " đã từng mua sản phẩm có ID = " + productId);
-//        } else {
-//            System.out.println("Người dùng có ID = " + userId + " chưa từng mua sản phẩm có ID = " + productId);
-//        }
-//    }
 }
 
 

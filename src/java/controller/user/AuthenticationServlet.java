@@ -168,6 +168,14 @@ public class AuthenticationServlet extends HttpServlet {
 //                    request.getSession().setAttribute("full_name", fullName);
                     url = "marketing/listFeedbackMarketing";
                 }
+                else if (foundUserAccount.getRole_id() == 2) {
+                    request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //sale
+                    request.getSession().setAttribute("user", foundUserAccount);
+                    request.getSession().setAttribute("role", userRole);
+                    request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
+//                    request.getSession().setAttribute("full_name", fullName);
+                    url = "sale/saleDashboard";
+                }
             } else {
                 request.setAttribute("error", "Email or Password is incorrect !");
                 url = "login.jsp";
