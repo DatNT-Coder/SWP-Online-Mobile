@@ -4,7 +4,10 @@
  */
 package controller.dashboard;
 
+import com.google.gson.Gson;
+import dao.FeedbackDAO;
 import dao.OrderDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,7 +16,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
+import model.Product;
 
 /**
  *
@@ -60,12 +65,24 @@ public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDAO orderDAO = new OrderDAO();
+        ProductDAO productDAO = new ProductDAO();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        
         int totalEarningsMonthly = orderDAO.getTotalEarningsMonthly();
         int totalEarningsAnnual = orderDAO.getTotalEarningsAnnual();
         int totalUser = orderDAO.getTotalUser();
         int totalUsersInLastWeek = orderDAO.getTotalUserInLastWeek();
         int totalProducts = orderDAO.getTotalProducts();
         HashMap<Integer, Integer> earningsByMonths = orderDAO.getEarningsByMonths();
+        
+         // Lấy danh sách sản phẩm và số sao trung bình
+        List<Product> productList = productDAO.getAllProduct();
+        HashMap<Integer, Double> productRatings = new HashMap<>();
+        for (Product product : productList) {
+            double avgRating = feedbackDAO.getAverageRating(product.getID());
+            productRatings.put(product.getID(), avgRating);
+        }
+    
         String months = earningsByMonths.keySet().toString();
         String values = earningsByMonths.values().toString();
         request.setAttribute("totalAnual", totalEarningsAnnual);
@@ -75,6 +92,16 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("totalLW", totalUsersInLastWeek);
         request.setAttribute("months", months);
         request.setAttribute("values", values);
+        
+         // Chuyển đổi dữ liệu thành JSON String
+        Gson gson = new Gson();
+        String productListJson = gson.toJson(productList);
+        String productRatingsJson = gson.toJson(productRatings);
+    
+        // Đặt danh sách sản phẩm và đánh giá vào request
+        request.setAttribute("productList", productListJson);
+        request.setAttribute("productRatings", productRatingsJson);
+        
         request.getRequestDispatcher("/AdminDashBoard.jsp").forward(request, response);
     }
 

@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -275,7 +276,24 @@
                         </div>
                     </div>
                     <!-- /.container-fluid -->
+                    <div class="container mt-5">
+                           <h3>Danh sách sản phẩm và đánh giá trung bình</h3>
 
+                           <table class="table table-bordered table-striped mt-3">
+                               <thead>
+                                   <tr>
+                                       <th>Tên sản phẩm</th>
+                                       <th>Đánh giá trung bình</th>
+                                   </tr>
+                               </thead>
+                               <tbody></tbody>
+                           </table>
+
+                           <!-- Phân trang -->
+                           <nav aria-label="Pagination">
+                               <ul class="pagination justify-content-center"></ul>
+                           </nav>
+                       </div>
                 </div>
                 <!-- End of Main Content -->
 
@@ -487,7 +505,93 @@
                 }
             });
         </script>
+        
+      <script>
+        // Convert the product details from Java to JavaScript
+        var productList = JSON.parse('${productList}'); 
+        var productRatings = JSON.parse('${productRatings}'); 
 
+        var currentPage = 1; // Current page
+        var itemsPerPage = 8; // Number of items per page
+
+        // Display products for the current page
+        function displayProducts() {
+            var start = (currentPage - 1) * itemsPerPage;
+            var end = start + itemsPerPage;
+
+            var keys = [];
+            for (var key in productList) {
+                if (productList.hasOwnProperty(key)) {
+                    keys.push(key);
+                }
+            }
+            var productsToDisplay = keys.slice(start, end);
+
+            // Clear the current products
+            $('tbody').empty();
+
+            // Add each product
+            productsToDisplay.forEach(function (productId) {
+                var product = productList[productId];
+                var productRating = productRatings[productId]; 
+
+                if (productRating === undefined || productRating === 0) {
+                    productRating = "Không có đánh giá";
+                } else {
+                    productRating = productRating.toFixed(1); // Làm tròn đến 1 chữ số thập phân nếu cần
+                }
+
+
+                var productHtml = '<tr>' +
+                    '<td>' + product.name + '</td>' +
+                    '<td>' + productRating + '</td>' +
+                    '</tr>';
+
+                $('tbody').append(productHtml);
+            });
+        }
+
+        // Update the pagination links
+        function updatePagination() {
+            var totalPages = Math.ceil(Object.keys(productList).length / itemsPerPage);
+
+            $('.pagination').empty();
+            var prevClass = currentPage === 1 ? 'disabled' : '';
+            var prevHtml = '<li class="page-item ' + prevClass + '"><a class="page-link" href="#">Trước</a></li>';
+            $('.pagination').append(prevHtml);
+
+            for (var i = 1; i <= totalPages; i++) {
+                var liClass = i === currentPage ? 'active' : '';
+                var liHtml = '<li class="page-item ' + liClass + '"><a class="page-link" href="#">' + i + '</a></li>';
+                $('.pagination').append(liHtml);
+            }
+
+            var nextClass = currentPage === totalPages ? 'disabled' : '';
+            var nextHtml = '<li class="page-item ' + nextClass + '"><a class="page-link" href="#">Sau</a></li>';
+            $('.pagination').append(nextHtml);
+
+            $('.pagination a').click(function (e) {
+                e.preventDefault();
+
+                var pageText = $(this).text();
+
+                if (pageText === 'Trước' && currentPage !== 1) {
+                    currentPage--;
+                } else if (pageText === 'Sau' && currentPage !== totalPages) {
+                    currentPage++;
+                } else if (pageText !== 'Sau' && pageText !== 'Trước') {
+                    currentPage = parseInt(pageText);
+                }
+
+                displayProducts();
+                updatePagination();
+            });
+        }
+
+        // Display the initial products and pagination
+        displayProducts();
+        updatePagination();
+    </script>  
     </body>
 
 </html>
