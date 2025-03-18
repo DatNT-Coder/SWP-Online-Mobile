@@ -55,7 +55,20 @@ public class BrandDAO extends DBContext {
         }
         return list;
     }
-
+    public int updateBrandStatusById(int bid, int status) {
+            String query = "UPDATE mydb.brand SET status = ? WHERE brandID = ?";
+            int n = 0;
+            try {
+                this.connection = getConnection();
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, status);
+                ps.setInt(2, bid);
+                n = ps.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return n;
+        }
 
     public static void main(String[] args) {
         BrandDAO dao = new BrandDAO();

@@ -51,6 +51,20 @@ public class ProductCategoryDAO extends DBContext {
         return listC;
     }
 
+    public int updateCategoryStatusById(int pid, int status) {
+        String query = "UPDATE mydb.productcategory SET status = ? WHERE ID = ?";
+        int n = 0;
+        try {
+            this.connection = getConnection();            
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, pid);
+            n = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
    
     public static void main(String[] args) {
         ProductCategoryDAO dao = new ProductCategoryDAO();
