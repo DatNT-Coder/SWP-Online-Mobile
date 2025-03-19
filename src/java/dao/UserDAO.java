@@ -4,6 +4,7 @@
  */
 package dao;
 
+import com.sun.jdi.connect.spi.Connection;
 import context.DBContext;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -61,37 +62,43 @@ public class UserDAO extends context.DBContext {
    }
 
    public String getUserFullName(String email, String password) {
-    String fullName = null;
-    DBContext dbContext = new DBContext();
-    connection = dbContext.getConnection();  // Use DBContext to get the connection
+      String fullName = null;
+      DBContext dbContext = new DBContext();
+      connection = dbContext.getConnection();  // Use DBContext to get the connection
 
-    String sql = "SELECT full_name FROM User WHERE email = ? AND password = ?";
+      String sql = "SELECT full_name FROM User WHERE email = ? AND password = ?";
 
-    try {
-        statement = connection.prepareStatement(sql);
-        statement.setObject(1, email);
-        statement.setObject(2, password);
+      try {
+         statement = connection.prepareStatement(sql);
+         statement.setObject(1, email);
+         statement.setObject(2, password);
 
-        resultSet = statement.executeQuery();
-        if (resultSet.next()) {
+         resultSet = statement.executeQuery();
+         if (resultSet.next()) {
             fullName = resultSet.getString("full_name");
             System.out.println("Retrieved full_name: " + fullName);  // Debugging line
-        }
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
-    } finally {
-        // Close resources after use
-        try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        } catch (SQLException e) {
+         }
+      } catch (SQLException e) {
+         System.out.println("Error: " + e.getMessage());
+      } finally {
+         // Close resources after use
+         try {
+            if (resultSet != null) {
+               resultSet.close();
+            }
+            if (statement != null) {
+               statement.close();
+            }
+            if (connection != null) {
+               connection.close();
+            }
+         } catch (SQLException e) {
             System.out.println("Error closing resources: " + e.getMessage());
-        }
-    }
+         }
+      }
 
-    return fullName;
-}
+      return fullName;
+   }
 
    public User checkUser(String email, String pass) {
 
@@ -1021,61 +1028,34 @@ public class UserDAO extends context.DBContext {
       }
       return n;
    }
-   
-   public int getTotalUsers() {
-        int totalUsers = 0;
-        String query = "SELECT COUNT(*) AS total_users FROM User";
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
-        try {
-            connection = new DBContext().getConnection();
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
+   public int getTotalUsers() {
+        String query = "SELECT COUNT(*) FROM User WHERE status = 1";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                totalUsers = rs.getInt("total_users");
+                return rs.getInt(1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-        return totalUsers;
+        return 0;
     }
 
-    public int getNewCustomersLast7Days() {
-        int newCustomers = 0;
-        String query = "SELECT COUNT(*) AS new_customers FROM User WHERE registration_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()";
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            connection = new DBContext().getConnection();
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
+    // Get Total New Customer Registrations within a Date Range
+    public int getNewCustomers(Date startDate, Date endDate) {
+        String query = "SELECT COUNT(*) FROM User WHERE registration_date BETWEEN ? AND ? AND status = 1";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                newCustomers = rs.getInt("new_customers");
+                return rs.getInt(1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-        return newCustomers;
+        return 0;
     }
 
    public static void main(String[] args) {
@@ -1088,7 +1068,5 @@ public class UserDAO extends context.DBContext {
       int update = dao.updateStatusUser(0, 49);
       System.out.println(update);
    }
-   
-   
 
 }

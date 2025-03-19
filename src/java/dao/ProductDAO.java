@@ -621,34 +621,51 @@ public class ProductDAO extends DBContext {
       }
       return n;
    }
-   
-   public int getTotalProducts() {
-        int totalProducts = 0;
-        String query = "SELECT COUNT(*) AS total_products FROM Product";
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
-        try {
-            connection = new DBContext().getConnection();
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                totalProducts = rs.getInt("total_products");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return totalProducts;
-    }
+   public int getTotalProducts() {
+      String query = "SELECT COUNT(*) FROM Product WHERE status = 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            return rs.getInt(1);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return 0;
+   }
+
+   // Get the Product with the Most Orders
+   public Product getMostOrderedProduct() {
+      String query = "SELECT product_id, COUNT(*) AS order_count FROM OrderDetail GROUP BY product_id ORDER BY order_count DESC LIMIT 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            int productId = rs.getInt("product_id");
+            // Return the product with the most orders
+            return getProductById(productId);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+
+   // Get the Product with the Most Feedback
+   public Product getMostFeedbackProduct() {
+      String query = "SELECT product_id, COUNT(*) AS feedback_count FROM Feedback GROUP BY product_id ORDER BY feedback_count DESC LIMIT 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            int productId = rs.getInt("product_id");
+            // Return the product with the most feedback
+            return getProductById(productId);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
 
    public static void main(String[] args) {
       // Khởi tạo ProductDAO

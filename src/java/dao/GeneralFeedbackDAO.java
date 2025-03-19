@@ -76,38 +76,17 @@ public class GeneralFeedbackDAO extends DBContext {
       }
    }
 
-   public String getProductWithMostFeedback() {
-      String productName = "No data";
-      String query = "SELECT p.name, COUNT(f.id) AS feedback_count FROM GeneralFeedback f JOIN Product p ON f.productId = p.ID GROUP BY p.name ORDER BY feedback_count DESC LIMIT 1";
-      Connection connection = null;
-      PreparedStatement ps = null;
-      ResultSet rs = null;
-
-      try {
-         connection = new DBContext().getConnection();
-         ps = connection.prepareStatement(query);
-         rs = ps.executeQuery();
+   public int getMostFeedbackProduct() {
+      String query = "SELECT product_id, COUNT(*) AS feedback_count FROM Feedback GROUP BY product_id ORDER BY feedback_count DESC LIMIT 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
          if (rs.next()) {
-            productName = rs.getString("name");
+            return rs.getInt("product_id");
          }
-      } catch (Exception e) {
+      } catch (SQLException e) {
          e.printStackTrace();
-      } finally {
-         try {
-            if (rs != null) {
-               rs.close();
-            }
-            if (ps != null) {
-               ps.close();
-            }
-            if (connection != null) {
-               connection.close();
-            }
-         } catch (SQLException e) {
-            e.printStackTrace();
-         }
       }
-      return productName;
+      return 0;
    }
 
    public static void main(String[] args) {

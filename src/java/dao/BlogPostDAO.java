@@ -664,30 +664,15 @@ public class BlogPostDAO extends DBContext {
    }
 
    public int getTotalPosts() {
-        int totalPosts = 0;
-        String query = "SELECT COUNT(*) AS total_posts FROM BlogPost";
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            connection = new DBContext().getConnection();
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                totalPosts = rs.getInt("total_posts");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return totalPosts;
-    }
+      String query = "SELECT COUNT(*) FROM BlogPost WHERE status = 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            return rs.getInt(1);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return 0;
+   }
 }

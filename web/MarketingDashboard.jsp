@@ -1,36 +1,24 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Marketing Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
 </head>
 <body>
-    <h1>Marketing Dashboard</h1>
-    <p>Total Posts: ${totalPosts}</p>
-    <p>Total Products: ${totalProducts}</p>
-    <p>Total Customers: ${totalCustomers}</p>
-    <p>Total Feedbacks: ${totalFeedbacks}</p>
+    <h1>Dashboard</h1>
+    
+    <p><strong>Total Users:</strong> ${totalUsers}</p>
+    <p><strong>Total Posts:</strong> ${totalPosts}</p>
+    <p><strong>Total Revenue:</strong> ${totalRevenue}</p>
+    <p><strong>Total New Customers Registered:</strong> ${totalNewCustomers}</p>
+    <p><strong>Total Products:</strong> ${totalProducts}</p>
 
-    <h2>Customer Trend (Last 7 Days)</h2>
-    <form action="/marketing/MarketingDashboard" method="get">
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" value="${param.startDate}">
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate" value="${param.endDate}">
-        <button type="submit">Update</button>
-    </form>
+    <h3>Most Ordered Product</h3>
+    <p>${mostOrderedProduct.name} - ${mostOrderedProduct.orderCount}</p>
 
-    <table border="1">
-        <tr>
-            <th>Date</th>
-            <th>New Customers</th>
-        </tr>
-        <c:forEach items="${customerTrend}" var="trend">
-            <tr>
-                <td>${trend.date}</td>
-                <td>${trend.new_customers}</td>
-            </tr>
-        </c:forEach>
-    </table>
+    <h3>Most Feedbacked Product</h3>
+    <p>${mostFeedbackProduct.name} - ${mostFeedbackProduct.feedbackCount}</p>
+
 </body>
 </html>
