@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -275,6 +276,41 @@
                         </div>
                     </div>
                     <!-- /.container-fluid -->
+                       <div class="container-fluid mt-5">
+                            <h3 class="text-center mb-4">Danh sách sản phẩm và đánh giá trung bình</h3>
+
+                            <div class="table-responsive p-3 shadow-lg rounded bg-white">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="sortable" onclick="sortTable(0)">Tên sản phẩm <i class="bi bi-arrow-down-up"></i></th>
+                                            <th class="sortable" onclick="sortTable(1)">Đánh giá trung bình <i class="bi bi-arrow-down-up"></i></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!-- Dữ liệu sẽ được thêm ở đây -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                    <!-- Phân trang -->
+                    <nav aria-label="Pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Trước</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Tiếp</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
 
                 </div>
                 <!-- End of Main Content -->
@@ -391,7 +427,7 @@
                         yPadding: 15,
                         displayColors: false,
                         caretPadding: 10,
-                    }
+                    },
                     legend: {
                         display: false
                     },
@@ -486,6 +522,121 @@
                     }
                 }
             });
+        </script>
+        
+      <script>
+                // Convert the product details from Java to JavaScript
+                var productList = JSON.parse('${productList}');
+                var productRatings = JSON.parse('${productRatings}');
+
+                var currentPage = 1; // Current page
+                var itemsPerPage = 8; // Number of items per page
+                var sortDirection = [true, true]; // Lưu trạng thái sắp xếp của từng cột
+
+                // Display products for the current page
+                function displayProducts() {
+                    var start = (currentPage - 1) * itemsPerPage;
+                    var end = start + itemsPerPage;
+
+                    var keys = [];
+                    for (var key in productList) {
+                        if (productList.hasOwnProperty(key)) {
+                            keys.push(key);
+                        }
+                    }
+
+                    // Sắp xếp trước khi hiển thị
+                    keys.sort((a, b) => {
+                        var productA = productList[a];
+                        var productB = productList[b];
+
+                        var ratingA = productRatings[a] || 0;
+                        var ratingB = productRatings[b] || 0;
+
+                        // Sắp xếp theo tên
+                        if (sortColumn === 0) {
+                            return sortDirection[0] ? productA.name.localeCompare(productB.name) : productB.name.localeCompare(productA.name);
+                        } 
+                        // Sắp xếp theo đánh giá trung bình
+                        else if (sortColumn === 1) {
+                            return sortDirection[1] ? ratingA - ratingB : ratingB - ratingA;
+                        }
+                        return 0;
+                    });
+
+                    var productsToDisplay = keys.slice(start, end);
+
+                    // Clear the current products
+                    $('tbody').empty();
+
+                    // Add each product
+                    productsToDisplay.forEach(function (productId) {
+                        var product = productList[productId];
+                        var productRating = productRatings[productId];
+
+                        if (productRating === undefined || productRating === 0) {
+                            productRating = "Không có đánh giá";
+                        } else {
+                            productRating = productRating.toFixed(1); // Làm tròn đến 1 chữ số thập phân nếu cần
+                        }
+
+                        var productHtml = '<tr>' +
+                            '<td>' + product.name + '</td>' +
+                            '<td>' + productRating + '</td>' +
+                            '</tr>';
+
+                        $('tbody').append(productHtml);
+                    });
+                }
+
+                // Update the pagination links
+                function updatePagination() {
+                    var totalPages = Math.ceil(Object.keys(productList).length / itemsPerPage);
+
+                    $('.pagination').empty();
+                    var prevClass = currentPage === 1 ? 'disabled' : '';
+                    var prevHtml = '<li class="page-item ' + prevClass + '"><a class="page-link" href="#">Trước</a></li>';
+                    $('.pagination').append(prevHtml);
+
+                    for (var i = 1; i <= totalPages; i++) {
+                        var liClass = i === currentPage ? 'active' : '';
+                        var liHtml = '<li class="page-item ' + liClass + '"><a class="page-link" href="#">' + i + '</a></li>';
+                        $('.pagination').append(liHtml);
+                    }
+
+                    var nextClass = currentPage === totalPages ? 'disabled' : '';
+                    var nextHtml = '<li class="page-item ' + nextClass + '"><a class="page-link" href="#">Sau</a></li>';
+                    $('.pagination').append(nextHtml);
+
+                    $('.pagination a').click(function (e) {
+                        e.preventDefault();
+
+                        var pageText = $(this).text();
+
+                        if (pageText === 'Trước' && currentPage !== 1) {
+                            currentPage--;
+                        } else if (pageText === 'Sau' && currentPage !== totalPages) {
+                            currentPage++;
+                        } else if (pageText !== 'Sau' && pageText !== 'Trước') {
+                            currentPage = parseInt(pageText);
+                        }
+
+                        displayProducts();
+                        updatePagination();
+                    });
+                }
+
+                // Hàm xử lý khi click vào cột để sắp xếp
+                var sortColumn = 0; // Mặc định là cột "Tên sản phẩm"
+                function sortTable(columnIndex) {
+                    sortColumn = columnIndex;
+                    sortDirection[columnIndex] = !sortDirection[columnIndex]; // Đảo ngược thứ tự sắp xếp
+                    displayProducts();
+                }
+
+                // Display the initial products and pagination
+                displayProducts();
+                updatePagination();
         </script>
 
     </body>

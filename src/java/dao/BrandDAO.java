@@ -55,7 +55,43 @@ public class BrandDAO extends DBContext {
         }
         return list;
     }
+    public int updateBrandStatusById(int bid, int status) {
+            String query = "UPDATE mydb.brand SET status = ? WHERE brandID = ?";
+            int n = 0;
+            try {
+                this.connection = getConnection();
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, status);
+                ps.setInt(2, bid);
+                n = ps.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return n;
+        }
+    
+    public int insertBrand(Brand brand) {
+        String query = "INSERT INTO brand (brandName, status) VALUES (?, ?)";
+        int brandId = 0;
+        try {
+            this.connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, brand.getBrandName());
+            ps.setInt(2, brand.getStatus());
 
+            ps.executeUpdate();
+            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    brandId = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Tạo thương hiệu mới thất bại, không có ID nào được tạo.");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return brandId;
+    }
 
     public static void main(String[] args) {
         BrandDAO dao = new BrandDAO();

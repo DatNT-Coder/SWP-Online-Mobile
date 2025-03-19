@@ -95,7 +95,9 @@ public class ProductList extends jakarta.servlet.http.HttpServlet {
             request.setAttribute("productRatingsJSON", productRatingsJSON);
             request.setAttribute("listPC", listPCategories);
             request.setAttribute("latestP", latestProduct);
+            
             request.getRequestDispatcher("shop.jsp").forward(request, response);
+
 
         }
     }

@@ -3,27 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/User.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/UserAddress.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/OrderDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/dashboard/MKTDashboardController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/sidebar.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Order.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Brand.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/PostCategory.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/AccountDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/BlogPostDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/MarketingDashboard.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/CartItem.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/OrderDetail.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/ProductDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Cart.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/GeneralFeedback.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Product.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/ProductCategory.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/BlogPost.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/GeneralFeedbackDAO.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/shop.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductList.java</file>
         </group>
     </open-files>
 </project-private>

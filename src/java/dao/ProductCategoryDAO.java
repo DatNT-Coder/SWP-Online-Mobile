@@ -51,6 +51,42 @@ public class ProductCategoryDAO extends DBContext {
         return listC;
     }
 
+    public int updateCategoryStatusById(int pid, int status) {
+        String query = "UPDATE mydb.productcategory SET status = ? WHERE ID = ?";
+        int n = 0;
+        try {
+            this.connection = getConnection();            
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, pid);
+            n = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+    public int insertProductCategory(ProductCategory productCategory) {
+        String query = "INSERT INTO productcategory (categoryName, status) VALUES (?, ?)";
+        int categoryId = 0;
+        try {
+            this.connection = getConnection();            
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, productCategory.getCategoryName());
+            ps.setInt(2, productCategory.getStatus());
+
+            ps.executeUpdate();
+            try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    categoryId = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Tạo danh mục sản phẩm mới thất bại, không có ID nào được tạo.");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return categoryId;
+    }
    
     public static void main(String[] args) {
         ProductCategoryDAO dao = new ProductCategoryDAO();
