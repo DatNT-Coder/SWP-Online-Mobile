@@ -1021,6 +1021,62 @@ public class UserDAO extends context.DBContext {
       }
       return n;
    }
+   
+   public int getTotalUsers() {
+        int totalUsers = 0;
+        String query = "SELECT COUNT(*) AS total_users FROM User";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalUsers = rs.getInt("total_users");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return totalUsers;
+    }
+
+    public int getNewCustomersLast7Days() {
+        int newCustomers = 0;
+        String query = "SELECT COUNT(*) AS new_customers FROM User WHERE registration_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                newCustomers = rs.getInt("new_customers");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return newCustomers;
+    }
 
    public static void main(String[] args) {
       // Thay đổi các giá trị này theo cấu hình của bạn
@@ -1032,5 +1088,7 @@ public class UserDAO extends context.DBContext {
       int update = dao.updateStatusUser(0, 49);
       System.out.println(update);
    }
+   
+   
 
 }

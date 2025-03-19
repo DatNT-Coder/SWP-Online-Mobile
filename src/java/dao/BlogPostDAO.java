@@ -547,22 +547,22 @@ public class BlogPostDAO extends DBContext {
    }
 
    public int updatePost(BlogPost blogPost) {
-        String query = "UPDATE blogs_posts SET title = ?, brief_info = ?, thumbnail = ?, details = ?, PostCategories_id = ?, flag_feature = ?, status = ? WHERE id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, blogPost.getTitle());
-            ps.setString(2, blogPost.getBrief_info());
-            ps.setString(3, blogPost.getThumbnail());
-            ps.setString(4, blogPost.getDetails());
-            ps.setInt(5, blogPost.getPostCategories_id());
-            ps.setBoolean(6, blogPost.isFlag_feature());
-            ps.setInt(7, blogPost.getStatus());
-            ps.setInt(8, blogPost.getId());
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return 0;
+      String query = "UPDATE blogs_posts SET title = ?, brief_info = ?, thumbnail = ?, details = ?, PostCategories_id = ?, flag_feature = ?, status = ? WHERE id = ?";
+      try {
+         PreparedStatement ps = connection.prepareStatement(query);
+         ps.setString(1, blogPost.getTitle());
+         ps.setString(2, blogPost.getBrief_info());
+         ps.setString(3, blogPost.getThumbnail());
+         ps.setString(4, blogPost.getDetails());
+         ps.setInt(5, blogPost.getPostCategories_id());
+         ps.setBoolean(6, blogPost.isFlag_feature());
+         ps.setInt(7, blogPost.getStatus());
+         ps.setInt(8, blogPost.getId());
+         return ps.executeUpdate();
+      } catch (SQLException e) {
+         System.out.println(e);
+      }
+      return 0;
    }
 
    private BlogPost extractBlogPost(ResultSet rs) throws SQLException {
@@ -581,13 +581,20 @@ public class BlogPostDAO extends DBContext {
               rs.getString("name")
       );
    }
+
    public List<BlogPost> listBlog(String search, int page, int size, String cateId, String status) {
       List<BlogPost> list = new ArrayList<>();
       String query = "SELECT * FROM blogs_posts WHERE title LIKE ? AND (PostCategories_id = ? OR '' = ?) AND (status = ? OR '' = ?) LIMIT ? OFFSET ?";
-      if(search == null) search = "";
-        if(cateId == null) cateId = "";
-        if(status == null) status = "";
-        
+      if (search == null) {
+         search = "";
+      }
+      if (cateId == null) {
+         cateId = "";
+      }
+      if (status == null) {
+         status = "";
+      }
+
       try {
          PreparedStatement ps = connection.prepareStatement(query);
          ps.setString(1, "%" + search + "%");
@@ -656,8 +663,31 @@ public class BlogPostDAO extends DBContext {
       return list;
    }
 
-   public int countBlogs(String search, String category, String status) {
-      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-   }
-   
+   public int getTotalPosts() {
+        int totalPosts = 0;
+        String query = "SELECT COUNT(*) AS total_posts FROM BlogPost";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalPosts = rs.getInt("total_posts");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return totalPosts;
+    }
 }

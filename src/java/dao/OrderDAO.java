@@ -339,6 +339,62 @@ public class OrderDAO {
         return null;
     }
     
+    public double getTotalRevenue() {
+        double totalRevenue = 0;
+        String query = "SELECT SUM(totalMoney) AS total_revenue FROM `Order`";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalRevenue = rs.getDouble("total_revenue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return totalRevenue;
+    }
+
+    public String getProductWithMostOrders() {
+        String productName = "No data";
+        String query = "SELECT p.name, COUNT(o.Id) AS order_count FROM `Order` o JOIN Product p ON o.productId = p.ID GROUP BY p.name ORDER BY order_count DESC LIMIT 1";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                productName = rs.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return productName;
+    }
+    
     public static void main(String[] args) {
         // Tạo đối tượng DAO để truy vấn dữ liệu
         OrderDAO userDAO = new OrderDAO();
