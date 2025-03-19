@@ -3,6 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -123,7 +124,7 @@
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
-                                       
+
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
@@ -165,31 +166,19 @@
                         </thead>
                         <tbody>
                             <c:forEach var="item" items="${cart}">
-                                <tr id="item-${item.productId}">
-                                    <td class="cart_product">
-                                        <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
-                                    </td>
-                                    <td class="cart_description">
-                                        <h4><a href="">${item.name}</a></h4>
-                                        <!--<p>Web ID: 1089772</p>-->
-                                    </td>
-                                    <td class="cart_price">
-                                        <p id="item-price-${item.productId}">$${item.price}</p>
-                                    </td>
-                                    <td class="cart_quantity">
-                                        <div class="cart_quantity_button">
-                                            <!--<a onclick="updateQuantity('${item.productId}', -1)" class="cart_quantity_down"> - </a>-->
-                                            <input readOnly id="item-quantity-${item.productId}" class="cart_quantity_input" type="text" name="quantity" value="${item.quantity}" autocomplete="off" size="2">
-                                            <!--<a onclick="updateQuantity('${item.productId}', 1)" class="cart_quantity_up"> + </a>-->
-                                        </div>
-                                    </td>
-                                    <td class="cart_total">
-                                        <p id="item-total-${item.productId}" class="cart_total_price">$${item.total}</p>
-                                    </td>
-                                    <td class="cart_delete">
-                                        <!--<a onclick="updateQuantity('${item.productId}', 0)" class="cart_quantity_delete"><i class="fa fa-times"></i></a>-->
-                                    </td>
-                                </tr>
+                                <c:if test="${empty selectedProducts or fn:contains(selectedProducts, item.productId)}">
+                                    <tr id="item-${item.productId}">
+                                        <td class="cart_product">
+                                            <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
+                                        </td>
+                                        <td class="cart_description">
+                                            <h4><a href="">${item.name}</a></h4>
+                                        </td>
+                                        <td class="cart_price"><p>$${item.price}</p></td>
+                                        <td class="cart_quantity"><p>${item.quantity}</p></td>
+                                        <td class="cart_total"><p>$${item.total}</p></td>
+                                    </tr>
+                                </c:if>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -232,7 +221,7 @@
                             return false;
                         }
                     </script>
-                    
+
                 </div>
             </div>
         </section> <!--/#cart_items-->
@@ -278,10 +267,10 @@
                                     <label for="exampleInputEmail1">Ghi chú</label>
                                     <input name="note" type="text" class="form-control" id="exampleInputEmail1" placeholder="Note">
                                 </div>
-                                
-                                        <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Hoàn tất đặt hàng"/>
-                                    
-                                </form>
+
+                                <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Hoàn tất đặt hàng"/>
+
+                            </form>
                             </form>
                         </div>
                     </div>

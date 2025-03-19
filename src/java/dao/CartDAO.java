@@ -10,8 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import model.CartItem;
 
 /**
@@ -219,7 +221,37 @@ public class CartDAO extends DBContext {
     }
     return "";
 }
-
+public ArrayList<CartItem> getSelectedCartItems(int userId, List<Integer> productIds) {
+    if (productIds.isEmpty()) {
+        return new ArrayList<>();
+    }
+    
+    String sql = "SELECT user_id, product_ID, quantity, c.status, " +
+                 "IFNULL(p.salePrice, p.originalPrice) AS price, p.name, p.image " +
+                 "FROM cart_item c JOIN product p ON p.ID = c.product_ID " +
+                 "WHERE user_id = ? AND product_ID IN (" + 
+                 productIds.stream().map(id -> "?").collect(Collectors.joining(",")) + ")";
+    
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        for (int i = 0; i < productIds.size(); i++) {
+            ps.setInt(i + 2, productIds.get(i));
+        }
+        ResultSet rs = ps.executeQuery();
+        ArrayList<CartItem> items = new ArrayList<>();
+        while (rs.next()) {
+            CartItem item = new CartItem(rs.getInt("user_id"), rs.getInt("product_ID"), rs.getInt("quantity"), rs.getInt("status"));
+            item.setPrice(rs.getDouble("price"));
+            item.setName(rs.getString("name"));
+            item.setImage(rs.getString("image"));
+            items.add(item);
+        }
+        return items;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return new ArrayList<>();
+}
 
 
    public static void main(String[] args) {
