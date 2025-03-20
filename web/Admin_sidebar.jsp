@@ -27,7 +27,7 @@
     <ul>
         <li><a href="/mobileshop/admin/adminDashBoard">Thống kê</a></li>
         <li><a href="/mobileshop/admin/listSettingAdmin">Danh sách cài đặt</a></li>
-        <li><a href="admin/udashboard">Danh sách người dùng</a></li>
+        <li><a href="admin/userlist">Danh sách người dùng</a></li>
     </ul>
 </div>
 

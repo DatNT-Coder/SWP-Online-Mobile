@@ -682,12 +682,10 @@ public class AccountDAO extends DBContext {
 //        User u = new User("lbienvda@gmail.com", "2");
 //        System.out.println(d.updateUserPassword(u));
         List<User> u = d.findAll();
-        u = d.searchUserInfo("89");
 //        System.out.println(u.get(0).getRole_name());
 //        System.out.println(u.get(0).getFull_name());
 //        System.out.println(u.get(0));
 //        System.out.println(d.getDataUser("lbienvda@gmail.com", "222"));
-
 
         System.out.println(u);
     }
@@ -758,39 +756,67 @@ public class AccountDAO extends DBContext {
         return u;
     }
 
-    public List<User> searchUserInfo(String kw) {
-        List<User> u = new ArrayList<>();
+    public List<User> searchUserInfo(String keyword, String sortField, String sortOrder) {
+        List<User> userList = new ArrayList<>();
         String query = "SELECT u.*, ur.role_id, r.role_name "
                 + "FROM User u "
                 + "JOIN user_role ur ON u.id = ur.user_id "
                 + "JOIN role r ON ur.role_id = r.id "
-                + "WHERE LOWER(full_name) LIKE LOWER(?) "
-                + "   OR LOWER(email) LIKE LOWER(?) "
-                + "   OR phone LIKE ?";
+                + "WHERE u.full_name LIKE ? OR u.email LIKE ? OR u.phone LIKE ? "
+                + "ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "DESC" : "ASC");
 
         try {
+            this.connection = getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
-            String searchKeyword = "%" + kw + "%";
-            ps.setString(1, searchKeyword);
-            ps.setString(2, searchKeyword);
-            ps.setString(3, searchKeyword);
-
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ps.setString(3, "%" + keyword + "%");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setFull_name(rs.getString("full_name"));
+                user.setGender(rs.getString("gender"));
                 user.setEmail(rs.getString("email"));
                 user.setPhone(rs.getString("phone"));
                 user.setStatus(rs.getInt("status"));
+                user.setRole_id(rs.getInt("role_id"));
+                user.setRole_name(rs.getString("role_name"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching users: " + e.getMessage());
+        }
+        return userList;
+    }
+
+    public List<User> sortUser(List<User> u, String sortField, String sortOrder) {
+
+        String query = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id "
+                + "ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "desc" : "asc");
+        try {
+            this.connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFull_name(rs.getString("full_name"));
                 user.setGender(rs.getString("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setStatus(rs.getInt("status"));
                 user.setRole_id(rs.getInt("role_id"));
                 user.setRole_name(rs.getString("role_name"));
                 u.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error fetching customers: " + e.getMessage());
         }
         return u;
     }

@@ -8,10 +8,6 @@
         <servlet-name>UsersListServlet</servlet-name>
         <servlet-class>controller.user.UsersListServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>UsersListDashboard</servlet-name>
-        <servlet-class>controller.user.UsersListDashboard</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>RejectServlet</servlet-name>
         <url-pattern>/reject</url-pattern>
@@ -22,11 +18,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
-        <url-pattern>/userlist</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UsersListDashboard</servlet-name>
-        <url-pattern>/admin/udashboard</url-pattern>
+        <url-pattern>/admin/userlist</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>HomePage</welcome-file>
