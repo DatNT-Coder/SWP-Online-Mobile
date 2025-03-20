@@ -1029,35 +1029,6 @@ public class UserDAO extends context.DBContext {
       return n;
    }
 
-   public int getTotalUsers() {
-        String query = "SELECT COUNT(*) FROM User WHERE status = 1";
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    // Get Total New Customer Registrations within a Date Range
-    public int getNewCustomers(Date startDate, Date endDate) {
-        String query = "SELECT COUNT(*) FROM User WHERE registration_date BETWEEN ? AND ? AND status = 1";
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setDate(1, startDate);
-            ps.setDate(2, endDate);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
    public static void main(String[] args) {
       // Thay đổi các giá trị này theo cấu hình của bạn
       int userIdToRetrieve = 3; // ID của người dùng bạn muốn lấy thông tin

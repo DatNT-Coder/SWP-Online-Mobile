@@ -344,19 +344,6 @@ public class OrderDAO {
       return null;
    }
 
-   public double getTotalRevenue() {
-      String query = "SELECT SUM(totalMoney) FROM `Order` WHERE status = 1";
-      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-         ResultSet rs = stmt.executeQuery();
-         if (rs.next()) {
-            return rs.getDouble(1);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-      return 0;
-   }
-
    public static void main(String[] args) {
       // Tạo đối tượng DAO để truy vấn dữ liệu
       OrderDAO userDAO = new OrderDAO();
