@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.CartItem;
@@ -343,6 +345,84 @@ public class OrderDAO {
       }
       return null;
    }
+
+   public Map<String, Object> getInformationUser(int ID) {
+      Map<String, Object> details = new HashMap<>();
+      try {
+         String sql = "SELECT user.full_name AS user_name, sales.full_name AS sales_name, orders.*\n"
+                 + "                FROM orders\n"
+                 + "                INNER JOIN user ON orders.User_id = user.id\n"
+                 + "                INNER JOIN user AS sales ON orders.saleID = sales.id\n"
+                 + "                WHERE orders.ID = ? ";
+         PreparedStatement ps = connection.prepareStatement(sql);
+         ps.setInt(1, ID);
+         ResultSet rs = ps.executeQuery();
+         if (rs.next()) {
+            Order order = new Order(rs.getInt("ID"),
+                    rs.getInt("User_id"),
+                    rs.getDate("order_date"),
+                    rs.getDouble("total"),
+                    rs.getInt("status"),
+                    rs.getDouble("discount"),
+                    rs.getString("address"),
+                    rs.getString("phone"),
+                    rs.getString("email"),
+                    rs.getString("notes"),
+                    rs.getString("gender"),
+                    rs.getInt("saleID"),
+                    rs.getInt("settings_id"));
+            details.put("order", order);
+            details.put("customerName", rs.getString("user_name"));
+            details.put("saleName", rs.getString("sales_name"));
+
+         }
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      }
+      return details;
+   }
+   
+   public LinkedHashMap<Integer, Map<String, Object>> getOrderDetails(String orderId) {
+        LinkedHashMap<Integer, Map<String, Object>> orderDetail = new LinkedHashMap<>();
+        String query = "SELECT\n"
+                + "    o.ID AS order_id,\n"
+                + "    p.name AS product_name,p.salePrice\n"
+                + "    ,pc.categoryName AS product_category,\n"
+                + "    od.quantity,\n"
+                + "    (od.quantity * p.salePrice) AS total_price\n"
+                + "FROM\n"
+                + "    orders o\n"
+                + "JOIN\n"
+                + "    orderdetails od ON o.ID = od.Orders_ID\n"
+                + "JOIN\n"
+                + "    product p ON od.Product_ID = p.ID\n"
+                + "JOIN\n"
+                + "    productcategory pc ON p.ProductCategory_ID = pc.ID\n"
+                + "    where o.ID = ? ;";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            int id = 1;
+            while (rs.next()) {
+                Map<String, Object> details = new HashMap<>();
+                details.put("order_id", rs.getInt("order_id"));
+                details.put("product_name", rs.getString("product_name"));
+                details.put("product_category", rs.getString("product_category"));
+                details.put("salePrice", rs.getDouble("salePrice"));
+                details.put("quantity", rs.getInt("quantity"));
+                details.put("total_price", rs.getDouble("total_price"));
+//              
+                orderDetail.put(id, details);
+                id++;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return orderDetail;
+
+    }
 
    public static void main(String[] args) {
       // Tạo đối tượng DAO để truy vấn dữ liệu

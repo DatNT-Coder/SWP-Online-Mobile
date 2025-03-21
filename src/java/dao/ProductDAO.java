@@ -464,11 +464,43 @@ public class ProductDAO extends DBContext {
       return productId;
    }
 
-   // Phương thức đếm tổng số sản phẩm có trạng thái là 1 hoặc 2 trong bảng product
+   // Phương thức đếm tổng số sản phẩm có trạng thái là 1 hoặc 0 trong bảng product
    public int countProduct() {
       int total = 0;
       try {
-         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (1, 2)";
+         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (1, 0)";
+         this.connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql);
+         ResultSet rs = statement.executeQuery();
+         if (rs.next()) {
+            total = rs.getInt("count_product");
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return total;
+   }
+
+   public int countProductActive() {
+      int total = 0;
+      try {
+         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (1)";
+         this.connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql);
+         ResultSet rs = statement.executeQuery();
+         if (rs.next()) {
+            total = rs.getInt("count_product");
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return total;
+   }
+
+   public int countProductInActive() {
+      int total = 0;
+      try {
+         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (0)";
          this.connection = getConnection();
          PreparedStatement statement = connection.prepareStatement(sql);
          ResultSet rs = statement.executeQuery();

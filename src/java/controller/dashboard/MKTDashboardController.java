@@ -91,14 +91,23 @@ public class MKTDashboardController extends HttpServlet {
         UserDAO uDAO = new UserDAO();
         List<User> newLyCustomers = uDAO.searchUsersByRegistrationDate(fromDate, toDate);
         FeedbackDAO gDAO = new FeedbackDAO();
+        
         int totalP = bDAO.getTotalPosts();
+        int totalPA = bDAO.getTotalPostsActive();
+        int totalPIA = bDAO.getTotalPostsInActive();
+        int totalPdA = pDAO.countProductActive();
+        int totalPdIA = pDAO.countProductInActive();
         int totalPd = pDAO.countProduct();
         int totalU = uDAO.countUsers();
         int gDAOfeed = gDAO.countProductFeedback();
 
         request.setAttribute("newLyCustomers", newLyCustomers);
         request.setAttribute("totalP", totalP);
+        request.setAttribute("totalPA", totalPA);
+        request.setAttribute("totalPIA", totalPIA);
         request.setAttribute("totalPd", totalPd);
+        request.setAttribute("totalPdA", totalPdA);
+        request.setAttribute("totalPdIA", totalPdIA);
         request.setAttribute("totalU", totalU);
         request.setAttribute("gDAOfeed", gDAOfeed);
         request.setAttribute("userProfile", userProfile);

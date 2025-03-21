@@ -12,6 +12,100 @@
       <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
       <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
    </head>
+   <style>
+      /* Teal Theme Styling */
+
+      /* General Background */
+      body {
+         color: #004d40;
+      }
+
+      /* Sidebar */
+      .wrapper {
+         background-color: #004d40;
+      }
+
+      .sidebar a {
+         color: #e0f2f1;
+      }
+
+      .sidebar a:hover {
+         background-color: #00796b;
+      }
+
+      /* Navbar Tabs */
+      .nav-tabs .nav-item .nav-link {
+         color: #004d40;
+         background-color: #b2dfdb;
+         border: 1px solid #00796b;
+      }
+
+      .nav-tabs .nav-item .nav-link.active {
+         background-color: #00796b;
+         color: #ffffff;
+      }
+
+      /* Panels */
+      .panel {
+         border: 1px solid #00796b;
+         background-color: #b2dfdb;
+      }
+
+      .panel-heading {
+         background-color: #00796b;
+         color: white;
+         font-weight: bold;
+      }
+
+      /* Table */
+      .table-hover tbody tr:hover {
+         background-color: #80cbc4;
+      }
+
+      th {
+         background-color: #00796b !important;
+         color: white !important;
+      }
+
+      /* Statistic Boxes */
+      .sm-st {
+         background-color: #00796b;
+         color: white;
+         padding: 15px;
+         border-radius: 10px;
+      }
+
+      .sm-st-icon {
+         background-color: #004d40;
+         padding: 10px;
+         border-radius: 50%;
+      }
+
+      /* Buttons */
+      input[type="submit"] {
+         background-color: #00796b;
+         color: white;
+         border: none;
+         cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+         background-color: #004d40;
+      }
+
+      /* Date Picker */
+      input[type="date"] {
+         border: 1px solid #00796b;
+         padding: 5px;
+         border-radius: 5px;
+      }
+
+      /* Scrollbar */
+      .panel-body.table-responsive {
+         scrollbar-width: thin;
+         scrollbar-color: #00796b #e0f2f1;
+      }
+   </style>
    <body class="skin-black">
       <div class="container-fluid">
          <div class="row">
@@ -28,7 +122,9 @@
                         <div class="sm-st clearfix">
                            <span class="sm-st-icon st-red"><i class="fa fa-file-text-o"></i></span>
                            <div class="sm-st-info">
-                              <span>${totalP}</span> Bài Đăng
+                              Tổng <span>${totalP}</span> Bài Đăng <br>
+                            * <span>${totalPA}</span> Bài viết đã được đăng <br>
+                            * <span>${totalPIA}</span> Bài viết bị ẩn <br>
                         </div>
                      </div>
                   </div>
@@ -36,7 +132,9 @@
                      <div class="sm-st clearfix">
                         <span class="sm-st-icon st-violet"><i class="fa fa-shopping-cart"></i></span>
                         <div class="sm-st-info">
-                           <span>${totalPd}</span> Sản Phẩm
+                           Tổng Sản Phẩm: <span>${totalPd}</span> <br>
+                           * <span>${totalPdA}</span> Sản phẩm đang được bày bán <br>
+                           * <span>${totalPdIA}</span> Sản phẩm chưa được bày bán.
                         </div>
                      </div>
                   </div>
