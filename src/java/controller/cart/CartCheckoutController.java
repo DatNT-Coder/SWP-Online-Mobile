@@ -25,22 +25,13 @@ import model.User;
  *
  * @author Asus
  */
-@WebServlet(name="CartCheckoutController", urlPatterns={"/customer/cart/checkout"})
+
+@WebServlet(name = "CartCheckoutController", urlPatterns = {"/customer/cart/checkout"})
 public class CartCheckoutController extends HttpServlet {
 
     private static final String VIEW_PATH = "/cart-done.jsp";
-
     private final CartDAO cartDAO = new CartDAO();
-
     private final OrderDAO orderDAO = new OrderDAO();
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String id = request.getParameter("id");
-        request.setAttribute("orderId", id);
-        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,12 +49,20 @@ public class CartCheckoutController extends HttpServlet {
         String email = request.getParameter("email");
         String note = request.getParameter("note");
 
-        ArrayList<CartItem> cart = cartDAO.getUserCart(userId);
-        double total = 0;
-        for (CartItem item : cart) {
-            total += item.getPrice();
+        // Lấy danh sách sản phẩm đã chọn từ session
+        ArrayList<CartItem> selectedCart = (ArrayList<CartItem>) session.getAttribute("selectedCart");
+        if (selectedCart == null || selectedCart.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/customer/cart/contact");
+            return;
         }
 
+        // Tính tổng tiền
+        double total = 0;
+        for (CartItem item : selectedCart) {
+            total += item.getPrice() * item.getQuantity();
+        }
+
+        // Tạo đơn hàng
         Order order = new Order();
         java.util.Date today = new java.util.Date();
         order.setAddress(address);
@@ -79,7 +78,8 @@ public class CartCheckoutController extends HttpServlet {
 
         Order addedOrder = orderDAO.addOrder(order);
 
-        for (CartItem item : cart) {
+        // Lưu chi tiết đơn hàng và cập nhật kho hàng
+        for (CartItem item : selectedCart) {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderId(addedOrder.getId());
             orderDetail.setProductId(item.getProductId());
@@ -89,11 +89,14 @@ public class CartCheckoutController extends HttpServlet {
             cartDAO.stock(item);
         }
 
-        cartDAO.deleteCart(userId);
-        
+        // Xóa các sản phẩm đã thanh toán khỏi giỏ hàng
+        for (CartItem item : selectedCart) {
+            cartDAO.deleteCartItem(userId, item.getProductId());
+        }
+
 
         String productDetails = "";
-        for (CartItem item : cart) {
+        for (CartItem item : selectedCart) {
             productDetails += "<tr><td align=\"left\" width=\"75%\" style=\"padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">"
                     + item.getName() + "</td>"
                     + "<td align=\"left\" width=\"25%\" style=\"padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">"
@@ -389,5 +392,17 @@ public class CartCheckoutController extends HttpServlet {
         Email.sendEmail(email, subject, content);
         response.sendRedirect(request.getContextPath() + "/customer/cart/checkout?id=" + order.getId());
 
+    }
+     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String orderId = request.getParameter("id");
+
+        if (orderId == null || orderId.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/customer/cart");
+            return;
+        }
+
+        request.setAttribute("orderId", orderId);
+        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }
