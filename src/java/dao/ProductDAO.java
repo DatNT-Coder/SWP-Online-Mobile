@@ -464,11 +464,43 @@ public class ProductDAO extends DBContext {
       return productId;
    }
 
-   // Phương thức đếm tổng số sản phẩm có trạng thái là 1 hoặc 2 trong bảng product
+   // Phương thức đếm tổng số sản phẩm có trạng thái là 1 hoặc 0 trong bảng product
    public int countProduct() {
       int total = 0;
       try {
-         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (1, 2)";
+         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (1, 0)";
+         this.connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql);
+         ResultSet rs = statement.executeQuery();
+         if (rs.next()) {
+            total = rs.getInt("count_product");
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return total;
+   }
+
+   public int countProductActive() {
+      int total = 0;
+      try {
+         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (1)";
+         this.connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql);
+         ResultSet rs = statement.executeQuery();
+         if (rs.next()) {
+            total = rs.getInt("count_product");
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return total;
+   }
+
+   public int countProductInActive() {
+      int total = 0;
+      try {
+         String sql = "SELECT COUNT(*) AS count_product FROM product WHERE status IN (0)";
          this.connection = getConnection();
          PreparedStatement statement = connection.prepareStatement(sql);
          ResultSet rs = statement.executeQuery();
@@ -620,6 +652,51 @@ public class ProductDAO extends DBContext {
          System.out.println(e);
       }
       return n;
+   }
+
+   public int getTotalProducts() {
+      String query = "SELECT COUNT(*) FROM Product WHERE status = 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            return rs.getInt(1);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return 0;
+   }
+
+   // Get the Product with the Most Orders
+   public Product getMostOrderedProduct() {
+      String query = "SELECT product_id, COUNT(*) AS order_count FROM OrderDetail GROUP BY product_id ORDER BY order_count DESC LIMIT 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            int productId = rs.getInt("product_id");
+            // Return the product with the most orders
+            return getProductById(productId);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+
+   // Get the Product with the Most Feedback
+   public Product getMostFeedbackProduct() {
+      String query = "SELECT product_id, COUNT(*) AS feedback_count FROM Feedback GROUP BY product_id ORDER BY feedback_count DESC LIMIT 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            int productId = rs.getInt("product_id");
+            // Return the product with the most feedback
+            return getProductById(productId);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return null;
    }
 
    public static void main(String[] args) {

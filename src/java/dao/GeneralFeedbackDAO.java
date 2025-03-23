@@ -20,88 +20,99 @@ import model.GeneralFeedback;
  */
 public class GeneralFeedbackDAO extends DBContext {
 
-    public ArrayList<GeneralFeedback> getAllFeedback() {
-        ArrayList<GeneralFeedback> feedbackList = new ArrayList<>();
-        try {
-            this.connection = getConnection();
-            String sql = "SELECT * FROM mydb.generalfeedback "
-                    + "JOIN mydb.user ON generalfeedback.user_id = user.id";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                GeneralFeedback feedback = new GeneralFeedback(
-                        rs.getInt("id"),
-                        rs.getString("full_name"),
-                        rs.getString("gender"),
-                        rs.getString("email"),
-                        rs.getString("phone"),
-                        rs.getInt("rating"),
-                        rs.getString("image"),
-                        rs.getString("comment"),
-                        rs.getInt("user_id"),
-                        rs.getInt("status"),
-                        rs.getString("image_status")
-                );
-                feedbackList.add(feedback);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(GeneralFeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return feedbackList;
-    }
+   public ArrayList<GeneralFeedback> getAllFeedback() {
+      ArrayList<GeneralFeedback> feedbackList = new ArrayList<>();
+      try {
+         this.connection = getConnection();
+         String sql = "SELECT * FROM mydb.generalfeedback "
+                 + "JOIN mydb.user ON generalfeedback.user_id = user.id";
+         PreparedStatement statement = connection.prepareStatement(sql);
+         ResultSet rs = statement.executeQuery();
+         while (rs.next()) {
+            GeneralFeedback feedback = new GeneralFeedback(
+                    rs.getInt("id"),
+                    rs.getString("full_name"),
+                    rs.getString("gender"),
+                    rs.getString("email"),
+                    rs.getString("phone"),
+                    rs.getInt("rating"),
+                    rs.getString("image"),
+                    rs.getString("comment"),
+                    rs.getInt("user_id"),
+                    rs.getInt("status"),
+                    rs.getString("image_status")
+            );
+            feedbackList.add(feedback);
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(GeneralFeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return feedbackList;
+   }
 
-    public void insertGeneralFeedback(String full_name, String gender, String email, String phone,
-            int rating, String image, String comment, String status, String image_status) {
-        try {
-            this.connection = getConnection();
-            String sql = "INSERT INTO mydb.generalfeedback "
-                    + "(full_name, gender, email, phone, rating, image, comment, User_id, status, image_status) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, (SELECT id FROM mydb.user WHERE email = ?), ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
+   public void insertGeneralFeedback(String full_name, String gender, String email, String phone,
+           int rating, String image, String comment, String status, String image_status) {
+      try {
+         this.connection = getConnection();
+         String sql = "INSERT INTO mydb.generalfeedback "
+                 + "(full_name, gender, email, phone, rating, image, comment, User_id, status, image_status) "
+                 + "VALUES (?, ?, ?, ?, ?, ?, ?, (SELECT id FROM mydb.user WHERE email = ?), ?, ?)";
+         PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setString(1, full_name);
-            statement.setString(2, gender);
-            statement.setString(3, email);
-            statement.setString(4, phone);
-            statement.setInt(5, rating);
-            statement.setString(6, image);
-            statement.setString(7, comment);
-            statement.setString(8, email); // Assuming email is unique in the user table
-            statement.setString(9, status);
-            statement.setString(10, image_status);
+         statement.setString(1, full_name);
+         statement.setString(2, gender);
+         statement.setString(3, email);
+         statement.setString(4, phone);
+         statement.setInt(5, rating);
+         statement.setString(6, image);
+         statement.setString(7, comment);
+         statement.setString(8, email); // Assuming email is unique in the user table
+         statement.setString(9, status);
+         statement.setString(10, image_status);
 
-            statement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(GeneralFeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+         statement.executeUpdate();
+      } catch (SQLException ex) {
+         Logger.getLogger(GeneralFeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+   }
 
-  
+   public int getMostFeedbackProduct() {
+      String query = "SELECT product_id, COUNT(*) AS feedback_count FROM Feedback GROUP BY product_id ORDER BY feedback_count DESC LIMIT 1";
+      try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            return rs.getInt("product_id");
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return 0;
+   }
 
-    public static void main(String[] args) {
-        // Create an instance of GeneralFeedDAO
-        GeneralFeedbackDAO generalFeedDAO = new GeneralFeedbackDAO();
+   public static void main(String[] args) {
+      // Create an instance of GeneralFeedDAO
+      GeneralFeedbackDAO generalFeedDAO = new GeneralFeedbackDAO();
 
-        // Insert a sample feedback
-        generalFeedDAO.insertGeneralFeedback(
-                "John Doe",
-                "Male",
-                "john.doe@example.com",
-                "123456789",
-                5,
-                "path/to/image.jpg",
-                "Great service!",
-                "Approved",
-                "path/to/status/image.jpg"
-        );
+      // Insert a sample feedback
+      generalFeedDAO.insertGeneralFeedback(
+              "John Doe",
+              "Male",
+              "john.doe@example.com",
+              "123456789",
+              5,
+              "path/to/image.jpg",
+              "Great service!",
+              "Approved",
+              "path/to/status/image.jpg"
+      );
 
-        // Call the getAllFeedback method to retrieve all feedback
-        ArrayList<GeneralFeedback> feedbackList = generalFeedDAO.getAllFeedback();
+      // Call the getAllFeedback method to retrieve all feedback
+      ArrayList<GeneralFeedback> feedbackList = generalFeedDAO.getAllFeedback();
 
-        // Print the feedback
-        for (GeneralFeedback feedback : feedbackList) {
-            System.out.println(feedback);
-        }
-    }
+      // Print the feedback
+      for (GeneralFeedback feedback : feedbackList) {
+         System.out.println(feedback);
+      }
+   }
 
 }
