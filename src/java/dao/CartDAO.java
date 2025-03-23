@@ -83,6 +83,19 @@ public class CartDAO extends DBContext {
         return null;
     }
 
+    public boolean deleteCartItem(int userId, int productId) {
+    String sql = "DELETE FROM cart_item WHERE user_id = ? AND product_id = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        ps.setInt(2, productId);
+        int result = ps.executeUpdate();
+        return result > 0; // Trả về true nếu xóa thành công
+    } catch (SQLException ex) {
+        Logger.getLogger(CartDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false; // Trả về false nếu có lỗi xảy ra
+}
+
     public CartItem deleteCartItem(CartItem item) {
         
         try   {
