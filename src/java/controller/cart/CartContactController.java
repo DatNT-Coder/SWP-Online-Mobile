@@ -37,6 +37,7 @@ public class CartContactController extends HttpServlet {
  
 
 @Override
+
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     HttpSession session = request.getSession();
@@ -67,8 +68,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         }
     }
 
-    double total = selectedCart.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
+    // Lưu danh sách sản phẩm đã chọn vào session để sử dụng khi thanh toán
+    session.setAttribute("selectedCart", selectedCart);
 
+    double total = selectedCart.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
     String qrImageLink = this.getVietQRLink((int) (total * 24640), "Thanh toán hóa đơn có mã khách hàng " + user.getId());
 
     request.setAttribute("cart", selectedCart);
@@ -80,8 +83,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     request.setAttribute("selectedProducts", selectedProductIdsParam);
     request.getRequestDispatcher(VIEW_PATH).forward(request, response);
 }
-
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
