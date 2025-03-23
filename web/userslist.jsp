@@ -34,6 +34,17 @@
                 background-color: #eeecfd !important;
                 cursor: pointer;
             }
+            .input-group {
+                display: flex;
+                align-items: center;  /* Căn giữa theo chiều dọc */
+                gap: 10px;  /* Khoảng cách giữa các phần tử */
+            }
+
+            .input-group select {
+                flex: 1;  /* Đảm bảo dropdown có cùng kích thước */
+                min-width: 150px; /* Giữ cho dropdown không quá nhỏ */
+            }
+
         </style>
     </head>
     <body>
@@ -114,13 +125,26 @@
 
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <select class="form-control" name="statusFilter">
-                                        <option value="">All</option>
-                                        <option value="1" ${statusFilter == '1' ? 'selected' : ''}>Active</option>
-                                        <option value="0" ${statusFilter == '0' ? 'selected' : ''}>Inactive</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-secondary">Filter by Status</button>
+                                    <form action="userlist" method="get" style="display: flex; gap: 10px;">
+                                        <input type="hidden" name="isFiltering" value="true">
+                                        <!-- Dropdown chọn loại filter -->
+                                        <select class="form-control" name="filterType" id="filterType" onchange="updateFilterOptions()">
+                                            <option value="all">All</option>
+                                            <option value="gender">Gender</option>
+                                            <option value="role">Role</option>
+                                            <option value="status">Status</option>
+                                        </select>
+
+                                        <!-- Dropdown chọn giá trị theo filter -->
+                                        <select class="form-control" name="filterValue" id="filterValue">
+                                            <option value="all">All</option>
+                                        </select>
+
+                                        <button type="submit" class="btn btn-secondary">Filter</button>
+                                    </form>
                                 </div>
+
+
                             </div>
 
 
@@ -181,10 +205,14 @@
                                         <c:when test="${not empty listUserBySearch}">
                                             <c:set var="listUser" value="${listUserBySearch}" />
                                         </c:when>
+                                        <c:when test="${not empty listUserByFilter}">
+                                            <c:set var="listUser" value="${listUserByFilter}" />
+                                        </c:when>
                                         <c:otherwise>
                                             <c:set var="listUser" value="${listUserByPage}" />
                                         </c:otherwise>
                                     </c:choose>
+
 
                                     <c:forEach var="u" items="${listUser}">
                                         <tr>
@@ -209,25 +237,43 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center mt-3">
 
+                                <!--  thêm kw để mỗi lần ấn phân trang kw vẫn sẽ được gửi về và lấy totalPage từ kw  -->
                                 <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
-
+                                <c:set var="is_filtering" value="${not empty isFiltering ? isFiltering : ''}"/>
+                                <c:set var="filter_type_value" value="${not empty filterType ? filterType : ''}"/>
+                                <c:set var="filter_value" value="${not empty filterValue ? filterValue : ''}"/>
+                                
                                 <c:if test="${currentPage > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=${currentPage - 1}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">Previous</a>
+                                        <a class="page-link" href="?page=${currentPage - 1}&sortField=${sortField}&sortOrder=${sortOrder}
+                                           ${not empty kw ? '&keyword=' : ''}${kw_value}
+                                           ${not empty isFiltering ? '&isFiltering=' : ''}${is_filtering}
+                                           ${not empty filterType ? '&filterType=' : ''}${filter_type_value}
+                                           ${not empty filterValue ? '&filterValue=' : ''}${filter_value}">Previous</a>
                                     </li>
                                 </c:if>
 
                                 <c:forEach var="i" begin="1" end="${totalPage}">
                                     <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                        <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">${i}</a>
+                                        <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}
+                                           ${not empty kw ? '&keyword=' : ''}${kw_value}
+                                           ${not empty isFiltering ? '&isFiltering=' : ''}${is_filtering}
+                                           ${not empty filterType ? '&filterType=' : ''}${filter_type_value}
+                                           ${not empty filterValue ? '&filterValue=' : ''}${filter_value}">
+                                            ${i}</a>
                                     </li>
                                 </c:forEach>
 
                                 <c:if test="${currentPage < totalPage}">
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">Next</a>
+                                        <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}
+                                           ${not empty kw ? '&keyword=' : ''}${kw_value}
+                                           ${not empty isFiltering ? '&isFiltering=' : ''}${is_filtering}
+                                           ${not empty filterType ? '&filterType=' : ''}${filter_type_value}
+                                           ${not empty filterValue ? '&filterValue=' : ''}${filter_value}">Next</a>
                                     </li>
                                 </c:if>
+
                             </ul>
                         </nav>
 
@@ -236,6 +282,55 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+                                            function updateFilterOptions() {
+                                                let filterType = document.getElementById("filterType").value;
+                                                let filterValue = document.getElementById("filterValue");
+
+                                                // Xóa tất cả option cũ
+                                                filterValue.innerHTML = "";
+
+                                                // Tạo option mặc định
+                                                let defaultOption = document.createElement("option");
+                                                defaultOption.value = "";
+                                                defaultOption.text = "All";
+                                                filterValue.appendChild(defaultOption);
+
+                                                // Thêm các giá trị dựa vào lựa chọn
+                                                let options = [];
+
+                                                if (filterType === "gender") {
+                                                    options = [
+                                                        {value: "Male", text: "Male"},
+                                                        {value: "Female", text: "Female"}
+                                                    ];
+                                                } else if (filterType === "role") {
+                                                    options = [
+                                                        {value: "user", text: "User"},
+                                                        {value: "sale", text: "Sale"},
+                                                        {value: "sale manager", text: "Sale Manager"},
+                                                        {value: "admin", text: "Admin"},
+                                                        {value: "marketing", text: "Marketing"},
+                                                        {value: "shipper", text: "Shipper"}
+                                                    ];
+                                                } else if (filterType === "status") {
+                                                    options = [
+                                                        {value: "1", text: "Active"},
+                                                        {value: "0", text: "Inactive"}
+                                                    ];
+                                                }
+
+                                                // Thêm các option mới vào dropdown
+                                                options.forEach(optionData => {
+                                                    let option = document.createElement("option");
+                                                    option.value = optionData.value;
+                                                    option.text = optionData.text;
+                                                    filterValue.appendChild(option);
+                                                });
+                                            }
+        </script>
+
     </body>
 </html>
 

@@ -60,7 +60,7 @@ public class UsersListServlet extends HttpServlet {
         }
 
         int currentPage = 1;
-        int limit = 15;
+        int limit = 5;
         if (request.getParameter("page") != null) {
             currentPage = Integer.parseInt(request.getParameter("page"));
         }
@@ -71,26 +71,41 @@ public class UsersListServlet extends HttpServlet {
 
         List<User> listUserBySearch = new ArrayList<>();
         List<User> listUserByPage = new ArrayList<>();
+        List<User> listUserByFilter = new ArrayList<>();
 
         int totalUser = 0;
         int totalPage = 0;
 
+        String filterType;
+        String filterValue;
+        String isFiltering = request.getParameter("isFiltering");
+
         if (kw != null && !kw.trim().isEmpty()) {
-            listUserBySearch = get.searchUserInfo(kw, sortField, sortOrder);
-            totalUser = listUserBySearch.size();
+            listUserBySearch = get.searchUserInfoPerPage(kw, sortField, sortOrder, offset, limit);
+            totalUser = get.searchAllUserInfo(kw).size();
             totalPage = (int) Math.ceil((double) totalUser / limit);
             if (listUserBySearch.isEmpty()) {
                 request.setAttribute("er", "No results found for: " + kw);
             }
+        } else if (isFiltering != null) {
+            filterType = request.getParameter("filterType");
+            filterValue = request.getParameter("filterValue");
+            request.setAttribute("filterValue", filterValue);
+            request.setAttribute("filterType", filterType);
+            listUserByFilter = get.userFilter(filterType, filterValue, offset, limit, sortField, sortOrder);
+            totalUser = get.userFilterAll(filterType, filterValue).size();
+            totalPage = (int) Math.ceil((double) totalUser / limit);
         } else {
             listUserByPage = get.getUserByPage(offset, limit, sortField, sortOrder);
             totalUser = get.findAll().size();
             totalPage = (int) Math.ceil((double) totalUser / limit);
         }
 
+        request.setAttribute("isFiltering", isFiltering);
         request.setAttribute("kw", kw);
         request.setAttribute("listUserBySearch", listUserBySearch);
         request.setAttribute("listUserByPage", listUserByPage);
+        request.setAttribute("listUserByFilter", listUserByFilter);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("sortField", sortField);
@@ -133,15 +148,14 @@ public class UsersListServlet extends HttpServlet {
     private String addDoPost(HttpServletRequest request, HttpServletResponse response) {
 
         //chưa lấy thông tin từ jsp
-        
         String url;
-        
+
         String name = request.getParameter("full_name");
         String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         String phone = request.getParameter("mobile");
         String pw = generatePW();
-        
+
         Date registrationDate = new Date(System.currentTimeMillis());
         int status = 1;
         int updatedBy = 0;
@@ -158,10 +172,10 @@ public class UsersListServlet extends HttpServlet {
             get.insertUserToDBbyAdmin(au);
             EmailSender.sendEmail(au.getEmail(), "Your password", "Take this password to log in: " + pw);
         }
-            return url = "/admin/userlist";
+        return url = "/admin/userlist";
     }
-    
-        private String generatePW() {
+
+    private String generatePW() {
         Random random = new Random();
         return String.format("%03d", random.nextInt(1000000));
     }

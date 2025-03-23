@@ -56,8 +56,9 @@ public class UserDetailServlet extends HttpServlet {
         
         User a = get.findUserById(idUserSelect);
         
-        request.setAttribute("userDetailInfo", a);
-        request.getRequestDispatcher(request.getContextPath() + "/user-detail.jsp").forward(request, response);
+        request.getSession().setAttribute("userDetailInfo", a);
+        
+        request.getRequestDispatcher("/user-detail.jsp").forward(request, response);
         
     }
 
@@ -72,7 +73,15 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        User b = (User) request.getSession().getAttribute("userDetailInfo");
+        b.setStatus(Integer.parseInt(request.getParameter("status")));
+        b.setRole_name(request.getParameter("role"));
+        
+        get.editUserByAdmin(b);
+        request.setAttribute("isTrue", "Updated");
+        request.getRequestDispatcher("/user-detail.jsp").forward(request, response);
+
     }
 
     /**
