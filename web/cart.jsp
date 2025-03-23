@@ -142,19 +142,19 @@
             </div>
         </header>
 
+       
+
         <section id="cart_items">
             <div class="container">
                 <div class="breadcrumbs">
-                    <ol style="color: #009981;" class="breadcrumb">
-
-                    </ol>
+                    <ol style="color: #FE0F9E;" class="breadcrumb"></ol>
                 </div>
-                <div style="color: #009981;" class="table-responsive cart_info">
-                    <form id="cart-form" action="${pageContext.request.contextPath}/customer/cart/contact" method="POST">
+                <div style="color: #FE0F9E;" class="table-responsive cart_info">
+                    <form id="checkoutForm" action="${pageContext.request.contextPath}/customer/cart/contact" method="GET">
                         <table class="table table-condensed">
                             <thead>
                                 <tr class="cart_menu">
-                                    <td></td> <!-- Cột mới cho checkbox -->
+                                    <td><input type="checkbox" id="select-all"></td> <!-- Checkbox chọn tất cả -->
                                     <td class="image">Sản phẩm</td>
                                     <td class="description"></td>
                                     <td class="price">Giá tiền</td>
@@ -163,14 +163,12 @@
                                     <td></td>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <c:forEach var="item" items="${cart}">
                                     <tr id="item-${item.productId}">
-                                        <td class="cart_select">
-                                            <input type="checkbox" name="selectedProducts" value="${item.productId}">
+                                        <td class="cart_checkbox">
+                                            <input type="checkbox" class="product-checkbox" value="${item.productId}">
                                         </td>
-
                                         <td class="cart_product">
                                             <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
                                         </td>
@@ -197,64 +195,89 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                    <script>
-                        async function updateQuantity(productId, amount) {
-                            const quantityDiv = document.getElementById('item-quantity-' + productId);
 
-                            if (!document.querySelector('.cart_info table tbody tr')) {
-                                await FuiToast.error('Your cart is empty. Add items to your cart before updating quantities.');
-                                return false;
-                            }
-                            const postData = new URLSearchParams();
-                            postData.append("productId", productId);
-                            if (amount === 0) {
-                                const confirmDelete = confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng không?');
-                                if (!confirmDelete) {
-                                    return false; // Người dùng không xác nhận xóa
-                                }
-                                postData.append("amount", -quantityDiv.value);
-                            } else {
-                                postData.append("amount", amount);
-                            }
-                            const response = await fetch('${pageContext.request.contextPath}/customer/cart/update', {
-                                method: "POST",
-                                body: postData
-                            });
-                            const data = await response.json();
-                            const status = data.status;
+                        <!-- Input ẩn để gửi danh sách sản phẩm được chọn -->
+                        <input type="hidden" id="selectedProductsInput" name="selectedProducts">
 
-                            console.log(data);
-                            if (status === 'successed') {
-                                const newQuantity = data.quantity;
-                                if (+newQuantity === 0) {
-                                    document.getElementById('item-' + productId).remove();
-                                    await FuiToast.success('Đã xóa sản phẩm!');
-                                    return false;
-                                }
-                                const price = data.price;
-                                const total = data.total;
-                                const priceDiv = document.getElementById('item-price-' + productId);
-                                const totalDiv = document.getElementById('item-total-' + productId);
-                                quantityDiv.value = newQuantity;
-                                priceDiv.innerHTML = '$' + price;
-                                totalDiv.innerHTML = '$' + total;
-//                                await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
-                            } else {
-                                await FuiToast.error('Update product quantity failed!');
-                            }
-                            return false;
-                        }
-                    </script>
-
-                </div>
-                <div  class="row">
-                    <div class="col" style="color: #FE0F9E; display: flex; justify-content: center; margin-top: -20px; margin-bottom: 30px;">
-
-                        <a  href="${pageContext.request.contextPath}/customer/cart/contact" class="btn btn-default add-to-cart" href="">Đi đến thanh toán</a>
-                    </div>
+                        <div class="row">
+                            <div class="col" style="color: #FE0F9E; display: flex; justify-content: center; margin-top: -20px; margin-bottom: 30px;">
+                                <button type="button" onclick="submitCheckout()" class="btn btn-default add-to-cart">Đi đến thanh toán</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section> <!--/#cart_items-->
+
+        <script>
+            async function updateQuantity(productId, amount) {
+                const quantityDiv = document.getElementById('item-quantity-' + productId);
+
+                if (!document.querySelector('.cart_info table tbody tr')) {
+                    await FuiToast.error('Your cart is empty. Add items to your cart before updating quantities.');
+                    return false;
+                }
+                const postData = new URLSearchParams();
+                postData.append("productId", productId);
+                if (amount === 0) {
+                    postData.append("amount", -quantityDiv.value);
+                } else {
+                    postData.append("amount", amount);
+                }
+                const response = await fetch('${pageContext.request.contextPath}/customer/cart/update', {
+                    method: "POST",
+                    body: postData
+                });
+                const data = await response.json();
+                const status = data.status;
+
+                console.log(data);
+                if (status === 'successed') {
+                    const newQuantity = data.quantity;
+                    if (+newQuantity === 0) {
+                        document.getElementById('item-' + productId).remove();
+                        await FuiToast.success('Đã xóa sản phẩm!');
+                        return false;
+                    }
+                    const price = data.price;
+                    const total = data.total;
+                    const priceDiv = document.getElementById('item-price-' + productId);
+                    const totalDiv = document.getElementById('item-total-' + productId);
+                    quantityDiv.value = newQuantity;
+                    priceDiv.innerHTML = '$' + price;
+                    totalDiv.innerHTML = '$' + total;
+                    await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
+                } else {
+                    await FuiToast.error('Update product quantity failed!');
+                }
+                return false;
+            }
+
+            function submitCheckout() {
+                let selectedProducts = [];
+                document.querySelectorAll('.product-checkbox:checked').forEach((checkbox) => {
+                    selectedProducts.push(checkbox.value);
+                });
+
+                if (selectedProducts.length === 0) {
+                    alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+                    return;
+                }
+
+                // Gán danh sách sản phẩm vào input hidden
+                document.getElementById("selectedProductsInput").value = selectedProducts.join(",");
+
+                // Submit form
+                document.getElementById("checkoutForm").submit();
+            }
+
+            // Chức năng chọn tất cả checkbox
+            document.getElementById("select-all").addEventListener("change", function () {
+                let checkboxes = document.querySelectorAll(".product-checkbox");
+                checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+            });
+        </script>
+
 
 
         <footer id="footer"><!--Footer-->
