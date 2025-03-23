@@ -20,7 +20,7 @@
             </c:choose>
         <p style="color: white">Welcome, ${sessionScope.user.full_name}</p>
 
-        <p style="color: white"><a href="/mobileshop/Home">Back to home</a></p>
+        <p style="color: white"><a href="/ProjectSWP391/HomePage">Back to home</a></p>
 
     </div>
     <h2>Admin</h2>
