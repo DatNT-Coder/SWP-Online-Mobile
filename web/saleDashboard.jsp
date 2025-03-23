@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="col-md-6" style="margin-bottom:5px;">
-                        <form action="saleDashboard" method="POST">
+                        <form action="/ProjectSWP391/sale/saleDashboard" method="POST">
                             <div class="col-md-6">
                                 <label for="startDate">Bắt đầu:</label>
                                 <input name="fromDate" value="${requestScope.fromDate}" type="date" class="form-control" id="startDate">
@@ -115,9 +115,10 @@
                                 <input name="toDate" value="${requestScope.toDate}" type="date" class="form-control" id="endDate" readonly>
                             </div>
                             <div class="col-md-3">
-                                <button style="margin-top: 8px; background-color: #2f7db2; border: white; color: white; padding: 5px 10px " class="" type="submit">Lọc <i class="fa-solid fa-filter"></i></button>
+                                <button style="margin-top: 8px; background-color: #2f7db2; border: white; color: white; padding: 5px 10px;" class="" type="submit">Lọc <i class="fa-solid fa-filter"></i></button>
                             </div>
                         </form>
+
 
                         <!--                            <div class="col-md-3">
                                                         <label for="sale">Sale:</label>
@@ -380,5 +381,6 @@
                             });
                         });
                     </script>
+
                     </body>
                     </html>

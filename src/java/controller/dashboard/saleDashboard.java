@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.dashboard;
 
 import com.google.gson.Gson;
@@ -58,7 +57,7 @@ public class saleDashboard extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User userProfile = (User) session.getAttribute("user");
-        
+
         String totalOrder = request.getParameter("totalOrder");
         String orderDone = request.getParameter("orderDone");
         OrderSaleDAO dao = new OrderSaleDAO();
@@ -101,7 +100,7 @@ public class saleDashboard extends HttpServlet {
         Map<Date, Integer> sumOrderChart;
         Map<Date, Integer> succOrderChart;
         List<Order> revenueInRange;
-        if (toDate_raw == null || fromDate_raw == null||toDate_raw.equals("") || fromDate_raw.equals("")) {
+        if (toDate_raw == null || fromDate_raw == null || toDate_raw.equals("") || fromDate_raw.equals("")) {
             sumOrderChart = dao.getTotalSuccessfulOrdersLast7Days();
             succOrderChart = dao.getTotalSuccessfulOrdersLast7Days();
             revenueInRange = dao.getRevenue7Days();
@@ -127,6 +126,8 @@ public class saleDashboard extends HttpServlet {
         request.setAttribute("revenue7Days", revenueInRangeJson);
         request.setAttribute("list", list);
         request.getRequestDispatcher("/saleDashboard.jsp").forward(request, response);
+
+
     }
 
     /**

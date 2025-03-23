@@ -5,6 +5,7 @@
 package dao;
 
 import context.DBContext;
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +18,12 @@ import model.Order;
  * @author Asus
  */
 public class OrderSaleDAO extends DBContext {
- 
+   private final Connection connection; // Kết nối cơ sở dữ liệu
+
+   public OrderSaleDAO() {
+      DBContext dbContext = new DBContext();
+      this.connection = dbContext.getConnection(); // Lấy kết nối từ DBContext
+   }
     public Integer getTotalOrders(String totalOrder) {
         try {
             String sql = "SELECT COUNT(*) \n"
@@ -239,7 +245,7 @@ public class OrderSaleDAO extends DBContext {
        
 
         // Gọi hàm getTotalOrdersInRange
-        Map<Date, Integer> result = obj.getTotalOrdersSuccessInRange("2024-02-16","2024-02-22");
+        Map<Date, Integer> result = obj.getTotalOrdersSuccessInRange("2024-02-16","2025-02-22");
 
         // In kết quả
         for (Map.Entry<Date, Integer> entry : result.entrySet()) {
