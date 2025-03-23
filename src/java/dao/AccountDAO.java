@@ -652,44 +652,6 @@ public class AccountDAO extends DBContext {
         return isUpdated;
     }
 
-    public static void main(String[] args) {
-        AccountDAO d = new AccountDAO();
-
-//        User a = new User("gggg@gmail.com", "a12345");
-//        User isExist = d.findEmailPasswordUser(a);
-//        System.out.println(isExist);
-//        
-//         User b = new User("gggg@gmail.com");
-//         System.out.println(d.checkUserEmailExist(b));
-//         
-//        String emailUser = "gggg@gmail.com";
-//        String password = "a12345";
-//        String username = "Pham Thanh Vinh";
-//        String phone = "1234567890";
-//        String gender = "Male";
-//        Date registrationDate = new Date(System.currentTimeMillis());
-//        int status = 1;
-//        int updatedBy = 0;
-//        Date updatedDate = null;
-//        String image = null;
-//        int settingsId = 1;
-//        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
-//        d.insertUserToDB(ru);
-//        System.out.println(d.checkUserEmailExistString("john.doe@example.com"));
-//        System.out.println(d.checkOldPassword("john.doe@example.com", "pass123"));
-//        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
-//        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
-//        User u = new User("lbienvda@gmail.com", "2");
-//        System.out.println(d.updateUserPassword(u));
-        List<User> u = d.findAll();
-//        System.out.println(u.get(0).getRole_name());
-//        System.out.println(u.get(0).getFull_name());
-//        System.out.println(u.get(0));
-//        System.out.println(d.getDataUser("lbienvda@gmail.com", "222"));
-
-        System.out.println(u);
-    }
-
     public List<User> findAll() {
         List<User> listFound = new ArrayList<>();
         connection = getConnection();
@@ -821,4 +783,168 @@ public class AccountDAO extends DBContext {
         return u;
     }
 
+    
+    //chưa test
+public boolean insertUserToDBbyAdmin(User au) {
+    boolean isInserted = false;  // Biến để kiểm tra thành công hay không
+    try {
+        // Kết nối với cơ sở dữ liệu
+        connection = getConnection();
+
+        // Câu lệnh SQL chèn user
+        String userSQL = "INSERT INTO `user` "
+                + "(email, password, full_name, phone, gender, registration_date, status, updatedBy, updatedDate, image, settings_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Chuẩn bị câu lệnh SQL
+        statement = connection.prepareStatement(userSQL, statement.RETURN_GENERATED_KEYS);
+
+        // Gán giá trị vào câu lệnh SQL
+        statement.setString(1, au.getEmail());
+        String hashedPassword = BCrypt.hashpw(au.getPassword(), BCrypt.gensalt());
+        statement.setString(2, hashedPassword);
+        statement.setString(3, au.getFull_name());
+        statement.setString(4, au.getPhone());
+        statement.setString(5, au.getGender());
+        statement.setDate(6, new java.sql.Date(au.getRegistration_date().getTime()));
+        statement.setInt(7, au.getStatus());
+        statement.setInt(8, au.getUpdatedBy());
+
+        // Xử lý giá trị NULL cho updatedDate và image
+        if (au.getUpdatedDate() != null) {
+            statement.setDate(9, new java.sql.Date(au.getUpdatedDate().getTime()));
+        } else {
+            statement.setNull(9, java.sql.Types.DATE);
+        }
+
+        if (au.getImage() != null) {
+            statement.setString(10, au.getImage());
+        } else {
+            statement.setNull(10, java.sql.Types.VARCHAR);
+        }
+
+        statement.setInt(11, au.getSettings_id());
+
+        // Thực thi câu lệnh SQL
+        int rowsAffected = statement.executeUpdate();
+        resultSet = statement.getGeneratedKeys();
+
+        // Kiểm tra nếu có ID được sinh tự động
+        if (resultSet.next() && rowsAffected > 0) {
+            int newUserId = resultSet.getInt(1);
+            System.out.println("User inserted with ID: " + newUserId);
+
+            // Thêm user_id vào bảng user_role (gán mặc định role_id = 1)
+            insertToUserRole(newUserId, 1);
+
+            // Thành công
+            isInserted = true;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Đóng tài nguyên
+        try {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    return isInserted;
+}
+
+
+        public static void main(String[] args) {
+        AccountDAO d = new AccountDAO();
+
+//        User a = new User("gggg@gmail.com", "a12345");
+//        User isExist = d.findEmailPasswordUser(a);
+//        System.out.println(isExist);
+//        
+//         User b = new User("gggg@gmail.com");
+//         System.out.println(d.checkUserEmailExist(b));
+//         
+//        String emailUser = "gggg@gmail.com";
+//        String password = "a12345";
+//        String username = "Pham Thanh Vinh";
+//        String phone = "1234567890";
+//        String gender = "Male";
+//        Date registrationDate = new Date(System.currentTimeMillis());
+//        int status = 1;
+//        int updatedBy = 0;
+//        Date updatedDate = null;
+//        String image = null;
+//        int settingsId = 1;
+//        User ru = new User(emailUser, password, username, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+//        d.insertUserToDB(ru);
+//        System.out.println(d.checkUserEmailExistString("john.doe@example.com"));
+//        System.out.println(d.checkOldPassword("john.doe@example.com", "pass123"));
+//        System.out.println(d.updatePassword("john.doe@example.com", "alo123"));
+//        System.out.println(d.getDataUser("alex.jones@example.com", "123"));
+//        User u = new User("lbienvda@gmail.com", "2");
+//        System.out.println(d.updateUserPassword(u));
+//        List<User> u = d.findAll();
+//        System.out.println(u.get(0).getRole_name());
+//        System.out.println(u.get(0).getFull_name());
+//        System.out.println(u.get(0));
+//        System.out.println(d.getDataUser("lbienvda@gmail.com", "222"));
+
+
+//        String name = "alo";
+//        String gender = "Male";
+//        String email = "thisismylatibute@gmail.com";
+//        String phone = "123456789";
+//        String pw = "123456789";
+//        
+//        Date registrationDate = new Date(System.currentTimeMillis());
+//        int status = 1;
+//        int updatedBy = 0;
+//        Date updatedDate = null;
+//        String image = null;
+//        int settingsId = 1;
+//
+//        User au = new User(email, pw, name, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+//
+//        System.out.println(d.insertUserToDBbyAdmin(au));
+            User u = d.findUserById(1);
+            System.out.println(u);
+    }
+    
+    public User findUserById(int idUserSelect) {
+    User user = null;
+    connection = getConnection();
+    String sql = "SELECT u.*, ur.role_id, r.role_name "
+            + "FROM User u "
+            + "JOIN user_role ur ON u.id = ur.user_id "
+            + "JOIN role r ON ur.role_id = r.id "
+            + "WHERE u.id = ?";
+
+    try {
+        statement = connection.prepareStatement(sql);
+        statement.setInt(1, idUserSelect); // Gán giá trị userId vào query
+        resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            int idUser = resultSet.getInt("id");
+            String emailFound = resultSet.getString("email").trim();
+            String fullNameFound = resultSet.getString("full_name");
+            String phoneNumberFound = resultSet.getString("phone");
+            String genderFound = resultSet.getString("gender");
+            int statusFound = resultSet.getInt("status");
+            int roleIdFound = resultSet.getInt("role_id");
+            String roleNameFound = resultSet.getString("role_name");
+
+            // Tạo User object với thông tin lấy từ database
+            user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound, roleNameFound);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error fetching user by ID: " + e.getMessage());
+    }
+    return user; // Trả về User hoặc null nếu không tìm thấy
+}
+
+    
 }

@@ -37,158 +37,204 @@
         </style>
     </head>
     <body>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 mb-3 mb-lg-5">
-                        <div class="card table-nowrap table-card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Users List</h5>
-                                
-                                <div>
-                                    <form action="userlist" method="post">
-                                        <button type="submit" class="btn btn-primary btn-sm">Add New</button>
-                                    </form>
-                                </div>
-                                
-                            </div>
-                            <div class="card-body d-flex justify-content-between">
-                                <div class="col-md-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-3 mb-lg-5">
+                    <div class="card table-nowrap table-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Users List</h5>
 
-                                    <div>
-                                        <form class="d-flex" action="userlist" method="get">
+                            <!--                            <div>
+                                                            //chưa pop up screen nhập thông tin
+                                                            <form action="userlist?action=add" method="post">
+                                                                <button type="submit" class="btn btn-primary btn-sm">Add New</button>
+                                                            </form>
+                                                        </div>-->
+
+                            <ul class="nav navbar-nav">
+                                <li><i class="fa fa-user"></i><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add </button></li>
+                            </ul>
+
+                            <!-- Modal sửa -->
+                            <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="editProfileModalLabel">Edit Profile</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="edit-form" action="userlist?action=add" method="post">
+                                                <div class="form-group">
+                                                    <label for="edit-full-name">Full Name</label>
+                                                    <input type="text" name="full_name" class="form-control" id="edit-full-name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="gender">Gender</label>
+                                                    <select id="gender" name="gender" class="form-control" required>
+                                                        <option value="" disabled selected>Select gender</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edit-email">Email</label>
+                                                    <input type="email" name="email" class="form-control" id="edit-email" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edit-phone">Phone Number:</label>
+                                                    <input name="mobile" type="text" class="form-control" id="edit-phone" placeholder="Enter phone number"
+                                                           pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="card-body d-flex justify-content-between">
+                            <div class="col-md-5">
+
+                                <div>
+                                    <form class="d-flex" action="userlist" method="get">
                                         <input type="text" class="form-control" name="keyword" 
                                                placeholder="Search by name, email, mobile">
                                         <button type="submit" class="btn btn-secondary">Search</button>
                                         ${er}
-                                        </form>
-                                    </div>
-
+                                    </form>
                                 </div>
-
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <select class="form-control" name="statusFilter">
-                                            <option value="">All</option>
-                                            <option value="1" ${statusFilter == '1' ? 'selected' : ''}>Active</option>
-                                            <option value="0" ${statusFilter == '0' ? 'selected' : ''}>Inactive</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-secondary">Filter by Status</button>
-                                    </div>
-                                </div>
-
 
                             </div>
 
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead class="small text-uppercase bg-body text-muted">
-                                        <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
-                                        <tr>
-                                            <th>
-                                                ID
-                                                <a href="?sortField=id&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=id&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Full Name
-                                                <a href="?sortField=full_name&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=full_name&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Gender
-                                                <a href="?sortField=gender&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=gender&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Email
-                                                <a href="?sortField=email&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=email&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Mobile
-                                                <a href="?sortField=phone&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=phone&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Status
-                                                <a href="?sortField=status&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=status&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Role
-                                                <a href="?sortField=role_name&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                                <a href="?sortField=role_name&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                            </th>
-                                            <th>
-                                                Option
-                                            </th>
-                                        </tr>
-
-
-                                    </thead>
-
-
-
-                                    <tbody>
-                                        <c:choose>
-                                            <c:when test="${not empty listUserBySearch}">
-                                                <c:set var="listUser" value="${listUserBySearch}" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:set var="listUser" value="${listUserByPage}" />
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                        <c:forEach var="u" items="${listUser}">
-                                            <tr>
-                                                <td>${u.id}</td>
-                                                <td>${u.full_name}</td>
-                                                <td>${u.gender}</td>
-                                                <td>${u.email}</td>
-                                                <td>${u.phone}</td>
-                                                <td>${u.status == 1 ? 'Active' : 'In Active'}</td>
-                                                <td>${u.role_name}</td>
-                                                <td>
-                                                    <a href="customerDetail?id=${customer.id}" class="btn btn-info btn-sm">View Detail</a>
-                                                    <a href="customerDetail?id=${customer.id}" class="btn btn-warning btn-sm">Edit</a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <select class="form-control" name="statusFilter">
+                                        <option value="">All</option>
+                                        <option value="1" ${statusFilter == '1' ? 'selected' : ''}>Active</option>
+                                        <option value="0" ${statusFilter == '0' ? 'selected' : ''}>Inactive</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-secondary">Filter by Status</button>
+                                </div>
                             </div>
 
-                            <!-- Phân trang đang làm -->
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center mt-3">
-                                    
-                                    <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
-                                    
-                                    <c:if test="${currentPage > 1}">
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page=${currentPage - 1}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">Previous</a>
-                                        </li>
-                                    </c:if>
-
-                                    <c:forEach var="i" begin="1" end="${totalPage}">
-                                        <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                            <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-
-                                    <c:if test="${currentPage < totalPage}">
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">Next</a>
-                                        </li>
-                                    </c:if>
-                                </ul>
-                            </nav>
 
                         </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="small text-uppercase bg-body text-muted">
+                                    <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
+                                    <tr>
+                                        <th>
+                                            ID
+                                            <a href="?sortField=id&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=id&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Full Name
+                                            <a href="?sortField=full_name&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=full_name&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Gender
+                                            <a href="?sortField=gender&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=gender&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Email
+                                            <a href="?sortField=email&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=email&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Mobile
+                                            <a href="?sortField=phone&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=phone&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Status
+                                            <a href="?sortField=status&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=status&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Role
+                                            <a href="?sortField=role_name&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=role_name&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
+                                        </th>
+                                        <th>
+                                            Option
+                                        </th>
+                                    </tr>
+
+
+                                </thead>
+
+
+
+                                <tbody>
+                                    <c:choose>
+                                        <c:when test="${not empty listUserBySearch}">
+                                            <c:set var="listUser" value="${listUserBySearch}" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="listUser" value="${listUserByPage}" />
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <c:forEach var="u" items="${listUser}">
+                                        <tr>
+                                            <td>${u.id}</td>
+                                            <td>${u.full_name}</td>
+                                            <td>${u.gender}</td>
+                                            <td>${u.email}</td>
+                                            <td>${u.phone}</td>
+                                            <td>${u.status == 1 ? 'Active' : 'In Active'}</td>
+                                            <td>${u.role_name}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/admin/userdetail?id=${u.id}" class="btn btn-warning btn-sm">View</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <!-- Phân trang đang làm -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center mt-3">
+
+                                <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
+
+                                <c:if test="${currentPage > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=${currentPage - 1}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">Previous</a>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach var="i" begin="1" end="${totalPage}">
+                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">${i}</a>
+                                    </li>
+                                </c:forEach>
+
+                                <c:if test="${currentPage < totalPage}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}${not empty kw ? '&keyword=' : ''}${kw_value}">Next</a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </nav>
+
                     </div>
                 </div>
             </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

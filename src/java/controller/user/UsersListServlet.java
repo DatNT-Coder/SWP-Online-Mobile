@@ -4,6 +4,7 @@
  */
 package controller.user;
 
+import constant.CommonConst;
 import dao.AccountDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import model.User;
 
 /**
@@ -71,18 +74,18 @@ public class UsersListServlet extends HttpServlet {
 
         int totalUser = 0;
         int totalPage = 0;
-        
+
         if (kw != null && !kw.trim().isEmpty()) {
             listUserBySearch = get.searchUserInfo(kw, sortField, sortOrder);
-             totalUser = listUserBySearch.size();
-             totalPage = (int) Math.ceil((double) totalUser / limit);
+            totalUser = listUserBySearch.size();
+            totalPage = (int) Math.ceil((double) totalUser / limit);
             if (listUserBySearch.isEmpty()) {
                 request.setAttribute("er", "No results found for: " + kw);
             }
         } else {
             listUserByPage = get.getUserByPage(offset, limit, sortField, sortOrder);
-             totalUser = get.findAll().size();
-             totalPage = (int) Math.ceil((double) totalUser / limit);
+            totalUser = get.findAll().size();
+            totalPage = (int) Math.ceil((double) totalUser / limit);
         }
 
         request.setAttribute("kw", kw);
@@ -99,7 +102,22 @@ public class UsersListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String action = request.getParameter("action") != null
+                ? request.getParameter("action")
+                : "";
+
+        String url;
+
+        switch (action) {
+            case "add":
+                url = addDoPost(request, response);
+                break;
+            default:
+                url = "/admin/userlist";
+        }
+
+        response.sendRedirect(request.getContextPath() + url);
     }
 
     /**
@@ -111,5 +129,41 @@ public class UsersListServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String addDoPost(HttpServletRequest request, HttpServletResponse response) {
+
+        //chưa lấy thông tin từ jsp
+        
+        String url;
+        
+        String name = request.getParameter("full_name");
+        String gender = request.getParameter("gender");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("mobile");
+        String pw = generatePW();
+        
+        Date registrationDate = new Date(System.currentTimeMillis());
+        int status = 1;
+        int updatedBy = 0;
+        Date updatedDate = null;
+        String image = null;
+        int settingsId = 1;
+
+        User au = new User(email, pw, name, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
+        boolean isExistUserEmail = get.checkUserEmailExist(au);
+
+        if (isExistUserEmail) {
+            request.setAttribute("erEmailExist", "Email is exist.");
+        } else {
+            get.insertUserToDBbyAdmin(au);
+            EmailSender.sendEmail(au.getEmail(), "Your password", "Take this password to log in: " + pw);
+        }
+            return url = "/admin/userlist";
+    }
+    
+        private String generatePW() {
+        Random random = new Random();
+        return String.format("%03d", random.nextInt(1000000));
+    }
 
 }
