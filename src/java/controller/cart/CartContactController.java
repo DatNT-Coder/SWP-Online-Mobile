@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import model.CartItem;
 import model.User;
 
@@ -34,7 +35,8 @@ public class CartContactController extends HttpServlet {
     private final CartDAO cartDAO = new CartDAO();
 
  
-    @Override
+
+@Override
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     HttpSession session = request.getSession();
@@ -51,35 +53,34 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     ArrayList<CartItem> cart = cartDAO.getUserCart(userId);
 
-    // Lấy danh sách productId từ checkbox đã chọn
-    String[] selectedProductIds = request.getParameterValues("selectedProducts");
-    if (selectedProductIds != null && cart != null) {
-        ArrayList<CartItem> selectedCart = new ArrayList<>();
+    // Nhận danh sách sản phẩm được chọn
+    String selectedProductIdsParam = request.getParameter("selectedProducts");
+    ArrayList<CartItem> selectedCart = new ArrayList<>();
+
+    if (selectedProductIdsParam != null && !selectedProductIdsParam.isEmpty()) {
+        List<String> selectedProductIds = Arrays.asList(selectedProductIdsParam.split(","));
+
         for (CartItem item : cart) {
-            String productId = String.valueOf(item.getProductId());
-            if (Arrays.asList(selectedProductIds).contains(productId)) {
+            if (selectedProductIds.contains(String.valueOf(item.getProductId()))) {
                 selectedCart.add(item);
             }
         }
-        cart = selectedCart; // Cập nhật giỏ hàng chỉ chứa sản phẩm được chọn
     }
 
-    double total = 0;
-    for (CartItem item : cart) {
-        total += item.getPrice() * item.getQuantity();
-    }
+    double total = selectedCart.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
 
     String qrImageLink = this.getVietQRLink((int) (total * 24640), "Thanh toán hóa đơn có mã khách hàng " + user.getId());
 
-    request.setAttribute("cart", cart);
+    request.setAttribute("cart", selectedCart);
     request.setAttribute("total", total);
     request.setAttribute("qr", qrImageLink);
     request.setAttribute("address", address);
     request.setAttribute("phone", phone);
     request.setAttribute("email", email);
-    request.setAttribute("selectedProducts", selectedProductIds); // Gửi danh sách sản phẩm đã chọn xuống JSP
+    request.setAttribute("selectedProducts", selectedProductIdsParam);
     request.getRequestDispatcher(VIEW_PATH).forward(request, response);
 }
+
 
 
     @Override
