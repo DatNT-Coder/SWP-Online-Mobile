@@ -1,9 +1,3 @@
-<%-- 
-    Document   : userslist
-    Created on : Mar 5, 2025, 1:39:36 PM
-    Author     : vuduc
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -16,8 +10,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
             body {
-                margin-top:20px;
-                background:#eee;
+                margin-top: 20px;
+                background: #eee;
             }
             .card {
                 box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
@@ -36,15 +30,13 @@
             }
             .input-group {
                 display: flex;
-                align-items: center;  /* Căn giữa theo chiều dọc */
-                gap: 10px;  /* Khoảng cách giữa các phần tử */
+                align-items: center;
+                gap: 10px;
             }
-
             .input-group select {
-                flex: 1;  /* Đảm bảo dropdown có cùng kích thước */
-                min-width: 150px; /* Giữ cho dropdown không quá nhỏ */
+                flex: 1;
+                min-width: 150px;
             }
-
         </style>
     </head>
     <body>
@@ -54,24 +46,16 @@
                     <div class="card table-nowrap table-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Users List</h5>
-
-                            <!--                            <div>
-                                                            //chưa pop up screen nhập thông tin
-                                                            <form action="userlist?action=add" method="post">
-                                                                <button type="submit" class="btn btn-primary btn-sm">Add New</button>
-                                                            </form>
-                                                        </div>-->
-
                             <ul class="nav navbar-nav">
                                 <li><i class="fa fa-user"></i><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add </button></li>
                             </ul>
 
-                            <!-- Modal sửa -->
+                            <!-- Add User Modal -->
                             <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="editProfileModalLabel">Edit Profile</h4>
+                                            <h4 class="modal-title" id="editProfileModalLabel">Add User</h4>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -106,114 +90,70 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
+
                         <div class="card-body d-flex justify-content-between">
                             <div class="col-md-5">
-
-                                <div>
-                                    <form class="d-flex" action="userlist" method="get">
-                                        <input type="text" class="form-control" name="keyword" 
-                                               placeholder="Search by name, email, mobile">
-                                        <button type="submit" class="btn btn-secondary">Search</button>
-                                        ${er}
-                                    </form>
-                                </div>
-
+                                <form class="d-flex" action="userlist" method="get">
+                                    <input type="text" class="form-control" name="keyword" 
+                                           placeholder="Search by name, email, mobile" value="${sessionScope.kw}">
+                                    <button type="submit" class="btn btn-secondary">Search</button>
+                                    ${sessionScope.er}
+                                </form>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="input-group">
                                     <form action="userlist" method="get" style="display: flex; gap: 10px;">
                                         <input type="hidden" name="isFiltering" value="true">
-                                        <!-- Dropdown chọn loại filter -->
                                         <select class="form-control" name="filterType" id="filterType" onchange="updateFilterOptions()">
-                                            <option value="all">All</option>
-                                            <option value="gender">Gender</option>
-                                            <option value="role">Role</option>
-                                            <option value="status">Status</option>
+                                            <option value="all" ${sessionScope.filterType == 'all' ? 'selected' : ''}>All</option>
+                                            <option value="gender" ${sessionScope.filterType == 'gender' ? 'selected' : ''}>Gender</option>
+                                            <option value="role" ${sessionScope.filterType == 'role' ? 'selected' : ''}>Role</option>
+                                            <option value="status" ${sessionScope.filterType == 'status' ? 'selected' : ''}>Status</option>
                                         </select>
-
-                                        <!-- Dropdown chọn giá trị theo filter -->
                                         <select class="form-control" name="filterValue" id="filterValue">
                                             <option value="all">All</option>
                                         </select>
-
                                         <button type="submit" class="btn btn-secondary">Filter</button>
                                     </form>
                                 </div>
-
-
                             </div>
-
-
                         </div>
 
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="small text-uppercase bg-body text-muted">
-                                    <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
                                     <tr>
-                                        <th>
-                                            ID
-                                            <a href="?sortField=id&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=id&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Full Name
-                                            <a href="?sortField=full_name&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=full_name&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Gender
-                                            <a href="?sortField=gender&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=gender&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Email
-                                            <a href="?sortField=email&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=email&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Mobile
-                                            <a href="?sortField=phone&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=phone&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Status
-                                            <a href="?sortField=status&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=status&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Role
-                                            <a href="?sortField=role_name&sortOrder=asc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-up"></i></a>
-                                            <a href="?sortField=role_name&sortOrder=desc${not empty kw ? '&keyword=' : ''}${kw_value}"><i class="fa fa-arrow-down"></i></a>
-                                        </th>
-                                        <th>
-                                            Option
-                                        </th>
+                                        <th>ID <a href="?sortField=id&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=id&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Full Name <a href="?sortField=full_name&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=full_name&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Gender <a href="?sortField=gender&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=gender&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Email <a href="?sortField=email&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=email&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Mobile <a href="?sortField=phone&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=phone&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Status <a href="?sortField=status&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=status&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Role <a href="?sortField=role_name&sortOrder=asc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-up"></i></a>
+                                            <a href="?sortField=role_name&sortOrder=desc&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}"><i class="fa fa-arrow-down"></i></a></th>
+                                        <th>Option</th>
                                     </tr>
-
-
                                 </thead>
-
-
-
                                 <tbody>
                                     <c:choose>
-                                        <c:when test="${not empty listUserBySearch}">
-                                            <c:set var="listUser" value="${listUserBySearch}" />
+                                        <c:when test="${not empty sessionScope.listUserBySearch}">
+                                            <c:set var="listUser" value="${sessionScope.listUserBySearch}" />
                                         </c:when>
-                                        <c:when test="${not empty listUserByFilter}">
-                                            <c:set var="listUser" value="${listUserByFilter}" />
+                                        <c:when test="${not empty sessionScope.listUserByFilter}">
+                                            <c:set var="listUser" value="${sessionScope.listUserByFilter}" />
                                         </c:when>
                                         <c:otherwise>
-                                            <c:set var="listUser" value="${listUserByPage}" />
+                                            <c:set var="listUser" value="${sessionScope.listUserByPage}" />
                                         </c:otherwise>
                                     </c:choose>
-
-
                                     <c:forEach var="u" items="${listUser}">
                                         <tr>
                                             <td>${u.id}</td>
@@ -230,76 +170,47 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
-
                         </div>
 
-                        <!-- Phân trang đang làm -->
+                        <!-- Pagination -->
+
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center mt-3">
-
-                                <!--  thêm kw để mỗi lần ấn phân trang kw vẫn sẽ được gửi về và lấy totalPage từ kw  -->
-                                <c:set var="kw_value" value="${not empty kw ? kw : ''}"/>
-                                <c:set var="is_filtering" value="${not empty isFiltering ? isFiltering : ''}"/>
-                                <c:set var="filter_type_value" value="${not empty filterType ? filterType : ''}"/>
-                                <c:set var="filter_value" value="${not empty filterValue ? filterValue : ''}"/>
-                                
-                                <c:if test="${currentPage > 1}">
+                                <c:if test="${sessionScope.currentPage > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=${currentPage - 1}&sortField=${sortField}&sortOrder=${sortOrder}
-                                           ${not empty kw ? '&keyword=' : ''}${kw_value}
-                                           ${not empty isFiltering ? '&isFiltering=' : ''}${is_filtering}
-                                           ${not empty filterType ? '&filterType=' : ''}${filter_type_value}
-                                           ${not empty filterValue ? '&filterValue=' : ''}${filter_value}">Previous</a>
+                                        <a class="page-link" href="?page=${sessionScope.currentPage - 1}&sortField=${sessionScope.sortField}&sortOrder=${sessionScope.sortOrder}&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}">Previous</a>
                                     </li>
                                 </c:if>
-
-                                <c:forEach var="i" begin="1" end="${totalPage}">
-                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                        <a class="page-link" href="?page=${i}&sortField=${sortField}&sortOrder=${sortOrder}
-                                           ${not empty kw ? '&keyword=' : ''}${kw_value}
-                                           ${not empty isFiltering ? '&isFiltering=' : ''}${is_filtering}
-                                           ${not empty filterType ? '&filterType=' : ''}${filter_type_value}
-                                           ${not empty filterValue ? '&filterValue=' : ''}${filter_value}">
-                                            ${i}</a>
+                                <c:forEach var="i" begin="1" end="${sessionScope.totalPage}">
+                                    <li class="page-item ${i == sessionScope.currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="?page=${i}&sortField=${sessionScope.sortField}&sortOrder=${sessionScope.sortOrder}&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}">${i}</a>
                                     </li>
                                 </c:forEach>
-
-                                <c:if test="${currentPage < totalPage}">
+                                <c:if test="${sessionScope.currentPage < sessionScope.totalPage}">
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=${currentPage + 1}&sortField=${sortField}&sortOrder=${sortOrder}
-                                           ${not empty kw ? '&keyword=' : ''}${kw_value}
-                                           ${not empty isFiltering ? '&isFiltering=' : ''}${is_filtering}
-                                           ${not empty filterType ? '&filterType=' : ''}${filter_type_value}
-                                           ${not empty filterValue ? '&filterValue=' : ''}${filter_value}">Next</a>
+                                        <a class="page-link" href="?page=${sessionScope.currentPage + 1}&sortField=${sessionScope.sortField}&sortOrder=${sessionScope.sortOrder}&keyword=${sessionScope.kw}&isFiltering=${sessionScope.isFiltering}&filterType=${sessionScope.filterType}&filterValue=${sessionScope.filterValue}">Next</a>
                                     </li>
                                 </c:if>
-
                             </ul>
                         </nav>
-
                     </div>
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
                                             function updateFilterOptions() {
                                                 let filterType = document.getElementById("filterType").value;
                                                 let filterValue = document.getElementById("filterValue");
-
-                                                // Xóa tất cả option cũ
                                                 filterValue.innerHTML = "";
 
-                                                // Tạo option mặc định
                                                 let defaultOption = document.createElement("option");
-                                                defaultOption.value = "";
+                                                defaultOption.value = "all";
                                                 defaultOption.text = "All";
                                                 filterValue.appendChild(defaultOption);
 
-                                                // Thêm các giá trị dựa vào lựa chọn
                                                 let options = [];
-
                                                 if (filterType === "gender") {
                                                     options = [
                                                         {value: "Male", text: "Male"},
@@ -321,16 +232,24 @@
                                                     ];
                                                 }
 
-                                                // Thêm các option mới vào dropdown
                                                 options.forEach(optionData => {
                                                     let option = document.createElement("option");
                                                     option.value = optionData.value;
                                                     option.text = optionData.text;
                                                     filterValue.appendChild(option);
                                                 });
-                                            }
-        </script>
 
+                                                // Set selected value from session if available
+                                                let sessionFilterValue = "${sessionScope.filterValue}";
+                                                if (sessionFilterValue) {
+                                                    filterValue.value = sessionFilterValue;
+                                                }
+                                            }
+
+                                            // Call updateFilterOptions on page load to set initial filter values
+                                            window.onload = function () {
+                                                updateFilterOptions();
+                                            };
+        </script>
     </body>
 </html>
-

@@ -719,77 +719,76 @@ public class AccountDAO extends DBContext {
     }
 
     public List<User> searchUserInfoPerPage(String keyword, String sortField, String sortOrder, int offset, int limit) {
-    List<User> userList = new ArrayList<>();
-    String query = "SELECT u.*, ur.role_id, r.role_name "
-            + "FROM User u "
-            + "JOIN user_role ur ON u.id = ur.user_id "
-            + "JOIN role r ON ur.role_id = r.id "
-            + "WHERE u.full_name LIKE ? OR u.email LIKE ? OR u.phone LIKE ? "
-            + "ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "DESC" : "ASC")
-            + " LIMIT ? OFFSET ?"; // Thêm phân trang
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id "
+                + "WHERE u.full_name LIKE ? OR u.email LIKE ? OR u.phone LIKE ? "
+                + "ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "DESC" : "ASC")
+                + " LIMIT ? OFFSET ?"; // Thêm phân trang
 
-    try {
-        this.connection = getConnection();
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, "%" + keyword + "%");
-        ps.setString(2, "%" + keyword + "%");
-        ps.setString(3, "%" + keyword + "%");
-        ps.setInt(4, limit);
-        ps.setInt(5, offset);
-        ResultSet rs = ps.executeQuery();
+        try {
+            this.connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ps.setString(3, "%" + keyword + "%");
+            ps.setInt(4, limit);
+            ps.setInt(5, offset);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            User user = new User();
-            user.setId(rs.getInt("id"));
-            user.setFull_name(rs.getString("full_name"));
-            user.setGender(rs.getString("gender"));
-            user.setEmail(rs.getString("email"));
-            user.setPhone(rs.getString("phone"));
-            user.setStatus(rs.getInt("status"));
-            user.setRole_id(rs.getInt("role_id"));
-            user.setRole_name(rs.getString("role_name"));
-            userList.add(user);
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFull_name(rs.getString("full_name"));
+                user.setGender(rs.getString("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setStatus(rs.getInt("status"));
+                user.setRole_id(rs.getInt("role_id"));
+                user.setRole_name(rs.getString("role_name"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching users: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error searching users: " + e.getMessage());
+        return userList;
     }
-    return userList;
-}
-    
+
     public List<User> searchAllUserInfo(String keyword) {
-    List<User> userList = new ArrayList<>();
-    String query = "SELECT u.*, ur.role_id, r.role_name "
-            + "FROM User u "
-            + "JOIN user_role ur ON u.id = ur.user_id "
-            + "JOIN role r ON ur.role_id = r.id "
-            + "WHERE u.full_name LIKE ? OR u.email LIKE ? OR u.phone LIKE ?";
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id "
+                + "WHERE u.full_name LIKE ? OR u.email LIKE ? OR u.phone LIKE ?";
 
-    try {
-        this.connection = getConnection();
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, "%" + keyword + "%");
-        ps.setString(2, "%" + keyword + "%");
-        ps.setString(3, "%" + keyword + "%");
-        ResultSet rs = ps.executeQuery();
+        try {
+            this.connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ps.setString(3, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            User user = new User();
-            user.setId(rs.getInt("id"));
-            user.setFull_name(rs.getString("full_name"));
-            user.setGender(rs.getString("gender"));
-            user.setEmail(rs.getString("email"));
-            user.setPhone(rs.getString("phone"));
-            user.setStatus(rs.getInt("status"));
-            user.setRole_id(rs.getInt("role_id"));
-            user.setRole_name(rs.getString("role_name"));
-            userList.add(user);
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFull_name(rs.getString("full_name"));
+                user.setGender(rs.getString("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setStatus(rs.getInt("status"));
+                user.setRole_id(rs.getInt("role_id"));
+                user.setRole_name(rs.getString("role_name"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching users: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error searching users: " + e.getMessage());
+        return userList;
     }
-    return userList;
-}
-
 
     public List<User> sortUser(List<User> u, String sortField, String sortOrder) {
 
@@ -938,7 +937,7 @@ public class AccountDAO extends DBContext {
         String sqlRole = "UPDATE user_role SET role_id = (SELECT id FROM role WHERE role_name = ?) WHERE user_id = ?";
 
         try {
-            connection.setAutoCommit(false); 
+            connection.setAutoCommit(false);
 
             // Cập nhật status
             statement = connection.prepareStatement(sql);
@@ -979,148 +978,147 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
-    
 
-public List<User> userFilter(String filterType, String filterValue, int offset, int limit, String sortField, String sortOrder) {
-    List<User> filteredUsers = new ArrayList<>();
-    connection = getConnection();
+    public List<User> userFilter(String filterType, String filterValue, int offset, int limit, String sortField, String sortOrder) {
+        List<User> filteredUsers = new ArrayList<>();
+        connection = getConnection();
 
-    // Câu lệnh SQL mặc định lấy tất cả user
-    String sql = "SELECT u.*, ur.role_id, r.role_name " +
-                 "FROM User u " +
-                 "JOIN user_role ur ON u.id = ur.user_id " +
-                 "JOIN role r ON ur.role_id = r.id";
+        // Câu lệnh SQL mặc định lấy tất cả user
+        String sql = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id";
 
-    boolean hasCondition = false; // Cờ kiểm tra có WHERE không
+        boolean hasCondition = false; // Cờ kiểm tra có WHERE không
 
-    if (!"all".equalsIgnoreCase(filterType)) {
-        switch (filterType) {
-            case "gender":
-                if (!"all".equalsIgnoreCase(filterValue)) {
-                    sql += " WHERE u.gender = ?";
-                    hasCondition = true;
-                }
-                break;
-            case "role":
-                if (!"all".equalsIgnoreCase(filterValue)) {
-                    sql += " WHERE r.role_name = ?";
-                    hasCondition = true;
-                }
-                break;
-            case "status":
-                if (!"all".equalsIgnoreCase(filterValue)) {
-                    sql += " WHERE u.status = ?";
-                    hasCondition = true;
-                }
-                break;
+        if (!"all".equalsIgnoreCase(filterType)) {
+            switch (filterType) {
+                case "gender":
+                    if (!"all".equalsIgnoreCase(filterValue)) {
+                        sql += " WHERE u.gender = ?";
+                        hasCondition = true;
+                    }
+                    break;
+                case "role":
+                    if (!"all".equalsIgnoreCase(filterValue)) {
+                        sql += " WHERE r.role_name = ?";
+                        hasCondition = true;
+                    }
+                    break;
+                case "status":
+                    if (!"all".equalsIgnoreCase(filterValue)) {
+                        sql += " WHERE u.status = ?";
+                        hasCondition = true;
+                    }
+                    break;
+            }
         }
+
+        // Thêm ORDER BY
+        sql += " ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "DESC" : "ASC");
+
+        // Thêm LIMIT và OFFSET
+        sql += " LIMIT ? OFFSET ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int paramIndex = 1;
+
+            // Nếu có điều kiện WHERE, thêm giá trị filter vào câu lệnh SQL
+            if (hasCondition) {
+                statement.setString(paramIndex++, filterValue);
+            }
+
+            // Set LIMIT và OFFSET
+            statement.setInt(paramIndex++, limit);
+            statement.setInt(paramIndex, offset);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int idUser = resultSet.getInt("id");
+                String emailFound = resultSet.getString("email").trim();
+                String fullNameFound = resultSet.getString("full_name");
+                String phoneNumberFound = resultSet.getString("phone");
+                String genderFound = resultSet.getString("gender");
+                int statusFound = resultSet.getInt("status");
+                int roleIdFound = resultSet.getInt("role_id");
+                String roleNameFound = resultSet.getString("role_name");
+
+                User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound, roleNameFound);
+                filteredUsers.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error filtering users: " + e.getMessage());
+        }
+
+        return filteredUsers;
     }
 
-    // Thêm ORDER BY
-    sql += " ORDER BY " + sortField + " " + ("desc".equalsIgnoreCase(sortOrder) ? "DESC" : "ASC");
+    public List<User> userFilterAll(String filterType, String filterValue) {
+        List<User> filteredUsers = new ArrayList<>();
+        connection = getConnection();
 
-    // Thêm LIMIT và OFFSET
-    sql += " LIMIT ? OFFSET ?";
+        // Câu lệnh SQL mặc định lấy tất cả user
+        String sql = "SELECT u.*, ur.role_id, r.role_name "
+                + "FROM User u "
+                + "JOIN user_role ur ON u.id = ur.user_id "
+                + "JOIN role r ON ur.role_id = r.id";
 
-    try {
-        PreparedStatement statement = connection.prepareStatement(sql);
-        int paramIndex = 1;
+        boolean hasCondition = false; // Kiểm tra có điều kiện lọc không
 
-        // Nếu có điều kiện WHERE, thêm giá trị filter vào câu lệnh SQL
-        if (hasCondition) {
-            statement.setString(paramIndex++, filterValue);
+        if (!"all".equalsIgnoreCase(filterType)) {
+            switch (filterType) {
+                case "gender":
+                    if (!"all".equalsIgnoreCase(filterValue)) {
+                        sql += " WHERE u.gender = ?";
+                        hasCondition = true;
+                    }
+                    break;
+                case "role":
+                    if (!"all".equalsIgnoreCase(filterValue)) {
+                        sql += " WHERE r.role_name = ?";
+                        hasCondition = true;
+                    }
+                    break;
+                case "status":
+                    if (!"all".equalsIgnoreCase(filterValue)) {
+                        sql += " WHERE u.status = ?";
+                        hasCondition = true;
+                    }
+                    break;
+            }
         }
 
-        // Set LIMIT và OFFSET
-        statement.setInt(paramIndex++, limit);
-        statement.setInt(paramIndex, offset);
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
 
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            int idUser = resultSet.getInt("id");
-            String emailFound = resultSet.getString("email").trim();
-            String fullNameFound = resultSet.getString("full_name");
-            String phoneNumberFound = resultSet.getString("phone");
-            String genderFound = resultSet.getString("gender");
-            int statusFound = resultSet.getInt("status");
-            int roleIdFound = resultSet.getInt("role_id");
-            String roleNameFound = resultSet.getString("role_name");
+            // Nếu có điều kiện WHERE, truyền giá trị filter vào SQL
+            if (hasCondition) {
+                statement.setString(1, filterValue);
+            }
 
-            User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound, roleNameFound);
-            filteredUsers.add(user);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int idUser = resultSet.getInt("id");
+                String emailFound = resultSet.getString("email").trim();
+                String fullNameFound = resultSet.getString("full_name");
+                String phoneNumberFound = resultSet.getString("phone");
+                String genderFound = resultSet.getString("gender");
+                int statusFound = resultSet.getInt("status");
+                int roleIdFound = resultSet.getInt("role_id");
+                String roleNameFound = resultSet.getString("role_name");
+
+                User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound, roleNameFound);
+                filteredUsers.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error filtering users: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.err.println("Error filtering users: " + e.getMessage());
+
+        return filteredUsers;
     }
 
-    return filteredUsers;
-}
-
-public List<User> userFilterAll(String filterType, String filterValue) {
-    List<User> filteredUsers = new ArrayList<>();
-    connection = getConnection();
-
-    // Câu lệnh SQL mặc định lấy tất cả user
-    String sql = "SELECT u.*, ur.role_id, r.role_name " +
-                 "FROM User u " +
-                 "JOIN user_role ur ON u.id = ur.user_id " +
-                 "JOIN role r ON ur.role_id = r.id";
-
-    boolean hasCondition = false; // Kiểm tra có điều kiện lọc không
-
-    if (!"all".equalsIgnoreCase(filterType)) {
-        switch (filterType) {
-            case "gender":
-                if (!"all".equalsIgnoreCase(filterValue)) {
-                    sql += " WHERE u.gender = ?";
-                    hasCondition = true;
-                }
-                break;
-            case "role":
-                if (!"all".equalsIgnoreCase(filterValue)) {
-                    sql += " WHERE r.role_name = ?";
-                    hasCondition = true;
-                }
-                break;
-            case "status":
-                if (!"all".equalsIgnoreCase(filterValue)) {
-                    sql += " WHERE u.status = ?";
-                    hasCondition = true;
-                }
-                break;
-        }
-    }
-
-    try {
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        // Nếu có điều kiện WHERE, truyền giá trị filter vào SQL
-        if (hasCondition) {
-            statement.setString(1, filterValue);
-        }
-
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            int idUser = resultSet.getInt("id");
-            String emailFound = resultSet.getString("email").trim();
-            String fullNameFound = resultSet.getString("full_name");
-            String phoneNumberFound = resultSet.getString("phone");
-            String genderFound = resultSet.getString("gender");
-            int statusFound = resultSet.getInt("status");
-            int roleIdFound = resultSet.getInt("role_id");
-            String roleNameFound = resultSet.getString("role_name");
-
-            User user = new User(idUser, emailFound, fullNameFound, phoneNumberFound, genderFound, statusFound, roleIdFound, roleNameFound);
-            filteredUsers.add(user);
-        }
-    } catch (SQLException e) {
-        System.err.println("Error filtering users: " + e.getMessage());
-    }
-
-    return filteredUsers;
-}
-
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         AccountDAO d = new AccountDAO();
 
 //        User a = new User("gggg@gmail.com", "a12345");
@@ -1170,26 +1168,23 @@ public List<User> userFilterAll(String filterType, String filterValue) {
 //        User au = new User(email, pw, name, phone, gender, registrationDate, status, updatedBy, updatedDate, image, settingsId);
 //
 //        System.out.println(d.insertUserToDBbyAdmin(au));
-
 //        User u = d.findUserById(1);
 //        System.out.println(u);
-
 //        User b = d.findUserById(1);
 //        b.setStatus(0);
 //        b.setRole_name("admin");
 //        
 //        System.out.println(d.editUserByAdmin(b));
-
 //            List<User> a = d.userFilter("status", "1");
 //            System.out.println(a.size());
-
 //        List<User> a = d.searchUserInfoPerPage("9", "id", "asc", 0, 5);
 //        List<User> b = d.getUserByPage(0, 5, "id", "asc");
 //            System.out.println(a.size());
 //            System.out.println(b.size());
-
 //        List<User> a = d.userFilterAll("role", "user");
 //            System.out.println(a.size());
+        List<User> a = d.searchAllUserInfo("9");
+        System.out.println(a.size());
     }
 
 }

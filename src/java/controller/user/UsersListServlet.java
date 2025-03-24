@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.user;
 
 import constant.CommonConst;
@@ -19,30 +15,9 @@ import java.util.List;
 import java.util.Random;
 import model.User;
 
-/**
- *
- * @author vuduc
- */
 public class UsersListServlet extends HttpServlet {
 
     AccountDAO get = new AccountDAO();
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UsersListDashboard</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UsersListDashboard at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -66,8 +41,13 @@ public class UsersListServlet extends HttpServlet {
         }
         int offset = (currentPage - 1) * limit;
 
-        // Lấy từ khóa tìm kiếm từ request
+        // Lấy keyword từ request và luôn lưu vào session
         String kw = request.getParameter("keyword");
+        session.setAttribute("kw", kw); // Luôn cập nhật kw vào session, kể cả khi null
+
+        String isFiltering = request.getParameter("isFiltering");
+        String filterType = request.getParameter("filterType");
+        String filterValue = request.getParameter("filterValue");
 
         List<User> listUserBySearch = new ArrayList<>();
         List<User> listUserByPage = new ArrayList<>();
@@ -76,40 +56,36 @@ public class UsersListServlet extends HttpServlet {
         int totalUser = 0;
         int totalPage = 0;
 
-        String filterType;
-        String filterValue;
-        String isFiltering = request.getParameter("isFiltering");
-
         if (kw != null && !kw.trim().isEmpty()) {
             listUserBySearch = get.searchUserInfoPerPage(kw, sortField, sortOrder, offset, limit);
             totalUser = get.searchAllUserInfo(kw).size();
             totalPage = (int) Math.ceil((double) totalUser / limit);
             if (listUserBySearch.isEmpty()) {
-                request.setAttribute("er", "No results found for: " + kw);
+                session.setAttribute("er", "No results found for: " + kw);
+            } else {
+                session.removeAttribute("er"); // Xóa thông báo lỗi nếu tìm thấy kết quả
             }
-        } else if (isFiltering != null) {
-            filterType = request.getParameter("filterType");
-            filterValue = request.getParameter("filterValue");
-            request.setAttribute("filterValue", filterValue);
-            request.setAttribute("filterType", filterType);
+        } else if (isFiltering != null && "true".equals(isFiltering)) {
             listUserByFilter = get.userFilter(filterType, filterValue, offset, limit, sortField, sortOrder);
             totalUser = get.userFilterAll(filterType, filterValue).size();
             totalPage = (int) Math.ceil((double) totalUser / limit);
+            session.setAttribute("filterValue", filterValue);
+            session.setAttribute("filterType", filterType);
         } else {
             listUserByPage = get.getUserByPage(offset, limit, sortField, sortOrder);
             totalUser = get.findAll().size();
             totalPage = (int) Math.ceil((double) totalUser / limit);
         }
 
-        request.setAttribute("isFiltering", isFiltering);
-        request.setAttribute("kw", kw);
-        request.setAttribute("listUserBySearch", listUserBySearch);
-        request.setAttribute("listUserByPage", listUserByPage);
-        request.setAttribute("listUserByFilter", listUserByFilter);
-        request.setAttribute("currentPage", currentPage);
-        request.setAttribute("totalPage", totalPage);
-        request.setAttribute("sortField", sortField);
-        request.setAttribute("sortOrder", sortOrder);
+        // Lưu tất cả các thuộc tính vào session
+        session.setAttribute("isFiltering", isFiltering);
+        session.setAttribute("listUserBySearch", listUserBySearch);
+        session.setAttribute("listUserByPage", listUserByPage);
+        session.setAttribute("listUserByFilter", listUserByFilter);
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPage", totalPage);
+        session.setAttribute("sortField", sortField);
+        session.setAttribute("sortOrder", sortOrder);
 
         request.getRequestDispatcher("/userslist.jsp").forward(request, response);
     }
@@ -118,10 +94,10 @@ public class UsersListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         String action = request.getParameter("action") != null
                 ? request.getParameter("action")
                 : "";
-
         String url;
 
         switch (action) {
@@ -135,20 +111,8 @@ public class UsersListServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + url);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
     private String addDoPost(HttpServletRequest request, HttpServletResponse response) {
-
-        //chưa lấy thông tin từ jsp
-        String url;
+        HttpSession session = request.getSession();
 
         String name = request.getParameter("full_name");
         String gender = request.getParameter("gender");
@@ -167,12 +131,12 @@ public class UsersListServlet extends HttpServlet {
         boolean isExistUserEmail = get.checkUserEmailExist(au);
 
         if (isExistUserEmail) {
-            request.setAttribute("erEmailExist", "Email is exist.");
+            session.setAttribute("erEmailExist", "Email is exist.");
         } else {
             get.insertUserToDBbyAdmin(au);
             EmailSender.sendEmail(au.getEmail(), "Your password", "Take this password to log in: " + pw);
         }
-        return url = "/admin/userlist";
+        return "/admin/userlist";
     }
 
     private String generatePW() {
@@ -180,4 +144,8 @@ public class UsersListServlet extends HttpServlet {
         return String.format("%03d", random.nextInt(1000000));
     }
 
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
 }
