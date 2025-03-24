@@ -249,10 +249,24 @@
                     <div class="col-sm-6">
                         <div class="total_area">
                             <form action="${pageContext.request.contextPath}/customer/cart/checkout" method="POST" style="margin-left: 2.5rem;">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Địa chỉ</label>
-                                    <input name="address" value="${address}" type="text" class="form-control" id="exampleInputEmail1" placeholder="Address" required="không thể bỏ trống địa chỉ">
+                                <div class="form-group" style="display: flex; gap: 10px;">
+                                    <input name="address" type="text" class="form-control" id="addressInput" placeholder="Nhập địa chỉ" style="flex: 2;" required>
+
+                                    <!-- Dropdown chọn địa chỉ -->
+                                    <select id="addressSelect" class="form-control" style="flex: 1;">
+                                        <c:forEach var="addr" items="${addressList}">
+                                            <option value="${addr}">${addr}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                    <!-- Ô nhập địa chỉ -->
                                 </div>
+
+                                <script>
+                                    document.getElementById("addressSelect").addEventListener("change", function () {
+                                        document.getElementById("addressInput").value = this.value;
+                                    });
+                                </script>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Số Điện Thoại</label>
                                     <input name="phone" value="${phone}"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone" required="không thể bỏ trống địa chỉ">
