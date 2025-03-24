@@ -48,7 +48,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     User user = (User) session.getAttribute("user");
     int userId = user.getId();
 
-    String address = cartDAO.getUserAddress(userId);
+    List<String> addressList = cartDAO.getUserAddresses(userId);
+request.setAttribute("addressList", addressList);
     String phone = cartDAO.getUserPhone(userId);
     String email = user.getEmail();
 
@@ -77,7 +78,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     request.setAttribute("cart", selectedCart);
     request.setAttribute("total", total);
     request.setAttribute("qr", qrImageLink);
-    request.setAttribute("address", address);
+    request.setAttribute("addressList", addressList);
     request.setAttribute("phone", phone);
     request.setAttribute("email", email);
     request.setAttribute("selectedProducts", selectedProductIdsParam);
