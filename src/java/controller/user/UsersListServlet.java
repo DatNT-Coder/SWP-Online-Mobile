@@ -35,7 +35,7 @@ public class UsersListServlet extends HttpServlet {
         }
 
         int currentPage = 1;
-        int limit = 5;
+        int limit = 8;
         if (request.getParameter("page") != null) {
             currentPage = Integer.parseInt(request.getParameter("page"));
         }
@@ -61,10 +61,8 @@ public class UsersListServlet extends HttpServlet {
             totalUser = get.searchAllUserInfo(kw).size();
             totalPage = (int) Math.ceil((double) totalUser / limit);
             if (listUserBySearch.isEmpty()) {
-                session.setAttribute("er", "No results found for: " + kw);
-            } else {
-                session.removeAttribute("er"); // Xóa thông báo lỗi nếu tìm thấy kết quả
-            }
+                request.setAttribute("er", "No results found for: " + kw);
+            } 
         } else if (isFiltering != null && "true".equals(isFiltering)) {
             listUserByFilter = get.userFilter(filterType, filterValue, offset, limit, sortField, sortOrder);
             totalUser = get.userFilterAll(filterType, filterValue).size();

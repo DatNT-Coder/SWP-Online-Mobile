@@ -98,7 +98,7 @@
                                     <input type="text" class="form-control" name="keyword" 
                                            placeholder="Search by name, email, mobile" value="${sessionScope.kw}">
                                     <button type="submit" class="btn btn-secondary">Search</button>
-                                    ${sessionScope.er}
+                                    ${er}
                                 </form>
                             </div>
 
@@ -107,10 +107,10 @@
                                     <form action="userlist" method="get" style="display: flex; gap: 10px;">
                                         <input type="hidden" name="isFiltering" value="true">
                                         <select class="form-control" name="filterType" id="filterType" onchange="updateFilterOptions()">
-                                            <option value="all" ${sessionScope.filterType == 'all' ? 'selected' : ''}>All</option>
-                                            <option value="gender" ${sessionScope.filterType == 'gender' ? 'selected' : ''}>Gender</option>
-                                            <option value="role" ${sessionScope.filterType == 'role' ? 'selected' : ''}>Role</option>
-                                            <option value="status" ${sessionScope.filterType == 'status' ? 'selected' : ''}>Status</option>
+                                            <option value="all" >All</option>
+                                            <option value="gender" >Gender</option>
+                                            <option value="role" >Role</option>
+                                            <option value="status" >Status</option>
                                         </select>
                                         <select class="form-control" name="filterValue" id="filterValue">
                                             <option value="all">All</option>
