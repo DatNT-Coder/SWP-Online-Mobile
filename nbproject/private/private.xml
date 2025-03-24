@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/mktDashboard.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/dashboard/MKTDashboardController.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/saleDashboard.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/shop.jsp</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/src/java/controller/product/ProductList.java</file>
+            <file>file:/C:/Users/tiend/Desktop/SWP/swp391-group3/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
