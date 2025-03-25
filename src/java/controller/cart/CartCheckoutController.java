@@ -73,8 +73,8 @@ public class CartCheckoutController extends HttpServlet {
         order.setNote(note);
         order.setuId(userId);
         order.setTotalMoney(total);
-        order.setSaleId(30);
-        order.setStatus(1);
+        order.setSaleId(0);
+        order.setStatus(0);
         order.setSettingId(1);
 
         Order addedOrder = orderDAO.addOrder(order);

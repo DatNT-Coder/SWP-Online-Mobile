@@ -46,6 +46,7 @@
                     <div class="card table-nowrap table-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Users List</h5>
+                            
                             <ul class="nav navbar-nav">
                                 <li><i class="fa fa-user"></i><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add </button></li>
                             </ul>
