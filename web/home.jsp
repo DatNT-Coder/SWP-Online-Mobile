@@ -587,6 +587,7 @@
                   var productRatings = JSON.parse(productRatingsJSON.trim());
                   var currentPage = 1; // Current page
                   var itemsPerPage = 6; // Number of items per page
+                  var isLoggedIn = ${sessionScope.user != null ? 'true' : 'false'};
 
                   // Display products for the current page
                   function displayProducts() {
@@ -614,14 +615,15 @@
                         // if (sessionStorage.getItem('user') !== null) {
                         // User is logged in, add "Add to cart" button with onclick attribute
                             productHtml += '<div style="display: flex; align-items: center;">' + 
-                        '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart">' +
-                            '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
-                        '</a>' +
-                        (productRatings[product.ID] != null && productRatings[product.ID] != '0'
-                            ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
-                              + productRatings[product.ID] + ' ★</a>'
-                            : '') +
-                    '</div>';
+                                '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart">' +
+                                    '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
+                                '</a>' +
+                                (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+                                    ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
+                                      + productRatings[product.ID] + ' ★</a>'
+                                    : '') +
+                            '</div>';
+
 
                         //                    } 
                         //                    else {
@@ -632,6 +634,10 @@
                         $('.product-list').append(productHtml);
                      });
                   }
+
+                function redirectToLogin() {
+                    window.location.href = 'login.jsp';
+                }
 
                   // Update the pagination links
                   function updatePagination() {
