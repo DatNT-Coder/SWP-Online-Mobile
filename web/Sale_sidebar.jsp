@@ -22,9 +22,20 @@
         <p style="color: white"><a href="/ProjectSWP391/HomePage">Back to home</a></p>
 
     </div>
-    <h2>Sale</h2>
+
+    <c:set var="role" value="${sessionScope.account.getRole_id()}" />
+    <c:if test="${role == 2}">
+        <h2>Sale</h2>
+    </c:if>
+    <c:if test="${role == 3 || role == 4}">
+        <h2>Sale Manager</h2>
+    </c:if>
+
     <ul>
         <li><a href="/ProjectSWP391/sale/saleDashboard">Thống kê</a></li>
         <li><a href="/ProjectSWP391/sale/listOrderSale">Danh sách đơn hàng</a></li>
+            <c:if test="${role == 3 || role == 4}">
+            <li><a href="/ProjectSWP391/salemanage/salemanageDashboard">Quản lý danh sách đơn hàng</a></li>
+        </c:if>
     </ul>
 </div>

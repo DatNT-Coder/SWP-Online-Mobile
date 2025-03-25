@@ -154,6 +154,11 @@ public class Order {
       this.gender = gender;
    }
 
+    @Override
+    public String toString() {
+        return "Order{" + "Id=" + Id + ", uId=" + uId + ", userName=" + userName + ", date=" + date + ", totalMoney=" + totalMoney + ", status=" + status + ", discount=" + discount + ", address=" + address + ", phone=" + phone + ", email=" + email + ", note=" + note + ", gender=" + gender + ", saleId=" + saleId + ", saleName=" + saleName + ", settingId=" + settingId + '}';
+    }
+
    public int getSaleId() {
       return saleId;
    }
