@@ -25,6 +25,6 @@
     <h2>Sale</h2>
     <ul>
         <li><a href="/ProjectSWP391/sale/saleDashboard">Thống kê</a></li>
-        <li><a href="/ProjectSWP391/sale/listOrderSale">Danh sách đơn hàng</a></li>
+        <li><a href="/ProjectSWP391/listOrderSale">Danh sách đơn hàng</a></li>
     </ul>
 </div>

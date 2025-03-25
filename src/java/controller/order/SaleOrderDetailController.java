@@ -4,24 +4,24 @@
  */
 package controller.order;
 
-import dao.OrderDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import model.Order;
+import dao.OrderDAO;
+import java.io.PrintWriter;
 
 /**
  *
  * @author naokh
  */
-@WebServlet(name = "orderDetail", urlPatterns = {"/sale/viewOrderSale"})
-public class orderDetail extends HttpServlet {
+@WebServlet(name = "SaleOrderDetailController", urlPatterns = {"/SaleOrderDetailController"})
+public class SaleOrderDetailController extends HttpServlet {
+
+   public OrderDAO orderDAO = new OrderDAO();
 
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +39,10 @@ public class orderDetail extends HttpServlet {
          out.println("<!DOCTYPE html>");
          out.println("<html>");
          out.println("<head>");
-         out.println("<title>Servlet orderDetail</title>");
+         out.println("<title>Servlet SaleOrderDetailController</title>");
          out.println("</head>");
          out.println("<body>");
-         out.println("<h1>Servlet orderDetail at " + request.getContextPath() + "</h1>");
+         out.println("<h1>Servlet SaleOrderDetailController at " + request.getContextPath() + "</h1>");
          out.println("</body>");
          out.println("</html>");
       }
@@ -60,32 +60,18 @@ public class orderDetail extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      String oid = request.getParameter("oid");
-
-      // Validate the parameter
-      if (oid == null || oid.trim().isEmpty()) {
-         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or invalid order ID");
-         return;
-      }
-
       try {
-         int ID = Integer.parseInt(oid);
-         OrderDAO dao = new OrderDAO();
+         int orderId = Integer.parseInt(request.getParameter("orderId"));
+         Order order = orderDAO.getOrderById(orderId);
 
-         Map<String, Object> details = dao.getInformationUser(ID);
-         LinkedHashMap<Integer, Map<String, Object>> orderDetail = dao.getOrderDetails(oid);
-         Order order = (Order) details.get("order");
-         String customerName = (String) details.get("customerName");
-         String saleName = (String) details.get("saleName");
-
-         request.setAttribute("order", order);
-         request.setAttribute("customerName", customerName);
-         request.setAttribute("saleName", saleName);
-         request.setAttribute("orderDetail", orderDetail);
-
-         request.getRequestDispatcher("/Sale_orderDetail.jsp").forward(request, response);
+         if (order != null) {
+            request.setAttribute("order", order);
+            request.getRequestDispatcher("SaleOrderDetail.jsp").forward(request, response);
+         } else {
+            response.sendRedirect("listOrderSale?error=Order not found");
+         }
       } catch (NumberFormatException e) {
-         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid order ID format");
+         response.sendRedirect("listOrderSale?error=Invalid order ID");
       }
    }
 
@@ -100,7 +86,21 @@ public class orderDetail extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      processRequest(request, response);
+      try {
+         int orderId = Integer.parseInt(request.getParameter("orderId"));
+         int newStatus = Integer.parseInt(request.getParameter("status"));
+         String note = request.getParameter("note");
+
+         boolean updated = orderDAO.updateOrderStatusAndNote(orderId, newStatus, note);
+
+         if (updated) {
+            response.sendRedirect("SaleOrderDetailController?orderId=" + orderId + "&success=Order updated");
+         } else {
+            response.sendRedirect("SaleOrderDetailController?orderId=" + orderId + "&error=Update failed");
+         }
+      } catch (NumberFormatException e) {
+         response.sendRedirect("listOrderSale?error=Invalid parameters");
+      }
    }
 
    /**

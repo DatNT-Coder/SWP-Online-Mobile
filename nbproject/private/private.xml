@@ -3,28 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/saleDashboard.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogListController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/OrderDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/dashboard/MKTDashboardController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/sidebar.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/ProductListMarketing.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_sidebar.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/orderDetail.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/mktDashboard.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/userslist.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_orderList.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/listOrderSale.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/ProductFeedback.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/bloglist.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/SliderListController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/slider/EditSliderController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/UserProfile.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/blog/BlogPostList.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/home.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/dashboard/saleDashboard.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/SaleOrderDetailController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SaleOrderDetail.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/OrderDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/cart/CartCheckoutController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Order.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_sidebar.jsp</file>
         </group>
     </open-files>
 </project-private>

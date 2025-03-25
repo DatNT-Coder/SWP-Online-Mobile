@@ -13,97 +13,193 @@
       <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
    </head>
    <style>
-      /* Teal Theme Styling */
+      :root {
+         --teal-primary: #4db6ac;
+         --teal-light: #82e9de;
+         --teal-dark: #00867d;
+         --teal-bg: #e0f2f1;
+         --teal-text: #004d40;
+      }
 
-      /* General Background */
       body {
-         color: #004d40;
+         background-color: var(--teal-bg);
+         color: var(--teal-text);
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
 
-      /* Sidebar */
-      .wrapper {
-         background-color: #004d40;
+      .skin-black {
+         background-color: var(--teal-bg) !important;
       }
 
-      .sidebar a {
-         color: #e0f2f1;
+      h2 {
+         color: var(--teal-dark);
+         margin: 20px 0;
+         font-weight: 600;
       }
 
-      .sidebar a:hover {
-         background-color: #00796b;
-      }
-
-      /* Navbar Tabs */
-      .nav-tabs .nav-item .nav-link {
-         color: #004d40;
-         background-color: #b2dfdb;
-         border: 1px solid #00796b;
-      }
-
-      .nav-tabs .nav-item .nav-link.active {
-         background-color: #00796b;
-         color: #ffffff;
-      }
-
-      /* Panels */
-      .panel {
-         border: 1px solid #00796b;
-         background-color: #b2dfdb;
-      }
-
-      .panel-heading {
-         background-color: #00796b;
-         color: white;
-         font-weight: bold;
-      }
-
-      /* Table */
-      .table-hover tbody tr:hover {
-         background-color: #80cbc4;
-      }
-
-      th {
-         background-color: #00796b !important;
-         color: white !important;
-      }
-
-      /* Statistic Boxes */
+      /* Statistics Cards */
       .sm-st {
-         background-color: #00796b;
-         color: white;
+         background: white;
+         border-radius: 8px;
          padding: 15px;
-         border-radius: 10px;
+         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+         transition: transform 0.3s ease;
+      }
+
+      .sm-st:hover {
+         transform: translateY(-5px);
+      }
+
+      .st-red {
+         background-color: #ffcdd2 !important;
+         color: #d32f2f;
+      }
+
+      .st-violet {
+         background-color: #e1bee7 !important;
+         color: #7b1fa2;
+      }
+
+      .st-blue {
+         background-color: #bbdefb !important;
+         color: #1976d2;
+      }
+
+      .st-green {
+         background-color: #c8e6c9 !important;
+         color: #388e3c;
       }
 
       .sm-st-icon {
-         background-color: #004d40;
-         padding: 10px;
-         border-radius: 50%;
+         background-color: var(--teal-primary) !important;
+         color: white !important;
       }
 
-      /* Buttons */
+      .sm-st-info {
+         color: var(--teal-text);
+      }
+
+      .sm-st-info span {
+         font-weight: bold;
+         color: var(--teal-dark);
+      }
+
+      /* Tabs */
+      .nav-tabs {
+         border-bottom: 2px solid var(--teal-light);
+         margin-bottom: 20px;
+      }
+
+      .nav-link {
+         color: var(--teal-text);
+         border: none !important;
+         padding: 12px 20px;
+         font-weight: 500;
+      }
+
+      .nav-link.active {
+         color: var(--teal-primary) !important;
+         background-color: transparent !important;
+         border-bottom: 3px solid var(--teal-primary) !important;
+      }
+
+      .nav-link:hover:not(.active) {
+         color: var(--teal-dark) !important;
+         background-color: rgba(77, 182, 172, 0.1) !important;
+      }
+
+      /* Tables */
+      .table {
+         background-color: white;
+         border-radius: 8px;
+         overflow: hidden;
+         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .table thead {
+         background-color: var(--teal-primary);
+         color: white;
+      }
+
+      .table th {
+         border: none !important;
+         padding: 12px 15px !important;
+      }
+
+      .table td {
+         padding: 10px 15px !important;
+         vertical-align: middle !important;
+         border-color: #e0f2f1 !important;
+      }
+
+      .table tr:nth-child(even) {
+         background-color: #f5f5f5;
+      }
+
+      .table tr:hover {
+         background-color: rgba(77, 182, 172, 0.1) !important;
+      }
+
+      /* Form Elements */
+      .panel {
+         border: none;
+         border-radius: 8px;
+         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+         background-color: white;
+      }
+
+      .panel-heading {
+         background-color: var(--teal-primary) !important;
+         color: white !important;
+         border-radius: 8px 8px 0 0 !important;
+         padding: 12px 15px !important;
+         border: none !important;
+      }
+
+      input[type="date"], input[type="submit"] {
+         border: 1px solid var(--teal-light);
+         border-radius: 4px;
+         padding: 8px 12px;
+         width: 100%;
+         margin-bottom: 15px;
+         color: var(--teal-text);
+      }
+
+      input[type="date"]:focus {
+         outline: none;
+         border-color: var(--teal-primary);
+         box-shadow: 0 0 0 2px rgba(77, 182, 172, 0.2);
+      }
+
       input[type="submit"] {
-         background-color: #00796b;
+         background-color: var(--teal-primary);
          color: white;
          border: none;
          cursor: pointer;
+         transition: background-color 0.3s;
       }
 
       input[type="submit"]:hover {
-         background-color: #004d40;
+         background-color: var(--teal-dark);
       }
 
-      /* Date Picker */
-      input[type="date"] {
-         border: 1px solid #00796b;
-         padding: 5px;
-         border-radius: 5px;
+      /* Scrollbar styling */
+      ::-webkit-scrollbar {
+         width: 8px;
       }
 
-      /* Scrollbar */
-      .panel-body.table-responsive {
-         scrollbar-width: thin;
-         scrollbar-color: #00796b #e0f2f1;
+      ::-webkit-scrollbar-track {
+         background: #f1f1f1;
+         border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+         background: var(--teal-light);
+         border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+         background: var(--teal-primary);
       }
    </style>
    <body class="skin-black">
@@ -123,8 +219,8 @@
                            <span class="sm-st-icon st-red"><i class="fa fa-file-text-o"></i></span>
                            <div class="sm-st-info">
                               Tổng <span>${totalP}</span> Bài Đăng <br>
-                            * <span>${totalPA}</span> Bài viết đã được đăng <br>
-                            * <span>${totalPIA}</span> Bài viết bị ẩn <br>
+                           * <span>${totalPA}</span> Bài viết đã được đăng <br>
+                           * <span>${totalPIA}</span> Bài viết bị ẩn <br>
                         </div>
                      </div>
                   </div>

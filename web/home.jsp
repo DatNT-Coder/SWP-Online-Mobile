@@ -130,11 +130,19 @@
                            User loggedInUser = (User) session.getAttribute(CommonConst.SESSION_ACCOUNT);
                            if (loggedInUser != null && loggedInUser.getRole_id() == 5) { 
                            %>
-                           <a href="/ProjectSWP391/marketing/listFeedbackMarketing">Bảng Điều Khiển</a>
+                           <a href="/ProjectSWP391/marketing/listFeedbackMarketing">Bảng Điều Khiển Marketing</a>
                            <% 
-                               } 
+                           } else if (loggedInUser != null && loggedInUser.getRole_id() == 2) { 
+                           %>
+                           <a href="/ProjectSWP391/sale/saleDashboard">Bảng Điều Khiển Sale</a>
+                           <% 
+                           } 
                            %>
                         </li>
+
+
+
+
 
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
@@ -613,15 +621,15 @@
                         //không dùng $\{product.ID} mà dùng + product.ID +
                         // if (sessionStorage.getItem('user') !== null) {
                         // User is logged in, add "Add to cart" button with onclick attribute
-                            productHtml += '<div style="display: flex; align-items: center;">' + 
-                        '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart">' +
-                            '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
-                        '</a>' +
-                        (productRatings[product.ID] != null && productRatings[product.ID] != '0'
-                            ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
-                              + productRatings[product.ID] + ' ★</a>'
-                            : '') +
-                    '</div>';
+                        productHtml += '<div style="display: flex; align-items: center;">' +
+                                '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart">' +
+                                '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
+                                '</a>' +
+                                (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+                                        ? '<a class="btn btn-default add-to-cart" style="cursor: default;">'
+                                        + productRatings[product.ID] + ' ★</a>'
+                                        : '') +
+                                '</div>';
 
                         //                    } 
                         //                    else {
