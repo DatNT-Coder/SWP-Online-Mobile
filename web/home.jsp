@@ -26,6 +26,7 @@
       <link href="css/main.css" rel="stylesheet">
       <link href="css/responsive.css" rel="stylesheet">
       <link href="css/slider.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
       <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
@@ -35,7 +36,6 @@
       <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
       <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
    </head><!--/head-->
 
    <body>
@@ -587,6 +587,7 @@
                   var productRatings = JSON.parse(productRatingsJSON.trim());
                   var currentPage = 1; // Current page
                   var itemsPerPage = 6; // Number of items per page
+                  var isLoggedIn = ${sessionScope.user != null ? 'true' : 'false'};
 
                   // Display products for the current page
                   function displayProducts() {
@@ -614,14 +615,15 @@
                         // if (sessionStorage.getItem('user') !== null) {
                         // User is logged in, add "Add to cart" button with onclick attribute
                             productHtml += '<div style="display: flex; align-items: center;">' + 
-                        '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart">' +
-                            '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
-                        '</a>' +
-                        (productRatings[product.ID] != null && productRatings[product.ID] != '0'
-                            ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
-                              + productRatings[product.ID] + ' ★</a>'
-                            : '') +
-                    '</div>';
+                                '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart">' +
+                                    '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
+                                '</a>' +
+                                (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+                                    ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
+                                      + productRatings[product.ID] + ' ★</a>'
+                                    : '') +
+                            '</div>';
+
 
                         //                    } 
                         //                    else {
@@ -632,6 +634,10 @@
                         $('.product-list').append(productHtml);
                      });
                   }
+
+                function redirectToLogin() {
+                    window.location.href = 'login.jsp';
+                }
 
                   // Update the pagination links
                   function updatePagination() {

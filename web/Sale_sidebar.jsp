@@ -26,6 +26,5 @@
     <ul>
         <li><a href="/ProjectSWP391/sale/saleDashboard">Thống kê</a></li>
         <li><a href="/ProjectSWP391/sale/listOrderSale">Danh sách đơn hàng</a></li>
-
     </ul>
 </div>
