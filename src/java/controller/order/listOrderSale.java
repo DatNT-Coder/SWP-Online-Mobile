@@ -4,16 +4,12 @@
  */
 package controller.order;
 
-import com.sun.jdi.connect.spi.Connection;
 import constant.CommonConst;
-import context.DBContext;
 import dao.OrderDAO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -22,10 +18,10 @@ import model.User;
 
 /**
  *
- * @author naokh
+ * @author vuduc
  */
-@WebServlet(name = "listOrderSale", urlPatterns = {"/listOrderSale"})
-public class listOrderSale extends HttpServlet {
+
+public class ListOrderSale extends HttpServlet {
 
     public OrderDAO orderDAO = new OrderDAO();
     private static final int RECORDS_PER_PAGE = 3;
@@ -106,7 +102,7 @@ public class listOrderSale extends HttpServlet {
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
-        request.getRequestDispatcher("Sale_orderList.jsp").forward(request, response);
+        request.getRequestDispatcher("/Sale_orderList.jsp").forward(request, response);
     }
 
     @Override

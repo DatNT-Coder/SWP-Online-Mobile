@@ -202,7 +202,7 @@
                <h2>Order List</h2>
 
                <!-- Search Form -->
-               <form action="listOrderSale" method="get">
+               <form action="ListOrderSale" method="get">
                   <input type="hidden" name="page" value="${param.page != null ? param.page : 1}">
                <select name="searchType">
                   <option value="order_id" ${param.searchType == 'order_id' ? 'selected' : ''}>Order ID</option>
@@ -213,7 +213,7 @@
             </form>
 
             <!-- Sort Form -->
-            <form action="listOrderSale" method="get">
+            <form action="ListOrderSale" method="get">
                <input type="hidden" name="page" value="1"> <!-- Reset to page 1 when changing sort -->
                <input type="hidden" name="searchType" value="${param.searchType}">
                <input type="hidden" name="searchValue" value="${param.searchValue}">
@@ -233,7 +233,7 @@
             </form>
 
             <!-- Filter Form -->
-            <form action="listOrderSale" method="get">
+            <form action="ListOrderSale" method="get">
                <input type="hidden" name="page" value="${param.page != null ? param.page : 1}">
                <input type="hidden" name="searchType" value="${param.searchType}">
                <input type="hidden" name="searchValue" value="${param.searchValue}">
@@ -327,7 +327,7 @@
                   <!-- Previous Page Link -->
                   <c:choose>
                      <c:when test="${currentPage > 1}">
-                        <a href="listOrderSale?page=${currentPage - 1}&sortBy=${currentSort}">
+                        <a href="ListOrderSale?page=${currentPage - 1}&sortBy=${currentSort}">
                            &laquo; Previous
                         </a>
                      </c:when>
@@ -343,7 +343,7 @@
                            <span class="active">${i}</span>
                         </c:when>
                         <c:otherwise>
-                           <a href="listOrderSale?page=${i}&sortBy=${currentSort}">
+                           <a href="ListOrderSale?page=${i}&sortBy=${currentSort}">
                               ${i}
                            </a>
                         </c:otherwise>
@@ -353,7 +353,7 @@
                   <!-- Next Page Link -->
                   <c:choose>
                      <c:when test="${currentPage < totalPages}">
-                        <a href="listOrderSale?page=${currentPage + 1}&sortBy=${currentSort}">
+                        <a href="ListOrderSale?page=${currentPage + 1}&sortBy=${currentSort}">
                            Next &raquo;
                         </a>
                      </c:when>

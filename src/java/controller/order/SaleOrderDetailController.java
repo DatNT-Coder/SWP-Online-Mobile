@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  *
  * @author naokh
  */
-@WebServlet(name = "SaleOrderDetailController", urlPatterns = {"/SaleOrderDetailController"})
+@WebServlet(name = "SaleOrderDetailController", urlPatterns = {"/sale/SaleOrderDetailController"})
 public class SaleOrderDetailController extends HttpServlet {
 
    public OrderDAO orderDAO = new OrderDAO();
@@ -66,12 +66,12 @@ public class SaleOrderDetailController extends HttpServlet {
 
          if (order != null) {
             request.setAttribute("order", order);
-            request.getRequestDispatcher("SaleOrderDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/SaleOrderDetail.jsp").forward(request, response);
          } else {
-            response.sendRedirect("listOrderSale?error=Order not found");
+            response.sendRedirect("ListOrderSale?error=Order not found");
          }
       } catch (NumberFormatException e) {
-         response.sendRedirect("listOrderSale?error=Invalid order ID");
+         response.sendRedirect("ListOrderSale?error=Invalid order ID");
       }
    }
 
@@ -99,7 +99,7 @@ public class SaleOrderDetailController extends HttpServlet {
             response.sendRedirect("SaleOrderDetailController?orderId=" + orderId + "&error=Update failed");
          }
       } catch (NumberFormatException e) {
-         response.sendRedirect("listOrderSale?error=Invalid parameters");
+         response.sendRedirect("ListOrderSale?error=Invalid parameters");
       }
    }
 
