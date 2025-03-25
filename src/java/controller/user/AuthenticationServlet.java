@@ -160,13 +160,34 @@ public class AuthenticationServlet extends HttpServlet {
 //                    request.getSession().setAttribute("full_name", fullName); 
                     url = "HomePage";
                     //false => quay tro lai trang login ( set them thong bao loi )
-                } else if (foundUserAccount.getRole_id() == 5 || foundUserAccount.getRole_id() == 4) {
+                } else if (foundUserAccount.getRole_id() == 5) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //luu len session để hiện logout trong home.jsp
                     request.getSession().setAttribute("user", foundUserAccount);
                     request.getSession().setAttribute("role", userRole);
                     request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
 //                    request.getSession().setAttribute("full_name", fullName);
                     url = "marketing/listFeedbackMarketing";
+                } else if (foundUserAccount.getRole_id() == 2) {
+                    request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //sale
+                    request.getSession().setAttribute("user", foundUserAccount);
+                    request.getSession().setAttribute("role", userRole);
+                    request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
+//                    request.getSession().setAttribute("full_name", fullName);
+                    url = "sale/saleDashboard";
+                } else if (foundUserAccount.getRole_id() == 4) {
+                    request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //sale
+                    request.getSession().setAttribute("user", foundUserAccount);
+                    request.getSession().setAttribute("role", userRole);
+                    request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
+//                    request.getSession().setAttribute("full_name", fullName);
+                    url = "admin/adminDashBoard";
+                } else if (foundUserAccount.getRole_id() == 3) {
+                    request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //sale
+                    request.getSession().setAttribute("user", foundUserAccount);
+                    request.getSession().setAttribute("role", userRole);
+                    request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
+//                    request.getSession().setAttribute("full_name", fullName);
+                    url = "salemanage/salemanageDashboard";
                 }
                 else if (foundUserAccount.getRole_id() == 2) {
                     request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, foundUserAccount); //sale
@@ -275,7 +296,7 @@ public class AuthenticationServlet extends HttpServlet {
     private String resendDoPost(HttpServletRequest request, HttpServletResponse response) {
         String url = null;
         String type = request.getParameter("type");
-        
+
         if (type.equalsIgnoreCase("reset")) {
             User u = new User((String) request.getSession().getAttribute("resetUserMail"));
 
@@ -295,7 +316,7 @@ public class AuthenticationServlet extends HttpServlet {
             EmailSender.sendEmail(u.getEmail(), "Code verify", "Take this code to verify: " + codeExpire.getCode() + " This code will expire after: " + formattedExpiryTime);
 
             url = "reset.jsp";
-            
+
         } else if (type.equalsIgnoreCase("regis")) {
             User u = (User) request.getSession().getAttribute("registerUser");
 

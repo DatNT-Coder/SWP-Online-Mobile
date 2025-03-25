@@ -532,6 +532,8 @@
         <script>
             // Convert the list of products from Java to JavaScript
             var products = JSON.parse('${listProduct}');
+            var productRatingsJSON = '${productRatingsJSON}';
+            var productRatings = JSON.parse(productRatingsJSON.trim());
 
             var productRatingsJSON = '${productRatingsJSON}';
             var productRatings = {};
