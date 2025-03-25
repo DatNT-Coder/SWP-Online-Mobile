@@ -57,7 +57,6 @@ public class saleDashboard extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User userProfile = (User) session.getAttribute("user");
-
         String totalOrder = request.getParameter("totalOrder");
         String orderDone = request.getParameter("orderDone");
         OrderSaleDAO dao = new OrderSaleDAO();

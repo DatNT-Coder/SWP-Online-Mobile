@@ -285,7 +285,7 @@
                                 <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Hoàn tất đặt hàng"/>
 
                             </form>
-                            </form>
+
                         </div>
                     </div>
                 </div>
