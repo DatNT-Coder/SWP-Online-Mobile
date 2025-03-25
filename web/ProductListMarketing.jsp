@@ -9,8 +9,8 @@
       <title>Product List | E-Shopee</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-      <link rel="stylesheet" href="css/styles.css">
-      <link rel="stylesheet" href="css/datatable.css">
+<!--      <link rel="stylesheet" href="css/styles.css">
+      <link rel="stylesheet" href="css/datatable.css">-->
    </head> 
    <style>
       :root {

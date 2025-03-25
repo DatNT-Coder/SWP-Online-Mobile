@@ -14,8 +14,6 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <title>Marketing | Quản lý Phản hồi</title>
-      <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-      <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
       <style>
          :root {
             --teal-primary: #26a69a;
@@ -178,6 +176,58 @@
             border-left: 4px solid #d32f2f;
          }
 
+         .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+         }
+
+         .row {
+            margin-left: 0;
+            margin-right: 0;
+            display: flex;
+            flex-wrap: nowrap; /* Prevent wrapping */
+         }
+
+         /* Sidebar styling */
+         .col-md-2 {
+            width: 250px; /* Fixed width for sidebar */
+            min-width: 250px; /* Prevent shrinking */
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+         }
+
+         /* Main content area */
+         .col-md-10 {
+            flex-grow: 1; /* Take remaining space */
+            padding: 20px;
+            background-color: #f5f7fa;
+            min-height: 100vh;
+         }
+
+         /* Responsive adjustments */
+         @media (max-width: 768px) {
+            .row {
+               flex-direction: column;
+            }
+
+            .col-md-2 {
+               width: 100%;
+               height: auto;
+               position: relative;
+            }
+
+            .col-md-10 {
+               width: 100%;
+               padding: 15px;
+            }
+         }
+
          /* Responsive Adjustments */
          @media (max-width: 768px) {
             .search-filter-section .row > div {
@@ -213,11 +263,12 @@
       <div class="container-fluid">
          <div class="row">
             <!-- Side Bar (Left Column) -->
-            <div class="col-md-2" style="padding: 0;">
+            <div class="col-md-2">
                <jsp:include page="sidebar.jsp"></jsp:include>
                </div>
-               <!-- Main Content -->
-               <div class="col-md-10" style="padding: 20px;">
+
+               <!-- Main Content (Right Column) -->
+               <div class="col-md-10">
                   <div class="container-fluid py-4">
                      <!-- Your existing content here -->
                      <div class="d-flex justify-content-between align-items-center mb-4">
@@ -253,41 +304,44 @@
                                  </div>
                               </div>
                            </form>
-
                         </div>
                      </div>
-                     <div>
-                        <h4>${requestScope.message}</h4>
                   </div>
-                  <div class="product-table">
-                     <table class="table table-striped" style="width: 100%;border: 1px solid #DDDDDD;border-radius: 6px;">
-                        <thead>
-                           <tr>
-                              <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=id">ID</a></th>
-                              <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=full_name">Tên khách hàng</a></th>
-                              <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=name">Tên sản phẩm</a></th>
-                              <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=rating">Đánh giá</a></th>
-                              <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=comment">Nội dung</a></th>
-                              <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=status">Trạng thái</a></th>
-                              <th>Chức Năng</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <!-- Sản phẩm sẽ được chèn vào đây -->
-                        </tbody>
-                     </table>
-                     <ul class="pagination">
-                        <li class="active"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">&raquo;</a></li>
-                     </ul>
-                  </div>
+                  <div>
+                     <h4>${requestScope.message}</h4>
+               </div>
+               <div class="product-table">
+                  <table class="table table-striped" style="width: 100%;border: 1px solid #DDDDDD;border-radius: 6px;">
+                     <thead>
+                        <tr>
+                           <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=id">ID</a></th>
+                           <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=full_name">Tên khách hàng</a></th>
+                           <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=name">Tên sản phẩm</a></th>
+                           <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=rating">Đánh giá</a></th>
+                           <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=comment">Nội dung</a></th>
+                           <th><a href="/ProjectSWP391/marketing/listFeedbackMarketing?msg=sortFeedback&sortBy=status">Trạng thái</a></th>
+                           <th>Chức Năng</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <!-- Sản phẩm sẽ được chèn vào đây -->
+                     </tbody>
+                  </table>
+                  <ul class="pagination">
+                     <li class="active"><a href="">1</a></li>
+                     <li><a href="">2</a></li>
+                     <li><a href="">3</a></li>
+                     <li><a href="">&raquo;</a></li>
+                  </ul>
                </div>
             </div>
          </div>
       </div>
    </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -6,10 +6,6 @@
       <meta charset="UTF-8">
       <title>Marketing | MKTDashboard</title>
       <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-      <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
       <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
    </head>
    <style>
@@ -25,16 +21,44 @@
          background-color: var(--teal-bg);
          color: var(--teal-text);
          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         margin: 0;
+         padding: 0;
       }
 
-      .skin-black {
-         background-color: var(--teal-bg) !important;
+      .container-fluid {
+         padding: 0;
+         margin: 0;
+      }
+
+      .row {
+         margin: 0;
+         display: flex;
+         min-height: 100vh;
+      }
+
+      /* Sidebar styling */
+      .col-md-3 {
+         width: 250px;
+         background: white;
+         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+         position: fixed;
+         height: 100vh;
+         z-index: 1000;
+      }
+
+      /* Main content area */
+      .col-md-9 {
+         margin-left: 250px;
+         width: calc(100% - 250px);
+         padding: 20px;
+         background-color: var(--teal-bg);
       }
 
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
+         text-align: center;
       }
 
       /* Statistics Cards */
@@ -44,6 +68,7 @@
          padding: 15px;
          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
          transition: transform 0.3s ease;
+         height: 100%;
       }
 
       .sm-st:hover {
@@ -73,15 +98,30 @@
       .sm-st-icon {
          background-color: var(--teal-primary) !important;
          color: white !important;
+         width: 50px;
+         height: 50px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border-radius: 50%;
+         font-size: 20px;
+         float: left;
+         margin-right: 15px;
       }
 
       .sm-st-info {
          color: var(--teal-text);
+         margin-left: 65px;
       }
 
       .sm-st-info span {
          font-weight: bold;
          color: var(--teal-dark);
+      }
+
+      /* Stats row */
+      .row.statistics {
+         margin-bottom: 20px;
       }
 
       /* Tabs */
@@ -114,6 +154,7 @@
          border-radius: 8px;
          overflow: hidden;
          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+         width: 100%;
       }
 
       .table thead {
@@ -140,12 +181,13 @@
          background-color: rgba(77, 182, 172, 0.1) !important;
       }
 
-      /* Form Elements */
+      /* Panels */
       .panel {
          border: none;
          border-radius: 8px;
          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
          background-color: white;
+         height: 100%;
       }
 
       .panel-heading {
@@ -156,6 +198,11 @@
          border: none !important;
       }
 
+      .panel-body {
+         padding: 15px;
+      }
+
+      /* Form Elements */
       input[type="date"], input[type="submit"] {
          border: 1px solid var(--teal-light);
          border-radius: 4px;
@@ -182,184 +229,196 @@
       input[type="submit"]:hover {
          background-color: var(--teal-dark);
       }
-
-      /* Scrollbar styling */
-      ::-webkit-scrollbar {
-         width: 8px;
+      /* Main content grid alignment */
+      .main-content {
+         display: grid;
+         grid-template-columns: 1fr;
+         gap: 20px;
+         padding: 20px;
       }
 
-      ::-webkit-scrollbar-track {
-         background: #f1f1f1;
-         border-radius: 4px;
+      /* Statistics grid */
+      .statistics-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         gap: 20px;
+         margin-bottom: 20px;
       }
 
-      ::-webkit-scrollbar-thumb {
-         background: var(--teal-light);
-         border-radius: 4px;
+      /* Tab content grid */
+      .tab-content-grid {
+         display: grid;
+         grid-template-columns: 2fr 1fr;
+         gap: 20px;
       }
 
-      ::-webkit-scrollbar-thumb:hover {
-         background: var(--teal-primary);
+      /* Panel alignment */
+      .panel-grid {
+         display: grid;
+         grid-template-rows: auto 1fr;
+         height: 100%;
+      }
+
+      /* Table container */
+      .table-container {
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+      }
+
+      /* Form alignment */
+      .filter-form {
+         display: grid;
+         gap: 10px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 992px) {
+         .col-md-3 {
+            width: 100%;
+            position: relative;
+            height: auto;
+         }
+
+         .col-md-9 {
+            margin-left: 0;
+            width: 100%;
+         }
+
+         .row {
+            flex-direction: column;
+         }
+         .tab-content-grid {
+            grid-template-columns: 1fr;
+         }
+
+         .statistics-grid {
+            grid-template-columns: 1fr 1fr;
+         }
+      }
       }
    </style>
    <body class="skin-black">
       <div class="container-fluid">
-         <div class="row">
-            <div class="col-md-3">
-               <div class="wrapper row-offcanvas row-offcanvas-left">
-                  <jsp:include page="sidebar.jsp"></jsp:include>
-                  </div>
-               </div>
-               <div class="col-md-9">
-                  <h2 style="text-align: center">Bảng quản lí marketing</h2>
-                  <div class="row" style="margin-bottom:5px;">
-                     <!-- Statistics section -->
-                     <div class="col-md-3">
-                        <div class="sm-st clearfix">
-                           <span class="sm-st-icon st-red"><i class="fa fa-file-text-o"></i></span>
-                           <div class="sm-st-info">
-                              Tổng <span>${totalP}</span> Bài Đăng <br>
-                           * <span>${totalPA}</span> Bài viết đã được đăng <br>
-                           * <span>${totalPIA}</span> Bài viết bị ẩn <br>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-violet"><i class="fa fa-shopping-cart"></i></span>
-                        <div class="sm-st-info">
-                           Tổng Sản Phẩm: <span>${totalPd}</span> <br>
-                           * <span>${totalPdA}</span> Sản phẩm đang được bày bán <br>
-                           * <span>${totalPdIA}</span> Sản phẩm chưa được bày bán.
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-blue"><i class="fa fa-user"></i></span>
-                        <div class="sm-st-info">
-                           <span>${totalU}</span> Khách Hàng
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-green"><i class="fa fa-comments"></i></span>
-                        <div class="sm-st-info">
-                           <span>${gDAOfeed}</span> Phản hồi
-                        </div>
-                     </div>
-                  </div>
-                  <!-- More statistic sections -->
-                  <!-- Add or keep only necessary sections here -->
-               </div>
-
-               <!-- Tab buttons -->
-               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                     <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">Tài khoản mới</a>
-                  </li>
-
-               </ul>
-               <!-- Tab content -->
-               <div class="tab-content" id="myTabContent">
-                  <!-- Tài khoản mới -->
-                  <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                     <div class="row">
-                        <div class="col-md-8">
-                           <section class="panel">
-
-                              <div class="panel-body table-responsive" style="max-height: 100vh; overflow: auto">
-                                 <table class="table table-hover">
-                                    <thead>
-                                       <tr>
-                                          <th>Số thứ tự</th>
-                                          <th>Email</th>
-                                          <th>Tên tài khoản</th>
-                                          <th>Ngày đăng kí</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                       <c:forEach items="${requestScope.newLyCustomers}" var="items">
-                                          <tr>
-                                             <td>${items.getID()}</td>
-                                             <td>${items.email}</td>
-                                             <td>${items.full_name}</td>
-                                             <td>${items.registration_date}</td>
-                                          </tr>
-                                       </c:forEach>
-                                    </tbody>
-                                 </table>
-                              </div>
-                           </section>
-                        </div>
-                        <div class="col-md-4">
-                           <section class="panel">
-                              <header class="panel-heading">
-                                 Thống kê
-                              </header>
-                              <div class="panel-body">
-                                 <form>
-                                    <label for="fromDate" style="display: block;">Bắt đầu:</label>
-                                    <input type="date" id="fromDate" name="fromDate" value="${requestScope.fromDate}" onchange="this.form.submit()" style="display: block; margin-bottom: 10px;" />
-
-                                    <label for="toDate" style="display: block;">Kết thúc:</label>
-                                    <input type="date" id="toDate" name="toDate" value="${requestScope.toDate}" onchange="this.form.submit()" style="display: block; margin-bottom: 10px;" />
-
-                                    <!-- Submit button -->
-                                    <input type="submit" value="Lọc" style="display: block; padding: 8px 16px;" />
-                                 </form>
-                              </div>
-                           </section>
-                        </div>
-                     </div>
-                  </div>                  
-               </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="wrapper row-offcanvas row-offcanvas-left">
+                <jsp:include page="sidebar.jsp"></jsp:include>
+            </div>
+        </div>
+        <div class="col-md-9 main-content">
+            <h2>Bảng quản lí marketing</h2>
+            
+            <!-- Statistics Cards Grid -->
+            <div class="statistics-grid">
+                <div class="sm-st">
+                    <span class="sm-st-icon st-red"><i class="fa fa-file-text-o"></i></span>
+                    <div class="sm-st-info">
+                        Tổng <span>${totalP}</span> Bài Đăng <br>
+                        * <span>${totalPA}</span> Bài viết đã được đăng <br>
+                        * <span>${totalPIA}</span> Bài viết bị ẩn
+                    </div>
+                </div>
+                
+                <div class="sm-st">
+                    <span class="sm-st-icon st-violet"><i class="fa fa-shopping-cart"></i></span>
+                    <div class="sm-st-info">
+                        Tổng Sản Phẩm: <span>${totalPd}</span> <br>
+                        * <span>${totalPdA}</span> Đang bày bán <br>
+                        * <span>${totalPdIA}</span> Chưa bày bán
+                    </div>
+                </div>
+                
+                <div class="sm-st">
+                    <span class="sm-st-icon st-blue"><i class="fa fa-user"></i></span>
+                    <div class="sm-st-info">
+                        <span>${totalU}</span> Khách Hàng
+                    </div>
+                </div>
+                
+                <div class="sm-st">
+                    <span class="sm-st-icon st-green"><i class="fa fa-comments"></i></span>
+                    <div class="sm-st-info">
+                        <span>${gDAOfeed}</span> Phản hồi
+                    </div>
+                </div>
             </div>
 
-         </div>
-         <!-- Tab Mới -->
-
-
-      </div>
-   </div>
-
-</div>
-</div>
-</div>
-</div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+            <!-- Tabs Section -->
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item">
+                    <a class="nav-link active" id="account-tab" href="#account">Tài khoản mới</a>
+                </li>
+            </ul>
+            
+            <!-- Tab Content Grid -->
+            <div class="tab-content tab-content-grid" id="myTabContent">
+                <div class="tab-pane fade show active panel-grid" id="account">
+                    <div class="table-container">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Số thứ tự</th>
+                                    <th>Email</th>
+                                    <th>Tên tài khoản</th>
+                                    <th>Ngày đăng kí</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${requestScope.newLyCustomers}" var="items">
+                                    <tr>
+                                        <td>${items.getID()}</td>
+                                        <td>${items.email}</td>
+                                        <td>${items.full_name}</td>
+                                        <td>${items.registration_date}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="panel panel-grid">
+                    <header class="panel-heading">
+                        Thống kê
+                    </header>
+                    <div class="panel-body">
+                        <form class="filter-form">
+                            <label for="fromDate">Bắt đầu:</label>
+                            <input type="date" id="fromDate" name="fromDate" value="${requestScope.fromDate}" onchange="this.form.submit()">
+                            
+                            <label for="toDate">Kết thúc:</label>
+                            <input type="date" id="toDate" name="toDate" value="${requestScope.toDate}" onchange="this.form.submit()">
+                            
+                            <input type="submit" value="Lọc">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>   
+   </body>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+      <script type="text/javascript">
                                        $(document).ready(function () {
-                                          // Chuyển đến tab "Tài khoản mới" khi trang được tải lên
                                           $('#account-tab').tab('show');
 
-                                          // Xử lý khi bấm vào tab
                                           $('#myTab a').on('click', function (e) {
                                              e.preventDefault();
-                                             // Lấy ID của tab được bấm
                                              var selectedTab = $(this).attr('href');
-                                             // Hiển thị nội dung của tab tương ứng với tab được bấm
                                              $(selectedTab).tab('show');
-                                             // Nếu tab được bấm là tab đầu tiên
                                              if (selectedTab === '#account') {
-                                                // Làm mới trang
                                                 window.location.reload();
                                              }
                                           });
 
-                                          // Xử lý khi chuyển tab
                                           $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                                             // Lấy ID của tab đang được chọn
                                              var selectedTab = $(e.target).attr('href');
-                                             // Ẩn tất cả các tab-pane khác
                                              $('.tab-pane').removeClass('show active');
-                                             // Hiển thị nội dung của tab được chọn
                                              $(selectedTab).addClass('show active');
                                           });
                                        });
-</script>
+      </script>
 
-</body>
 </html>
