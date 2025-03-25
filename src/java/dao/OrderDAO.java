@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -381,76 +382,126 @@ public class OrderDAO {
       }
       return details;
    }
-   
+
    public LinkedHashMap<Integer, Map<String, Object>> getOrderDetails(String orderId) {
-        LinkedHashMap<Integer, Map<String, Object>> orderDetail = new LinkedHashMap<>();
-        String query = "SELECT\n"
-                + "    o.ID AS order_id,\n"
-                + "    p.name AS product_name,p.salePrice\n"
-                + "    ,pc.categoryName AS product_category,\n"
-                + "    od.quantity,\n"
-                + "    (od.quantity * p.salePrice) AS total_price\n"
-                + "FROM\n"
-                + "    orders o\n"
-                + "JOIN\n"
-                + "    orderdetails od ON o.ID = od.Orders_ID\n"
-                + "JOIN\n"
-                + "    product p ON od.Product_ID = p.ID\n"
-                + "JOIN\n"
-                + "    productcategory pc ON p.ProductCategory_ID = pc.ID\n"
-                + "    where o.ID = ? ;";
+      LinkedHashMap<Integer, Map<String, Object>> orderDetail = new LinkedHashMap<>();
+      String query = "SELECT\n"
+              + "    o.ID AS order_id,\n"
+              + "    p.name AS product_name,p.salePrice\n"
+              + "    ,pc.categoryName AS product_category,\n"
+              + "    od.quantity,\n"
+              + "    (od.quantity * p.salePrice) AS total_price\n"
+              + "FROM\n"
+              + "    orders o\n"
+              + "JOIN\n"
+              + "    orderdetails od ON o.ID = od.Orders_ID\n"
+              + "JOIN\n"
+              + "    product p ON od.Product_ID = p.ID\n"
+              + "JOIN\n"
+              + "    productcategory pc ON p.ProductCategory_ID = pc.ID\n"
+              + "    where o.ID = ? ;";
 
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, orderId);
-            ResultSet rs = ps.executeQuery();
-            int id = 1;
-            while (rs.next()) {
-                Map<String, Object> details = new HashMap<>();
-                details.put("order_id", rs.getInt("order_id"));
-                details.put("product_name", rs.getString("product_name"));
-                details.put("product_category", rs.getString("product_category"));
-                details.put("salePrice", rs.getDouble("salePrice"));
-                details.put("quantity", rs.getInt("quantity"));
-                details.put("total_price", rs.getDouble("total_price"));
+      try {
+         PreparedStatement ps = connection.prepareStatement(query);
+         ps.setString(1, orderId);
+         ResultSet rs = ps.executeQuery();
+         int id = 1;
+         while (rs.next()) {
+            Map<String, Object> details = new HashMap<>();
+            details.put("order_id", rs.getInt("order_id"));
+            details.put("product_name", rs.getString("product_name"));
+            details.put("product_category", rs.getString("product_category"));
+            details.put("salePrice", rs.getDouble("salePrice"));
+            details.put("quantity", rs.getInt("quantity"));
+            details.put("total_price", rs.getDouble("total_price"));
 //              
-                orderDetail.put(id, details);
-                id++;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return orderDetail;
+            orderDetail.put(id, details);
+            id++;
+         }
+      } catch (SQLException ex) {
+         ex.printStackTrace();
+      }
+      return orderDetail;
 
-    }
+   }
 
    public static void main(String[] args) {
       // Tạo đối tượng DAO để truy vấn dữ liệu
       OrderDAO userDAO = new OrderDAO();
+//
+//      // ID của khách hàng cần tìm (thay đổi tùy vào dữ liệu có trong DB)
+//      int customerId = 1;
+//
+//      // Gọi phương thức để tìm khách hàng
+//      User user = userDAO.getCustomerById(customerId);
+//
+//      // Kiểm tra kết quả và hiển thị
+//      if (user != null) {
+//         System.out.println("User found:");
+//         System.out.println("ID: " + user.getId());
+//         System.out.println("Email: " + user.getEmail());
+//         System.out.println("Full Name: " + user.getFull_name());
+//         System.out.println("Phone: " + user.getPhone());
+//         System.out.println("Gender: " + user.getGender());
+//         System.out.println("Registration Date: " + user.getRegistration_date());
+//         System.out.println("Status: " + user.getStatus());
+//         System.out.println("Updated By: " + user.getUpdatedBy());
+//         System.out.println("Updated Date: " + user.getUpdatedDate());
+//         System.out.println("Image: " + user.getImage());
+//         System.out.println("Settings ID: " + user.getSettings_id());
+//      } else {
+//         System.out.println("User not found with ID: " + customerId);
+//      }
+List<Order> a = userDAO.getAllOrders();
+      System.out.println(a.size());
 
-      // ID của khách hàng cần tìm (thay đổi tùy vào dữ liệu có trong DB)
-      int customerId = 1;
+   }
 
-      // Gọi phương thức để tìm khách hàng
-      User user = userDAO.getCustomerById(customerId);
+   public ArrayList<Order> getAllOrders() {
+      String sql = "SELECT id, user_id, order_date, total, status, discount, "
+              + "address, phone, email, notes, gender, saleid, settings_id FROM orders";
 
-      // Kiểm tra kết quả và hiển thị
-      if (user != null) {
-         System.out.println("User found:");
-         System.out.println("ID: " + user.getId());
-         System.out.println("Email: " + user.getEmail());
-         System.out.println("Full Name: " + user.getFull_name());
-         System.out.println("Phone: " + user.getPhone());
-         System.out.println("Gender: " + user.getGender());
-         System.out.println("Registration Date: " + user.getRegistration_date());
-         System.out.println("Status: " + user.getStatus());
-         System.out.println("Updated By: " + user.getUpdatedBy());
-         System.out.println("Updated Date: " + user.getUpdatedDate());
-         System.out.println("Image: " + user.getImage());
-         System.out.println("Settings ID: " + user.getSettings_id());
-      } else {
-         System.out.println("User not found with ID: " + customerId);
+      ArrayList<Order> orders = new ArrayList<>();
+
+      try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+         while (rs.next()) {
+            int id = rs.getInt("id");
+            int userId = rs.getInt("user_id");
+            Date orderDate = rs.getDate("order_date");
+            double total = rs.getDouble("total");
+            int status = rs.getInt("status");
+            double discount = rs.getDouble("discount");
+            String address = rs.getString("address");
+            String phone = rs.getString("phone");
+            String email = rs.getString("email");
+            String note = rs.getString("notes");
+            String gender = rs.getString("gender");
+            int saleId = rs.getInt("saleid");
+            int settingId = rs.getInt("settings_id");
+
+            Order order = new Order();
+            order.setId(id);
+            order.setuId(userId);
+            order.setDate(orderDate);
+            order.setTotalMoney(total);
+            order.setStatus(status);
+            order.setDiscount(discount);
+            order.setAddress(address);
+            order.setPhone(phone);
+            order.setEmail(email);
+            order.setNote(note);
+            order.setGender(gender);
+            order.setSaleId(saleId);
+            order.setSettingId(settingId);
+
+            orders.add(order);
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
+
+      return orders;
    }
 
 }
