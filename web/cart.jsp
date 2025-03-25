@@ -154,7 +154,7 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr class="cart_menu">
-                                    <td><input type="checkbox" id="select-all"></td> <!-- Checkbox chọn tất cả -->
+                                    <td><input type="checkbox"  id="select-all"></td> <!-- Checkbox chọn tất cả -->
                                     <td class="image">Sản phẩm</td>
                                     <td class="description"></td>
                                     <td class="price">Giá tiền</td>
