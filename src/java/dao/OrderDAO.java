@@ -695,7 +695,7 @@ public class OrderDAO {
     }
 
 public boolean findSaleId(int saleId) {
-    String sql = "SELECT COUNT(*) FROM orders WHERE saleid = ?";
+    String sql = "SELECT COUNT(*) FROM user_role WHERE user_id = ? AND role_id = 2";
     
     try (PreparedStatement ps = connection.prepareStatement(sql)) {
         ps.setInt(1, saleId);
@@ -703,14 +703,14 @@ public boolean findSaleId(int saleId) {
         try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 //count luôn trả về số nguyên nên phải getInt, getInt(1) là để lấy cột đầu trường đầu tiên được trả về trong cột COUNT.
-                return rs.getInt(1) > 0; // Nếu số lượng > 0, saleId tồn tại
+                return rs.getInt(1) > 0; // Nếu COUNT > 0, saleId hợp lệ
             }
         }
     } catch (SQLException ex) {
         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
     
-    return false; // Mặc định trả về false nếu có lỗi hoặc không tìm thấy
+    return false; // Trả về false nếu không tìm thấy hoặc lỗi xảy ra
 }
 
 

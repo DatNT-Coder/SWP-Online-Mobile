@@ -2,18 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/web/Sale_orderList.jsp</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/src/java/controller/user/AuthenticationServlet.java</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/src/java/dao/OrderDAO.java</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/src/java/controller/order/SaleMangeServlet.java</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/src/java/dao/UserDAO.java</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/src/java/controller/cart/CartCheckoutController.java</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/web/SaleManagerDashboard.jsp</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/src/java/controller/order/listOrderSale.java</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/web/userslist.jsp</file>
-            <file>file:/C:/Users/vuduc/Documents/NetBeansProjects/swp391-group3/web/Sale_sidebar.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
