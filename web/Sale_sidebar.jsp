@@ -33,9 +33,6 @@
 
     <ul>
         <li><a href="/ProjectSWP391/sale/saleDashboard">Thống kê</a></li>
-        <li><a href="/ProjectSWP391/sale/listOrderSale">Danh sách đơn hàng</a></li>
-            <c:if test="${role == 3 || role == 4}">
-            <li><a href="/ProjectSWP391/salemanage/salemanageDashboard">Quản lý danh sách đơn hàng</a></li>
-        </c:if>
+        <li><a href="/ProjectSWP391/sale/ListOrderSale">Danh sách đơn hàng</a></li>
     </ul>
 </div>

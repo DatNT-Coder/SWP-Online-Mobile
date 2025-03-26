@@ -187,7 +187,7 @@ public class AuthenticationServlet extends HttpServlet {
                     request.getSession().setAttribute("role", userRole);
                     request.getSession().setAttribute("profileUser", d.getDataUser(email, password));
 //                    request.getSession().setAttribute("full_name", fullName);
-                    url = "salemanage/salemanageDashboard";
+                    url = "sale/saleDashboard";
                 }
             } else {
                 request.setAttribute("error", "Email or Password is incorrect !");

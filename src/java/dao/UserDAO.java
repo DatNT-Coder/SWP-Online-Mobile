@@ -4,6 +4,7 @@
  */
 package dao;
 
+import com.sun.jdi.connect.spi.Connection;
 import context.DBContext;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -61,37 +62,43 @@ public class UserDAO extends context.DBContext {
    }
 
    public String getUserFullName(String email, String password) {
-    String fullName = null;
-    DBContext dbContext = new DBContext();
-    connection = dbContext.getConnection();  // Use DBContext to get the connection
+      String fullName = null;
+      DBContext dbContext = new DBContext();
+      connection = dbContext.getConnection();  // Use DBContext to get the connection
 
-    String sql = "SELECT full_name FROM User WHERE email = ? AND password = ?";
+      String sql = "SELECT full_name FROM User WHERE email = ? AND password = ?";
 
-    try {
-        statement = connection.prepareStatement(sql);
-        statement.setObject(1, email);
-        statement.setObject(2, password);
+      try {
+         statement = connection.prepareStatement(sql);
+         statement.setObject(1, email);
+         statement.setObject(2, password);
 
-        resultSet = statement.executeQuery();
-        if (resultSet.next()) {
+         resultSet = statement.executeQuery();
+         if (resultSet.next()) {
             fullName = resultSet.getString("full_name");
             System.out.println("Retrieved full_name: " + fullName);  // Debugging line
-        }
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
-    } finally {
-        // Close resources after use
-        try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        } catch (SQLException e) {
+         }
+      } catch (SQLException e) {
+         System.out.println("Error: " + e.getMessage());
+      } finally {
+         // Close resources after use
+         try {
+            if (resultSet != null) {
+               resultSet.close();
+            }
+            if (statement != null) {
+               statement.close();
+            }
+            if (connection != null) {
+               connection.close();
+            }
+         } catch (SQLException e) {
             System.out.println("Error closing resources: " + e.getMessage());
-        }
-    }
+         }
+      }
 
-    return fullName;
-}
+      return fullName;
+   }
 
    public User checkUser(String email, String pass) {
 
@@ -222,8 +229,8 @@ public class UserDAO extends context.DBContext {
    }
 
    //dao for order list sale
-   public Vector<User> getAllSaleUser() {
-      Vector<User> list = new Vector<>();
+   public ArrayList<User> getAllSaleUser() {
+    ArrayList<User> list = new ArrayList<>();
       String xSql = "SELECT user.*\n"
               + "FROM user\n"
               + "INNER JOIN user_role ON user.id = user_role.User_id\n"

@@ -6,6 +6,7 @@ package controller.order;
 
 import constant.CommonConst;
 import dao.OrderDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,48 +21,54 @@ import model.User;
  *
  * @author vuduc
  */
+
 public class ListOrderSale extends HttpServlet {
 
-     public OrderDAO orderDAO = new OrderDAO();
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ListOrderSale</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ListOrderSale at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+   public OrderDAO orderDAO = new OrderDAO();
+   private static final int RECORDS_PER_PAGE = 3;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String searchType = request.getParameter("searchType");
+   /**
+    * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    *
+    * @param request servlet request
+    * @param response servlet response
+    * @throws ServletException if a servlet-specific error occurs
+    * @throws IOException if an I/O error occurs
+    */
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
+      response.setContentType("text/html;charset=UTF-8");
+      try (PrintWriter out = response.getWriter()) {
+         /* TODO output your page here. You may use following sample code. */
+         out.println("<!DOCTYPE html>");
+         out.println("<html>");
+         out.println("<head>");
+         out.println("<title>Servlet NewServlet</title>");
+         out.println("</head>");
+         out.println("<body>");
+         out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+         out.println("</body>");
+         out.println("</html>");
+      }
+   }
+
+   @Override
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // Get pagination parameter
+      // add default value when parameter is missing/empty
+      int page = 1; // default to first page
+      String pageParam = request.getParameter("page");
+      if (pageParam != null && !pageParam.trim().isEmpty()) {
+         try {
+            page = Integer.parseInt(pageParam);
+         } catch (NumberFormatException e) {
+            // Handle invalid number format (maybe log it)
+            page = 1; // fallback to first page
+         }
+      }
+
+      // Get search parameters
+      String searchType = request.getParameter("searchType");
       String searchValue = request.getParameter("searchValue");
       String sortBy = request.getParameter("sortBy");
       String fromDate = request.getParameter("fromDate");
@@ -85,37 +92,38 @@ public class ListOrderSale extends HttpServlet {
          saleId = loggedInUser.getId();
       }
 
-      // Fetch orders based on filters
-      ArrayList<Order> orders = orderDAO.getFilteredOrders(searchType, searchValue, sortBy, fromDate, toDate, saleId, status);
+      // Calculate offset for pagination
+      int offset = (page - 1) * RECORDS_PER_PAGE;
+
+      // Fetch orders based on filters with pagination
+      ArrayList<Order> orders = orderDAO.getFilteredOrdersWithPagination(
+              searchType, searchValue, sortBy, fromDate, toDate,
+              saleId, status, offset, RECORDS_PER_PAGE);
+
+      // Get total count of orders (for pagination)
+      int totalOrders = orderDAO.getTotalFilteredOrdersCount(
+              searchType, searchValue, fromDate, toDate, saleId, status);
+
+      // Calculate total pages
+      int totalPages = (int) Math.ceil((double) totalOrders / RECORDS_PER_PAGE);
       
-
       // Set attributes and forward to JSP
+      request.setAttribute("currentSort", sortBy);
       request.setAttribute("orders", orders);
+      request.setAttribute("totalOrders", totalOrders);
+      request.setAttribute("currentPage", page);
+      request.setAttribute("totalPages", totalPages);
       request.getRequestDispatcher("/Sale_orderList.jsp").forward(request, response);
-    }
+   }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+   @Override
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
+      processRequest(request, response);
+   }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+   @Override
+   public String getServletInfo() {
+      return "Short description";
+   }
 }

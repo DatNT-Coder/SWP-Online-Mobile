@@ -46,7 +46,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListOrderSale</servlet-name>
-        <url-pattern>/sale/listOrderSale</url-pattern>
+        <url-pattern>/sale/ListOrderSale</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SaleManageDetail</servlet-name>
