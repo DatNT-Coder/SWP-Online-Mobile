@@ -243,6 +243,33 @@
          border-bottom: 1px solid var(--teal-light);
       }
 
+      .sidebar h2 {
+         color: var(--teal-primary);
+         font-size: 1.2rem;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+         padding: 0 20px 15px;
+         margin-bottom: 10px;
+         border-bottom: 2px solid var(--teal-lighter);
+      }
+      h2 {
+         color: var(--teal-dark);
+         margin: 20px 0;
+         font-weight: 600;
+         text-align: center;
+      }
+      user agent stylesheet
+      h2 {
+         display: block;
+         font-size: 1.5em;
+         margin-block-start: 0.83em;
+         margin-block-end: 0.83em;
+         margin-inline-start: 0px;
+         margin-inline-end: 0px;
+         font-weight: bold;
+         unicode-bidi: isolate;
+      }
+
       /* Responsive adjustments */
       @media (max-width: 768px) {
          .row {
@@ -497,7 +524,7 @@
 //            }
                                          );
                               });
-                  </<script>
-</body>
-                          </html>
+                          </<script>
+      </body>
+      </html>
 

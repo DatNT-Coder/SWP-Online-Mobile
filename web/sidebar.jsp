@@ -30,45 +30,6 @@ String fullName = (String) session.getAttribute("full_name");
       transition: all 0.3s ease;
    }
 
-   .user-avatar {
-      text-align: center;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--teal-lighter);
-      margin-bottom: 15px;
-   }
-
-   .user-avatar img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--teal-light);
-      margin-bottom: 10px;
-   }
-
-   .user-avatar p {
-      margin: 5px 0;
-      color: var(--sidebar-text);
-      font-size: 0.9rem;
-   }
-
-   .user-avatar p:first-of-type {
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--teal-dark);
-   }
-
-   .user-avatar a {
-      color: var(--teal-primary);
-      text-decoration: none;
-      transition: color 0.3s;
-   }
-
-   .user-avatar a:hover {
-      color: var(--teal-darker);
-      text-decoration: underline;
-   }
-
    .sidebar h2 {
       color: var(--teal-primary);
       font-size: 1.2rem;
@@ -153,10 +114,45 @@ String fullName = (String) session.getAttribute("full_name");
 
 <div class="sidebar">
    <div class="user-avatar">
-      <img src="${pageContext.request.contextPath}/img/${sessionScope.user.image}" alt="User Avatar">
-      <p style="font-weight: bold">Welcome, <%= fullName != null ? fullName : "Guest" %></p>
-      <p><a href="/ProjectSWP391/HomePage">Back to home</a></p>
+      <div class="user-logo">
+         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4a6ea9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+         </svg>
+      </div>
+      <p style="font-weight: bold; margin-top: 10px;">Welcome, <%= fullName != null ? fullName : "Guest" %></p>
+      <p style="margin-top: 5px;"><a href="/ProjectSWP391/HomePage" style="text-decoration: none; color: #4a6ea9;">Back to home</a></p>
    </div>
+
+   <style>
+      .user-avatar {
+         height: 205px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         padding: 20px;
+         background-color: #f5f7fa;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+         text-align: center;
+      }
+
+      .user-logo {
+         width: 60px;
+         height: 60px;
+         background-color: #e1e8f0;
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         margin-bottom: 10px;
+      }
+
+      .user-logo svg {
+         width: 32px;
+         height: 32px;
+      }
+   </style>
    <h2>Marketing</h2>
    <ul>
       <li><a href="/ProjectSWP391/marketing/MKTDashboardController">Bảng điều khiển tiếp thị</a></li>

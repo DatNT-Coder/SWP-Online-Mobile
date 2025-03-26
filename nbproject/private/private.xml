@@ -4,13 +4,23 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/User.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_orderList.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/SaleOrderDetailController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/mktDashBoard.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SaleOrderDetail.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/ListOrderSale.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/SaleOrderDetailController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/OrderDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/dashboard/MKTDashboardController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/ProductListMarketing.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/sidebar.jsp</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/customer/CustomerListServlet.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/AssignOrderController.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Marketing_FeedbackList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_orderList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/ListOrderSale.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SliderListMarketing.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/CustomerList.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/bloglist.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SaleManagerDashboard.jsp</file>
         </group>
     </open-files>
 </project-private>

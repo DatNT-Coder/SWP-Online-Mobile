@@ -11,8 +11,6 @@
       <meta name="author" content="">
       <title>Slider List | E-Shopee</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-      <!--      <link rel="stylesheet" href="css/styles.css">
-            <link rel="stylesheet" href="css/datatable.css">-->
    </head>
    <style>
       :root {
@@ -30,7 +28,7 @@
          color: var(--teal-text);
          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
-
+      
       .container-fluid {
          padding-left: 0;
          padding-right: 0;
@@ -269,6 +267,33 @@
          padding: 8px 12px;
       }
 
+      .sidebar h2 {
+         color: var(--teal-primary);
+         font-size: 1.2rem;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+         padding: 0 20px 15px;
+         margin-bottom: 10px;
+         border-bottom: 2px solid var(--teal-lighter);
+      }
+      h2 {
+         color: var(--teal-dark);
+         margin: 20px 0;
+         font-weight: 600;
+         text-align: center;
+      }
+      user agent stylesheet
+      h2 {
+         display: block;
+         font-size: 1.5em;
+         margin-block-start: 0.83em;
+         margin-block-end: 0.83em;
+         margin-inline-start: 0px;
+         margin-inline-end: 0px;
+         font-weight: bold;
+         unicode-bidi: isolate;
+      }
+
       /* Responsive adjustments */
       @media (max-width: 768px) {
          .row {
@@ -289,7 +314,7 @@
             margin-bottom: 10px;
             margin-right: 0;
          }
-         
+
          .pagination .page-link {
             padding: 6px 10px;
             min-width: 32px;
@@ -351,11 +376,11 @@
                               <thead>
                                  <tr>
                                     <th class="col-id">ID</th>
-                                    <th class="col-image">Image</th>
-                                    <th class="col-title">Title</th>
-                                    <th class="col-backlink">Back link</th>
-                                    <th class="col-status">Status</th>
-                                    <th class="col-actions">Actions</th>
+                                    <th class="col-image">Ảnh</th>
+                                    <th class="col-title">Tiêu đề</th>
+                                    <th class="col-backlink">Link</th>
+                                    <th class="col-status">Trạng Thái</th>
+                                    <th class="col-actions">Tác vụ</th>
                                  </tr>
                               </thead>
                               <tbody>

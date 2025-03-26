@@ -8,9 +8,6 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Product List | E-Shopee</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-      <!--      <link rel="stylesheet" href="css/styles.css">
-            <link rel="stylesheet" href="css/datatable.css">-->
    </head>
    <style>
       :root {
@@ -333,6 +330,33 @@
       .pagination .page-item:last-child .page-link {
          font-weight: bold;
          padding: 8px 12px;
+      }
+
+      .sidebar h2 {
+         color: var(--teal-primary);
+         font-size: 1.2rem;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+         padding: 0 20px 15px;
+         margin-bottom: 10px;
+         border-bottom: 2px solid var(--teal-lighter);
+      }
+      h2 {
+         color: var(--teal-dark);
+         margin: 20px 0;
+         font-weight: 600;
+         text-align: center;
+      }
+      user agent stylesheet
+      h2 {
+         display: block;
+         font-size: 1.5em;
+         margin-block-start: 0.83em;
+         margin-block-end: 0.83em;
+         margin-inline-start: 0px;
+         margin-inline-end: 0px;
+         font-weight: bold;
+         unicode-bidi: isolate;
       }
 
       /* Responsive adjustments */

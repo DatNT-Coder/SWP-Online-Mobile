@@ -111,7 +111,7 @@ public class MKTDashboardController extends HttpServlet {
         request.setAttribute("totalU", totalU);
         request.setAttribute("gDAOfeed", gDAOfeed);
         request.setAttribute("userProfile", userProfile);
-        request.getRequestDispatcher("/mktDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/mktDashBoard.jsp").forward(request, response);
 
     }
 
