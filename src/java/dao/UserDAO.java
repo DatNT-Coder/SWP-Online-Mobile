@@ -229,8 +229,8 @@ public class UserDAO extends context.DBContext {
    }
 
    //dao for order list sale
-   public Vector<User> getAllSaleUser() {
-      Vector<User> list = new Vector<>();
+   public ArrayList<User> getAllSaleUser() {
+    ArrayList<User> list = new ArrayList<>();
       String xSql = "SELECT user.*\n"
               + "FROM user\n"
               + "INNER JOIN user_role ON user.id = user_role.User_id\n"

@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import model.CartItem;
 import model.Order;
 import model.OrderDetail;
+import model.Product;
 import model.User;
 
 /**
@@ -153,37 +154,43 @@ public class OrderDAO {
    }
 
    public Order getOrderById(int orderId) {
-      String sql = "select id, user_id, order_date, total, status, discount,\n"
-              + " address, phone, email, notes, gender, saleid, settings_id from orders where id = ?";
+      String sql = "SELECT o.id, o.user_id, u.full_name AS username, o.order_date, "
+              + "o.total, o.status, o.discount, o.address, o.phone, o.email, o.notes, o.gender, "
+              + "o.saleid, s.full_name AS salename, o.settings_id "
+              + "FROM orders o "
+              + "JOIN user u ON o.user_id = u.id "
+              + "LEFT JOIN user s ON o.saleid = s.id "
+              + "WHERE o.id = ?";
+
       try (PreparedStatement ps = connection.prepareStatement(sql)) {
          ps.setInt(1, orderId);
+
          try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-               int id = rs.getInt("id");
-               Date orderDate = rs.getDate("order_date");
-               double total = rs.getDouble("total");
-               int status = rs.getInt("status");
-               String address = rs.getString("address");
-               String phone = rs.getString("phone");
-               String email = rs.getString("email");
-               String note = rs.getString("notes");
-               int settingId = rs.getInt("settings_id");
                Order order = new Order();
-               order.setId(id);
-               order.setDate(orderDate);
-               order.setTotalMoney(total);
-               order.setStatus(status);
-               order.setAddress(address);
-               order.setPhone(phone);
-               order.setEmail(email);
-               order.setNote(note);
-               order.setSettingId(settingId);
+               order.setId(rs.getInt("id"));
+               order.setuId(rs.getInt("user_id"));
+               order.setDate(rs.getDate("order_date"));
+               order.setTotalMoney(rs.getDouble("total"));
+               order.setStatus(rs.getInt("status"));
+               order.setDiscount(rs.getDouble("discount"));
+               order.setAddress(rs.getString("address"));
+               order.setPhone(rs.getString("phone"));
+               order.setEmail(rs.getString("email"));
+               order.setNote(rs.getString("notes"));
+               order.setGender(rs.getString("gender"));
+               order.setSaleId(rs.getInt("saleid"));
+               order.setSettingId(rs.getInt("settings_id"));
+               order.setUserName(rs.getString("username"));
+               order.setSaleName(rs.getString("salename"));
+
                return order;
             }
          }
       } catch (SQLException ex) {
          Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
+
       return null;
    }
 
@@ -425,38 +432,6 @@ public class OrderDAO {
 
    }
 
-   public static void main(String[] args) {
-      // Tạo đối tượng DAO để truy vấn dữ liệu
-      OrderDAO userDAO = new OrderDAO();
-//
-//      // ID của khách hàng cần tìm (thay đổi tùy vào dữ liệu có trong DB)
-//      int customerId = 1;
-//
-//      // Gọi phương thức để tìm khách hàng
-//      User user = userDAO.getCustomerById(customerId);
-//
-//      // Kiểm tra kết quả và hiển thị
-//      if (user != null) {
-//         System.out.println("User found:");
-//         System.out.println("ID: " + user.getId());
-//         System.out.println("Email: " + user.getEmail());
-//         System.out.println("Full Name: " + user.getFull_name());
-//         System.out.println("Phone: " + user.getPhone());
-//         System.out.println("Gender: " + user.getGender());
-//         System.out.println("Registration Date: " + user.getRegistration_date());
-//         System.out.println("Status: " + user.getStatus());
-//         System.out.println("Updated By: " + user.getUpdatedBy());
-//         System.out.println("Updated Date: " + user.getUpdatedDate());
-//         System.out.println("Image: " + user.getImage());
-//         System.out.println("Settings ID: " + user.getSettings_id());
-//      } else {
-//         System.out.println("User not found with ID: " + customerId);
-//      }
-      List<Order> a = userDAO.getAllOrders();
-      System.out.println(a.get(0).getUserName());
-
-   }
-
    public ArrayList<Order> getAllOrders() {
       String sql = "SELECT o.id, o.user_id, u.full_name AS user_name, o.order_date, o.total, o.status, o.discount, "
               + "o.address, o.phone, o.email, o.notes, o.gender, s.full_name AS sale_name, o.saleid, o.settings_id "
@@ -530,112 +505,440 @@ public class OrderDAO {
       return orders;
    }
 
-   public ArrayList<Order> getFilteredOrders(String searchType, String searchValue, String sortBy, 
-                                          String fromDate, String toDate, Integer saleId, Integer status) {
-    StringBuilder sql = new StringBuilder("SELECT o.id, o.user_id, u.full_name AS username, o.order_date, "
-            + "o.total, o.status, o.discount, o.address, o.phone, o.email, o.notes, o.gender, "
-            + "o.saleid, s.full_name AS salename, o.settings_id "
-            + "FROM orders o "
-            + "JOIN user u ON o.user_id = u.id "
-            + "LEFT JOIN user s ON o.saleid = s.id "
-            + "WHERE 1=1");
+   public ArrayList<Order> getFilteredOrders(String searchType, String searchValue, String sortBy,
+           String fromDate, String toDate, Integer saleId, Integer status) {
+      StringBuilder sql = new StringBuilder("SELECT o.id, o.user_id, u.full_name AS username, o.order_date, "
+              + "o.total, o.status, o.discount, o.address, o.phone, o.email, o.notes, o.gender, "
+              + "o.saleid, s.full_name AS salename, o.settings_id "
+              + "FROM orders o "
+              + "JOIN user u ON o.user_id = u.id "
+              + "LEFT JOIN user s ON o.saleid = s.id "
+              + "WHERE 1=1");
 
-    // Danh sách tham số
-    List<Object> params = new ArrayList<>();
+      // Danh sách tham số
+      List<Object> params = new ArrayList<>();
 
-    // Lọc theo searchType
-    if (searchType != null && searchValue != null && !searchValue.isEmpty()) {
-        if (searchType.equals("order_id")) {
+      // Lọc theo searchType
+      if (searchType != null && searchValue != null && !searchValue.isEmpty()) {
+         if (searchType.equals("order_id")) {
             sql.append(" AND o.id = ?");
             params.add(Integer.parseInt(searchValue)); // Chuyển searchValue thành số nguyên
-        } else if (searchType.equals("user_id")) {
+         } else if (searchType.equals("user_id")) {
             sql.append(" AND o.user_id = ?");
             params.add(Integer.parseInt(searchValue));
-        }
-    }
+         }
+      }
 
-    // Lọc theo khoảng ngày
-    if (fromDate != null && !fromDate.isEmpty()) {
-        sql.append(" AND o.order_date >= ?");
-        params.add(Date.valueOf(fromDate));
-    }
-    if (toDate != null && !toDate.isEmpty()) {
-        sql.append(" AND o.order_date <= ?");
-        params.add(Date.valueOf(toDate));
-    }
+      // Lọc theo khoảng ngày
+      if (fromDate != null && !fromDate.isEmpty()) {
+         sql.append(" AND o.order_date >= ?");
+         params.add(Date.valueOf(fromDate));
+      }
+      if (toDate != null && !toDate.isEmpty()) {
+         sql.append(" AND o.order_date <= ?");
+         params.add(Date.valueOf(toDate));
+      }
 
-    // Lọc theo saleId (nếu có)
-    if (saleId != null) {
-        sql.append(" AND o.saleid = ?");
-        params.add(saleId);
-    }
+      // Lọc theo saleId (nếu có)
+      if (saleId != null) {
+         sql.append(" AND o.saleid = ?");
+         params.add(saleId);
+      }
 
-    // Lọc theo status (nếu có)
-    if (status != null) {
-        sql.append(" AND o.status = ?");
-        params.add(status);
-    }
+      // Lọc theo status (nếu có)
+      if (status != null) {
+         sql.append(" AND o.status = ?");
+         params.add(status);
+      }
 
-    // Sắp xếp kết quả
-    if (sortBy != null) {
-        switch (sortBy) {
+      // Sắp xếp kết quả
+      if (sortBy != null) {
+         switch (sortBy) {
             case "order_date":
-                sql.append(" ORDER BY o.order_date DESC");
-                break;
+               sql.append(" ORDER BY o.order_date DESC");
+               break;
             case "customer_id":
-                sql.append(" ORDER BY o.user_id");
-                break;
+               sql.append(" ORDER BY o.user_id");
+               break;
             case "total_cost":
-                sql.append(" ORDER BY o.total DESC");
-                break;
+               sql.append(" ORDER BY o.total DESC");
+               break;
             case "status":
-                sql.append(" ORDER BY o.status");
-                break;
+               sql.append(" ORDER BY o.status");
+               break;
             default:
-                sql.append(" ORDER BY o.order_date DESC"); // Sắp xếp mặc định
-        }
-    } else {
-        sql.append(" ORDER BY o.order_date DESC"); // Sắp xếp mặc định nếu sortBy = null
-    }
+               sql.append(" ORDER BY o.order_date DESC"); // Sắp xếp mặc định
+         }
+      } else {
+         sql.append(" ORDER BY o.order_date DESC"); // Sắp xếp mặc định nếu sortBy = null
+      }
 
-    ArrayList<Order> orders = new ArrayList<>();
+      ArrayList<Order> orders = new ArrayList<>();
 
-    try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
-        // Gán tham số vào PreparedStatement
-        for (int i = 0; i < params.size(); i++) {
+      try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+         // Gán tham số vào PreparedStatement
+         for (int i = 0; i < params.size(); i++) {
             ps.setObject(i + 1, params.get(i));
-        }
+         }
 
-        try (ResultSet rs = ps.executeQuery()) {
+         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Order order = new Order();
-                order.setId(rs.getInt("id"));
-                order.setuId(rs.getInt("user_id"));
-                order.setDate(rs.getDate("order_date"));
-                order.setTotalMoney(rs.getDouble("total"));
-                order.setStatus(rs.getInt("status"));
-                order.setDiscount(rs.getDouble("discount"));
-                order.setAddress(rs.getString("address"));
-                order.setPhone(rs.getString("phone"));
-                order.setEmail(rs.getString("email"));
-                order.setNote(rs.getString("notes"));
-                order.setGender(rs.getString("gender"));
-                order.setSaleId(rs.getInt("saleid"));
-                order.setSettingId(rs.getInt("settings_id"));
-                
-                // Gán thêm username và salename
-                order.setUserName(rs.getString("username"));
-                order.setSaleName(rs.getString("salename"));
+               Order order = new Order();
+               order.setId(rs.getInt("id"));
+               order.setuId(rs.getInt("user_id"));
+               order.setDate(rs.getDate("order_date"));
+               order.setTotalMoney(rs.getDouble("total"));
+               order.setStatus(rs.getInt("status"));
+               order.setDiscount(rs.getDouble("discount"));
+               order.setAddress(rs.getString("address"));
+               order.setPhone(rs.getString("phone"));
+               order.setEmail(rs.getString("email"));
+               order.setNote(rs.getString("notes"));
+               order.setGender(rs.getString("gender"));
+               order.setSaleId(rs.getInt("saleid"));
+               order.setSettingId(rs.getInt("settings_id"));
 
-                orders.add(order);
+               // Gán thêm username và salename
+               order.setUserName(rs.getString("username"));
+               order.setSaleName(rs.getString("salename"));
+
+               orders.add(order);
             }
-        }
-    } catch (SQLException ex) {
-        Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
-    }
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
 
-    return orders;
-}
+      return orders;
+   }
 
+   public boolean updateOrderStatusAndNote(int orderId, int status, String note) {
+      String sql = "UPDATE orders SET status = ?, notes = ? WHERE id = ?";
 
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, status);
+         ps.setString(2, note);
+         ps.setInt(3, orderId);
+
+         int rowsAffected = ps.executeUpdate();
+         return rowsAffected > 0;
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+         return false;
+      }
+   }
+
+   public ArrayList<Order> getFilteredOrdersWithPagination(String searchType, String searchValue, String sortBy,
+           String fromDate, String toDate, Integer saleId, Integer status, int offset, int limit) {
+      StringBuilder sql = new StringBuilder("SELECT o.id, o.user_id, u.full_name AS username, o.order_date, "
+              + "o.total, o.status, o.discount, o.address, o.phone, o.email, o.notes, o.gender, "
+              + "o.saleid, s.full_name AS salename, o.settings_id "
+              + "FROM orders o "
+              + "JOIN user u ON o.user_id = u.id "
+              + "LEFT JOIN user s ON o.saleid = s.id "
+              + "WHERE 1=1");
+
+      // Danh sách tham số
+      List<Object> params = new ArrayList<>();
+
+      // Lọc theo searchType
+      if (searchType != null && searchValue != null && !searchValue.isEmpty()) {
+         if (searchType.equals("order_id")) {
+            sql.append(" AND o.id = ?");
+            params.add(Integer.parseInt(searchValue));
+         } else if (searchType.equals("user_id")) {
+            sql.append(" AND o.user_id = ?");
+            params.add(Integer.parseInt(searchValue));
+         }
+      }
+
+      // Lọc theo khoảng ngày
+      if (fromDate != null && !fromDate.isEmpty()) {
+         sql.append(" AND o.order_date >= ?");
+         params.add(Date.valueOf(fromDate));
+      }
+      if (toDate != null && !toDate.isEmpty()) {
+         sql.append(" AND o.order_date <= ?");
+         params.add(Date.valueOf(toDate));
+      }
+
+      // Lọc theo saleId (nếu có)
+      if (saleId != null) {
+         sql.append(" AND o.saleid = ?");
+         params.add(saleId);
+      }
+
+      // Lọc theo status (nếu có)
+      if (status != null) {
+         sql.append(" AND o.status = ?");
+         params.add(status);
+      }
+
+      // Sắp xếp kết quả
+      if (sortBy != null) {
+         switch (sortBy) {
+            case "order_date":
+               sql.append(" ORDER BY o.order_date DESC");
+               break;
+            case "customer_id":
+               sql.append(" ORDER BY o.user_id");
+               break;
+            case "total_cost":
+               sql.append(" ORDER BY o.total DESC");
+               break;
+            case "status":
+               sql.append(" ORDER BY o.status");
+               break;
+            default:
+               sql.append(" ORDER BY o.order_date DESC"); // Sắp xếp mặc định
+         }
+      } else {
+         sql.append(" ORDER BY o.order_date DESC"); // Sắp xếp mặc định nếu sortBy = null
+      }
+
+      // Thêm phân trang
+      sql.append(" LIMIT ? OFFSET ?");
+      params.add(limit);
+      params.add(offset);
+
+      ArrayList<Order> orders = new ArrayList<>();
+
+      try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+         // Gán tham số vào PreparedStatement
+         for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+         }
+
+         try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+               Order order = new Order();
+               order.setId(rs.getInt("id"));
+               order.setuId(rs.getInt("user_id"));
+               order.setDate(rs.getDate("order_date"));
+               order.setTotalMoney(rs.getDouble("total"));
+               order.setStatus(rs.getInt("status"));
+               order.setDiscount(rs.getDouble("discount"));
+               order.setAddress(rs.getString("address"));
+               order.setPhone(rs.getString("phone"));
+               order.setEmail(rs.getString("email"));
+               order.setNote(rs.getString("notes"));
+               order.setGender(rs.getString("gender"));
+               order.setSaleId(rs.getInt("saleid"));
+               order.setSettingId(rs.getInt("settings_id"));
+
+               // Gán thêm username và salename
+               order.setUserName(rs.getString("username"));
+               order.setSaleName(rs.getString("salename"));
+
+               orders.add(order);
+            }
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      return orders;
+   }
+
+   public int getTotalFilteredOrdersCount(String searchType, String searchValue,
+           String fromDate, String toDate, Integer saleId, Integer status) {
+      StringBuilder sql = new StringBuilder("SELECT COUNT(*) AS total "
+              + "FROM orders o "
+              + "JOIN user u ON o.user_id = u.id "
+              + "LEFT JOIN user s ON o.saleid = s.id "
+              + "WHERE 1=1");
+
+      // Danh sách tham số
+      List<Object> params = new ArrayList<>();
+
+      // Lọc theo searchType
+      if (searchType != null && searchValue != null && !searchValue.isEmpty()) {
+         if (searchType.equals("order_id")) {
+            sql.append(" AND o.id = ?");
+            params.add(Integer.parseInt(searchValue));
+         } else if (searchType.equals("user_id")) {
+            sql.append(" AND o.user_id = ?");
+            params.add(Integer.parseInt(searchValue));
+         }
+      }
+
+      // Lọc theo khoảng ngày
+      if (fromDate != null && !fromDate.isEmpty()) {
+         sql.append(" AND o.order_date >= ?");
+         params.add(Date.valueOf(fromDate));
+      }
+      if (toDate != null && !toDate.isEmpty()) {
+         sql.append(" AND o.order_date <= ?");
+         params.add(Date.valueOf(toDate));
+      }
+
+      // Lọc theo saleId (nếu có)
+      if (saleId != null) {
+         sql.append(" AND o.saleid = ?");
+         params.add(saleId);
+      }
+
+      // Lọc theo status (nếu có)
+      if (status != null) {
+         sql.append(" AND o.status = ?");
+         params.add(status);
+      }
+
+      int total = 0;
+
+      try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+         // Gán tham số vào PreparedStatement
+         for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+         }
+
+         try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+               total = rs.getInt("total");
+            }
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      return total;
+   }
+
+   public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
+      List<OrderDetail> details = new ArrayList<>();
+      // Changed Orders_ID to match your actual column name
+      String sql = "SELECT * FROM orderdetails WHERE Orders_ID = ?";
+
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, orderId);
+         ResultSet rs = ps.executeQuery();
+
+         while (rs.next()) {
+            OrderDetail detail = new OrderDetail();
+            detail.setProductId(rs.getInt("Product_ID"));
+            detail.setOrderId(rs.getInt("Orders_ID"));  // Changed to match your column
+            detail.setQuantity(rs.getInt("quantity"));
+            detail.setPrice(rs.getDouble("price"));
+            details.add(detail);
+
+            // Debug logging
+            System.out.println("Found order detail: "
+                    + "ProductID=" + detail.getProductId()
+                    + ", OrderID=" + detail.getOrderId()
+                    + ", Qty=" + detail.getQuantity());
+         }
+      } catch (SQLException ex) {
+         System.out.println("Error in getOrderDetailsByOrderId: " + ex.getMessage());
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      System.out.println("Total details found: " + details.size());
+      return details;
+   }
+
+   public Product getProductById(int productId) {
+      String sql = "SELECT * FROM product WHERE ID = ?";
+
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, productId);
+         ResultSet rs = ps.executeQuery();
+
+         if (rs.next()) {
+            Product product = new Product();
+            product.setID(rs.getInt("ID"));
+            product.setName(rs.getString("name"));
+            product.setOriginalPrice(rs.getDouble("originalPrice"));
+            product.setSalePrice(rs.getDouble("salePrice"));
+            product.setDetails(rs.getString("details"));
+            product.setImage(rs.getString("image"));
+            product.setStock(rs.getInt("stock"));
+            product.setProductCategory_ID(rs.getInt("ProductCategory_ID"));
+            product.setUpdatedDate(rs.getDate("updatedDate"));
+            product.setStatus(rs.getInt("status"));
+            product.setBrandId(rs.getInt("brandID"));
+            product.setCost_price(rs.getDouble("cost_price"));
+            product.setSettings_id(rs.getInt("settings_id"));
+
+            System.out.println("Found product: " + product.getID() + " - " + product.getName());
+            return product;
+         }
+      } catch (SQLException ex) {
+         System.out.println("Error in getProductById: " + ex.getMessage());
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      System.out.println("No product found for ID: " + productId);
+      return null;
+   }
+
+   public String getCategoryNameById(int categoryId) {
+      String sql = "SELECT categoryName FROM productcategory WHERE ID = ?";  // Changed table and column names
+
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, categoryId);
+         ResultSet rs = ps.executeQuery();
+
+         if (rs.next()) {
+            return rs.getString("categoryName");  // Changed column name
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return "Uncategorized";
+   }
+
+   public boolean assignOrderToSale(int orderId, int saleId) {
+      String sql = "UPDATE orders SET saleID = ? WHERE id = ?";
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, saleId);
+         ps.setInt(2, orderId);
+         int rowsAffected = ps.executeUpdate();
+         return rowsAffected > 0;
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+      } finally {
+         // Close resources
+         try {
+            if (connection != null) {
+               connection.close();
+            }
+         } catch (SQLException e) {
+            e.printStackTrace();
+         }
+      }
+   }
+   
+      public static void main(String[] args) {
+      // Tạo đối tượng DAO để truy vấn dữ liệu
+      OrderDAO userDAO = new OrderDAO();
+//
+//      // ID của khách hàng cần tìm (thay đổi tùy vào dữ liệu có trong DB)
+//      int customerId = 1;
+//
+//      // Gọi phương thức để tìm khách hàng
+//      User user = userDAO.getCustomerById(customerId);
+//
+//      // Kiểm tra kết quả và hiển thị
+//      if (user != null) {
+//         System.out.println("User found:");
+//         System.out.println("ID: " + user.getId());
+//         System.out.println("Email: " + user.getEmail());
+//         System.out.println("Full Name: " + user.getFull_name());
+//         System.out.println("Phone: " + user.getPhone());
+//         System.out.println("Gender: " + user.getGender());
+//         System.out.println("Registration Date: " + user.getRegistration_date());
+//         System.out.println("Status: " + user.getStatus());
+//         System.out.println("Updated By: " + user.getUpdatedBy());
+//         System.out.println("Updated Date: " + user.getUpdatedDate());
+//         System.out.println("Image: " + user.getImage());
+//         System.out.println("Settings ID: " + user.getSettings_id());
+//      } else {
+//         System.out.println("User not found with ID: " + customerId);
+//      }
+
+    
+          System.out.println(userDAO.assignOrderToSale(1, 22));
+   }
+   
 }

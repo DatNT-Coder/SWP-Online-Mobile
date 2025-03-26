@@ -20,6 +20,10 @@
         <servlet-name>ListOrderSale</servlet-name>
         <servlet-class>controller.order.ListOrderSale</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaleManageDetail</servlet-name>
+        <servlet-class>controller.order.SaleManageDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RejectServlet</servlet-name>
         <url-pattern>/reject</url-pattern>
@@ -42,7 +46,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListOrderSale</servlet-name>
-        <url-pattern>/sale/listOrderSale</url-pattern>
+        <url-pattern>/sale/ListOrderSale</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleManageDetail</servlet-name>
+        <url-pattern>/salemanage/smdetail</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>HomePage</welcome-file>
