@@ -8,101 +8,120 @@
       <title>Edit Product - Product Management</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-   </head>
-   <style>
-      body {
-         background-color: #f8f9fa;
-         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-
-      .sidebar {
-         min-height: 100vh;
-         position: sticky;
-         top: 0;
-      }
-
-      .main-content {
-         padding: 0;
-      }
-
-      .card {
-         border-radius: 8px;
-         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-         border: none;
-      }
-
-      .table th {
-         font-weight: 600;
-         color: #495057;
-      }
-
-      .sortable {
-         cursor: pointer;
-      }
-
-      .sortable i {
-         font-size: 0.8rem;
-         margin-left: 5px;
-      }
-
-      .product-thumbnail {
-         width: 50px;
-         height: 50px;
-         object-fit: cover;
-         border-radius: 4px;
-      }
-
-      .badge-featured {
-         background-color: #ffc107;
-         color: #212529;
-      }
-
-      .badge-active {
-         background-color: #28a745;
-      }
-
-      .badge-inactive {
-         background-color: #dc3545;
-      }
-
-      .action-btn {
-         padding: 0.25rem 0.5rem;
-         font-size: 0.875rem;
-      }
-
-      .action-btn + .action-btn {
-         margin-left: 5px;
-      }
-
-      .pagination {
-         margin-top: 20px;
-         margin-bottom: 0;
-      }
-
-      @media (max-width: 992px) {
-         .sidebar {
-            min-height: auto;
-            position: static;
+      <style>
+         :root {
+            --teal-light: #e0f2f1;
+            --teal-main: #26a69a;
+            --teal-dark: #00897b;
+            --teal-accent: #80cbc4;
+            --teal-card: #f0f9f8;
          }
-      }
 
+         body {
+            background-color: #f5f5f5;
+         }
 
-   </style>
+         .main-content {
+            background-color: white;
+            min-height: 100vh;
+         }
+
+         .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            background-color: var(--teal-card);
+         }
+
+         .card-header {
+            background-color: var(--teal-main);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 15px 20px;
+         }
+
+         .btn-primary {
+            background-color: var(--teal-main);
+            border-color: var(--teal-main);
+         }
+
+         .btn-primary:hover {
+            background-color: var(--teal-dark);
+            border-color: var(--teal-dark);
+         }
+
+         .btn-outline-secondary {
+            color: var(--teal-main);
+            border-color: var(--teal-main);
+         }
+
+         .btn-outline-secondary:hover {
+            background-color: var(--teal-light);
+            color: var(--teal-dark);
+         }
+
+         .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+         }
+
+         .breadcrumb-item.active {
+            color: var(--teal-dark);
+            font-weight: 500;
+         }
+
+         a {
+            color: var(--teal-main);
+         }
+
+         a:hover {
+            color: var(--teal-dark);
+         }
+
+         .form-control, .form-select {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+         }
+
+         .form-control:focus, .form-select:focus {
+            border-color: var(--teal-accent);
+            box-shadow: 0 0 0 0.25rem rgba(38, 166, 154, 0.25);
+         }
+
+         .input-group-text {
+            background-color: var(--teal-light);
+            color: var(--teal-dark);
+            border-color: #ced4da;
+         }
+
+         h2, h5.card-title {
+            color: var(--teal-dark);
+         }
+
+         .nav-tabs .nav-link.active {
+            color: var(--teal-dark);
+            border-bottom: 2px solid var(--teal-main);
+         }
+
+         .img-thumbnail {
+            border: 2px solid var(--teal-accent);
+            background-color: white;
+         }
+      </style>
+   </head>
    <body>
       <div class="container-fluid">
          <div class="row">
-            <!-- Sidebar -->
-
-
             <!-- Main Content -->
             <div class="col-lg-12 main-content">
                <div class="container-fluid py-4">
                   <div class="d-flex justify-content-between align-items-center mb-4">
                      <div>
-                        <h2>Edit Product</h2>
+                        <h2><i class="bi bi-pencil-square me-2"></i>Edit Product</h2>
                         <nav aria-label="breadcrumb">
                            <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a href="product-listAdmin">Products</a></li>
+                              <li class="breadcrumb-item"><a href="product-listAdmin"><i class="bi bi-box-seam me-1"></i>Products</a></li>
                               <li class="breadcrumb-item active" aria-current="page">Edit Product</li>
                            </ol>
                         </nav>
@@ -124,7 +143,7 @@
                            <div class="row">
                               <!-- Left Column - Basic Info -->
                               <div class="col-md-8">
-                                 <h5 class="card-title mb-4">Basic Information</h5>
+                                 <h5 class="card-title mb-4"><i class="bi bi-info-circle me-2"></i>Basic Information</h5>
 
                                  <div class="mb-3">
                                     <label for="productName" class="form-label">Product Name</label>
@@ -155,12 +174,12 @@
                                     </div>
                                  </div>
 
-                                 <h5 class="card-title mb-4 mt-5">Pricing Information</h5>
+                                 <h5 class="card-title mb-4 mt-5"><i class="bi bi-tag me-2"></i>Pricing Information</h5>
 
                                  <div class="row mb-3">
                                     <div class="col-md-4">
                                        <label for="originalPrice" class="form-label">Original Price</label>
-                                       <div  class="input-group">
+                                       <div class="input-group">
                                           <span class="input-group-text">$</span>
                                           <input name="originalPrice" type="number" class="form-control" id="originalPrice" value="${requestScope.product.originalPrice}" step="0.01" required>
                                        </div>
@@ -181,14 +200,13 @@
                                     </div>
                                  </div>
 
-                                 <h5 class="card-title mb-4 mt-5">Inventory</h5>
+                                 <h5 class="card-title mb-4 mt-5"><i class="bi bi-box-seam me-2"></i>Inventory</h5>
 
                                  <div class="row mb-3">
                                     <div class="col-md-6">
                                        <label for="stock" class="form-label">Stock Quantity</label>
-                                       <input name="stock" ${requestScope.product.getStock()} type="number" class="form-control" id="stock" value="50" required>
+                                       <input name="stock" type="number" class="form-control" id="stock" value="${requestScope.product.getStock()}" required>
                                     </div>
-
                                  </div>
                               </div>
 
@@ -196,22 +214,22 @@
                               <div class="col-md-4">
                                  <div class="card mb-4">
                                     <div class="card-header">
-                                       <h5 class="card-title mb-0">Product Image</h5>
+                                       <h5 class="card-title mb-0"><i class="bi bi-image me-2"></i>Product Image</h5>
                                     </div>
                                     <div class="card-body">
                                        <div class="text-center mb-3">
-                                          <img src="images/shop/${requestScope.product.image}" class="img-fluid rounded" style="max-height: 200px;" alt="Product Image">
+                                          <img src="images/shop/${requestScope.product.image}" class="img-thumbnail" style="max-height: 200px;" alt="Product Image">
                                        </div>
                                        <div class="mb-3">
                                           <label for="productImage" class="form-label">Upload New Image</label>
-                                          <input type="file" class="form-control" id="productImage" accept="image/*">
+                                          <input name="productImage" type="file" class="form-control" id="productImage" accept="image/*">
                                        </div>
                                     </div>
                                  </div>
 
                                  <div class="card">
                                     <div class="card-header">
-                                       <h5 class="card-title mb-0">Product Status</h5>
+                                       <h5 class="card-title mb-0"><i class="bi bi-gear me-2"></i>Product Status</h5>
                                     </div>
                                     <div class="card-body">
                                        <div class="mb-3">
@@ -227,7 +245,6 @@
                                                    <option value="0" selected>Inactive</option>
                                                 </c:otherwise>
                                              </c:choose>
-
                                           </select>
                                        </div>
                                        <div class="mb-3">
@@ -254,5 +271,3 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
    </body>
 </html>
-
-

@@ -26,6 +26,26 @@
          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
 
+      .col-md-2 {
+         width: 250px;
+         min-width: 250px;
+         background-color: var(--teal-card);
+         box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+         z-index: 100;
+         height: 100vh;
+         position: sticky;
+         top: 0;
+         overflow-y: auto;
+         border-right: 1px solid var(--teal-light);
+      }
+
+      /* Main content styles */
+      .col-lg-10 .main-content {
+         flex-grow: 1;
+         padding: 20px;
+         background-color: var(--teal-bg);
+      }
+
       .container {
          padding: 20px;
          max-width: 100%;
@@ -195,7 +215,7 @@
       }
 
       .sidebar h2 {
-         color: var(--teal-primary);
+         color: #26A69A;
          font-size: 1.2rem;
          text-transform: uppercase;
          letter-spacing: 1px;
@@ -203,12 +223,16 @@
          margin-bottom: 10px;
          border-bottom: 2px solid var(--teal-lighter);
       }
+
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
          text-align: center;
+         padding-bottom: 10px;
+         border-bottom: 2px solid #80cbc4;
       }
+
       user agent stylesheet
       h2 {
          display: block;

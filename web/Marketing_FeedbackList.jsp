@@ -45,7 +45,7 @@
       }
 
       /* Sidebar styles */
-      .col-md-2.sidebar {
+      .col-md-2 {
          width: 250px;
          min-width: 250px;
          background-color: var(--teal-card);
@@ -59,7 +59,7 @@
       }
 
       /* Main content styles */
-      .col-md-10.main-content {
+      .col-lg-10 .main-content {
          flex-grow: 1;
          padding: 20px;
          background-color: var(--teal-bg);
@@ -287,7 +287,7 @@
       }
 
       .sidebar h2 {
-         color: var(--teal-primary);
+         color: #26A69A;
          font-size: 1.2rem;
          text-transform: uppercase;
          letter-spacing: 1px;
@@ -295,12 +295,16 @@
          margin-bottom: 10px;
          border-bottom: 2px solid var(--teal-lighter);
       }
+
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
          text-align: center;
+         padding-bottom: 10px;
+         border-bottom: 2px solid #80cbc4;
       }
+
       user agent stylesheet
       h2 {
          display: block;
@@ -347,7 +351,7 @@
                </div>
 
                <!-- Main Content (Right Column) -->
-               <div class="col-md-10 main-content" style="padding: 20px;">
+               <div class="col-lg-10 main-content" style="padding: 20px;">
                   <div class="container-fluid py-4">
                      <!-- Your existing content here -->
                      <div class="d-flex justify-content-between align-items-center mb-4">

@@ -7,6 +7,7 @@
       <title>Marketing | MKTDashboard</title>
       <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
       <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
    </head>
    <style>
       :root {
@@ -37,21 +38,34 @@
       }
 
       /* Sidebar styling */
-      .col-md-3 {
+      .col-md-2 {
          width: 250px;
-         background: white;
-         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-         position: fixed;
+         min-width: 250px;
+         background-color: white;
+         box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+         z-index: 100;
          height: 100vh;
-         z-index: 1000;
+         position: sticky;
+         top: 0;
+         overflow-y: auto;
+         border-right: 1px solid var(--teal-light);
       }
 
-      /* Main content area */
-      .col-md-9 {
-         margin-left: 250px;
-         width: calc(100% - 250px);
+      /* Main content styles */
+      .col-lg-10.main-content {
+         flex-grow: 1;
          padding: 20px;
          background-color: var(--teal-bg);
+      }
+      
+      .sidebar h2 {
+         color: #26A69A;
+         font-size: 1.2rem;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+         padding: 0 20px 15px;
+         margin-bottom: 10px;
+         border-bottom: 2px solid var(--teal-lighter);
       }
 
       h2 {
@@ -59,6 +73,8 @@
          margin: 20px 0;
          font-weight: 600;
          text-align: center;
+         padding-bottom: 10px;
+         border-bottom: 2px solid #80cbc4;
       }
 
       /* Statistics Cards */
@@ -298,17 +314,17 @@
       }
       }
    </style>
-   <body class="skin-black">
+   <body>
       <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <div class="wrapper row-offcanvas row-offcanvas-left">
+        <div class="col-md-2"> 
                 <jsp:include page="sidebar.jsp"></jsp:include>
-            </div>
         </div>
-        <div class="col-md-9 main-content">
+        <div class="col-lg-10 main-content">
+           <div class="container-fluid py-4">
+           <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Bảng quản lí marketing</h2>
-            
+            </div>
             <!-- Statistics Cards Grid -->
             <div class="statistics-grid">
                 <div class="sm-st">
@@ -396,8 +412,10 @@
                 </div>
             </div>
         </div>
-    </div>
-      </div>   
+      </div>
+   </div>  
+</div> 
+                            
    </body>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
       <script type="text/javascript">

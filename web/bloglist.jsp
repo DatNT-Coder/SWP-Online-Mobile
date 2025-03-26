@@ -45,7 +45,7 @@
       .col-md-2 {
          width: 250px;
          min-width: 250px;
-         background-color: var(--teal-card);
+         background-color: white;
          box-shadow: 2px 0 5px rgba(0,0,0,0.1);
          z-index: 100;
          height: 100vh;
@@ -118,22 +118,87 @@
       }
 
       /* Form styles */
-      .form-select,
-      .form-control,
-      .search-input {
-         border: 1px solid var(--teal-light);
-         border-radius: 4px;
-         padding: 8px 12px;
-         transition: all 0.3s;
+      .search-filter-section {
          background-color: var(--teal-card);
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+         border: 1px solid var(--teal-accent);
+         margin-bottom: 20px;
       }
 
-      .form-select:focus,
-      .form-control:focus,
-      .search-input:focus {
-         border-color: var(--teal-primary);
-         box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
-         outline: none;
+      .filter-header {
+         display: flex;
+         margin-bottom: 10px;
+      }
+
+      .filter-title, .search-title {
+         color: var(--teal-dark);
+         font-size: 1.1rem;
+         margin: 0 0 10px 0;
+         display: flex;
+         align-items: center;
+      }
+
+      .filter-title {
+         flex: 2;
+      }
+
+      .search-title {
+         flex: 1;
+      }
+
+      .filter-title::before {
+         content: "🗂️";
+         margin-right: 10px;
+      }
+
+      .search-title::before {
+         content: "🔍";
+         margin-right: 10px;
+      }
+
+      .blog-filter-form .filter-search-container {
+         display: flex;
+         gap: 15px;
+      }
+
+      .filter-section {
+         display: flex;
+         gap: 15px;
+         flex: 2;
+      }
+
+      .search-section {
+         flex: 1;
+      }
+
+      .search-input-group {
+         display: flex;
+         gap: 10px;
+      }
+
+      .filter-group {
+         flex: 1;
+      }
+
+      .search-input-group .form-control {
+         flex: 1;
+      }
+
+      @media (max-width: 992px) {
+         .filter-header {
+            flex-direction: column;
+         }
+
+         .blog-filter-form .filter-search-container {
+            flex-direction: column;
+         }
+
+         .filter-section {
+            flex-direction: column;
+            gap: 10px;
+         }
       }
 
       /* Table styles */
@@ -244,7 +309,7 @@
       }
 
       .sidebar h2 {
-         color: var(--teal-primary);
+         color: #26A69A;
          font-size: 1.2rem;
          text-transform: uppercase;
          letter-spacing: 1px;
@@ -252,12 +317,16 @@
          margin-bottom: 10px;
          border-bottom: 2px solid var(--teal-lighter);
       }
+
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
          text-align: center;
+         padding-bottom: 10px;
+         border-bottom: 2px solid #80cbc4;
       }
+
       user agent stylesheet
       h2 {
          display: block;
@@ -314,40 +383,53 @@
                      </div>
 
                      <!-- Search and Filter -->
-                     <div class="card mb-4">
-                        <div class="card-body">
-                           <form class="p d-flex col-md-4" style="width: 100%; float: right !important" action="blog-list?page=${requestScope.page}" method="get">
-                           <button type="button" onclick="window.location.href = '/ProjectSWP391/blog-list'" class="reset-btn">
-                              Xóa lọc & tìm kiếm
-                           </button>            
-                           <div class="col-md-4 d-flex align-items-center">
-                              <select name="category" name="" class="form-select me-2" style="max-width: 150px;">
-                                 <option value="" ${empty requestScope.category ? "selected" : ""}>Tất cả danh mục</option>
-                                 <c:forEach var="category" items="${requestScope.listCategory}">
-                                    <option ${requestScope.category == category.id ? "selected" : ""} value="${category.id}">${category.name}</option>
-                                 </c:forEach>
-                              </select>
-                           </div>
-
-                           <div class="col-md-4">
-                              <select name="status" class="form-select" style="max-width: 150px;">
-                                 <option value="" ${ (requestScope.statusA == "" || empty requestScope.statusA) ? "selected" : ""}>Tất cả trạng thái</option>
-                                 <option value="1" ${ requestScope.statusA == "1" ? "selected" : ""}>Đã đăng</option>
-                                 <option value="0" ${ requestScope.statusA == "0" ? "selected" : ""}>Nháp</option>
-                              </select>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="input-group">
-                                 <input name="search" type="text" class="form-control" placeholder="Tìm kiếm bài viết...">
+                     <div class="search-filter-section">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <form action="blog-list?page=${requestScope.page}" method="get" class="form-group blog-filter-form">
+                              <div class="filter-header">
+                                 <h3 class="filter-title">Lọc bài viết</h3>
+                                 <h3 class="search-title">Tìm kiếm bài viết</h3>
                               </div>
-                           </div>
-                           <div class="col-md-2">
-                              <button type="submit" class="search-button">Search</button>
-                           </div>
 
-                        </form>
+                              <div class="filter-search-container">
+                                 <div class="filter-section">
+                                    <div class="filter-group">
+                                       <select name="category" class="form-control">
+                                          <option value="" ${empty requestScope.category ? "selected" : ""}>Tất cả danh mục</option>
+                                          <c:forEach var="category" items="${requestScope.listCategory}">
+                                             <option ${requestScope.category == category.id ? "selected" : ""} value="${category.id}">${category.name}</option>
+                                          </c:forEach>
+                                       </select>
+                                    </div>
+
+                                    <div class="filter-group">
+                                       <select name="status" class="form-control">
+                                          <option value="" ${ (requestScope.statusA == "" || empty requestScope.statusA) ? "selected" : ""}>Tất cả trạng thái</option>
+                                          <option value="1" ${ requestScope.statusA == "1" ? "selected" : ""}>Đã đăng</option>
+                                          <option value="0" ${ requestScope.statusA == "0" ? "selected" : ""}>Nháp</option>
+                                       </select>
+                                    </div>
+                                 </div>
+
+                                 <div class="search-section">
+                                    <div class="search-input-group">
+                                       <input name="search" type="text" class="form-control" placeholder="Tìm kiếm bài viết...">
+                                       <button type="submit" class="btn btn-primary">
+                                          Tìm kiếm
+                                       </button>
+                                       <button type="button" onclick="window.location.href = '/ProjectSWP391/blog-list'" 
+                                               class="btn btn-secondary">
+                                          Xóa lọc
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
                      </div>
-                  </div>  
+                  </div>
+
 
                   <!-- Posts Table -->
                   <div class="card">
@@ -514,17 +596,17 @@
                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
                <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
                <script>
-                              $(document).ready(function () {
-                                 $('#myTable').DataTable(
+                                          $(document).ready(function () {
+                                             $('#myTable').DataTable(
 //                    {
 //                "paging": false,       
 //                "searching": false,    
 //                "info": false,    
 //                "ordering": true       
 //            }
-                                         );
-                              });
-                          </<script>
-      </body>
-      </html>
+                                                     );
+                          });
+                  </<script>
+            </body>
+   </html>
 

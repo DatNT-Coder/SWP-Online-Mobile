@@ -41,7 +41,7 @@
       .col-md-2 {
          width: 250px;
          min-width: 250px;
-         background-color: var(--teal-card);
+         background-color: white;
          box-shadow: 2px 0 5px rgba(0,0,0,0.1);
          z-index: 100;
          height: 100vh;
@@ -134,22 +134,87 @@
       }
 
       /* Form styles */
-      .form-select,
-      .search-input,
-      .form-control {
-         border: 1px solid var(--teal-light);
-         border-radius: 4px;
-         padding: 8px 12px;
-         transition: all 0.3s;
+      .search-filter-section {
          background-color: var(--teal-card);
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+         border: 1px solid var(--teal-accent);
+         margin-bottom: 20px;
       }
 
-      .form-select:focus,
-      .search-input:focus,
-      .form-control:focus {
-         border-color: var(--teal-primary);
-         box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
-         outline: none;
+      .filter-header {
+         display: flex;
+         margin-bottom: 10px;
+      }
+
+      .filter-title, .search-title {
+         color: var(--teal-dark);
+         font-size: 1.1rem;
+         margin: 0 0 10px 0;
+         display: flex;
+         align-items: center;
+      }
+
+      .filter-title {
+         flex: 2;
+      }
+
+      .search-title {
+         flex: 1;
+      }
+
+      .filter-title::before {
+         content: "🗂️";
+         margin-right: 10px;
+      }
+
+      .search-title::before {
+         content: "🔍";
+         margin-right: 10px;
+      }
+
+      .product-filter-form .filter-search-container {
+         display: flex;
+         gap: 20px;
+      }
+
+      .filter-section {
+         display: flex;
+         gap: 15px;
+         flex: 2;
+      }
+
+      .search-section {
+         flex: 1;
+      }
+
+      .search-input-group {
+         display: flex;
+         gap: 10px;
+      }
+
+      .filter-group {
+         flex: 1;
+      }
+
+      .search-input-group .form-control {
+         flex: 1;
+      }
+
+      @media (max-width: 992px) {
+         .filter-header {
+            flex-direction: column;
+         }
+
+         .product-filter-form .filter-search-container {
+            flex-direction: column;
+         }
+
+         .filter-section {
+            flex-direction: column;
+            gap: 10px;
+         }
       }
 
       /* Table styles */
@@ -333,7 +398,7 @@
       }
 
       .sidebar h2 {
-         color: var(--teal-primary);
+         color: #26A69A;
          font-size: 1.2rem;
          text-transform: uppercase;
          letter-spacing: 1px;
@@ -341,12 +406,16 @@
          margin-bottom: 10px;
          border-bottom: 2px solid var(--teal-lighter);
       }
+
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
          text-align: center;
+         padding-bottom: 10px;
+         border-bottom: 2px solid #80cbc4;
       }
+
       user agent stylesheet
       h2 {
          display: block;
@@ -412,38 +481,52 @@
                      </div>
 
                      <!-- Filters and Search -->
-                     <div class="card mb-4">
-                        <div class="card-body">
-                           <form class="p d-flex col-md-4" style="width: 100%; float: right !important" action="product-listAdmin?page=${requestScope.page}" method="get">
-                           <button type="button" onclick="window.location.href = '/ProjectSWP391/product-listAdmin'" class="reset-btn">
-                              Xóa lọc & tìm kiếm
-                           </button>
-                           <div class="col-md-4 d-flex align-items-center">
-                              <select class="form-select custom-select" id="categoryFilter" name="category">
-                                 <option value="">All Categories</option>
-                                 <c:forEach var="category" items="${requestScope.listCategory}">
-                                    <option value="${category.id}">${category.categoryName}</option>
-                                 </c:forEach>
-                              </select>
-                           </div>
+                     <div class="search-filter-section">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <form action="product-listAdmin?page=${requestScope.page}" method="get" class="form-group product-filter-form">
+                              <div class="filter-header">
+                                 <h3 class="filter-title">Lọc sản phẩm</h3>
+                                 <h3 class="search-title">Tìm kiếm sản phẩm</h3>
+                              </div>
 
-                           <div class="col-md-4">
-                              <select class="form-select custom-select" id="statusFilter" name="brand">
-                                 <option value="">Brand</option>
-                                 <c:forEach var="brand" items="${requestScope.brandList}">
-                                    <option value="${brand.brandID}">${brand.brandName}</option>
-                                 </c:forEach>
-                              </select>
-                           </div>
-                           <div class="col-md-4">
-                              <input name="search" type="text" class="search-input" id="searchInput" placeholder="Search by title" value="${param.search}">
-                           </div>
-                           <div class="col-md-2">
-                              <button type="submit" class="search-button">
-                                 Search
-                              </button>
-                           </div>
-                        </form>
+                              <div class="filter-search-container">
+                                 <div class="filter-section">
+                                    <div class="filter-group">
+                                       <select class="form-control" id="categoryFilter" name="category">
+                                          <option value="">Tất cả danh mục</option>
+                                          <c:forEach var="category" items="${requestScope.listCategory}">
+                                             <option value="${category.id}">${category.categoryName}</option>
+                                          </c:forEach>
+                                       </select>
+                                    </div>
+
+                                    <div class="filter-group">
+                                       <select class="form-control" id="statusFilter" name="brand">
+                                          <option value="">Thương hiệu</option>
+                                          <c:forEach var="brand" items="${requestScope.brandList}">
+                                             <option value="${brand.brandID}">${brand.brandName}</option>
+                                          </c:forEach>
+                                       </select>
+                                    </div>
+                                 </div>
+
+                                 <div class="search-section">
+                                    <div class="search-input-group">
+                                       <input name="search" type="text" class="form-control" id="searchInput" 
+                                              placeholder="Tìm theo tên" value="${param.search}">
+                                       <button type="submit" class="btn btn-primary">
+                                          Tìm kiếm
+                                       </button>
+                                       <button type="button" onclick="window.location.href = '/ProjectSWP391/product-listAdmin'" 
+                                               class="btn btn-secondary">
+                                          Xóa lọc
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
                      </div>
                   </div>
 

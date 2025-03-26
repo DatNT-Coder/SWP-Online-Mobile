@@ -28,7 +28,7 @@
          color: var(--teal-text);
          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
-      
+
       .container-fluid {
          padding-left: 0;
          padding-right: 0;
@@ -44,7 +44,7 @@
       .col-md-2 {
          width: 250px;
          min-width: 250px;
-         background-color: var(--teal-card);
+         background-color: white;
          box-shadow: 2px 0 5px rgba(0,0,0,0.1);
          z-index: 100;
          height: 100vh;
@@ -107,21 +107,50 @@
          margin-right: 10px;
       }
 
-      /* Form styles */
-      .form-select,
-      .search-input {
-         border: 1px solid var(--teal-light);
-         border-radius: 4px;
-         padding: 8px 12px;
-         transition: all 0.3s;
+      .search-filter-section {
          background-color: var(--teal-card);
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+         border: 1px solid var(--teal-accent);
+         margin-bottom: 20px;
       }
 
-      .form-select:focus,
-      .search-input:focus {
-         border-color: var(--teal-primary);
-         box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
-         outline: none;
+      .filter-search-container {
+         display: flex;
+         gap: 20px;
+         align-items: flex-end;
+      }
+
+      .filter-section, .search-section {
+         flex: 1;
+      }
+
+      .search-filter-section h3 {
+         color: var(--teal-dark);
+         font-size: 1.1rem;
+         margin-bottom: 10px;
+         display: flex;
+         align-items: center;
+      }
+
+      .filter-section h3::before {
+         content: "🗂️";
+         margin-right: 10px;
+      }
+
+      .search-section h3::before {
+         content: "🔍";
+         margin-right: 10px;
+      }
+
+      .search-input-group {
+         display: flex;
+         gap: 10px;
+      }
+
+      .search-input-group .form-control {
+         flex: 1;
       }
 
       /* Table styles */
@@ -268,7 +297,7 @@
       }
 
       .sidebar h2 {
-         color: var(--teal-primary);
+         color: #26A69A;
          font-size: 1.2rem;
          text-transform: uppercase;
          letter-spacing: 1px;
@@ -276,12 +305,16 @@
          margin-bottom: 10px;
          border-bottom: 2px solid var(--teal-lighter);
       }
+
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
          text-align: center;
+         padding-bottom: 10px;
+         border-bottom: 2px solid #80cbc4;
       }
+
       user agent stylesheet
       h2 {
          display: block;
@@ -344,27 +377,33 @@
                         </div>
                      </div>
                      <!-- Filters and Search -->
-                     <div class="card mb-4">
-                        <div class="card-body">
-                           <div class="row g-3">
-                              <form action="search-slider" method="get" class="d-flex col-md-4" style="width: 100%; float: right !important">
-                                 <button type="button" onclick="window.location.href = '/ProjectSWP391/slider-list'" class="reset-btn">
-                                    Reset Filter and Search
-                                 </button>
-                                 <div class="col-md-4">
-                                    <select class="form-select input-group-outline" name="status" onchange="this.form.submit()">
-                                       <option value="1" <%= (request.getAttribute("status") != null && (int) request.getAttribute("status") == 1) ? "selected" : "" %>>Active</option>
-                                    <option value="0" <%= (request.getAttribute("status") != null && (int) request.getAttribute("status") == 0) ? "selected" : "" %>>Inactive</option>
-                                 </select>
-                              </div>
-                              <div class="d-flex col-md-4">
-                                 <input type="text" name="keyword" placeholder="Search by title..." 
-                                        value="<c:out value='${param.keyword}'/>" class="search-input">
-                                 <button type="submit" class="search-button">Search</button>
+                     <div class="search-filter-section">
+                        <div class="row">
+                           <div class="col-md-8">
+                              <form action="search-slider" method="get" class="form-group">
+                                 <div class="filter-search-container">
+                                    <div class="filter-section">
+                                       <h3>Filter Sliders:</h3>
+                                       <select class="form-control" name="status" onchange="this.form.submit()">
+                                          <option value="1" <%= (request.getAttribute("status") != null && (int) request.getAttribute("status") == 1) ? "selected" : "" %>>Active</option>
+                                       <option value="0" <%= (request.getAttribute("status") != null && (int) request.getAttribute("status") == 0) ? "selected" : "" %>>Inactive</option>
+                                    </select>
+                                 </div>
+                                 <div class="search-section">
+                                    <h3>Search Sliders:</h3>
+                                    <div class="search-input-group">
+                                       <input type="text" name="keyword" placeholder="Search by title..." 
+                                              value="<c:out value='${param.keyword}'/>" class="form-control">
+                                       <button type="submit" class="btn btn-primary">Search</button>
+                                       <button type="button" onclick="window.location.href = '/ProjectSWP391/slider-list'" class="btn btn-secondary">
+                                          Reset
+                                       </button>
+                                    </div>
+                                 </div>
                               </div>
                            </form>
                         </div>
-                     </div>  
+                     </div>
                   </div>
 
 
@@ -454,16 +493,16 @@
       <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
       <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
       <script>
-                                       $('#sliderTable').DataTable({
-                                          "paging": false,
-                                          "searching": true,
-                                          "ordering": true,
-                                          "info": false,
-                                          "columnDefs": [
-                                             {"orderable": false, "targets": [1, 5]}
-                                          ],
-                                          "dom": 't' // This removes DataTables' default styling (search bar, pagination, etc.)
-                                       });
+                        $('#sliderTable').DataTable({
+                           "paging": false,
+                           "searching": true,
+                           "ordering": true,
+                           "info": false,
+                           "columnDefs": [
+                              {"orderable": false, "targets": [1, 5]}
+                           ],
+                           "dom": 't' // This removes DataTables' default styling (search bar, pagination, etc.)
+                        });
       </script>
 
    </body>
