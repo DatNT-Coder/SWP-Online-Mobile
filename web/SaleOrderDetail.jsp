@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : SaleOrderDetail
     Created on : Mar 25, 2025, 6:33:45 PM
     Author     : naokh
@@ -6,8 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Order" %>
+<%@page import="java.util.List"%>
+<%@page import="model.OrderDetail"%>
+<%@page import="model.Product"%>
+<%@page import="dao.OrderDAO"%>
+<%@page import="model.User"%>
+<%@page import="java.util.ArrayList"%>
 <%
     Order order = (Order) request.getAttribute("order");
+    List<User> salesList = (ArrayList<User>) request.getAttribute("salesList");
 %>
 
 <!DOCTYPE html>
@@ -124,6 +131,14 @@
             border-radius: 6px;
          }
 
+         .assign-form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff8e1;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+         }
+
          select, textarea {
             padding: 8px 12px;
             border: 1px solid #ccc;
@@ -153,6 +168,15 @@
             cursor: pointer;
             font-weight: 500;
             transition: background-color 0.3s;
+         }
+
+         .assign-button {
+            background-color: #ffc107;
+            color: #333;
+         }
+
+         .assign-button:hover {
+            background-color: #ffab00;
          }
 
          button:hover {
@@ -192,6 +216,14 @@
       </style>
    </head>
    <body>
+      <%
+    System.out.println("Order object exists: " + (order != null));
+    if (order != null) {
+        System.out.println("Order ID: " + order.getId());
+    }
+    System.out.println("OrderDetails attribute exists: " + 
+        (request.getAttribute("orderDetails") != null));
+      %>
       <div class="container">
          <a href="${pageContext.request.contextPath}/sale/ListOrderSale" class="back-button">
             ← Back to Order List
@@ -280,15 +312,38 @@
                   </tr>
                </thead>
                <tbody>
-                  <!-- Placeholder row - replace with dynamic data -->
+                  <%
+                      List<OrderDetail> orderDetails = (List<OrderDetail>) request.getAttribute("orderDetails");
+                      if (orderDetails == null || orderDetails.isEmpty()) {
+                  %>
                   <tr>
-                     <td><img src="${pageContext.request.contextPath}/images/placeholder-product.jpg" alt="Product" class="thumbnail"></td>
-                     <td>Sample Product</td>
-                     <td>Sample Category</td>
-                     <td>$19.99</td>
-                     <td>2</td>
-                     <td>$39.98</td>
+                     <td colspan="6" style="text-align: center; color: red;">
+                        No products found for this order
+                     </td>
                   </tr>
+                  <%
+                      } else {
+                          OrderDAO orderDAO = new OrderDAO();
+                          for (OrderDetail detail : orderDetails) {
+                              Product product = orderDAO.getProductById(detail.getProductId());
+                              if (product == null) continue;
+                              double totalPrice = detail.getPrice() * detail.getQuantity();
+                  %>
+                  <tr>
+                     <td>
+                        <img src="${pageContext.request.contextPath}/images/products/<%= product.getImage() != null ? product.getImage() : "placeholder-product.jpg" %>" 
+                             alt="<%= product.getName() %>" class="thumbnail">
+                     </td>
+                     <td><%= product.getName() %></td>
+                     <td><%= orderDAO.getCategoryNameById(product.getProductCategory_ID()) %></td>
+                     <td>$<%= String.format("%.2f", detail.getPrice()) %></td>
+                     <td><%= detail.getQuantity() %></td>
+                     <td>$<%= String.format("%.2f", totalPrice) %></td>
+                  </tr>
+                  <%
+                          }
+                      }
+                  %>
                </tbody>
             </table>
          </div>
@@ -311,6 +366,27 @@
          <% } else { %>
          <p style="color: #dc3545; padding: 20px; background-color: #f8d7da; border-radius: 4px;">Order not found.</p>
          <% } %>
+
+         <!-- Assign Order Form -->
+         <form class="assign-form" action="AssignOrderController" method="POST">
+            <input type="hidden" name="orderId" value="<%= order.getId() %>">
+
+            <label for="saleId">Assign To:</label>
+            <select name="saleId" id="saleId" required>
+               <option value="">-- Select Salesperson --</option>
+               <% if (salesList != null && !salesList.isEmpty()) {
+            for (User sale : salesList) { %>
+               <option value="<%= sale.getId() %>" <%= order.getSaleId() == sale.getId() ? "selected" : "" %>>
+                  <%= sale.getFull_name() %> (<%= sale.getEmail() %>)
+               </option>
+               <% }
+        } else { %>
+               <option value="">No salespersons available</option>
+               <% } %>
+            </select>
+
+            <button type="submit" class="assign-button">Assign</button>
+         </form>
       </div>
    </body>
 </html>

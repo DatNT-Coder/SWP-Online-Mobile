@@ -3,14 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/User.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_orderList.jsp</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/listOrderSale.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/SaleOrderDetailController.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/SaleOrderDetail.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/ListOrderSale.java</file>
             <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/OrderDAO.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/cart/CartCheckoutController.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/model/Order.java</file>
-            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/web/Sale_sidebar.jsp</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/dao/UserDAO.java</file>
+            <file>file:/C:/Users/naokh/Documents/GitHub/swp391-group3/src/java/controller/order/AssignOrderController.java</file>
         </group>
     </open-files>
 </project-private>

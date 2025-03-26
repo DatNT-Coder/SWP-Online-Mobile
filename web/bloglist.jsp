@@ -10,8 +10,8 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
-<!--      <link rel="stylesheet" href="css/styles.css">
-      <link rel="stylesheet" href="css/datatable.css">-->
+      <!--      <link rel="stylesheet" href="css/styles.css">
+            <link rel="stylesheet" href="css/datatable.css">-->
    </head>
    <style>
       :root {
@@ -21,220 +21,251 @@
          --teal-bg: #e0f2f1;
          --teal-text: #004d40;
          --teal-card: #ffffff;
+         --teal-accent: #b2dfdb;
       }
 
       body {
-         background-color: #f5f7fa;
+         background-color: var(--teal-bg);
          color: var(--teal-text);
          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
 
-      .main-content {
-         padding: 20px;
-         background-color: #f5f7fa;
+      .container-fluid {
+         padding-left: 0;
+         padding-right: 0;
       }
 
+      .row {
+         display: flex;
+         margin-left: 0;
+         margin-right: 0;
+      }
+
+      /* Sidebar styles */
+      .col-md-2 {
+         width: 250px;
+         min-width: 250px;
+         background-color: var(--teal-card);
+         box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+         z-index: 100;
+         height: 100vh;
+         position: sticky;
+         top: 0;
+         overflow-y: auto;
+         border-right: 1px solid var(--teal-light);
+      }
+
+      /* Main content styles */
+      .col-lg-10.main-content {
+         flex-grow: 1;
+         padding: 20px;
+         background-color: var(--teal-bg);
+      }
+
+      /* Header styles */
       h2 {
          color: var(--teal-dark);
          font-weight: 600;
-         margin: 0;
+         margin: 20px 0;
+         padding-bottom: 10px;
+         border-bottom: 2px solid var(--teal-light);
       }
 
-      /* Buttons */
-      .add-slider-btn {
-         background-color: var(--teal-primary);
-         color: white;
-         border: none;
-         padding: 10px 20px;
-         border-radius: 4px;
-         font-weight: 500;
-         cursor: pointer;
-         transition: all 0.3s ease;
-         display: flex;
-         align-items: center;
-      }
-
-      .add-slider-btn:hover {
-         background-color: var(--teal-dark);
-         transform: translateY(-2px);
-         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .search-button {
+      /* Button styles */
+      .add-slider-btn,
+      .reset-btn,
+      .search-button,
+      .btn-primary,
+      .btn-secondary {
          background-color: var(--teal-primary);
          color: white;
          border: none;
          padding: 8px 16px;
-         border-radius: 0 4px 4px 0;
-         cursor: pointer;
-         transition: background-color 0.3s;
-      }
-
-      .search-button:hover {
-         background-color: var(--teal-dark);
-      }
-
-      .reset-btn {
-         background-color: #f5f5f5;
-         color: var(--teal-text);
-         border: 1px solid #ddd;
-         padding: 8px 16px;
          border-radius: 4px;
-         margin-right: 10px;
-         cursor: pointer;
          transition: all 0.3s;
+         cursor: pointer;
       }
 
-      .reset-btn:hover {
-         background-color: #e0e0e0;
-         border-color: #ccc;
+      .add-slider-btn:hover,
+      .reset-btn:hover,
+      .search-button:hover,
+      .btn-primary:hover {
+         background-color: var(--teal-dark);
+         transform: translateY(-1px);
       }
 
-      /* Form Elements */
-      .search-input {
-         padding: 8px 12px;
-         border: 1px solid #ddd;
-         border-radius: 4px 0 0 4px;
-         width: 100%;
-         outline: none;
+      .btn-outline-secondary {
+         color: var(--teal-primary);
+         border-color: var(--teal-primary);
       }
 
-      .search-input:focus {
-         border-color: var(--teal-light);
-         box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
+      .btn-outline-secondary:hover {
+         background-color: var(--teal-primary);
+         color: white;
       }
 
-      .form-select {
-         padding: 8px 12px;
-         border: 1px solid #ddd;
-         border-radius: 4px;
-         color: var(--teal-text);
-      }
-
-      .form-select:focus {
-         border-color: var(--teal-light);
-         box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
-      }
-
-      /* Cards */
+      /* Card styles */
       .card {
-         border: none;
-         border-radius: 8px;
-         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-         margin-bottom: 20px;
          background-color: var(--teal-card);
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+         border: 1px solid var(--teal-accent);
+         margin-bottom: 20px;
       }
 
       .card-body {
          padding: 20px;
       }
 
-      /* Table Styling */
+      /* Form styles */
+      .form-select,
+      .form-control,
+      .search-input {
+         border: 1px solid var(--teal-light);
+         border-radius: 4px;
+         padding: 8px 12px;
+         transition: all 0.3s;
+         background-color: var(--teal-card);
+      }
+
+      .form-select:focus,
+      .form-control:focus,
+      .search-input:focus {
+         border-color: var(--teal-primary);
+         box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
+         outline: none;
+      }
+
+      /* Table styles */
       .table {
          width: 100%;
          border-collapse: separate;
          border-spacing: 0;
-         background-color: white;
+         margin-bottom: 0;
       }
 
       .table thead th {
          background-color: var(--teal-primary);
          color: white;
          padding: 12px 15px;
-         border: none;
          font-weight: 500;
       }
 
-      .table tbody tr {
-         transition: background-color 0.2s;
+      .table tbody tr:nth-child(even) {
+         background-color: var(--teal-bg);
       }
 
       .table tbody tr:hover {
-         background-color: rgba(38, 166, 154, 0.1);
+         background-color: var(--teal-accent);
       }
 
-      .table td {
+      .table td, .table th {
          padding: 12px 15px;
          vertical-align: middle;
-         border-bottom: 1px solid #f0f0f0;
+         border-bottom: 1px solid var(--teal-light);
       }
 
-      /* Image Styling */
-      .slider-image {
-         width: 150px;
+      /* Image styles */
+      .col-thumb img {
+         max-width: 100px;
          height: auto;
          border-radius: 4px;
-         object-fit: cover;
       }
 
-      /* Status Badges */
+      /* Status badges */
       .badge-active {
-         background-color: #c8e6c9;
-         color: #388e3c;
+         background-color: #4CAF50;
+         color: white;
          padding: 4px 8px;
          border-radius: 12px;
          font-size: 0.8rem;
       }
 
       .badge-inactive {
-         background-color: #ffcdd2;
-         color: #d32f2f;
+         background-color: #F44336;
+         color: white;
          padding: 4px 8px;
          border-radius: 12px;
          font-size: 0.8rem;
       }
 
-      /* Action Buttons */
-      .btn-sm {
-         padding: 5px 10px;
-         font-size: 0.8rem;
-         margin-right: 5px;
+      .feature-badge {
+         background-color: #FFC107;
+         color: #212529;
+         padding: 3px 6px;
+         border-radius: 12px;
+         font-size: 0.75rem;
       }
 
-      .btn-primary {
-         background-color: var(--teal-primary);
-         border-color: var(--teal-primary);
-      }
-
-      .btn-primary:hover {
-         background-color: var(--teal-dark);
-         border-color: var(--teal-dark);
-      }
-
-      /* Pagination */
+      /* Pagination styles */
       .pagination {
-         margin: 0;
+         display: flex;
+         justify-content: center;
+         margin-top: 20px;
+         list-style: none;
+         padding: 0;
       }
 
-      .page-link {
-         color: var(--teal-primary);
-         border: 1px solid #ddd;
+      .pagination .page-item {
+         margin: 0 4px;
       }
 
-      .page-link:hover {
+      .pagination .page-link {
          color: var(--teal-dark);
-         background-color: #f5f5f5;
-         border-color: #ddd;
+         text-decoration: none;
+         padding: 8px 14px;
+         border-radius: 4px;
+         border: 1px solid var(--teal-light);
+         transition: all 0.3s ease;
+         background-color: white;
       }
 
-      .page-item.active .page-link {
+      .pagination .page-item.active .page-link {
          background-color: var(--teal-primary);
-         border-color: var(--teal-primary);
          color: white;
+         border-color: var(--teal-primary);
       }
 
-      /* Responsive Adjustments */
+      .pagination .page-link:hover:not(.active) {
+         background-color: var(--teal-light);
+         color: var(--teal-text);
+      }
+
+      /* Modal styles */
+      .modal-content {
+         border-radius: 8px;
+         border: 1px solid var(--teal-accent);
+      }
+
+      .modal-header {
+         background-color: var(--teal-primary);
+         color: white;
+         border-bottom: 1px solid var(--teal-light);
+      }
+
+      /* Responsive adjustments */
       @media (max-width: 768px) {
-         .main-content {
-            padding: 15px;
+         .row {
+            flex-direction: column;
          }
 
-         .slider-image {
-            width: 100px;
+         .col-md-2 {
+            width: 100%;
+            height: auto;
+            position: relative;
          }
 
-         .col-actions {
-            white-space: nowrap;
+         .d-flex.col-md-4 {
+            flex-direction: column;
+         }
+
+         .reset-btn {
+            margin-bottom: 10px;
+         }
+
+         .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
          }
       }
    </style>
@@ -466,7 +497,7 @@
 //            }
                                          );
                               });
-            </<script>
-                    </body>
-      </html>
+                  </<script>
+</body>
+                          </html>
 

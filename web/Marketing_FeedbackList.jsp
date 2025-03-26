@@ -22,15 +22,49 @@
             --teal-bg: #e0f2f1;
             --teal-text: #004d40;
             --teal-card: #ffffff;
+            --teal-accent: #b2dfdb;
          }
 
          body {
-            background-color: #f5f7fa;
+            background-color: var(--teal-bg);
             color: var(--teal-text);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
          }
 
-         .header h1 {
+         .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+         }
+
+         .row {
+            display: flex;
+            margin-left: 0;
+            margin-right: 0;
+         }
+
+         /* Sidebar styles */
+         .col-md-2.sidebar {
+            width: 250px;
+            min-width: 250px;
+            background-color: var(--teal-card);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 100;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            border-right: 1px solid var(--teal-light);
+         }
+
+         /* Main content styles */
+         .col-md-10.main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: var(--teal-bg);
+         }
+
+         /* Header styles */
+         .header h2 {
             color: var(--teal-dark);
             font-weight: 600;
             margin: 20px 0;
@@ -38,30 +72,76 @@
             border-bottom: 2px solid var(--teal-light);
          }
 
-         /* Search and Filter Section */
+         /* Search and Filter Section - Redesigned */
          .search-filter-section {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: transparent;
+            padding: 0;
             margin-bottom: 20px;
          }
 
+         .search-filter-section > .row {
+            display: contents;
+         }
+
+         /* Filter section (left) */
+         .search-filter-section > .row > .col-md-7 {
+            background-color: var(--teal-card);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid var(--teal-accent);
+         }
+
+         /* Search section (right) */
+         .search-filter-section > .row > .col-md-5 {
+            background-color: var(--teal-card);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid var(--teal-accent);
+         }
+
+         /* Section headers */
          .search-filter-section h3 {
             color: var(--teal-dark);
             font-size: 1.1rem;
-            margin-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--teal-light);
+            display: flex;
+            align-items: center;
          }
 
+         /* Filter icon */
+         .search-filter-section > .row > .col-md-7 h3::before {
+            content: "🗂️";
+            margin-right: 10px;
+         }
+
+         /* Search icon */
+         .search-filter-section > .row > .col-md-5 h3::before {
+            content: "🔍";
+            margin-right: 10px;
+         }
+
+         /* Form elements */
          .form-control {
-            border: 1px solid #ddd;
+            border: 1px solid var(--teal-light);
             border-radius: 4px;
             padding: 8px 12px;
             transition: all 0.3s;
+            background-color: var(--teal-card);
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
          }
 
          .form-control:focus {
-            border-color: var(--teal-light);
+            border-color: var(--teal-primary);
             box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.2);
             outline: none;
          }
@@ -72,142 +152,136 @@
             border: none;
             padding: 8px 16px;
             border-radius: 4px;
-            margin-top: 10px;
             transition: all 0.3s;
+            cursor: pointer;
+            width: 100%;
          }
 
          .add-product-btn:hover {
             background-color: var(--teal-dark);
+            transform: translateY(-1px);
          }
 
-         /* Table Styling */
+         /* Table styles */
          .product-table {
-            background-color: white;
+            background-color: var(--teal-card);
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             padding: 20px;
             overflow-x: auto;
+            border: 1px solid var(--teal-accent);
          }
 
          .table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-bottom: 20px;
+            table-layout: fixed;
          }
 
          .table thead th {
             background-color: var(--teal-primary);
             color: white;
             padding: 12px 15px;
-            border: none;
             font-weight: 500;
+            text-align: left;
          }
 
-         .table thead th a {
-            color: white;
-            text-decoration: none;
-         }
-
-         .table thead th a:hover {
-            text-decoration: underline;
-         }
-
-         .table tbody tr {
-            transition: background-color 0.2s;
+         .table tbody tr:nth-child(even) {
+            background-color: var(--teal-bg);
          }
 
          .table tbody tr:hover {
-            background-color: rgba(38, 166, 154, 0.1);
+            background-color: var(--teal-accent);
          }
 
          .table td {
             padding: 12px 15px;
             vertical-align: middle;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid var(--teal-light);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
          }
 
-         /* Status Indicators */
-         .fa-eye {
-            color: #388e3c;
+         /* Column widths */
+         .product-table th:nth-child(1),
+         .product-table td:nth-child(1) {
+            width: 80px;
+         }
+         .product-table th:nth-child(2),
+         .product-table td:nth-child(2) {
+            width: 150px;
+         }
+         .product-table th:nth-child(3),
+         .product-table td:nth-child(3) {
+            width: 150px;
+         }
+         .product-table th:nth-child(4),
+         .product-table td:nth-child(4) {
+            width: 100px;
+         }
+         .product-table th:nth-child(5),
+         .product-table td:nth-child(5) {
+            width: 300px;
+            white-space: normal;
+         }
+         .product-table th:nth-child(6),
+         .product-table td:nth-child(6) {
+            width: 120px;
+         }
+         .product-table th:nth-child(7),
+         .product-table td:nth-child(7) {
+            width: 100px;
          }
 
-         .fa-eye-slash {
-            color: #d32f2f;
-         }
-
-         /* Pagination */
+         /* Pagination Styles */
          .pagination {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 25px;
+            list-style: none;
+            padding: 0;
          }
 
          .pagination li {
-            margin: 0 5px;
+            margin: 0 4px;
          }
 
          .pagination li a {
-            color: var(--teal-primary);
-            border: 1px solid #ddd;
-            padding: 6px 12px;
-            border-radius: 4px;
+            color: var(--teal-dark);
             text-decoration: none;
-            transition: all 0.3s;
+            padding: 8px 14px;
+            border-radius: 4px;
+            border: 1px solid var(--teal-light);
+            transition: all 0.3s ease;
+            display: inline-block;
+            min-width: 40px;
+            text-align: center;
          }
 
          .pagination li.active a {
             background-color: var(--teal-primary);
             color: white;
             border-color: var(--teal-primary);
+            font-weight: 500;
          }
 
          .pagination li a:hover:not(.active) {
-            background-color: #f5f5f5;
+            background-color: var(--teal-light);
+            color: var(--teal-text);
          }
 
-         /* Message Styling */
-         h4 {
-            color: #d32f2f;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #ffebee;
-            border-radius: 4px;
-            border-left: 4px solid #d32f2f;
+         .pagination li.disabled a {
+            color: #ccc;
+            pointer-events: none;
+            border-color: #eee;
          }
 
-         .container-fluid {
-            padding-left: 0;
-            padding-right: 0;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-         }
-
-         .row {
-            margin-left: 0;
-            margin-right: 0;
-            display: flex;
-            flex-wrap: nowrap; /* Prevent wrapping */
-         }
-
-         /* Sidebar styling */
-         .col-md-2 {
-            width: 250px; /* Fixed width for sidebar */
-            min-width: 250px; /* Prevent shrinking */
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-            background-color: white;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            z-index: 1000;
-         }
-
-         /* Main content area */
-         .col-md-10 {
-            flex-grow: 1; /* Take remaining space */
-            padding: 20px;
-            background-color: #f5f7fa;
-            min-height: 100vh;
+         /* Pagination arrows */
+         .pagination li:first-child a,
+         .pagination li:last-child a {
+            font-weight: bold;
          }
 
          /* Responsive adjustments */
@@ -216,59 +290,36 @@
                flex-direction: column;
             }
 
-            .col-md-2 {
+            .col-md-2.sidebar {
                width: 100%;
                height: auto;
                position: relative;
             }
 
-            .col-md-10 {
-               width: 100%;
-               padding: 15px;
-            }
-         }
-
-         /* Responsive Adjustments */
-         @media (max-width: 768px) {
-            .search-filter-section .row > div {
-               margin-bottom: 15px;
+            .search-filter-section {
+               grid-template-columns: 1fr;
             }
 
-            .table {
-               font-size: 0.9rem;
+            .product-table table {
+               min-width: 700px;
             }
-
-            .table td, .table th {
-               padding: 8px 10px;
+            .pagination li a {
+               padding: 6px 10px;
+               min-width: 32px;
             }
-         }
-
-         /* Sort Indicator */
-         th[data-sort]::after {
-            content: " \25B4";
-            opacity: 0.5;
-         }
-
-         th[data-sort="desc"]::after {
-            content: " \25BE";
-         }
-
-         th[data-sort="asc"]::after {
-            content: " \25B4";
-            opacity: 1;
          }
       </style>
    </head>
    <body>
       <div class="container-fluid">
          <div class="row">
-            <!-- Side Bar (Left Column) -->
+            <!-- Side Bar (Left Column) - Fixed position -->
             <div class="col-md-2">
                <jsp:include page="sidebar.jsp"></jsp:include>
                </div>
 
                <!-- Main Content (Right Column) -->
-               <div class="col-md-10">
+               <div class="col-md-10 main-content" style="padding: 20px;">
                   <div class="container-fluid py-4">
                      <!-- Your existing content here -->
                      <div class="d-flex justify-content-between align-items-center mb-4">
@@ -297,7 +348,6 @@
                                  <div class="form-group">
                                     <label for="fSearch">
                                        <h3>Tìm kiếm:</h3>
-
                                     </label>
                                     <input type="text" name="fSearch" class="form-control" placeholder="Tên khách hàng, nội dung..."/>
                                     <button class="add-product-btn btn btn-primary" type="submit">Tìm kiếm</button>
@@ -337,163 +387,156 @@
             </div>
          </div>
       </div>
-   </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- icon -->
-<script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/js/price-range.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.scrollUp.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
-<script src="${pageContext.request.contextPath}/js/main.js"></script>
-<script>
-   // Convert the product details from Java to JavaScript
-   var feedbackList = JSON.parse('${listFeedback}');
 
-   var currentPage = 1; // Current page
-   var itemsPerPage = 8; // Number of items per page
+      <!-- icon -->
+      <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
+      <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+      <script src="${pageContext.request.contextPath}/js/price-range.js"></script>
+      <script src="${pageContext.request.contextPath}/js/jquery.scrollUp.min.js"></script>
+      <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+      <script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
+      <script src="${pageContext.request.contextPath}/js/main.js"></script>
+      <script>
+         // Convert the product details from Java to JavaScript
+         var feedbackList = JSON.parse('${listFeedback}');
 
-   // Display products for the current page
-   function displayProducts() {
-      var start = (currentPage - 1) * itemsPerPage;
-      var end = start + itemsPerPage;
-      // Tạo một mảng để lưu trữ các key
-      var keys = [];
-      for (var key in feedbackList) {
-         if (feedbackList.hasOwnProperty(key)) {
-            keys.push(key);
-         }
-      }
-      var feedbackToDisplay = keys.slice(start, end);
+         var currentPage = 1; // Current page
+         var itemsPerPage = 8; // Number of items per page
 
-      // Clear the current products
-      $('tbody').empty();
+         // Display products for the current page
+         function displayProducts() {
+            var start = (currentPage - 1) * itemsPerPage;
+            var end = start + itemsPerPage;
+            // Tạo một mảng để lưu trữ các key
+            var keys = [];
+            for (var key in feedbackList) {
+               if (feedbackList.hasOwnProperty(key)) {
+                  keys.push(key);
+               }
+            }
+            var feedbackToDisplay = keys.slice(start, end);
 
-      // Add each product
-      feedbackToDisplay.forEach(function (feedbackId) {
-         var feedback = feedbackList[feedbackId].feedback;
-         // Kiểm tra product.status và chọn icon tương ứng
-         var statusIcon = feedback.status === 0 ? 'fa-eye-slash' : 'fa-eye';
-         var isFeed = feedback.status === 1 ? 'Khả dụng' : 'Không khả dụng';
+            // Clear the current products
+            $('tbody').empty();
 
-         var productHtml = '<tr>' +
-                 '<td><a href="/ProjectSWP391/marketing/viewFeedbackMarketing?msg=loadpage&pid=' + feedback.id + '" style="color: black; text-decoration: none;">' + feedback.id + '</a></td>' +
-                 '<td>' + feedback.full_name + '</td>' +
-                 '<td>' + feedbackList[feedbackId].productname + '</td>' +
-                 ' <td>' + feedback.rating + '</td>' +
-                 '<td>' + feedback.comment + '</td>' +
-                 '<td>' + isFeed + '</td>' +
-                 ' <td> <a href="/ProjectSWP391/marketing/listFeedbackMarketing?fid=' + feedback.id + '&msg=toggleStatus&status=' + feedback.status + '"><i class="fa-solid ' + statusIcon + ' fa-lg"></i></a> </td>' +
-                 ' </tr>';
-         $('tbody').append(productHtml);
-      });
-   }
+            // Add each product
+            feedbackToDisplay.forEach(function (feedbackId) {
+               var feedback = feedbackList[feedbackId].feedback;
+               // Kiểm tra product.status và chọn icon tương ứng
+               var statusIcon = feedback.status === 0 ? 'fa-eye-slash' : 'fa-eye';
+               var isFeed = feedback.status === 1 ? 'Khả dụng' : 'Không khả dụng';
 
-   // Update the pagination links
-   function updatePagination() {
-      var totalPages = Math.ceil(Object.keys(feedbackList).length / itemsPerPage);
-
-      // Clear the current pagination links
-      $('.pagination').empty();
-      // Add "Previous" button
-      var prevClass = currentPage === 1 ? 'disabled' : '';
-      var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
-      $('.pagination').append(prevHtml);
-
-      // Add each pagination link
-      for (var i = 1; i <= totalPages; i++) {
-         var liClass = i === currentPage ? 'active' : '';
-         var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
-         $('.pagination').append(liHtml);
-      }
-
-      // Add "Next" button
-      var nextClass = currentPage === totalPages ? 'disabled' : '';
-      var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
-      $('.pagination').append(nextHtml);
-
-      // Add event handlers to the pagination links
-      $('.pagination a').click(function (e) {
-         e.preventDefault();
-
-         var pageText = $(this).text();
-
-         if (pageText === 'Trước' && currentPage !== 1) {
-            currentPage--;
-         } else if (pageText === 'Sau' && currentPage !== totalPages) {
-            currentPage++;
-         } else if (pageText !== 'Sau' && pageText !== 'Trước') {
-            currentPage = parseInt(pageText);
+               var productHtml = '<tr>' +
+                       '<td><a href="/ProjectSWP391/marketing/viewFeedbackMarketing?msg=loadpage&pid=' + feedback.id + '" style="color: black; text-decoration: none;">' + feedback.id + '</a></td>' +
+                       '<td>' + feedback.full_name + '</td>' +
+                       '<td>' + feedbackList[feedbackId].productname + '</td>' +
+                       ' <td>' + feedback.rating + '</td>' +
+                       '<td>' + feedback.comment + '</td>' +
+                       '<td>' + isFeed + '</td>' +
+                       ' <td> <a href="/ProjectSWP391/marketing/listFeedbackMarketing?fid=' + feedback.id + '&msg=toggleStatus&status=' + feedback.status + '"><i class="fa-solid ' + statusIcon + ' fa-lg"></i></a> </td>' +
+                       ' </tr>';
+               $('tbody').append(productHtml);
+            });
          }
 
+         // Update the pagination links
+         function updatePagination() {
+            var totalPages = Math.ceil(Object.keys(feedbackList).length / itemsPerPage);
+
+            // Clear the current pagination links
+            $('.pagination').empty();
+            // Add "Previous" button
+            var prevClass = currentPage === 1 ? 'disabled' : '';
+            var prevHtml = '<li class="' + prevClass + '"><a href="#">Trước</a></li>';
+            $('.pagination').append(prevHtml);
+
+            // Add each pagination link
+            for (var i = 1; i <= totalPages; i++) {
+               var liClass = i === currentPage ? 'active' : '';
+               var liHtml = '<li class="' + liClass + '"><a href="#">' + i + '</a></li>';
+               $('.pagination').append(liHtml);
+            }
+
+            // Add "Next" button
+            var nextClass = currentPage === totalPages ? 'disabled' : '';
+            var nextHtml = '<li class="' + nextClass + '"><a href="#">Sau</a></li>';
+            $('.pagination').append(nextHtml);
+
+            // Add event handlers to the pagination links
+            $('.pagination a').click(function (e) {
+               e.preventDefault();
+
+               var pageText = $(this).text();
+
+               if (pageText === 'Trước' && currentPage !== 1) {
+                  currentPage--;
+               } else if (pageText === 'Sau' && currentPage !== totalPages) {
+                  currentPage++;
+               } else if (pageText !== 'Sau' && pageText !== 'Trước') {
+                  currentPage = parseInt(pageText);
+               }
+
+               displayProducts();
+               updatePagination();
+            });
+         }
+         //Xử lý với filter.
+         let selectedOption;
+         $('#listFilter').change(function () {
+            selectedOption = $(this).val();
+
+            if (selectedOption === 'status') {
+               var filterDetail = $('#filterDetail');
+               filterDetail.empty();
+               filterDetail.append('<option selected disabled>Lựa chọn</option>');
+               filterDetail.append('<option value="0">Không khả dụng</option>');
+               filterDetail.append('<option value="1">Khả dụng</option>');
+            }
+
+         });
+         $('#filterDetail').change(function () {
+            var filterDetail = $(this).val();
+            window.location.href = '/ProjectSWP391/marketing/listFeedbackMarketing?msg=feedbackFilter&selected=' + selectedOption + '&value=' + filterDetail;
+         });
+         // Display the initial products and pagination
          displayProducts();
          updatePagination();
-      });
-   }
-   //Xử lý với filter.
-   let selectedOption;
-   $('#listFilter').change(function () {
-      selectedOption = $(this).val();
-
-      if (selectedOption === 'status') {
-         var filterDetail = $('#filterDetail');
-         filterDetail.empty();
-         filterDetail.append('<option selected disabled>Lựa chọn</option>');
-         filterDetail.append('<option value="0">Không khả dụng</option>');
-         filterDetail.append('<option value="1">Khả dụng</option>');
-      }
-
-   });
-   $('#filterDetail').change(function () {
-      var filterDetail = $(this).val();
-      window.location.href = '/ProjectSWP391/marketing/listFeedbackMarketing?msg=feedbackFilter&selected=' + selectedOption + '&value=' + filterDetail;
-   });
-   // Display the initial products and pagination
-   displayProducts();
-   updatePagination();
 
 
-</script>
-<script>
+      </script>
+      <script>
 
-   var sortState = JSON.parse(sessionStorage.getItem('sortState')) || {
-      id: false,
-      full_name: false,
-      name: false,
-      rating: false,
-      comment: false,
-      status: false
+         var sortState = JSON.parse(sessionStorage.getItem('sortState')) || {
+            id: false,
+            full_name: false,
+            name: false,
+            rating: false,
+            comment: false,
+            status: false
 
-   };
+         };
 
 
-   document.querySelectorAll('th a').forEach(function (link) {
-      var column = link.getAttribute('href').split('=')[2];
-      link.addEventListener('click', function (e) {
-         e.preventDefault();
+         document.querySelectorAll('th a').forEach(function (link) {
+            var column = link.getAttribute('href').split('=')[2];
+            link.addEventListener('click', function (e) {
+               e.preventDefault();
 
-         // Đảo ngược trạng thái sắp xếp
-         sortState[column] = !sortState[column];
-         sessionStorage.setItem('sortState', JSON.stringify(sortState));
-         // Xác định thứ tự sắp xếp dựa trên trạng thái
-         var order = sortState[column] ? 'ASC' : 'DESC';
+               // Đảo ngược trạng thái sắp xếp
+               sortState[column] = !sortState[column];
+               sessionStorage.setItem('sortState', JSON.stringify(sortState));
+               // Xác định thứ tự sắp xếp dựa trên trạng thái
+               var order = sortState[column] ? 'ASC' : 'DESC';
 
-         // Cập nhật href của liên kết với thứ tự sắp xếp mới
-         link.setAttribute('href', 'listFeedbackMarketing?msg=sortFeedback&sortBy=' + column + '&order=' + order);
+               // Cập nhật href của liên kết với thứ tự sắp xếp mới
+               link.setAttribute('href', 'listFeedbackMarketing?msg=sortFeedback&sortBy=' + column + '&order=' + order);
 
-         // Kích hoạt liên kết
-         window.location.href = link.getAttribute('href');
-      });
-   });
+               // Kích hoạt liên kết
+               window.location.href = link.getAttribute('href');
+            });
+         });
 
-</script>
-</body>
+      </script>
+   </body>
 </html>
 

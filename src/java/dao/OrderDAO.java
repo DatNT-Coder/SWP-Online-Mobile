@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import model.CartItem;
 import model.Order;
 import model.OrderDetail;
+import model.Product;
 import model.User;
 
 /**
@@ -153,37 +154,43 @@ public class OrderDAO {
    }
 
    public Order getOrderById(int orderId) {
-      String sql = "select id, user_id, order_date, total, status, discount,\n"
-              + " address, phone, email, notes, gender, saleid, settings_id from orders where id = ?";
+      String sql = "SELECT o.id, o.user_id, u.full_name AS username, o.order_date, "
+              + "o.total, o.status, o.discount, o.address, o.phone, o.email, o.notes, o.gender, "
+              + "o.saleid, s.full_name AS salename, o.settings_id "
+              + "FROM orders o "
+              + "JOIN user u ON o.user_id = u.id "
+              + "LEFT JOIN user s ON o.saleid = s.id "
+              + "WHERE o.id = ?";
+
       try (PreparedStatement ps = connection.prepareStatement(sql)) {
          ps.setInt(1, orderId);
+
          try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-               int id = rs.getInt("id");
-               Date orderDate = rs.getDate("order_date");
-               double total = rs.getDouble("total");
-               int status = rs.getInt("status");
-               String address = rs.getString("address");
-               String phone = rs.getString("phone");
-               String email = rs.getString("email");
-               String note = rs.getString("notes");
-               int settingId = rs.getInt("settings_id");
                Order order = new Order();
-               order.setId(id);
-               order.setDate(orderDate);
-               order.setTotalMoney(total);
-               order.setStatus(status);
-               order.setAddress(address);
-               order.setPhone(phone);
-               order.setEmail(email);
-               order.setNote(note);
-               order.setSettingId(settingId);
+               order.setId(rs.getInt("id"));
+               order.setuId(rs.getInt("user_id"));
+               order.setDate(rs.getDate("order_date"));
+               order.setTotalMoney(rs.getDouble("total"));
+               order.setStatus(rs.getInt("status"));
+               order.setDiscount(rs.getDouble("discount"));
+               order.setAddress(rs.getString("address"));
+               order.setPhone(rs.getString("phone"));
+               order.setEmail(rs.getString("email"));
+               order.setNote(rs.getString("notes"));
+               order.setGender(rs.getString("gender"));
+               order.setSaleId(rs.getInt("saleid"));
+               order.setSettingId(rs.getInt("settings_id"));
+               order.setUserName(rs.getString("username"));
+               order.setSaleName(rs.getString("salename"));
+
                return order;
             }
          }
       } catch (SQLException ex) {
          Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
       }
+
       return null;
    }
 
@@ -452,8 +459,8 @@ public class OrderDAO {
 //      } else {
 //         System.out.println("User not found with ID: " + customerId);
 //      }
-      List<Order> a = userDAO.getAllOrders();
-      System.out.println(a.get(0).getUserName());
+      Product a = userDAO.getProductById(1);
+      System.out.println(a);
 
    }
 
@@ -829,4 +836,108 @@ public class OrderDAO {
       return total;
    }
 
+   public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
+      List<OrderDetail> details = new ArrayList<>();
+      // Changed Orders_ID to match your actual column name
+      String sql = "SELECT * FROM orderdetails WHERE Orders_ID = ?";
+
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, orderId);
+         ResultSet rs = ps.executeQuery();
+
+         while (rs.next()) {
+            OrderDetail detail = new OrderDetail();
+            detail.setProductId(rs.getInt("Product_ID"));
+            detail.setOrderId(rs.getInt("Orders_ID"));  // Changed to match your column
+            detail.setQuantity(rs.getInt("quantity"));
+            detail.setPrice(rs.getDouble("price"));
+            details.add(detail);
+
+            // Debug logging
+            System.out.println("Found order detail: "
+                    + "ProductID=" + detail.getProductId()
+                    + ", OrderID=" + detail.getOrderId()
+                    + ", Qty=" + detail.getQuantity());
+         }
+      } catch (SQLException ex) {
+         System.out.println("Error in getOrderDetailsByOrderId: " + ex.getMessage());
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      System.out.println("Total details found: " + details.size());
+      return details;
+   }
+
+   public Product getProductById(int productId) {
+      String sql = "SELECT * FROM product WHERE ID = ?";
+
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, productId);
+         ResultSet rs = ps.executeQuery();
+
+         if (rs.next()) {
+            Product product = new Product();
+            product.setID(rs.getInt("ID"));
+            product.setName(rs.getString("name"));
+            product.setOriginalPrice(rs.getDouble("originalPrice"));
+            product.setSalePrice(rs.getDouble("salePrice"));
+            product.setDetails(rs.getString("details"));
+            product.setImage(rs.getString("image"));
+            product.setStock(rs.getInt("stock"));
+            product.setProductCategory_ID(rs.getInt("ProductCategory_ID"));
+            product.setUpdatedDate(rs.getDate("updatedDate"));
+            product.setStatus(rs.getInt("status"));
+            product.setBrandId(rs.getInt("brandID"));
+            product.setCost_price(rs.getDouble("cost_price"));
+            product.setSettings_id(rs.getInt("settings_id"));
+
+            System.out.println("Found product: " + product.getID() + " - " + product.getName());
+            return product;
+         }
+      } catch (SQLException ex) {
+         System.out.println("Error in getProductById: " + ex.getMessage());
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      System.out.println("No product found for ID: " + productId);
+      return null;
+   }
+
+   public String getCategoryNameById(int categoryId) {
+      String sql = "SELECT categoryName FROM productcategory WHERE ID = ?";  // Changed table and column names
+
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, categoryId);
+         ResultSet rs = ps.executeQuery();
+
+         if (rs.next()) {
+            return rs.getString("categoryName");  // Changed column name
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return "Uncategorized";
+   }
+
+   public boolean assignOrderToSale(int orderId, int saleId) {
+      String sql = "UPDATE orders SET sale_id = ? WHERE id = ?";
+      try (PreparedStatement ps = connection.prepareStatement(sql)) {
+         ps.setInt(1, saleId);
+         ps.setInt(2, orderId);
+         int rowsAffected = ps.executeUpdate();
+         return rowsAffected > 0;
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+      } finally {
+         // Close resources
+         try {
+            if (connection != null) {
+               connection.close();
+            }
+         } catch (SQLException e) {
+            e.printStackTrace();
+         }
+      }
+   }
 }
