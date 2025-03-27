@@ -40,20 +40,6 @@
          margin-right: 0;
       }
 
-      /* Sidebar styles */
-      .col-md-2 {
-         width: 250px;
-         min-width: 250px;
-         background-color: white;
-         box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-         z-index: 100;
-         height: 100vh;
-         position: sticky;
-         top: 0;
-         overflow-y: auto;
-         border-right: 1px solid var(--teal-light);
-      }
-
       /* Main content styles */
       .col-lg-10.main-content {
          flex-grow: 1;
