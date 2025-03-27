@@ -27,7 +27,7 @@
     <ul>
         <li><a href="/ProjectSWP391/admin/adminDashBoard">Thống kê</a></li>
         <li><a href="/ProjectSWP391/admin/listSettingAdmin">Danh sách cài đặt</a></li>
-        <li><a href="admin/userlist">Danh sách người dùng</a></li>
+        <li><a href="/ProjectSWP391/admin/userlist">Danh sách người dùng</a></li>
     </ul>
 </div>
 
