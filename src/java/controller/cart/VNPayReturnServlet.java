@@ -70,7 +70,7 @@ public class VNPayReturnServlet extends HttpServlet {
             order.setNote(note);
             order.setuId(userId);
             order.setTotalMoney(total);
-            order.setSaleId(30);
+            order.setSaleId(0);
             order.setStatus(1);
             order.setSettingId(1);
 
