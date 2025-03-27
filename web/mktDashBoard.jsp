@@ -90,6 +90,7 @@
             padding: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
          }
+
       </style>
    </head>
    <body>
@@ -102,11 +103,6 @@
                <!-- Main Content -->
                <div class="col-lg-10 main-content">
                   <div class="container-fluid py-4">
-                     <div class="dashboard-header">
-                        <h2 class="mb-0">Marketing Dashboard</h2>
-                        <p class="text-muted mb-0">Statistics overview</p>
-                     </div>
-
                      <!-- Date Filter -->
                      <div class="date-filter mb-4">
                         <form method="get" class="row g-3">
@@ -119,7 +115,7 @@
                            <input type="date" class="form-control" id="toDate" name="toDate" value="${toDate}">
                         </div>
                         <div class="col-md-4 d-flex align-items-end">
-                           <button type="submit" class="btn btn-primary">Apply Filter</button>
+                           <button type="submit" class="btn btn-primary" style="background-color: #4DB6AC; border-color: #4DB6AC"><strong>Lọc Người Dùng</strong></button>
                         </div>
                      </form>
                   </div>
