@@ -366,26 +366,29 @@
          <p style="color: #dc3545; padding: 20px; background-color: #f8d7da; border-radius: 4px;">Order not found.</p>
          <% } %>
          
-         <!-- Assign Order Form -->
-         <form class="assign-form" action="AssignOrderController" method="POST">
-            <input type="hidden" name="orderId" value="<%= order.getId() %>">
+         <c:set var="role" value="${sessionScope.account.getRole_id()}" />
+            <c:if test="${role == 3 || role == 4}">
+                <!-- Assign Order Form -->
+                <form class="assign-form" action="AssignOrderController" method="POST">
+                    <input type="hidden" name="orderId" value="<%= order.getId() %>">
 
-            <label for="saleId">Assign To:</label>
-            <select name="saleId" id="saleId" required>
-               <option value="">-- Select Salesperson --</option>
-               <% if (salesList != null && !salesList.isEmpty()) {
-            for (User sale : salesList) { %>
-               <option value="<%= sale.getId() %>" <%= order.getSaleId() == sale.getId() ? "selected" : "" %>>
-                  <%= sale.getFull_name() %> (<%= sale.getEmail() %>)
-               </option>
-               <% }
-        } else { %>
-               <option value="">No salespersons available</option>
-               <% } %>
-            </select>
+                    <label for="saleId">Assign To:</label>
+                    <select name="saleId" id="saleId" required>
+                        <option value="">-- Select Salesperson --</option>
+                        <% if (salesList != null && !salesList.isEmpty()) {
+                for (User sale : salesList) { %>
+                        <option value="<%= sale.getId() %>" <%= order.getSaleId() == sale.getId() ? "selected" : "" %>>
+                            <%= sale.getId() %> - <%= sale.getFull_name() %> - (<%= sale.getEmail() %>)
+                        </option>
+                        <% }
+                } else { %>
+                        <option value="">No salespersons available</option>
+                        <% } %>
+                    </select>
 
-            <button type="submit" class="assign-button">Assign</button>
-         </form>
+                        <button type="submit" class="assign-button">Assign</button> <h5 style="color: green"> ${message} ${error} </h5>
+                </form>
+            </c:if>
       </div>
    </body>
 </html>
