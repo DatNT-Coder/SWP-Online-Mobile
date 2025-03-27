@@ -4,266 +4,267 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <title>Marketing | MKTDashboard</title>
+      <title>Marketing Dashboard</title>
       <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-      <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
-      <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
       <script src="https://kit.fontawesome.com/8922b65fb8.js" crossorigin="anonymous"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <style>
+         :root {
+            --teal-primary: #4db6ac;
+            --teal-light: #82e9de;
+            --teal-dark: #00867d;
+            --teal-bg: #e0f2f1;
+            --teal-text: #004d40;
+         }
+
+         body {
+            background-color: var(--teal-bg);
+            color: var(--teal-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         }
+
+         .dashboard-header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+         }
+
+         .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+            margin-bottom: 20px;
+         }
+
+         .stat-card:hover {
+            transform: translateY(-5px);
+         }
+
+         .stat-icon {
+            background-color: var(--teal-primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 20px;
+            float: left;
+            margin-right: 15px;
+         }
+
+         .stat-info {
+            margin-left: 65px;
+         }
+
+         .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+         }
+
+         .data-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+         }
+
+         .data-table thead {
+            background-color: var(--teal-primary);
+            color: white;
+         }
+
+         .date-filter {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+         }
+
+      </style>
    </head>
-   <style>
-      /* Teal Theme Styling */
-
-      /* General Background */
-      body {
-         color: #004d40;
-      }
-
-      /* Sidebar */
-      .wrapper {
-         background-color: #004d40;
-      }
-
-      .sidebar a {
-         color: #e0f2f1;
-      }
-
-      .sidebar a:hover {
-         background-color: #00796b;
-      }
-
-      /* Navbar Tabs */
-      .nav-tabs .nav-item .nav-link {
-         color: #004d40;
-         background-color: #b2dfdb;
-         border: 1px solid #00796b;
-      }
-
-      .nav-tabs .nav-item .nav-link.active {
-         background-color: #00796b;
-         color: #ffffff;
-      }
-
-      /* Panels */
-      .panel {
-         border: 1px solid #00796b;
-         background-color: #b2dfdb;
-      }
-
-      .panel-heading {
-         background-color: #00796b;
-         color: white;
-         font-weight: bold;
-      }
-
-      /* Table */
-      .table-hover tbody tr:hover {
-         background-color: #80cbc4;
-      }
-
-      th {
-         background-color: #00796b !important;
-         color: white !important;
-      }
-
-      /* Statistic Boxes */
-      .sm-st {
-         background-color: #00796b;
-         color: white;
-         padding: 15px;
-         border-radius: 10px;
-      }
-
-      .sm-st-icon {
-         background-color: #004d40;
-         padding: 10px;
-         border-radius: 50%;
-      }
-
-      /* Buttons */
-      input[type="submit"] {
-         background-color: #00796b;
-         color: white;
-         border: none;
-         cursor: pointer;
-      }
-
-      input[type="submit"]:hover {
-         background-color: #004d40;
-      }
-
-      /* Date Picker */
-      input[type="date"] {
-         border: 1px solid #00796b;
-         padding: 5px;
-         border-radius: 5px;
-      }
-
-      /* Scrollbar */
-      .panel-body.table-responsive {
-         scrollbar-width: thin;
-         scrollbar-color: #00796b #e0f2f1;
-      }
-   </style>
-   <body class="skin-black">
+   <body>
       <div class="container-fluid">
          <div class="row">
-            <div class="col-md-3">
-               <div class="wrapper row-offcanvas row-offcanvas-left">
-                  <jsp:include page="sidebar.jsp"></jsp:include>
-                  </div>
+            <!-- Sidebar -->
+            <div class="col-md-2">
+               <jsp:include page="sidebar.jsp"></jsp:include>
                </div>
-               <div class="col-md-9">
-                  <h2 style="text-align: center">Bảng quản lí marketing</h2>
-                  <div class="row" style="margin-bottom:5px;">
-                     <!-- Statistics section -->
-                     <div class="col-md-3">
-                        <div class="sm-st clearfix">
-                           <span class="sm-st-icon st-red"><i class="fa fa-file-text-o"></i></span>
-                           <div class="sm-st-info">
-                              Tổng <span>${totalP}</span> Bài Đăng <br>
-                            * <span>${totalPA}</span> Bài viết đã được đăng <br>
-                            * <span>${totalPIA}</span> Bài viết bị ẩn <br>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-violet"><i class="fa fa-shopping-cart"></i></span>
-                        <div class="sm-st-info">
-                           Tổng Sản Phẩm: <span>${totalPd}</span> <br>
-                           * <span>${totalPdA}</span> Sản phẩm đang được bày bán <br>
-                           * <span>${totalPdIA}</span> Sản phẩm chưa được bày bán.
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-blue"><i class="fa fa-user"></i></span>
-                        <div class="sm-st-info">
-                           <span>${totalU}</span> Khách Hàng
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-green"><i class="fa fa-comments"></i></span>
-                        <div class="sm-st-info">
-                           <span>${gDAOfeed}</span> Phản hồi
-                        </div>
-                     </div>
-                  </div>
-                  <!-- More statistic sections -->
-                  <!-- Add or keep only necessary sections here -->
-               </div>
-
-               <!-- Tab buttons -->
-               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                     <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">Tài khoản mới</a>
-                  </li>
-
-               </ul>
-               <!-- Tab content -->
-               <div class="tab-content" id="myTabContent">
-                  <!-- Tài khoản mới -->
-                  <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                     <div class="row">
-                        <div class="col-md-8">
-                           <section class="panel">
-
-                              <div class="panel-body table-responsive" style="max-height: 100vh; overflow: auto">
-                                 <table class="table table-hover">
-                                    <thead>
-                                       <tr>
-                                          <th>Số thứ tự</th>
-                                          <th>Email</th>
-                                          <th>Tên tài khoản</th>
-                                          <th>Ngày đăng kí</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                       <c:forEach items="${requestScope.newLyCustomers}" var="items">
-                                          <tr>
-                                             <td>${items.getID()}</td>
-                                             <td>${items.email}</td>
-                                             <td>${items.full_name}</td>
-                                             <td>${items.registration_date}</td>
-                                          </tr>
-                                       </c:forEach>
-                                    </tbody>
-                                 </table>
-                              </div>
-                           </section>
+               <!-- Main Content -->
+               <div class="col-lg-10 main-content">
+                  <div class="container-fluid py-4">
+                     <!-- Date Filter -->
+                     <div class="date-filter mb-4">
+                        <form method="get" class="row g-3">
+                           <div class="col-md-4">
+                              <label for="fromDate" class="form-label">From Date</label>
+                              <input type="date" class="form-control" id="fromDate" name="fromDate" value="${fromDate}">
                         </div>
                         <div class="col-md-4">
-                           <section class="panel">
-                              <header class="panel-heading">
-                                 Thống kê
-                              </header>
-                              <div class="panel-body">
-                                 <form>
-                                    <label for="fromDate" style="display: block;">Bắt đầu:</label>
-                                    <input type="date" id="fromDate" name="fromDate" value="${requestScope.fromDate}" onchange="this.form.submit()" style="display: block; margin-bottom: 10px;" />
+                           <label for="toDate" class="form-label">To Date</label>
+                           <input type="date" class="form-control" id="toDate" name="toDate" value="${toDate}">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                           <button type="submit" class="btn btn-primary" style="background-color: #4DB6AC; border-color: #4DB6AC"><strong>Lọc Người Dùng</strong></button>
+                        </div>
+                     </form>
+                  </div>
 
-                                    <label for="toDate" style="display: block;">Kết thúc:</label>
-                                    <input type="date" id="toDate" name="toDate" value="${requestScope.toDate}" onchange="this.form.submit()" style="display: block; margin-bottom: 10px;" />
-
-                                    <!-- Submit button -->
-                                    <input type="submit" value="Lọc" style="display: block; padding: 8px 16px;" />
-                                 </form>
-                              </div>
-                           </section>
+                  <!-- Statistics Cards -->
+                  <div class="row">
+                     <div class="col-md-3">
+                        <div class="stat-card">
+                           <div class="stat-icon bg-danger">
+                              <i class="fas fa-file-alt"></i>
+                           </div>
+                           <div class="stat-info">
+                              <h5>Posts</h5>
+                              <p class="mb-1">Total: <strong>${totalP}</strong></p>
+                              <p class="mb-1">Active: <strong>${totalPA}</strong></p>
+                              <p class="mb-0">Inactive: <strong>${totalPIA}</strong></p>
+                           </div>
                         </div>
                      </div>
-                  </div>                  
+
+                     <div class="col-md-3">
+                        <div class="stat-card">
+                           <div class="stat-icon bg-purple">
+                              <i class="fas fa-shopping-cart"></i>
+                           </div>
+                           <div class="stat-info">
+                              <h5>Products</h5>
+                              <p class="mb-1">Total: <strong>${totalPd}</strong></p>
+                              <p class="mb-1">Active: <strong>${totalPdA}</strong></p>
+                              <p class="mb-0">Inactive: <strong>${totalPdIA}</strong></p>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-md-3">
+                        <div class="stat-card">
+                           <div class="stat-icon bg-primary">
+                              <i class="fas fa-users"></i>
+                           </div>
+                           <div class="stat-info">
+                              <h5>Customers</h5>
+                              <p class="mb-0">Total: <strong>${totalU}</strong></p>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-md-3">
+                        <div class="stat-card">
+                           <div class="stat-icon bg-success">
+                              <i class="fas fa-comments"></i>
+                           </div>
+                           <div class="stat-info">
+                              <h5>Feedback</h5>
+                              <p class="mb-0">Total: <strong>${totalFeedback}</strong></p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Charts and Tables -->
+                  <div class="row mt-4">
+                     <!-- Customer Trend Chart -->
+                     <div class="col-md-8">
+                        <div class="chart-container">
+                           <h5>New Customer Trend (${fromDate} to ${toDate})</h5>
+                           <canvas id="customerTrendChart"></canvas>
+                        </div>
+                     </div>
+
+                     <!-- Recent Customers -->
+                     <div class="col-md-4">
+                        <div class="chart-container">
+                           <h5>Recent Customers</h5>
+                           <div class="table-responsive">
+                              <table class="table data-table">
+                                 <thead>
+                                    <tr>
+                                       <th>Name</th>
+                                       <th>Date</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <c:forEach items="${newCustomers}" var="customer" end="4">
+                                       <tr>
+                                          <td>${customer.full_name}</td>
+                                          <td>${customer.registration_date}</td>
+                                       </tr>
+                                    </c:forEach>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
-
-         </div>
-         <!-- Tab Mới -->
-
-
+         </div> 
       </div>
-   </div>
 
-</div>
-</div>
-</div>
-</div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-                                       $(document).ready(function () {
-                                          // Chuyển đến tab "Tài khoản mới" khi trang được tải lên
-                                          $('#account-tab').tab('show');
 
-                                          // Xử lý khi bấm vào tab
-                                          $('#myTab a').on('click', function (e) {
-                                             e.preventDefault();
-                                             // Lấy ID của tab được bấm
-                                             var selectedTab = $(this).attr('href');
-                                             // Hiển thị nội dung của tab tương ứng với tab được bấm
-                                             $(selectedTab).tab('show');
-                                             // Nếu tab được bấm là tab đầu tiên
-                                             if (selectedTab === '#account') {
-                                                // Làm mới trang
-                                                window.location.reload();
-                                             }
-                                          });
 
-                                          // Xử lý khi chuyển tab
-                                          $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                                             // Lấy ID của tab đang được chọn
-                                             var selectedTab = $(e.target).attr('href');
-                                             // Ẩn tất cả các tab-pane khác
-                                             $('.tab-pane').removeClass('show active');
-                                             // Hiển thị nội dung của tab được chọn
-                                             $(selectedTab).addClass('show active');
-                                          });
-                                       });
-</script>
+      <script>
+         // Customer Trend Chart
+         const trendCtx = document.getElementById('customerTrendChart').getContext('2d');
+         const trendData = {
+            labels: [
+         <c:forEach items="${customerTrend}" var="entry">
+               "${entry.key}",
+         </c:forEach>
+            ],
+            datasets: [{
+                  label: 'New Customers',
+                  data: [
+         <c:forEach items="${customerTrend}" var="entry">
+            ${entry.value},
+         </c:forEach>
+                  ],
+                  backgroundColor: 'rgba(77, 182, 172, 0.2)',
+                          borderColor: 'rgba(77, 182, 172, 1)',
+                  borderWidth: 2,
+                          tension: 0.3,
+                  fill: true
+               }]
+         };
 
-</body>
+         const trendChart = new Chart(trendCtx, {
+            type: 'line',
+            data: trendData,
+            options: {
+               responsive: true,
+               plugins: {
+                  legend: {
+                     position: 'top',
+                  },
+                  tooltip: {
+                     mode: 'index',
+                     intersect: false,
+                  }
+               },
+               scales: {
+                  y: {
+                     beginAtZero: true,
+                     ticks: {
+                        stepSize: 1
+                     }
+                  }
+               }
+            }
+         });
+      </script>
+   </body>
 </html>

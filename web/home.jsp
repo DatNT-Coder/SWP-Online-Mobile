@@ -130,11 +130,19 @@
                            User loggedInUser = (User) session.getAttribute(CommonConst.SESSION_ACCOUNT);
                            if (loggedInUser != null && loggedInUser.getRole_id() == 5) { 
                            %>
-                           <a href="/ProjectSWP391/marketing/listFeedbackMarketing">Bảng Điều Khiển</a>
+                           <a href="/ProjectSWP391/marketing/listFeedbackMarketing">Bảng Điều Khiển Marketing</a>
                            <% 
-                               } 
+                           } else if (loggedInUser != null && loggedInUser.getRole_id() == 2) { 
+                           %>
+                           <a href="/ProjectSWP391/sale/saleDashboard">Bảng Điều Khiển Sale</a>
+                           <% 
+                           } 
                            %>
                         </li>
+
+
+
+
 
                         <%-- popup khi đúng role --%>  
                         <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">

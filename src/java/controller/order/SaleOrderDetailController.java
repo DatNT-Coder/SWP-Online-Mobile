@@ -93,10 +93,10 @@ public class SaleOrderDetailController extends HttpServlet {
             System.out.println("Order not found for ID: " + orderId);
          }
          if (request.getParameter("assignSuccess") != null) {
-            request.setAttribute("message", "Order successfully assigned");
+            request.setAttribute("message", "Order successfully assigned to salesperson");
          }
          if (request.getParameter("assignError") != null) {
-            request.setAttribute("error", "Failed to assign order");
+            request.setAttribute("error", "Failed to assign order to salesperson");
          }
       } catch (Exception e) {
          request.setAttribute("error", "Error processing request: " + e.getMessage());

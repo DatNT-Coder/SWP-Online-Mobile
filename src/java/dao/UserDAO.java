@@ -1029,6 +1029,40 @@ public class UserDAO extends context.DBContext {
       return n;
    }
 
+   public int countUsersRegisteredBetween(Date startDate, Date endDate) {
+      int count = 0;
+      try {
+         this.connection = getConnection();
+         String sql = "SELECT COUNT(*) AS count_users \n"
+                 + "FROM mydb.user AS u\n"
+                 + "INNER JOIN user_role AS ur ON u.id = ur.User_id\n"
+                 + "WHERE ur.role_id = 1 \n"
+                 + "AND u.registration_date >= ? \n"
+                 + "AND u.registration_date < ?";
+
+         PreparedStatement statement = connection.prepareStatement(sql);
+         statement.setDate(1, startDate);
+         statement.setDate(2, endDate);
+
+         ResultSet rs = statement.executeQuery();
+         if (rs.next()) {
+            count = rs.getInt("count_users");
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+         // Close connection if your DBContext doesn't handle it automatically
+         try {
+            if (connection != null) {
+               connection.close();
+            }
+         } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      }
+      return count;
+   }
+
    public static void main(String[] args) {
       // Thay đổi các giá trị này theo cấu hình của bạn
       int userIdToRetrieve = 3; // ID của người dùng bạn muốn lấy thông tin

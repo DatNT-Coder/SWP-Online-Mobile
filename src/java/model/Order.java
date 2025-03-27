@@ -66,6 +66,13 @@ public class Order {
 
    }
 
+   public Order(int Id, int status, double discount, String note) {
+      this.Id = Id;
+      this.status = status;
+      this.discount = discount;
+      this.note = note;
+   }
+
    public int getId() {
       return Id;
    }
