@@ -3,6 +3,7 @@
     Created on : Mar 25, 2025, 6:33:45 PM
     Author     : naokh
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Order" %>
 <%@page import="java.util.List"%>
