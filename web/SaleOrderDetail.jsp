@@ -365,6 +365,27 @@
          <% } else { %>
          <p style="color: #dc3545; padding: 20px; background-color: #f8d7da; border-radius: 4px;">Order not found.</p>
          <% } %>
+         
+         <!-- Assign Order Form -->
+         <form class="assign-form" action="AssignOrderController" method="POST">
+            <input type="hidden" name="orderId" value="<%= order.getId() %>">
+
+            <label for="saleId">Assign To:</label>
+            <select name="saleId" id="saleId" required>
+               <option value="">-- Select Salesperson --</option>
+               <% if (salesList != null && !salesList.isEmpty()) {
+            for (User sale : salesList) { %>
+               <option value="<%= sale.getId() %>" <%= order.getSaleId() == sale.getId() ? "selected" : "" %>>
+                  <%= sale.getFull_name() %> (<%= sale.getEmail() %>)
+               </option>
+               <% }
+        } else { %>
+               <option value="">No salespersons available</option>
+               <% } %>
+            </select>
+
+            <button type="submit" class="assign-button">Assign</button>
+         </form>
       </div>
    </body>
 </html>
