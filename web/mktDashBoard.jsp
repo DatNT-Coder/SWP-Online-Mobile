@@ -11,11 +11,13 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <style>
          :root {
-            --teal-primary: #4db6ac;
-            --teal-light: #82e9de;
-            --teal-dark: #00867d;
+            --teal-primary: #26a69a;
+            --teal-light: #80cbc4;
+            --teal-dark: #00897b;
             --teal-bg: #e0f2f1;
             --teal-text: #004d40;
+            --teal-card: #ffffff;
+            --teal-accent: #b2dfdb;
          }
 
          body {
