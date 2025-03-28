@@ -559,7 +559,8 @@
 
                 // Add each product
                 productsToDisplay.forEach(function (product) {
-                    var productHtml = '<div class="col-md-4">' +
+                    var productHtml = 
+                            '<div class="col-md-4">' +
                             '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
                             '<div class="product-image-wrapper">' +
                             '<div class="single-products">' +
@@ -570,12 +571,12 @@
                             '<p>' + product.name + '</p>';
 
                     productHtml += '<div style="display: flex; align-items: center; ' + 
-                        (productRatings[product.ID] == null || productRatings[product.ID] == '0' ? 'justify-content: center; width: 100%;' : '') + '">' + 
+                        (productRatings[product.ID] === null || productRatings[product.ID] === '0' ? 'justify-content: center; width: 100%;' : '') + '">' + 
                             '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart" ' + 
-                            (productRatings[product.ID] == null || productRatings[product.ID] == '0' ? 'style="flex-grow: 1;"' : '') + '>' +
+                            (productRatings[product.ID] === null || productRatings[product.ID] === '0' ? 'style="flex-grow: 1;"' : '') + '>' +
                                 '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng' +
                             '</a>' +
-                            (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+                            (productRatings[product.ID] !== null && productRatings[product.ID] !== '0'
                                 ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
                                   + productRatings[product.ID] + ' ★</a>'
                                 : '') +

@@ -635,7 +635,7 @@ public class BlogPostDAO extends DBContext {
                  + "LEFT JOIN `mydb`.`user` AS u ON bp.User_id = u.id \n"
                  + "WHERE bp.status != 0 \n"
                  + "ORDER BY bp.updatedDate DESC \n"
-                 + "LIMIT 5;";
+                 + "LIMIT 2;";
          PreparedStatement statement = connection.prepareStatement(sql);
 
          ResultSet rs = statement.executeQuery();

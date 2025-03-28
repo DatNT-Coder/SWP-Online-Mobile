@@ -143,7 +143,7 @@ public class HomePage extends jakarta.servlet.http.HttpServlet {
          
          request.setAttribute("productRatingsJSON", productRatingsJSON);
 
-         request.getRequestDispatcher("home.jsp").forward(request, response);
+         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
       }
 
    }
