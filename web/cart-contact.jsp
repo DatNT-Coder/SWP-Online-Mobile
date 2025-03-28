@@ -88,7 +88,7 @@
                                     </li>
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
-                                     
+
                                 </ul>
                             </div>
                         </div>
@@ -174,10 +174,16 @@
 
 
                                 </c:if>
-                                <tr>
-                                    <td>Tổng tiền <span>$${total}</span></td>
-                                </tr>
+
                             </c:forEach>
+                            <tr>
+                                <td colspan="4" class="text-right" style="font-weight: bold; font-size: 18px; padding: 15px;">
+                                    Tổng tiền:
+                                </td>
+                                <td colspan="2" style="font-weight: bold; font-size: 20px; color: #ff5733;">
+                                    $${total}
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <script>
