@@ -178,7 +178,12 @@
                                         <td class="cart_quantity"><p>${item.quantity}</p></td>
                                         <td class="cart_total"><p>$${item.total}</p></td>
                                     </tr>
+
+
                                 </c:if>
+                                <tr>
+                                    <td>Tổng tiền <span>$${total}</span></td>
+                                </tr>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -254,17 +259,26 @@
 
                                     <!-- Dropdown chọn địa chỉ -->
                                     <select id="addressSelect" class="form-control" style="flex: 1;">
-                                        <c:forEach var="addr" items="${addressList}">
-                                            <option value="${addr}">${addr}</option>
+                                        <c:forEach var="addr" items="${addressList}" varStatus="status">
+                                            <option value="${addr}" ${status.first ? 'selected' : ''}>${addr}</option>
                                         </c:forEach>
                                     </select>
-
-                                    <!-- Ô nhập địa chỉ -->
                                 </div>
 
                                 <script>
-                                    document.getElementById("addressSelect").addEventListener("change", function () {
-                                        document.getElementById("addressInput").value = this.value;
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        let addressSelect = document.getElementById("addressSelect");
+                                        let addressInput = document.getElementById("addressInput");
+
+                                        // Lấy địa chỉ đầu tiên nếu có
+                                        if (addressSelect.options.length > 0) {
+                                            addressInput.value = addressSelect.options[0].value;
+                                        }
+
+                                        // Cập nhật input khi chọn trong dropdown
+                                        addressSelect.addEventListener("change", function () {
+                                            addressInput.value = this.value;
+                                        });
                                     });
                                 </script>
                                 <div class="form-group">
@@ -282,7 +296,7 @@
                                     <input name="note" type="text" class="form-control" id="exampleInputEmail1" placeholder="Note">
                                 </div>
 
-                                <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Hoàn tất đặt hàng"/>
+                                <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Thanh Toán bằng VnPay"/>
 
                             </form>
 
