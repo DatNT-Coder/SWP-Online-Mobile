@@ -85,14 +85,7 @@
                                     </li>
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
-                                        <c:choose>
-                                            <c:when test="${sessionScope.user == null}">
-                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                            <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                       
                                 </ul>
                             </div>
                         </div>
