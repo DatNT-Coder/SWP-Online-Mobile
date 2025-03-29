@@ -624,15 +624,18 @@
                         //không dùng $\{product.ID} mà dùng + product.ID +
                         // if (sessionStorage.getItem('user') !== null) {
                         // User is logged in, add "Add to cart" button with onclick attribute
-                            productHtml += '<div style="display: flex; align-items: center;">' + 
-                                '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart">' +
-                                    '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
-                                '</a>' +
-                                (productRatings[product.ID] != null && productRatings[product.ID] != '0'
-                                    ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
-                                      + productRatings[product.ID] + ' ★</a>'
-                                    : '') +
-                            '</div>';
+                          productHtml += '<div style="display: flex; align-items: center; width: 100%;">' + 
+    '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart" style="flex: 1; text-align: center; margin-right: 0px;">' +
+        '<i class="fa fa-shopping-cart"></i> Thêm giỏ hàng' +
+    '</a>' +
+    (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+        ? '<a class="btn btn-default add-to-cart" style="cursor: default; flex: 0 0 auto; text-align: center; margin-left: 0px;">' 
+          + productRatings[product.ID] + ' ★</a>'
+        : '') +
+'</div>';
+
+                    
+                    
 
 
                         //                    } 

@@ -545,6 +545,7 @@
 
     var currentPage = 1; // Current page
     var itemsPerPage = 6; // Number of items per page
+    var isLoggedIn = ${sessionScope.user != null ? 'true' : 'false'};
 
     // Display products for the current page
     function displayProducts() {
@@ -567,24 +568,26 @@
                     '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
                     '<p>' + product.name + '</p>';
 
-            productHtml += '<div style="display: flex; align-items: center; ' + 
-               (productRatings[product.ID] == null || productRatings[product.ID] == '0' ? 'justify-content: center; width: 100%;' : '') + '">' + 
-                   '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart" ' + 
-                   (productRatings[product.ID] == null || productRatings[product.ID] == '0' ? 'style="flex-grow: 1;"' : '') + '>' +
-                       '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng' +
-                   '</a>' +
-                   (productRatings[product.ID] != null && productRatings[product.ID] != '0'
-                       ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
-                         + productRatings[product.ID] + ' ★</a>'
-                       : '') +
-               '</div>';
+           productHtml += '<div style="display: flex; align-items: center; width: 100%;">' + 
+    '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart" style="flex: 1; text-align: center; margin-right: 0px;">' +
+        '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng' +
+    '</a>' +
+    (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+        ? '<a class="btn btn-default add-to-cart" style="cursor: default; flex: 0 0 auto; text-align: center; margin-left: 0px;">' 
+          + productRatings[product.ID] + ' ★</a>'
+        : '') +
+'</div>';
+
+
 
 productHtml += '</div></div></div></a></div>';
 $('.product-list').append(productHtml);
 
         });
     }
-
+function redirectToLogin() {
+                    window.location.href="authen?action=login";
+                }
     // Update the pagination links
     function updatePagination() {
         var totalPages = Math.ceil(products.length / itemsPerPage);
