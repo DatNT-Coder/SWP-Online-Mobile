@@ -112,8 +112,8 @@
         <servlet-class>controller.blog.BlogPostList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PostcategoryController</servlet-name>
-        <servlet-class>controller.blog.PostcategoryController</servlet-class>
+        <servlet-name>PostCategoryController</servlet-name>
+        <servlet-class>controller.blog.PostCategoryController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BlogDetail</servlet-name>
@@ -160,7 +160,7 @@
         <url-pattern>/verifyemail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PostcategoryController</servlet-name>
+        <servlet-name>PostCategoryController</servlet-name>
         <url-pattern>/Postcategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

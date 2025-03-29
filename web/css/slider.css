@@ -33,12 +33,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .blog_list .blog_link .badge{
-   color: #5372F0;
+   color: black;
    padding 1px 2px;
    font-size: 0.95rem;
    font-weight: 500;
-   margin: 1px 0 1px;
-   background: #DDE4FF;
+   margin-bottom: 10px;
+   background: #26a69a;
    width: fit-content;
    border-radius: 50px;
    border-color: black;
@@ -47,7 +47,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 ul {
    display: block;
    list-style-type: disc;
-   margin-block-start: 1em;
    margin-block-end: 1em;
    margin-inline-start: 0px;
    margin-inline-end: 0px;
