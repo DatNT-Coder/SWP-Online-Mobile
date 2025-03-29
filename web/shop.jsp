@@ -570,7 +570,7 @@
                             '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
                             '<p>' + product.name + '</p>';
 
-                    productHtml += '<div style="display: flex; align-items: center;">' + 
+                     productHtml += '<div style="display: flex; align-items: center;">' + 
                                 '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart">' +
                                     '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
                                 '</a>' +

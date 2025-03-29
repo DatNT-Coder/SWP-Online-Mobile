@@ -593,6 +593,8 @@
                   var products = JSON.parse('${listProduct}');
                   var productRatingsJSON = '${productRatingsJSON}';
                   var productRatings = JSON.parse(productRatingsJSON.trim());
+                  console.log("productRatingsJSON:", productRatingsJSON);
+
                   var currentPage = 1; // Current page
                   var itemsPerPage = 6; // Number of items per page
                   var isLoggedIn = ${sessionScope.user != null ? 'true' : 'false'};
