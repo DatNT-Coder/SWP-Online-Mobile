@@ -85,14 +85,7 @@
                                     </li>
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
-                                        <c:choose>
-                                            <c:when test="${sessionScope.email == null || sessionScope.pass == null}">
-                                            <li><a href="login.jsp"><i class="fa fa-lock"></i> Đăng Nhập</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                            <li><a href="logOut.jsp"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                      
                                 </ul>
                             </div>
                         </div>
@@ -154,7 +147,7 @@
                 <div class="table-responsive cart_info">
                     <div class="text-center">
                         <h2 class="text-success">Bạn đã hoàn tất đơn đặt hàng</h2>
-                        <h3>Mã Đơn hàn của bạn là: #${orderId}</h3>
+                        <h3>Mã Đơn hàng của bạn là: #${orderId}</h3>
                         <a href="/ProjectSWP391/HomePage"  class="btn btn-default add-to-cart"><i ></i>Trở về trang chủ</a>
                         <a href="${pageContext.request.contextPath}/feedback"  class="btn btn-default add-to-cart"><i ></i>Đi đến bình luận</a>
                     </div>

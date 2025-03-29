@@ -401,7 +401,7 @@ public class VNPayReturnServlet extends HttpServlet {
 
     } else {
         // Thanh toán thất bại
-        response.sendRedirect(request.getContextPath() + "/customer/cart/checkout-fail");
+        response.sendRedirect(request.getContextPath() + "/cart-fail.jsp");
     }
 
     }

@@ -1,9 +1,6 @@
 
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,7 +20,7 @@
         <script src="${pageContext.request.contextPath}/js/html5shiv.js"></script>
         <script src="${pageContext.request.contextPath}/js/respond.min.js"></script>
         <![endif]-->       
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/ico/favicon.ico">
+        <link rel="shortcut icon" href="images/ico/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-72-precomposed.png">
@@ -41,7 +38,7 @@
                         <div class="col-sm-6 ">
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
-                                    <li><a href=""><i class="fa fa-phone"></i> +84 987 654 321</a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> +84 985 350 491</a></li>
                                     <li><a href=""><i class="fa fa-envelope"></i> group3_shopmobile@gmail.com</a></li>
                                 </ul>
                             </div>
@@ -88,7 +85,7 @@
                                     </li>
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="/ProjectSWP391/CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
-
+                                      
                                 </ul>
                             </div>
                         </div>
@@ -98,6 +95,7 @@
 
             <div class="header-bottom"><!--header-bottom-->
                 <div class="container">
+                    
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="navbar-header">
@@ -110,14 +108,15 @@
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="${pageContext.request.contextPath}/HomePage">Trang chủ</a></li>
-                                    <li class="dropdown"><a href="HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="/ProjectSWP391/HomePage">Trang chủ</a></li>
+                                    <li class="dropdown"><a href="/ProjectSWP391/HomePage" class="active">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="/ProjectSWP391/ProductList" class="active">Sản phẩm</a></li>
+                                         
                                         </ul>
                                     </li> 
                                     <li class="dropdown"><a href="/ProjectSWP391/BlogPostList">Bài Đăng<i class="fa fa-angle-down"></i></a>
-
+                                      
                                     </li> 
                                     <li><a href="contact-us.html">Liên hệ</a></li>
                                 </ul>
@@ -135,175 +134,26 @@
                     </div>
                 </div>
             </div>
-        </header><!--/header-->
+        </header>
 
         <section id="cart_items">
             <div class="container">
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
-                        <li><a href="/ProjectSWP391/HomePage">Home</a></li>
+                        <li><a href="home.jsp">Home</a></li>
                         <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
                 <div class="table-responsive cart_info">
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr class="cart_menu">
-                                <td class="image">Sản Phẩm</td>
-                                <td class="description"></td>
-                                <td class="price">Giá Tiền</td>
-                                <td class="quantity">Số lượng</td>
-                                <td class="total">Tổng tiền</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="item" items="${cart}">
-                                <c:if test="${empty selectedProducts or fn:contains(selectedProducts, item.productId)}">
-                                    <tr id="item-${item.productId}">
-                                        <td class="cart_product">
-                                            <a href=""><img style="max-height: 100px;" src="${pageContext.request.contextPath}/assets/img/productImage/${item.image}" alt=""></a>
-                                        </td>
-                                        <td class="cart_description">
-                                            <h4><a href="">${item.name}</a></h4>
-                                        </td>
-                                        <td class="cart_price"><p>$${item.price}</p></td>
-                                        <td class="cart_quantity"><p>${item.quantity}</p></td>
-                                        <td class="cart_total"><p>$${item.total}</p></td>
-                                    </tr>
-
-
-                                </c:if>
-
-                            </c:forEach>
-                            <tr>
-                                <td colspan="4" class="text-right" style="font-weight: bold; font-size: 18px; padding: 15px;">
-                                    Tổng tiền:
-                                </td>
-                                <td colspan="2" style="font-weight: bold; font-size: 20px; color: #ff5733;">
-                                    $${total}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <script>
-                        async function updateQuantity(productId, amount) {
-                            const quantityDiv = document.getElementById('item-quantity-' + productId);
-                            const postData = new URLSearchParams();
-                            postData.append("productId", productId);
-                            if (amount === 0) {
-                                postData.append("amount", -quantityDiv.value);
-                            } else {
-                                postData.append("amount", amount);
-                            }
-                            const response = await fetch('${pageContext.request.contextPath}/customer/cart/update', {
-                                method: "POST",
-                                body: postData
-                            });
-                            const data = await response.json();
-                            const status = data.status;
-
-                            console.log(data);
-                            if (status === 'successed') {
-                                const newQuantity = data.quantity;
-                                if (+newQuantity === 0) {
-                                    document.getElementById('item-' + productId).remove();
-                                    await FuiToast.success('Updated product quantity successfully!');
-                                    return false;
-                                }
-                                const price = data.price;
-                                const total = data.total;
-                                const priceDiv = document.getElementById('item-price-' + productId);
-                                const totalDiv = document.getElementById('item-total-' + productId);
-                                quantityDiv.value = newQuantity;
-                                priceDiv.innerHTML = '$' + price;
-                                totalDiv.innerHTML = '$' + total;
-                                await FuiToast.success('Updated product quantity successfully!');
-                            } else {
-                                await FuiToast.error('Update product quantity failed!');
-                            }
-                            return false;
-                        }
-                    </script>
-
+                    <div class="text-center">
+                        <h2 class="text-success">Đặt hàng thất bại</h2>
+                        
+                        <a href="/ProjectSWP391/HomePage"  class="btn btn-default add-to-cart"><i ></i>Trở về trang chủ</a>
+                        <a href="/ProjectSWP391/CartViewController"  class="btn btn-default add-to-cart"><i ></i>Đi đến giỏ hàng</a>
+                    </div>
                 </div>
             </div>
         </section> <!--/#cart_items-->
-
-        <section id="do_action">
-            <div class="container">
-                <div class="heading">
-                    <h3>Thông Tin Liên Lạc</h3>
-                    <p>Hãy hoàn thành thông tin trước khi bạn đạt hàng</p>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="total_area">
-                            <ul>
-                                <li>Tổng tiền <span>$${total}</span></li>
-                                <li>
-                                    <p>
-                                        Thanh toán bằng mã QR dưới đây!
-                                    </p>
-                                    <img style="max-width: 250px; margin: 0 auto; display: block;" src="${qr}" alt="qr"/>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="total_area">
-                            <form action="${pageContext.request.contextPath}/customer/cart/checkout" method="POST" style="margin-left: 2.5rem;">
-                                <div class="form-group" style="display: flex; gap: 10px;">
-                                    <input name="address" type="text" class="form-control" id="addressInput" placeholder="Nhập địa chỉ" style="flex: 2;" required>
-
-                                    <!-- Dropdown chọn địa chỉ -->
-                                    <select id="addressSelect" class="form-control" style="flex: 1;">
-                                        <c:forEach var="addr" items="${addressList}" varStatus="status">
-                                            <option value="${addr}" ${status.first ? 'selected' : ''}>${addr}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        let addressSelect = document.getElementById("addressSelect");
-                                        let addressInput = document.getElementById("addressInput");
-
-                                        // Lấy địa chỉ đầu tiên nếu có
-                                        if (addressSelect.options.length > 0) {
-                                            addressInput.value = addressSelect.options[0].value;
-                                        }
-
-                                        // Cập nhật input khi chọn trong dropdown
-                                        addressSelect.addEventListener("change", function () {
-                                            addressInput.value = this.value;
-                                        });
-                                    });
-                                </script>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Số Điện Thoại</label>
-                                    <input name="phone" value="${phone}"  type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone" required="không thể bỏ trống địa chỉ">
-                                    <!--<label style="color: red" > số điện thoại không đúng định dạng!!!</label>-->
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <input name="email" value="${email}"   type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" required="không thể bỏ trống địa chỉ">
-                                    <!--<label style="color: red" > email không tồn tại!!!</label>-->
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Ghi chú</label>
-                                    <input name="note" type="text" class="form-control" id="exampleInputEmail1" placeholder="Note">
-                                </div>
-
-                                <input  type="submit" class="btn btn-default update" style="margin-left: 0;" value="Thanh Toán bằng VnPay"/>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section><!--/#do_action-->
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -391,19 +241,19 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Dịch vụ</h2>
+                                <h2>Service</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Hỗ trợ online</a></li>
-                                    <li><a href="">Liên hệ</a></li>
-                                    <li><a href="">Trạng thái đơn hàng</a></li>
-                                    <li><a href="">Thay đổi địa chỉ</a></li>
+                                    <li><a href="">Online Help</a></li>
+                                    <li><a href="">Contact Us</a></li>
+                                    <li><a href="">Order Status</a></li>
+                                    <li><a href="">Change Location</a></li>
                                     <li><a href="">FAQ’s</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Mua nhanh</h2>
+                                <h2>Quock Shop</h2>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a href="">T-Shirt</a></li>
                                     <li><a href="">Mens</a></li>
@@ -415,33 +265,35 @@
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Chính sách</h2>
+                                <h2>Policies</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Điều khoản sử dụng</a></li>
-                                    <li><a href="">Quyền riêng tư</a></li>
-                                    <li><a href="">Chính sách đổi trả</a></li>
-                                    <li><a href="">Hệ thống hóa đơn</a></li>
+                                    <li><a href="">Terms of Use</a></li>
+                                    <li><a href="">Privecy Policy</a></li>
+                                    <li><a href="">Refund Policy</a></li>
+                                    <li><a href="">Billing System</a></li>
+                                    <li><a href="">Ticket System</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="single-widget">
-                                <h2>Về người bán hàng</h2>
+                                <h2>About Shopper</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="">Thông tin công ty</a></li>
-                                    <li><a href="">Địa chỉ cửa hàng</a></li>
-                                    <li><a href="">Tiếp thị liên kết</a></li>
-                                    <li><a href="">Bản quyền</a></li>
+                                    <li><a href="">Company Information</a></li>
+                                    <li><a href="">Careers</a></li>
+                                    <li><a href="">Store Location</a></li>
+                                    <li><a href="">Affillate Program</a></li>
+                                    <li><a href="">Copyright</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-3 col-sm-offset-1">
                             <div class="single-widget">
-                                <h2>Về người bán hàng</h2>
+                                <h2>About Shopper</h2>
                                 <form action="#" class="searchform">
-                                    <input type="text" placeholder="Địa chỉ email..." />
-                                    <button style="background-color: #009981" type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                                    <p>Nhận được thông tin cập nhật mới nhất <br />từ website</p>
+                                    <input type="text" placeholder="Your email address" />
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <p>Get the most recent updates from <br />our site and be updated your self...</p>
                                 </form>
                             </div>
                         </div>
@@ -453,8 +305,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2025 . All rights reserved.</p>
-                        <p class="pull-right">Designed by <span><a target="_blank" href=""></a></span></p>
+                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
                     </div>
                 </div>
             </div>
