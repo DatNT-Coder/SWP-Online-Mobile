@@ -121,13 +121,17 @@
                               User loggedInUser = (User) session.getAttribute(CommonConst.SESSION_ACCOUNT);
                               if (loggedInUser != null && loggedInUser.getRole_id() == 5) { 
                               %>
-                              <a href="/ProjectSWP391/marketing/listFeedbackMarketing">Bảng Điều Khiển Marketing</a>
+                              <a href="/ProjectSWP391/marketing/MarketingDashboardController">Bảng Điều Khiển Marketing</a>
                               <% 
                               } else if (loggedInUser != null && loggedInUser.getRole_id() == 2) { 
                               %>
                               <a href="/ProjectSWP391/sale/saleDashboard">Bảng Điều Khiển Sale</a>
                               <% 
-                              } 
+                              } else if (loggedInUser != null && loggedInUser.getRole_id() == 4) { 
+                              %>
+                              <a href="/ProjectSWP391/admin/adminDashBoard">Bảng Điều Khiển Admin</a>
+                              <% 
+                              }
                               %>
                            </li>
                            <%-- popup khi đúng role --%>  

@@ -30,7 +30,6 @@
     </head><!--/head-->
 
     <body>
-        <div id="fui-toast"></div>
         <header id="header"><!--header-->
             <div class="header_top"><!--header_top-->
                 <div class="container">
@@ -145,12 +144,6 @@
 
         <section id="cart_items">
             <div class="container">
-                <div class="breadcrumbs">
-                    <ol class="breadcrumb">
-                        <li><a href="home.jsp">Home</a></li>
-                        <li class="active">Shopping Cart</li>
-                    </ol>
-                </div>
                 <div class="table-responsive cart_info">
                     <div class="text-center">
                         <h2 class="text-success">Bạn đã hoàn tất đơn đặt hàng</h2>

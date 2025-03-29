@@ -132,7 +132,7 @@
             border-bottom: 1px solid #eee;
          }
 
-         tr:nth-child(even) {
+         tr:nth-child(even) {                            
             background-color: var(--teal-light);
          }
 

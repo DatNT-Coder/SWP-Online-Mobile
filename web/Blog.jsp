@@ -1,3 +1,5 @@
+<%@ page import="model.User"%>
+<%@ page import="constant.CommonConst"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -30,7 +32,7 @@
    </head><!--/head-->
 
    <body>
-      <!--header-->
+       <!--header-->
       <header id="header">
          <div class="header_top"><!--header_top-->
             <div class="container">
@@ -83,8 +85,8 @@
                   </div>
                </div>
          </section>
-
-         <div class="header-bottom"><!--header-bottom-->
+         <!--header-bottom-->
+         <div class="header-bottom">
             <div class="container">
                <div class="row">
                   <div class="col-sm-8">
@@ -108,20 +110,93 @@
                                  <li><a href="BlogPostList">Danh sách Bài Đăng</a></li>
                               </ul>
                            </li>
+                           <li>
+                              <% 
+                              User loggedInUser = (User) session.getAttribute(CommonConst.SESSION_ACCOUNT);
+                              if (loggedInUser != null && loggedInUser.getRole_id() == 5) { 
+                              %>
+                              <a href="/ProjectSWP391/marketing/MarketingDashboardController">Bảng Điều Khiển Marketing</a>
+                              <% 
+                              } else if (loggedInUser != null && loggedInUser.getRole_id() == 2) { 
+                              %>
+                              <a href="/ProjectSWP391/sale/saleDashboard">Bảng Điều Khiển Sale</a>
+                              <% 
+                              } else if (loggedInUser != null && loggedInUser.getRole_id() == 4) { 
+                              %>
+                              <a href="/ProjectSWP391/admin/adminDashBoard">Bảng Điều Khiển Admin</a>
+                              <% 
+                              }
+                              %>
+                           </li>
+                           <%-- popup khi đúng role --%>  
+                           <%--  <c:if test="${account.getRole_id() == 4 || account.getRole_id() == 5}">
+                                   <li class="dropdown"><a href="customerList">Customer List</a>
+                                   </li>
+                               </c:if> --%>
                         </ul>
                      </div>
                   </div>
-                  <div class=" pull-right">
-                     <form action="BlogPostList">
-
-                        <input name="keyword" type="text" placeholder="Tìm kiếm..." required=""/>
-                        <button type="submit" value="search">Tìm kiếm</button>
-                     </form> 
+                  <div class="col-sm-4">
+                     <div class="pull-right">
+                        <form action="searchProduct" class="search-form">
+                           <input type="hidden" name="action" value="searchByWord"/>
+                           <input name="searchBox" type="text" placeholder="Mô tả, tên sản phẩm..." required aria-label="Search products"/>
+                           <button type="submit" value="search">
+                              <i class="fa fa-search"></i> Tìm kiếm
+                           </button>
+                        </form> 
+                     </div>
                   </div>
                </div>
             </div>
-         </div><!--/header-bottom-->
-      </header><!--/header-->
+         </div>
+      </header>
+
+      <!--Edit Profile-->
+      <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="editProfileModalLabel">Edit Profile</h4>
+               </div>
+               <div class="modal-body">
+                  <form class="edit-form" action="user-profile" enctype="multipart/form-data" method="post">
+                     <div class="form-group">
+                        <label for="edit-full-name">Full Name</label>
+                        <input type="text" name="fullName" class="form-control" id="edit-full-name" value="${sessionScope.profileUser.full_name}">
+                     </div>
+                     <div class="form-group">
+                        <label for="edit-email">Email</label>
+                        <input type="email" name="email" class="form-control" disabled="true"id="edit-email" value="${sessionScope.profileUser.email}">
+                     </div>
+                     <div class="form-group">
+                        <label for="edit-phone">Phone</label>
+                        <input type="tel" name="phone" class="form-control" id="edit-phone" value="${sessionScope.profileUser.phone}">
+                     </div>
+                     <div class="form-group">
+                        <label for="edit-gender">Gender</label>
+                        <select class="form-control" id="edit-gender" name="gender">
+                           <option value="Male" ${sessionScope.profileUser.gender == "Male" ?"selected" : ""}>Male</option>
+                           <option value="Female" ${sessionScope.profileUser.gender == "Female" ?"selected" : ""}>Female</option>
+                           <option value="Other"${sessionScope.profileUser.gender == "Other" ?"selected" : ""}>Other</option>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                        <label for="profile-image">Profile Image</label>
+                        <input type="file" id="profile-image" accept="image/*">
+                        <p class="help-block">Choose a new profile image</p>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn primary">Save Changes</button>
+                     </div>
+                  </form>
+               </div>
+
+            </div>
+         </div>
+      </div>
 
       <section>
          <div class="container">
@@ -195,149 +270,54 @@
          </div>
       </section>
 
-      <footer id="footer"><!--Footer-->
-         <div class="footer-top">
-            <div class="container">
-               <div class="row">
-                  <div class="col-sm-2">
-                     <div class="companyinfo">
-                        <h2><span>e</span>-shopper</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
-                     </div>
-                  </div>
-                  <div class="col-sm-7">
-                     <div class="col-sm-3">
-                        <div class="video-gallery text-center">
-                           <a href="#">
-                              <div class="iframe-img">
-                                 <img src="images/home/iframe1.png" alt="" />
-                              </div>
-                              <div class="overlay-icon">
-                                 <i class="fa fa-play-circle-o"></i>
-                              </div>
-                           </a>
-                           <p>Circle of Hands</p>
-                           <h2>24 DEC 2014</h2>
-                        </div>
-                     </div>
-
-                     <div class="col-sm-3">
-                        <div class="video-gallery text-center">
-                           <a href="#">
-                              <div class="iframe-img">
-                                 <img src="images/home/iframe2.png" alt="" />
-                              </div>
-                              <div class="overlay-icon">
-                                 <i class="fa fa-play-circle-o"></i>
-                              </div>
-                           </a>
-                           <p>Circle of Hands</p>
-                           <h2>24 DEC 2014</h2>
-                        </div>
-                     </div>
-
-                     <div class="col-sm-3">
-                        <div class="video-gallery text-center">
-                           <a href="#">
-                              <div class="iframe-img">
-                                 <img src="images/home/iframe3.png" alt="" />
-                              </div>
-                              <div class="overlay-icon">
-                                 <i class="fa fa-play-circle-o"></i>
-                              </div>
-                           </a>
-                           <p>Circle of Hands</p>
-                           <h2>24 DEC 2014</h2>
-                        </div>
-                     </div>
-
-                     <div class="col-sm-3">
-                        <div class="video-gallery text-center">
-                           <a href="#">
-                              <div class="iframe-img">
-                                 <img src="images/home/iframe4.png" alt="" />
-                              </div>
-                              <div class="overlay-icon">
-                                 <i class="fa fa-play-circle-o"></i>
-                              </div>
-                           </a>
-                           <p>Circle of Hands</p>
-                           <h2>24 DEC 2014</h2>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-sm-3">
-                     <div class="address">
-                        <img src="images/home/map.png" alt="" />
-                        <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-
+      <!--Footer-->               
+      <footer id="footer">
          <div class="footer-widget">
             <div class="container">
                <div class="row">
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                      <div class="single-widget">
-                        <h2>Service</h2>
+                        <h2>Support - service</h2>
                         <ul class="nav nav-pills nav-stacked">
-                           <li><a href="">Online Help</a></li>
-                           <li><a href="">Contact Us</a></li>
-                           <li><a href="">Order Status</a></li>
-                           <li><a href="">Change Location</a></li>
-                           <li><a href="">FAQ’s</a></li>
+                           <li><a href="/mua-hang-tra-gop">Policy and instructions for installment purchases</a></li>
+                           <li><a href="/huong-dan-dat-hang">Purchase instructions and shipping policy</a></li>
+                           <li><a href="/order/check">Order Tracking</a></li>
+                           <li><a href="/chinh-sach-bao-hanh">Exchange and warranty policy</a></li>
+                           <li><a href="/tin-tuc/dat-hang/dich-vu-bao-hanh-mo-rong-hoang-ha-mobile/">Extended warranty service</a></li>
                         </ul>
                      </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                      <div class="single-widget">
-                        <h2>Quock Shop</h2>
+                        <h2>Contact information</h2>
                         <ul class="nav nav-pills nav-stacked">
-                           <li><a href="">T-Shirt</a></li>
-                           <li><a href="">Mens</a></li>
-                           <li><a href="">Womens</a></li>
-                           <li><a href="">Gift Cards</a></li>
-                           <li><a href="">Shoes</a></li>
+                           <li><a href="/cham-soc-khach-hang">Customer care</a></li>
+                           <li><a href="/trung-tam-bao-hanh">Warranty lookup</a></li>
+                           <li><a href="contact-us.html">Contact us</a></li>
                         </ul>
                      </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                      <div class="single-widget">
-                        <h2>Policies</h2>
+                        <h2>Payment methods</h2>
                         <ul class="nav nav-pills nav-stacked">
-                           <li><a href="">Terms of Use</a></li>
-                           <li><a href="">Privecy Policy</a></li>
-                           <li><a href="">Refund Policy</a></li>
-                           <li><a href="">Billing System</a></li>
-                           <li><a href="">Ticket System</a></li>
+                           <img src="images/home/visa.png" />
+                           <img src="images/home/mastercard.png" />
+                           <img src="images/home/jcb.png" />
+                           <img src="images/home/samsungpay.png" />
+                           <img src="images/home/vnpay.png" />
+                           <img src="images/home/zalopay.png" />
                         </ul>
                      </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                      <div class="single-widget">
-                        <h2>About Shopper</h2>
+                        <h2>Shipping method</h2>
                         <ul class="nav nav-pills nav-stacked">
-                           <li><a href="">Company Information</a></li>
-                           <li><a href="">Careers</a></li>
-                           <li><a href="">Store Location</a></li>
-                           <li><a href="">Affillate Program</a></li>
-                           <li><a href="">Copyright</a></li>
+                           <img src="images/home/vnpost.png">
                         </ul>
                      </div>
                   </div>
-                  <div class="col-sm-3 col-sm-offset-1">
-                     <div class="single-widget">
-                        <h2>About Shopper</h2>
-                        <form action="#" class="searchform">
-                           <input type="text" placeholder="Your email address" />
-                           <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                           <p>Get the most recent updates from <br />our site and be updated your self...</p>
-                        </form>
-                     </div>
-                  </div>
-
                </div>
             </div>
          </div>
@@ -345,13 +325,11 @@
          <div class="footer-bottom">
             <div class="container">
                <div class="row">
-                  <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                  <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
                </div>
             </div>
          </div>
+      </footer>
 
-      </footer><!--/Footer-->
 
 
 
