@@ -45,10 +45,13 @@
                 <div class="col-12 mb-3 mb-lg-5">
                     <div class="card table-nowrap table-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
+                            
+                            <a href="/ProjectSWP391/admin/adminDashBoard" class="btn btn-info btn-sm"> Home </a>
+                            
                             <h5 class="mb-0">Users List</h5>
                             
                             <ul class="nav navbar-nav">
-                                <li><i class="fa fa-user"></i><button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add </button></li>
+                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addUserModal"> Add </button></li>
                             </ul>
 
                             <!-- Add User Modal -->

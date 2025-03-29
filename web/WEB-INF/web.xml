@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>SaleFilter</filter-name>
+        <filter-class>filter.SaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SaleFilter</filter-name>
+        <url-pattern>/sale/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MarketingFilter</filter-name>
+        <url-pattern>/marketing/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HomeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>ResetPassword</servlet-name>
         <servlet-class>controller.user.ResetPassword</servlet-class>
@@ -63,14 +83,10 @@
         <filter-name>MarketingFilter</filter-name>
         <filter-class>filter.MarketingFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>MarketingFilter</filter-name>
-        <url-pattern>/marketing/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>HomeFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
     <servlet>
         <servlet-name>HomePage</servlet-name>
         <servlet-class>controller.home.HomePage</servlet-class>
