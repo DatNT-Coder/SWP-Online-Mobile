@@ -13,10 +13,10 @@
       <title>My Assigned Orders</title>
    </head>
    <body>
-      <div class="col-md-3">
+      <div class="col-md-2">
          <jsp:include page="Sale_sidebar.jsp"></jsp:include>
          </div>
-         <div class="col-md-9">
+         <div class="col-md-10">
             <section class="content">
                <h2>Order List</h2>
 

@@ -176,8 +176,7 @@ h1, h2, h3, h4, h5, h6 {
    font-size: 14px;
 }
 
-.mainmenu ul li a:hover,
-.mainmenu ul li a.active {
+.mainmenu ul li a:hover {
    color: #00796b;
    background: transparent;
    border-bottom: 1px solid #00796b;
@@ -492,7 +491,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .single-blog-post a img {
    width: 100%;
-   height: 200px;
+   height: 160px;
    object-fit: cover;
    margin-bottom: 15px;
 }

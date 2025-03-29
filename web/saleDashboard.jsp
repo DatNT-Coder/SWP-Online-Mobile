@@ -136,12 +136,18 @@
             background-color: var(--teal-light);
          }
 
+         .col-lg-10.main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: var(--teal-bg);
+         }
+
          @media (max-width: 768px) {
             .dashboard-container {
                flex-direction: column;
             }
 
-            .col-md-3 {
+            .col-md-2 {
                width: 100%;
             }
 
@@ -158,205 +164,208 @@
       </style>
    </head>
    <body>
-      <div class="dashboard-container">
-         <!-- Sidebar -->
-         <div class="col-md-3">
-            <jsp:include page="Sale_sidebar.jsp"></jsp:include>
-            </div>
+      <div class="container-fluid">
+         <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+               <jsp:include page="Sale_sidebar.jsp"></jsp:include>
+               </div>
 
-            <!-- Main Content -->
-            <div class="main-content">
-               <div class="row" style="margin-bottom:5px;">
-                  <div class="col-md-3">
-                     <div class="sm-st clearfix">
-                        <span class="sm-st-icon st-blue"><i class="fa-solid fa-cart-arrow-down"></i></span>
-                        <div class="sm-st-info">
-                           <span>${sumOrder}</span>
-                        Total Orders
+               <!-- Main Content -->
+               <div class="col-lg-10 main-content">
+                  <div class="container-fluid py-4">
+                     <div class="main-content">
+                        <div class="row" style="margin-bottom:5px;">
+                           <div class="col-md-3">
+                              <div class="sm-st clearfix">
+                                 <span class="sm-st-icon st-blue"><i class="fa-solid fa-cart-arrow-down"></i></span>
+                                 <div class="sm-st-info">
+                                    <span>${sumOrder}</span>
+                                 Total Orders
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-3">
+                           <div class="sm-st clearfix">
+                              <span class="sm-st-icon st-green"><i class="fa-solid fa-check"></i></span>
+                              <div class="sm-st-info">
+                                 <span>${succOrder}</span>
+                                 Successful Orders
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="col-md-6" style="margin-bottom:5px;">
+                           <form action="/ProjectSWP391/sale/saleDashboard" method="POST" class="row">
+                              <div class="col-md-6">
+                                 <label for="startDate">From:</label>
+                                 <input name="fromDate" value="${requestScope.fromDate}" type="date" class="form-control" id="startDate">
+                              </div>
+                              <div class="col-md-6">
+                                 <label for="endDate">To:</label>
+                                 <input name="toDate" value="${requestScope.toDate}" type="date" class="form-control" id="endDate" readonly>
+                              </div>
+                              <div class="col-md-3">
+                                 <button style="margin-top: 8px;" class="btn btn-primary" type="submit">Filter <i class="fa-solid fa-filter"></i></button>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+
+                     <!-- Main row -->
+                     <div class="row">
+                        <div class="col-md-8">
+                           <!-- Success Rate Chart -->
+                           <section class="panel">
+                              <header class="panel-heading">Order Success Rate</header>
+                              <div class="panel-body">
+                                 <canvas id="successRateChart" width="600" height="330"></canvas>
+                              </div>
+                           </section>
+
+                           <!-- Revenue Trend Chart -->
+                           <section class="panel">
+                              <header class="panel-heading">7-Day Revenue Trend</header>
+                              <div class="panel-body">
+                                 <canvas id="revenueTrendChart" width="600" height="330"></canvas>
+                              </div>
+                           </section>
+                        </div>
+
+                        <div class="col-md-4">
+                           <!-- Best Selling Products -->
+                           <section class="panel">
+                              <header class="panel-heading">Best Selling Products</header>
+                              <div class="panel-body">
+                                 <table class="table table-bordered">
+                                    <thead>
+                                       <tr>
+                                          <th>Product Name</th>
+                                          <th>Total Quantity</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <c:forEach items="${list}" var="listSelling">
+                                          <tr>
+                                             <td>${listSelling.key}</td>
+                                             <td>${listSelling.value}</td>
+                                          </tr>
+                                       </c:forEach>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </section>
+                        </div>
                      </div>
                   </div>
                </div>
-               <div class="col-md-3">
-                  <div class="sm-st clearfix">
-                     <span class="sm-st-icon st-green"><i class="fa-solid fa-check"></i></span>
-                     <div class="sm-st-info">
-                        <span>${succOrder}</span>
-                        Successful Orders
-                     </div>
-                  </div>
-               </div>
 
-               <div class="col-md-6" style="margin-bottom:5px;">
-                  <form action="/ProjectSWP391/sale/saleDashboard" method="POST" class="row">
-                     <div class="col-md-6">
-                        <label for="startDate">From:</label>
-                        <input name="fromDate" value="${requestScope.fromDate}" type="date" class="form-control" id="startDate">
-                     </div>
-                     <div class="col-md-6">
-                        <label for="endDate">To:</label>
-                        <input name="toDate" value="${requestScope.toDate}" type="date" class="form-control" id="endDate" readonly>
-                     </div>
-                     <div class="col-md-3">
-                        <button style="margin-top: 8px;" class="btn btn-primary" type="submit">Filter <i class="fa-solid fa-filter"></i></button>
-                     </div>
-                  </form>
-               </div>
-            </div>
+               <script>
+                  // Date picker constraints - kept exactly the same as original
+                  window.onload = function () {
+                     var today = new Date().toISOString().split('T')[0];
+                     document.getElementById('startDate').setAttribute('max', today);
+                     document.getElementById('endDate').setAttribute('max', today);
+                     document.getElementById('startDate').addEventListener('change', function () {
+                        if (this.value)
+                           document.getElementById('endDate').setAttribute('min', this.value);
+                     }, false);
+                     document.getElementById('endDate').addEventListener('change', function () {
+                        if (this.value)
+                           document.getElementById('startDate').setAttribute('max', this.value);
+                     }, false);
+                  };
 
-            <!-- Main row -->
-            <div class="row">
-               <div class="col-md-8">
-                  <!-- Success Rate Chart -->
-                  <section class="panel">
-                     <header class="panel-heading">Order Success Rate</header>
-                     <div class="panel-body">
-                        <canvas id="successRateChart" width="600" height="330"></canvas>
-                     </div>
-                  </section>
+                  // Auto-set end date 7 days after start date - kept exactly the same as original
+                  document.addEventListener('DOMContentLoaded', function () {
+                     var startDateInput = document.getElementById('startDate');
+                     var endDateInput = document.getElementById('endDate');
 
-                  <!-- Revenue Trend Chart -->
-                  <section class="panel">
-                     <header class="panel-heading">7-Day Revenue Trend</header>
-                     <div class="panel-body">
-                        <canvas id="revenueTrendChart" width="600" height="330"></canvas>
-                     </div>
-                  </section>
-               </div>
+                     startDateInput.addEventListener('change', function () {
+                        var startDateValue = startDateInput.value;
 
-               <div class="col-md-4">
-                  <!-- Best Selling Products -->
-                  <section class="panel">
-                     <header class="panel-heading">Best Selling Products</header>
-                     <div class="panel-body">
-                        <table class="table table-bordered">
-                           <thead>
-                              <tr>
-                                 <th>Product Name</th>
-                                 <th>Total Quantity</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <c:forEach items="${list}" var="listSelling">
-                                 <tr>
-                                    <td>${listSelling.key}</td>
-                                    <td>${listSelling.value}</td>
-                                 </tr>
-                              </c:forEach>
-                           </tbody>
-                        </table>
-                     </div>
-                  </section>
-               </div>
-            </div>
-         </div>
-      </div>
+                        if (startDateValue) {
+                           var startDate = new Date(startDateValue);
 
-      <script>
-         // Date picker constraints - kept exactly the same as original
-         window.onload = function () {
-            var today = new Date().toISOString().split('T')[0];
-            document.getElementById('startDate').setAttribute('max', today);
-            document.getElementById('endDate').setAttribute('max', today);
-            document.getElementById('startDate').addEventListener('change', function () {
-               if (this.value)
-                  document.getElementById('endDate').setAttribute('min', this.value);
-            }, false);
-            document.getElementById('endDate').addEventListener('change', function () {
-               if (this.value)
-                  document.getElementById('startDate').setAttribute('max', this.value);
-            }, false);
-         };
+                           if (startDate.toISOString().split('T')[0] === new Date().toISOString().split('T')[0]) {
+                              endDateInput.value = new Date().toISOString().split('T')[0];
+                           } else {
+                              startDate.setDate(startDate.getDate() + 6);
+                              endDateInput.value = startDate.toISOString().split('T')[0];
+                           }
 
-         // Auto-set end date 7 days after start date - kept exactly the same as original
-         document.addEventListener('DOMContentLoaded', function () {
-            var startDateInput = document.getElementById('startDate');
-            var endDateInput = document.getElementById('endDate');
+                           endDateInput.readOnly = true;
+                        }
+                     });
+                  });
 
-            startDateInput.addEventListener('change', function () {
-               var startDateValue = startDateInput.value;
+                  // Success Rate Chart - kept exactly the same as original
+                  var successOrdersJSON = '${succOrderChart}';
+                  var totalOrdersJSON = '${sumOrderChart}';
+                  var successOrders = JSON.parse(successOrdersJSON);
+                  var totalOrders = JSON.parse(totalOrdersJSON);
+                  var dateLabels = Object.keys(successOrders).sort();
+                  var successValues = Object.values(successOrders);
+                  var totalValues = Object.values(totalOrders);
 
-               if (startDateValue) {
-                  var startDate = new Date(startDateValue);
+                  var ctx = document.getElementById('successRateChart').getContext('2d');
+                  var successRateChart = new Chart(ctx, {
+                     type: 'line',
+                     data: {
+                        labels: dateLabels,
+                        datasets: [{
+                              label: 'Success Rate',
+                              borderColor: 'green',
+                              data: successValues.map((success, index) => {
+                                 return (success / totalValues[index]) * 100;
+                              }),
+                              fill: false
+                           }]
+                     }
+                  });
 
-                  if (startDate.toISOString().split('T')[0] === new Date().toISOString().split('T')[0]) {
-                     endDateInput.value = new Date().toISOString().split('T')[0];
-                  } else {
-                     startDate.setDate(startDate.getDate() + 6);
-                     endDateInput.value = startDate.toISOString().split('T')[0];
+                  // Revenue Trend Chart - kept exactly the same as original
+                  function formatDate(date) {
+                     var d = new Date(date),
+                             month = '' + (d.getMonth() + 1),
+                             day = '' + d.getDate(),
+                             year = d.getFullYear();
+
+                     if (month.length < 2)
+                        month = '0' + month;
+                     if (day.length < 2)
+                        day = '0' + day;
+
+                     return [year, month, day].join('-');
                   }
 
-                  endDateInput.readOnly = true;
-               }
-            });
-         });
+                  var revenue7Days = JSON.parse('${revenue7Days}');
+                  var labels = [];
+                  var revenues = [];
 
-         // Success Rate Chart - kept exactly the same as original
-         var successOrdersJSON = '${succOrderChart}';
-         var totalOrdersJSON = '${sumOrderChart}';
-         var successOrders = JSON.parse(successOrdersJSON);
-         var totalOrders = JSON.parse(totalOrdersJSON);
-         var dateLabels = Object.keys(successOrders).sort();
-         var successValues = Object.values(successOrders);
-         var totalValues = Object.values(totalOrders);
+                  for (var i = 0; i < revenue7Days.length; i++) {
+                     labels.push(formatDate(revenue7Days[i].date));
+                     revenues.push(revenue7Days[i].totalMoney);
+                  }
 
-         var ctx = document.getElementById('successRateChart').getContext('2d');
-         var successRateChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-               labels: dateLabels,
-               datasets: [{
-                     label: 'Success Rate',
-                     borderColor: 'green',
-                     data: successValues.map((success, index) => {
-                        return (success / totalValues[index]) * 100;
-                     }),
-                     fill: false
-                  }]
-            }
-         });
+                  var revenueTrendData = {
+                     labels: labels,
+                     revenues: revenues
+                  };
 
-         // Revenue Trend Chart - kept exactly the same as original
-         function formatDate(date) {
-            var d = new Date(date),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
-
-            if (month.length < 2)
-               month = '0' + month;
-            if (day.length < 2)
-               day = '0' + day;
-
-            return [year, month, day].join('-');
-         }
-
-         var revenue7Days = JSON.parse('${revenue7Days}');
-         var labels = [];
-         var revenues = [];
-
-         for (var i = 0; i < revenue7Days.length; i++) {
-            labels.push(formatDate(revenue7Days[i].date));
-            revenues.push(revenue7Days[i].totalMoney);
-         }
-
-         var revenueTrendData = {
-            labels: labels,
-            revenues: revenues
-         };
-
-         var ctx = document.getElementById('revenueTrendChart').getContext('2d');
-         var revenueTrendChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-               labels: revenueTrendData.labels,
-               datasets: [{
-                     label: '7-Day Revenue Trend',
-                     borderColor: 'orange',
-                     data: revenueTrendData.revenues,
-                     fill: false
-                  }]
-            }
-         });
-      </script>
-   </body>
-</html>
+                  var ctx = document.getElementById('revenueTrendChart').getContext('2d');
+                  var revenueTrendChart = new Chart(ctx, {
+                     type: 'line',
+                     data: {
+                        labels: revenueTrendData.labels,
+                        datasets: [{
+                              label: '7-Day Revenue Trend',
+                              borderColor: 'orange',
+                              data: revenueTrendData.revenues,
+                              fill: false
+                           }]
+                     }
+                  });
+               </script>
+               </body>
+               </html>
