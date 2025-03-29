@@ -89,7 +89,7 @@ public class SliderListController extends HttpServlet {
       request.setAttribute("pagination_url", "slider-list?");
       request.getSession().setAttribute("backlink", "slider-list");
 
-      request.getRequestDispatcher("Marketing_SliderList.jsp").forward(request, response);
+      request.getRequestDispatcher("SliderListMarketing.jsp").forward(request, response);
    }
 
    /**

@@ -297,17 +297,20 @@
       }
 
       .sidebar h2 {
-         color: #00796b;
-         font-size: 18px;
-         margin-bottom: 15px;
-         padding-bottom: 10px;
-         border-bottom: 1px solid #b2dfdb;
+         color: #26A69A;
+         font-size: 1.2rem;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+         padding: 0 20px 15px;
+         margin-bottom: 10px;
+         border-bottom: 2px solid var(--teal-lighter);
       }
 
       h2 {
          color: var(--teal-dark);
          margin: 20px 0;
          font-weight: 600;
+         text-align: center;
          padding-bottom: 10px;
          border-bottom: 2px solid #80cbc4;
       }
@@ -591,7 +594,7 @@
 //            }
                                                      );
                                           });
-                  </<script>
-                          </body>
+                          </<script>
+            </body>
    </html>
 

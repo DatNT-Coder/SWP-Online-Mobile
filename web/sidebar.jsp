@@ -18,7 +18,7 @@ String fullName = (String) session.getAttribute("full_name");
 
    <h2 class="sidebar-title">Marketing</h2>
    <ul class="sidebar-menu">
-      <li><a href="/ProjectSWP391/marketing/MarketingDashboardController"><i class="bi bi-speedometer2"></i> Bảng điều khiển tiếp thị</a></li>
+      <li><a href="/ProjectSWP391/marketing/MKTDashboardController"><i class="bi bi-speedometer2"></i> Bảng điều khiển tiếp thị</a></li>
       <li><a href="/ProjectSWP391/marketing/listFeedbackMarketing"><i class="bi bi-chat-square-text"></i> Danh sách phản hồi</a></li>
       <li><a href="/ProjectSWP391/slider-list"><i class="bi bi-images"></i> Danh sách slider</a></li>
       <li><a href="/ProjectSWP391/product-listAdmin"><i class="bi bi-box-seam"></i> Danh sách sản phẩm</a></li>

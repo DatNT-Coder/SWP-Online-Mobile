@@ -27,8 +27,8 @@ import model.User;
  *
  * @author naokh
  */
-@WebServlet(name = "MKTDashboardController", urlPatterns = {"/marketing/MarketingDashboardController"})
-public class MarketingDashboardController extends HttpServlet {
+@WebServlet(name = "MKTDashboardController", urlPatterns = {"/marketing/MKTDashboardController"})
+public class MKTDashboardController extends HttpServlet {
 
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -127,7 +127,7 @@ public class MarketingDashboardController extends HttpServlet {
       request.setAttribute("newCustomers", newCustomers);
       request.setAttribute("customerTrend", customerTrend);
       request.setAttribute("userProfile", userProfile);
-      request.getRequestDispatcher("/Marketing_DashBoard.jsp").forward(request, response);
+      request.getRequestDispatcher("/mktDashBoard.jsp").forward(request, response);
 
    }
 

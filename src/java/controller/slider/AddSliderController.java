@@ -5,9 +5,14 @@
 package controller.slider;
 
 import dao.SliderDAO;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import model.Slider;
 import model.User;
 
@@ -70,7 +78,7 @@ public class AddSliderController extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      request.getRequestDispatcher("MKT_NewSlider.jsp").forward(request, response);
+      request.getRequestDispatcher("AddNewSlider.jsp").forward(request, response);
    }
 
    /**

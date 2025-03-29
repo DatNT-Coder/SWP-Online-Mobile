@@ -113,7 +113,7 @@ public class ListOrderSale extends HttpServlet {
       request.setAttribute("totalOrders", totalOrders);
       request.setAttribute("currentPage", page);
       request.setAttribute("totalPages", totalPages);
-      request.getRequestDispatcher("/Sale_OrderList.jsp").forward(request, response);
+      request.getRequestDispatcher("/Sale_orderList.jsp").forward(request, response);
    }
 
    @Override

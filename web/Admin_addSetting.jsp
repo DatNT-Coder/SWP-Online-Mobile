@@ -7,207 +7,119 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
         <title>Admin | Thêm cài đặt</title>
-        
-        <!-- Bootstrap & Icons -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-        
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/sider.css" rel="stylesheet">
         <style>
-            :root {
-                --teal-primary: #26a69a;
-                --teal-light: #80cbc4;
-                --teal-dark: #00897b;
-                --teal-bg: #e0f2f1;
-                --teal-text: #004d40;
-                --teal-card: #ffffff;
-                --teal-accent: #b2dfdb;
+            .w-100{
+                width: 100%;
             }
-
-            body {
-                background-color: var(--teal-bg);
-                color: var(--teal-text);
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-
-            .dashboard-container {
-                display: flex;
-                min-height: 100vh;
-            }
-
-            .main-content {
-                flex: 1;
-                padding: 20px;
-                background-color: var(--teal-bg);
-            }
-
-            .panel {
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                margin-bottom: 20px;
-                border: 1px solid var(--teal-accent);
-                padding: 20px;
-            }
-
-            .panel-heading {
-                background-color: var(--teal-primary);
-                color: white;
-                padding: 15px 20px;
-                border-radius: 8px 8px 0 0;
-                font-weight: 600;
-            }
-
-            .btn-primary {
-                background-color: var(--teal-primary);
-                color: white;
-                border: none;
-                padding: 8px 16px;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            .btn-primary:hover {
-                background-color: var(--teal-dark);
-            }
-
-            .btn-secondary {
-                background-color: #6c757d;
-                color: white;
-            }
-
-            .btn-secondary:hover {
-                background-color: #5a6268;
-                color: white;
-            }
-
-            .form-control {
-                border: 1px solid var(--teal-light);
-                border-radius: 4px;
-                padding: 8px 12px;
-                margin-bottom: 15px;
-            }
-
-            .form-label {
-                font-weight: 600;
-                margin-bottom: 8px;
-                display: block;
-            }
-
-            .breadcrumb {
-                background-color: var(--teal-light);
-                padding: 8px 15px;
-                border-radius: 4px;
-            }
-
-            .breadcrumb-item.active {
-                color: var(--teal-text);
-                font-weight: 500;
-            }
-
-            @media (max-width: 768px) {
-                .dashboard-container {
-                    flex-direction: column;
-                }
-                
-                .form-row > div {
-                    margin-bottom: 15px;
-                }
+            .mt-4{
+                margin-top: 16px;
             }
         </style>
     </head>
     <body>
-        <div class="dashboard-container">
-            <!-- Sidebar -->
-            <div style="min-width: 250px;">
-                <jsp:include page="Admin_sidebar.jsp"></jsp:include>
-            </div>
-
-            <!-- Main Content -->
-            <div class="main-content">
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/ProjectSWP391/admin/listSettingAdmin">Danh sách cài đặt</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm cài đặt</li>
-                    </ol>
-                </nav>
-
-                <div class="panel">
-                    <header class="panel-heading">Thêm cài đặt</header>
-                    <div class="panel-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"><jsp:include page="Admin_sidebar.jsp"></jsp:include></div>
+                    <div class="col-md-9">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/ProjectSWP391/admin/listSettingAdmin">Danh sách sản phẩm</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
+                            </ol>
+                        </nav>
+                        <div class="header col-md-12">
+                            <h1>Thêm cài đặt</h1>
+                        </div>
                         <form id="myForm" action="/ProjectSWP391/admin/manageSettingAdmin" method="post">
                             <input type="hidden" name="msg" value="addSetting"/>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="form-label">Kiểu cài đặt:</label>
-                                    <select required class="form-control" id="type" name="type">
-                                        <c:forEach items="${requestScope.listType}" var="listType">
-                                            <option value="${listType.type}" <c:if test="${'all'.equals(listType.type)}">disabled</c:if>>
-                                                ${listType.type}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <label class="form-label">Tên cài đặt:</label>
-                                    <input value="" required type="text" name="sName" class="form-control">
-                                </div>
+                            <div class="col-md-5 mb-3">
+                                <label>
+                                    <h4>Kiểu cài đặt:</h4>
+
+                                </label>
+                                <select required="" class="form-control" id="id" name="type">
+
+                                <c:forEach items="${requestScope.listType}" var="listType">
+                                    <option value="${listType.type}" <c:if test="${'all'.equals(listType.type)}">disabled</c:if>>${listType.type}</option>
+                                </c:forEach>
+
+                            </select>
+
+                        </div>
+                        <div class="col-md-7 mb-3">
+                            <label>
+                                <h4>Tên cài đặt:</h4>
+
+                            </label>
+                            <input value="" required="" type="text" name="sName" class="form-control w-100">
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+                            <label>
+                                <h4>Thứ tự</h4>
+
+                            </label>
+                            <input value="" required="" type="text" name="order" class="form-control w-100" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" >
+                        </div>
+                        <div class="col-md-7 mb-3">
+                            <label>
+                                <h4>Trạng thái hoạt động:</h4>
+
+                            </label>
+                            <select required="" class="form-control" id="id" name="status">
+
+
+                                <option value="1" >Hoạt động</option>
+                                <option value="0" >Không hoạt động</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label>
+                                <h4>Mô tả cài đặt </h4>
+
+                            </label>
+                            <textarea required="" id="id" name="description" rows="5" cols="10" class="form-control w-100"></textarea>
+                        </div>
+                        <div class="mt-4"></div>
+                        <div class="col-md-12">
+                            <div class="text-left col-md-3 mt-4">
+                                <button id="confirmButton" class="btn btn-primary" type="submit">Thêm cài đặt</button>
+                                <a class="btn" href="/ProjectSWP391/admin/listSettingAdmin">Hủy bỏ</a>
                             </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="form-label">Thứ tự:</label>
-                                    <input value="" required type="text" name="order" class="form-control" 
-                                           pattern="^\d+(\.\d+)?$" title="Vui lòng nhập số">
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <label class="form-label">Trạng thái hoạt động:</label>
-                                    <select required class="form-control" id="status" name="status">
-                                        <option value="1">Hoạt động</option>
-                                        <option value="0">Không hoạt động</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <label class="form-label">Mô tả cài đặt:</label>
-                                    <textarea required id="description" name="description" rows="5" class="form-control"></textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="row mt-4">
-                                <div class="col-12 text-end">
-                                    <a class="btn btn-secondary me-2" href="/ProjectSWP391/admin/listSettingAdmin">Hủy bỏ</a>
-                                    <button id="confirmButton" class="btn btn-primary" type="submit">
-                                        <i class="bi bi-plus-circle"></i> Thêm cài đặt
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+
+
+
+
                 </div>
+
             </div>
         </div>
-
         <script>
             document.getElementById("confirmButton").addEventListener("click", function (event) {
-                event.preventDefault();
                 const isConfirmed = confirm("Bạn có chắc muốn thêm cài đặt này?");
                 if (isConfirmed) {
+                    // Nếu người dùng xác nhận, gửi form
                     document.getElementById("myForm").submit();
+                } else {
+                    // Nếu người dùng hủy bỏ, không làm gì cả
+                    event.preventDefault();
                 }
             });
+
         </script>
-        
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
