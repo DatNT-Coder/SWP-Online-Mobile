@@ -530,132 +530,126 @@
 
         
         <script>
-            // Convert the list of products from Java to JavaScript
-            var products = JSON.parse('${listProduct}');
-            var productRatingsJSON = '${productRatingsJSON}';
-            var productRatings = JSON.parse(productRatingsJSON.trim());
+    // Convert the list of products from Java to JavaScript
+    var products = JSON.parse('${listProduct}');
+    
+    var productRatingsJSON = '${productRatingsJSON}';
+    var productRatings = {};
 
-            var productRatingsJSON = '${productRatingsJSON}';
-            var productRatings = {};
-            var isLoggedIn = ${sessionScope.user != null ? 'true' : 'false'};
+    try {
+        productRatings = JSON.parse(productRatingsJSON.trim());
+        console.log("Product Ratings:", productRatings);
+    } catch (e) {
+        console.error("Lỗi khi parse productRatingsJSON:", e.message);
+    }
 
-            try {
-                productRatings = JSON.parse(productRatingsJSON.trim());
-                console.log("Product Ratings:", productRatings);
-            } catch (e) {
-                console.error("Lỗi khi parse productRatingsJSON:", e.message);
-            }
+    var currentPage = 1; // Current page
+    var itemsPerPage = 6; // Number of items per page
 
-            var currentPage = 1; // Current page
-            var itemsPerPage = 6; // Number of items per page
+    // Display products for the current page
+    function displayProducts() {
+        var start = (currentPage - 1) * itemsPerPage;
+        var end = start + itemsPerPage;
+        var productsToDisplay = products.slice(start, end);
 
-            // Display products for the current page
-            function displayProducts() {
-                var start = (currentPage - 1) * itemsPerPage;
-                var end = start + itemsPerPage;
-                var productsToDisplay = products.slice(start, end);
+        // Clear the current products
+        $('.product-list').empty();
 
-                // Clear the current products
-                $('.product-list').empty();
+        // Add each product
+        productsToDisplay.forEach(function (product) {
+            var productHtml = '<div class="col-md-4">' +
+                    '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
+                    '<div class="product-image-wrapper">' +
+                    '<div class="single-products">' +
+                    '<div class="productinfo text-center">' +
+                    '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
+                    '<h2>$' + product.salePrice + '</h2>' +
+                    '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
+                    '<p>' + product.name + '</p>';
 
-                // Add each product
-                productsToDisplay.forEach(function (product) {
-                    var productHtml = '<div class="col-md-4">' +
-                            '<a href="ProductDetails?bid=' + product.brandId + '&cid=' + product.ProductCategory_ID + '&pid=' + product.ID + '">' +
-                            '<div class="product-image-wrapper">' +
-                            '<div class="single-products">' +
-                            '<div class="productinfo text-center">' +
-                            '<img style="width: 200px;height: 200px;object-fit: contain;" src="./assets/img/productImage/' + product.image + '" alt="" />' +
-                            '<h2>$' + product.salePrice + '</h2>' +
-                            '<h5 style="color:black;text-decoration: line-through;opacity:0.8;">$' + product.originalPrice + '</h5>' +
-                            '<p>' + product.name + '</p>';
+            productHtml += '<div style="display: flex; align-items: center;">' + 
+                   '<a onclick="addToCart(' + product.ID + ')" class="btn btn-default add-to-cart">' +
+                       '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng' +
+                   '</a>' +
+                   (productRatings[product.ID] != null && productRatings[product.ID] != '0'
+                       ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
+                         + productRatings[product.ID] + ' ★</a>'
+                       : '') +
+               '</div>';
+            
+            productHtml += '</div></div></div></a></div>';
+            $('.product-list').append(productHtml);
+        });
+    }
 
-                     productHtml += '<div style="display: flex; align-items: center;">' + 
-                                '<a onclick="' + (isLoggedIn ? 'addToCart(' + product.ID + ')' : 'redirectToLogin()') + '" class="btn btn-default add-to-cart">' +
-                                    '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ' +
-                                '</a>' +
-                                (productRatings[product.ID] != null && productRatings[product.ID] != '0'
-                                    ? '<a class="btn btn-default add-to-cart" style="cursor: default;">' 
-                                      + productRatings[product.ID] + ' ★</a>'
-                                    : '') +
-                            '</div>';
-                    
-                    productHtml += '</div></div></div></a></div>';
-                    $('.product-list').append(productHtml);
+    // Update the pagination links
+    function updatePagination() {
+        var totalPages = Math.ceil(products.length / itemsPerPage);
 
-                });
-            }
-                function redirectToLogin() {
-                    window.location.href = 'login.jsp';
-                }
-            // Update the pagination links
-            function updatePagination() {
-                var totalPages = Math.ceil(products.length / itemsPerPage);
+        $('.pagination').empty();
 
-                $('.pagination').empty();
+        var prevClass = currentPage === 1 ? 'disabled' : '';
+        $('.pagination').append('<li class="' + prevClass + '"><a href="#">Trước</a></li>');
 
-                var prevClass = currentPage === 1 ? 'disabled' : '';
-                $('.pagination').append('<li class="' + prevClass + '"><a href="#">Trước</a></li>');
+        for (var i = 1; i <= totalPages; i++) {
+            var liClass = i === currentPage ? 'active' : '';
+            $('.pagination').append('<li class="' + liClass + '"><a href="#">' + i + '</a></li>');
+        }
 
-                for (var i = 1; i <= totalPages; i++) {
-                    var liClass = i === currentPage ? 'active' : '';
-                    $('.pagination').append('<li class="' + liClass + '"><a href="#">' + i + '</a></li>');
-                }
+        var nextClass = currentPage === totalPages ? 'disabled' : '';
+        $('.pagination').append('<li class="' + nextClass + '"><a href="#">Sau</a></li>');
 
-                var nextClass = currentPage === totalPages ? 'disabled' : '';
-                $('.pagination').append('<li class="' + nextClass + '"><a href="#">Sau</a></li>');
+        $('.pagination a').click(function (e) {
+            e.preventDefault();
 
-                $('.pagination a').click(function (e) {
-                    e.preventDefault();
+            var pageText = $(this).text();
 
-                    var pageText = $(this).text();
-
-                    if (pageText === 'Trước' && currentPage !== 1) currentPage--;
-                    else if (pageText === 'Sau' && currentPage !== totalPages) currentPage++;
-                    else if (!isNaN(pageText)) currentPage = parseInt(pageText);
-
-                    displayProducts();
-                    updatePagination();
-                });
-            }
-
-            function sortProducts() {
-                var sortBy = $('#sortPrice').val();
-
-                if (sortBy === 'asc') {
-                    products.sort(function (a, b) {
-                        return a.salePrice - b.salePrice;
-                    });
-                } else if (sortBy === 'desc') {
-                    products.sort(function (a, b) {
-                        return b.salePrice - a.salePrice;
-                    });
-                } else {
-                    products = JSON.parse('${listProduct}');
-                }
-
-                displayProducts();
-                updatePagination();
-            }
-
-            function searchProducts() {
-                var searchText = $('#searchInput').val().toLowerCase();
-
-                // Lọc sản phẩm theo tên sản phẩm
-                products = products.filter(function (product) {
-                    return product.name.toLowerCase().includes(searchText);
-                });
-
-                currentPage = 1;
-                displayProducts();
-                updatePagination();
-            }
-
-            $('#searchButton').click(searchProducts);
+            if (pageText === 'Trước' && currentPage !== 1) currentPage--;
+            else if (pageText === 'Sau' && currentPage !== totalPages) currentPage++;
+            else if (!isNaN(pageText)) currentPage = parseInt(pageText);
 
             displayProducts();
             updatePagination();
-    </script>
+        });
+    }
+
+    function sortProducts() {
+        var sortBy = $('#sortPrice').val();
+
+        if (sortBy === 'asc') {
+            products.sort(function (a, b) {
+                return a.salePrice - b.salePrice;
+            });
+        } else if (sortBy === 'desc') {
+            products.sort(function (a, b) {
+                return b.salePrice - a.salePrice;
+            });
+        } else {
+            products = JSON.parse('${listProduct}');
+        }
+
+        displayProducts();
+        updatePagination();
+    }
+
+    function searchProducts() {
+        var searchText = $('#searchInput').val().toLowerCase();
+        
+        // Lọc sản phẩm theo tên sản phẩm
+        products = products.filter(function (product) {
+            return product.name.toLowerCase().includes(searchText);
+        });
+
+        currentPage = 1;
+        displayProducts();
+        updatePagination();
+    }
+
+    $('#searchButton').click(searchProducts);
+
+    displayProducts();
+    updatePagination();
+</script>
 
 
     </body>

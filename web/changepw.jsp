@@ -32,6 +32,10 @@
                 <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"> Change </button> <h5 style="color: red"> ${errorMessage} </h5>
             </div>
         </form>
+            <a href="/ProjectSWP391/HomePage" class="block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    Home
+</a>
+
     </div>
 </body>
 </html>
