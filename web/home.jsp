@@ -402,7 +402,7 @@
                                                          <a  onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
                                                       </c:if>
                                                       <c:if test="${sessionScope.user == null}">
-                                                         <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
+                                                         <a href="authen?action=login"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
                                                       </c:if>
                                                    </div>
                                                 </div>
@@ -425,7 +425,7 @@
                                                          <a onclick="addToCart(${latestP.ID})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
                                                       </c:if>
                                                       <c:if test="${sessionScope.user == null}">
-                                                         <a href="login.jsp"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
+                                                         <a href="authen?action=login"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
                                                       </c:if>
                                                    </div>
                                                 </div>
@@ -646,7 +646,7 @@
                   }
 
                 function redirectToLogin() {
-                    window.location.href = 'login.jsp';
+                    window.location.href="authen?action=login";
                 }
 
                   // Update the pagination links
