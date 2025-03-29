@@ -707,4 +707,44 @@ public class BlogPostDAO extends DBContext {
       }
       return total;
    }
+
+   public int getPostCountByCategory(int categoryId) {
+      String sql = "SELECT COUNT(*) FROM blogs_posts WHERE PostCategories_id = ?";
+      try {
+         PreparedStatement st = connection.prepareStatement(sql);
+         st.setInt(1, categoryId);
+         ResultSet rs = st.executeQuery();
+         return rs.next() ? rs.getInt(1) : 0;
+      } catch (SQLException e) {
+         System.out.println("Count error: " + e.getMessage());
+         return 0;
+      }
+   }
+
+   public ArrayList<BlogPost> getPostsByCategory(int categoryId, int pageIndex, int postPerPage) {
+      ArrayList<BlogPost> list = new ArrayList<>();
+      String sql = "SELECT * FROM blogs_posts WHERE PostCategories_id = ? "
+              + "ORDER BY updatedDate DESC LIMIT ? OFFSET ?";
+
+      try {
+         PreparedStatement st = connection.prepareStatement(sql);
+         st.setInt(1, categoryId);
+         st.setInt(2, postPerPage);
+         st.setInt(3, (pageIndex - 1) * postPerPage);
+
+         ResultSet rs = st.executeQuery();
+         while (rs.next()) {
+            BlogPost post = new BlogPost();
+            post.setId(rs.getInt("id"));
+            post.setTitle(rs.getString("title"));
+            post.setBrief_info(rs.getString("brief_info"));
+            post.setThumbnail(rs.getString("thumbnail"));
+            // Map all other required fields
+            list.add(post);
+         }
+      } catch (SQLException e) {
+         System.out.println("Query error: " + e.getMessage());
+      }
+      return list;
+   }
 }

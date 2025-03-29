@@ -497,6 +497,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .single-blog-post p {
+   font-family: "Alata", sans-serif;
    color: #00695c;
    font-size: 14px;
    margin-bottom: 15px;
@@ -509,6 +510,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .post-meta ul li {
+   font-family: "Alata", sans-serif;
    display: inline-block;
    margin-right: 10px;
 }
@@ -613,6 +615,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .single-widget ul li a {
+   font-family: "Alata", sans-serif;
    color: #00695c;
    font-size: 14px;
    transition: all 0.3s;
@@ -1058,6 +1061,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pull-right button[type="submit"] {
+   font-family: "Alata", sans-serif;
    height: 50px;
    width: 600px;
    background: #26a69a;

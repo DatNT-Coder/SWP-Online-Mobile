@@ -256,7 +256,7 @@
                               <input type="hidden" name="action" value="searchByPrice"/>
                               <input style="padding:0.5rem;width:100%" placeholder="Từ..."  type="text" name="fromPrice" class="span2" value="${sessionScope.fromP}" pattern="^\d+(\.\d+)?$" title="vui lòng nhập số" ><br />
                               <input style="padding:0.5rem;width:100%;margin-top:6px;" placeholder="Đến..." type="text" name="toPrice" class="span2" value="${sessionScope.toP}"  pattern="^\d+(\.\d+)?$" title="vui lòng nhập số"  ><br />
-                              <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;" type="submit">Tìm kiếm</button>
+                              <button style="background-color: #009981;color:white;border: none;width:100%;padding:.5rem;border-radius: 10px" type="submit">Tìm kiếm</button>
                            </div>
                         </form>
                      </div><!--/price-range-->

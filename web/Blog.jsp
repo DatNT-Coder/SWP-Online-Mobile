@@ -31,8 +31,8 @@
       </style>
    </head><!--/head-->
 
-   <body>
-       <!--header-->
+   <body>      
+      <!--header-->
       <header id="header">
          <div class="header_top"><!--header_top-->
             <div class="container">
@@ -213,14 +213,9 @@
                            </div>
                         </c:forEach>
                      </div><!--/category-products-->
-
-
-
-                     <div class="shipping text-center"><!--shipping-->
-                        <img src="images/home/shipping.png" alt="" />
-                     </div><!--/shipping-->
                   </div>
                </div>
+
                <div class="col-sm-9">
                   <div class="blog-post-area">
                      <h2 class="title text-center">Latest From our Blog</h2>
@@ -248,19 +243,33 @@
 
 
                      <ul class="pagination justify-content-center">
+                        <%-- Previous Page Link --%>
                         <c:if test="${pageIndex > 1}">
                            <li class="page-item">
-                              <a class="page-link" href="BlogPostList?index=${pageIndex-1}">Trước</a>
+                              <a class="page-link" 
+                                 href="${not empty currentCategory ? 'Postcategory?categoryId='.concat(currentCategory).concat('&') : 'BlogPostList?'}index=${pageIndex-1}">
+                                 Trước
+                              </a>
                            </li>
                         </c:if>
 
+                        <%-- Page Numbers --%>
                         <c:forEach var="i" begin="1" end="${endPage}">
-                           <li class="page-item ${pageIndex == i?"active":""}"><a class="page-link" href="BlogPostList?index=${i}">${i}</a></li>                              
-                           </c:forEach>
+                           <li class="page-item ${pageIndex == i ? 'active' : ''}">
+                              <a class="page-link" 
+                                 href="${not empty currentCategory ? 'Postcategory?categoryId='.concat(currentCategory).concat('&') : 'BlogPostList?'}index=${i}">
+                                 ${i}
+                              </a>
+                           </li>                              
+                        </c:forEach>
 
+                        <%-- Next Page Link --%>
                         <c:if test="${pageIndex < endPage}">
                            <li class="page-item">
-                              <a class="page-link" href="BlogPostList?index=${pageIndex+1}">Sau</a>
+                              <a class="page-link" 
+                                 href="${not empty currentCategory ? 'Postcategory?categoryId='.concat(currentCategory).concat('&') : 'BlogPostList?'}index=${pageIndex+1}">
+                                 Sau
+                              </a>
                            </li>
                         </c:if>
                      </ul>
