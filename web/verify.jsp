@@ -30,18 +30,19 @@
                 %>
                 <input type="hidden" name="e" value="<%= email %>" />
                 <input type="text" name="vCode" placeholder="Input Verification Code" class="w-full max-w-md px-4 py-2 mb-4 border border-gray-400 rounded" required />
-                <button type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                <button style="margin-left: 10px; background-color: #009981; color:white;"  type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
                     Verify
                 </button>  <h1 style="color: red"> ${errorMessage} </h1>
             </form>
             <div style="display: flex; justify-content: flex-start; align-items: center;">
                 <form action="authen?action=resend" method="post">
-                    <button style="margin-right: 10px" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                    <input type="hidden" name="type" value="regis">
+                    <button style="margin-left: 10px; background-color: #009981; color:white;" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
                         Resend
                     </button>
                 </form>
                 <form action="HomePage">
-                    <button style="margin-left: 10px" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
+                    <button style="margin-left: 10px; background-color: #009981; color:white;" type="submit" class="px-6 py-2 text-white bg-orange-500 rounded hover:bg-orange-600">
                         Home
                     </button>
                 </form>

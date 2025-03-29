@@ -85,7 +85,7 @@
                                     </li>
                                     <li><a href="/ProjectSWP391/customer/cart/contact"><i class="fa fa-crosshairs"></i> Thanh Toán</a></li>
                                     <li><a href="CartViewController"><i class="fa fa-shopping-cart"></i> Giỏ Hàng</a></li>
-                                       
+
                                 </ul>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
             </div>
         </header>
 
-       
+
 
         <section id="cart_items">
             <div class="container">
@@ -239,7 +239,17 @@
                     quantityDiv.value = newQuantity;
                     priceDiv.innerHTML = '$' + price;
                     totalDiv.innerHTML = '$' + total;
-                    await FuiToast.success('Vượt quá số lượng sản phẩm trong kho!');
+                    if (amount < 0 && quantityDiv.value <= 1) {
+                        await FuiToast.error('Không thể giảm xuống 0! Hãy dùng nút xóa nếu muốn xóa sản phẩm.');
+                        return false;
+                    }
+
+                    // Hiển thị thông báo đúng khi thêm hoặc trừ sản phẩm
+                    if (amount > 0) {
+                        await FuiToast.success('Đã thêm 1 sản phẩm vào giỏ hàng!');
+                    } else if (amount < 0) {
+                        await FuiToast.success('Đã giảm 1 sản phẩm trong giỏ hàng!');
+                    }
                 } else {
                     await FuiToast.error('Update product quantity failed!');
                 }

@@ -79,7 +79,7 @@ public class VerifyServlet extends HttpServlet {
         String codeFromVerify = request.getParameter("vCode");
 
         VerificationCode storedCode = AuthenticationServlet.getVerificationCodes().get(emailFromVerify);
-        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeFromVerify);
+        boolean isCodeValid = storedCode != null && !storedCode.isExpired() && storedCode.getCode().equals(codeFromVerify.trim());
 
         if (isCodeValid) {
 
