@@ -709,7 +709,7 @@ public class BlogPostDAO extends DBContext {
    }
 
    public int getPostCountByCategory(int categoryId) {
-      String sql = "SELECT COUNT(*) FROM blogs_posts WHERE PostCategories_id = ?";
+      String sql = "SELECT COUNT(*) FROM blogs_posts WHERE PostCategories_id = ? AND status in ( 1 )";
       try {
          PreparedStatement st = connection.prepareStatement(sql);
          st.setInt(1, categoryId);
@@ -723,7 +723,7 @@ public class BlogPostDAO extends DBContext {
 
    public ArrayList<BlogPost> getPostsByCategory(int categoryId, int pageIndex, int postPerPage) {
       ArrayList<BlogPost> list = new ArrayList<>();
-      String sql = "SELECT * FROM blogs_posts WHERE PostCategories_id = ? "
+      String sql = "SELECT * FROM blogs_posts WHERE PostCategories_id = ?  AND status in ( 1 ) "
               + "ORDER BY updatedDate DESC LIMIT ? OFFSET ?";
 
       try {

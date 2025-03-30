@@ -268,8 +268,8 @@
                <label>Status:</label>
                <select name="status">
                   <option value="">All</option>
-                  <option value="0" ${param.status == '0' ? 'selected' : ''}>Payment successful</option>
-                  <option value="1" ${param.status == '1' ? 'selected' : ''}>Delivery successful</option>
+                  <option value="1" ${param.status == '0' ? 'selected' : ''}>Payment successful</option>
+                  <option value="3" ${param.status == '1' ? 'selected' : ''}>Delivery successful</option>
                </select>
 
                <button type="submit">Filter</button>
@@ -309,9 +309,9 @@
                      <td><%= order.getGender() %></td>
                      <td>
                         <% switch(order.getStatus()) {
-                           case 0: %>Payment successful<%
+                           case 1: %>Payment successful<%
                      break;
-                  case 1: %>Delivery successful<%
+                  case 3: %>Delivery successful<%
                      break;
                   default: %>Unknown<%
                         } %>

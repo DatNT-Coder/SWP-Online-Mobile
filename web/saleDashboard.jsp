@@ -90,7 +90,7 @@
                                 <span class="sm-st-icon st-blue"><i class="fa-solid fa-cart-arrow-down"></i></span>
                                 <div class="sm-st-info">
                                     <span>${sumOrder}</span>
-                                Tổng số đơn hàng
+                                Tổng số đơn hàng chưa được giao
                             </div>
                         </div>
                     </div>

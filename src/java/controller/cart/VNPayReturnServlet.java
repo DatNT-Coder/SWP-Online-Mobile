@@ -401,7 +401,8 @@ public class VNPayReturnServlet extends HttpServlet {
 
     } else {
         // Thanh toán thất bại
-        response.sendRedirect(request.getContextPath() + "/cart-fail.jsp");
+//        response.sendRedirect(request.getContextPath() + "/cart-fail.jsp");
+         request.getRequestDispatcher("/cart-fail.jsp").forward(request, response);
     }
 
     }
