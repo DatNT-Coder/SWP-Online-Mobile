@@ -90,7 +90,6 @@ public class VerifyServlet extends HttpServlet {
             
             dao.insertUserToDB(u);
             
-            request.getSession().setAttribute(CommonConst.SESSION_ACCOUNT, u);
             request.getRequestDispatcher("HomePage").forward(request, response);
 
         } else {

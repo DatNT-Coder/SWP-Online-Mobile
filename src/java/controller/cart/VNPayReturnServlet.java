@@ -103,7 +103,7 @@ public class VNPayReturnServlet extends HttpServlet {
 
 
             //Email
-            String subject = "Verify Your Email - Your Website.";
+            String subject = "Verify Your Email - Online Mobile Shop.";  
             String content = "<!DOCTYPE html>\n"
                     + "<html>\n"
                     + "<head>\n"

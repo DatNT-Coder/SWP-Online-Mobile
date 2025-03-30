@@ -40,8 +40,8 @@
                   <div class="col-sm-12">
                      <div class="contactinfo">
                         <ul class="nav nav-pills">
-                           <li><a href="#"><i class="fa fa-phone"></i> +8486 933 35322</a></li>
-                           <li><a href="#"><i class="fa fa-envelope"></i> ProjectSWP391@fpt.edu.vn</a></li>
+                           <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                           <li><a href="#"><i class="fa fa-envelope"></i>  group3_shopmobile@gmail.com</a></li>
                         </ul>
                      </div>
                   </div>
